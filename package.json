@@ -1,0 +1,10 @@
+{
+  "name": "com.vz.dev",
+  "version": "1.0.0",
+  "displayName": "_VzDev Tools",
+  "description": "Resources For Develop",
+  "unity": "6000.3",
+  "author": {
+    "name": "Victor Chan"
+  }
+}
