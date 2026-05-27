@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d991a49743d12d4095e4b026e6eb61a, type: 3}
+  m_Name: "\u74B0\u63A7 - \u9EDE\u64CA\u53F3\u908A\u7570\u5E38\u544A\u8B66\u5217\u8868\u6309\u9215"
+  m_EditorClassIdentifier: Assembly-CSharp::VzDev.DotweenUtils.DOTweenMo
+  duration: 0.3
+  delay: 0
+  ease: 6
+  setFromValue: 0
+  setToValue: 1
+  fromValue: {x: 0, y: 0}
+  toValue: {x: -300, y: 0}

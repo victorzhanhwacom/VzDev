@@ -2238,9 +2238,9 @@ MonoBehaviour:
   onScrollEnd:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8398638817823490921}
-        m_TargetAssemblyTypeName: VzDev.DOTweenUtils.DoTweenFader, VzDev
-        m_MethodName: Hide
+      - m_Target: {fileID: 5934490012855958278}
+        m_TargetAssemblyTypeName: VzDev.DotweenUtils.DOTweenPlayer, VzDev
+        m_MethodName: PlayBackwards
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2268,9 +2268,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8398638817823490921}
-          m_TargetAssemblyTypeName: VzDev.DOTweenUtils.DoTweenFader, VzDev
-          m_MethodName: Show
+        - m_Target: {fileID: 5934490012855958278}
+          m_TargetAssemblyTypeName: VzDev.DotweenUtils.DOTweenPlayer, VzDev
+          m_MethodName: PlayTween
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2402,11 +2402,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 304765641914196293}
+  - component: {fileID: 5934490012855958278}
+  - component: {fileID: 838387310485807252}
   - component: {fileID: 3314389722512993450}
   - component: {fileID: 4073840640545926695}
   - component: {fileID: 3350522653442668800}
-  - component: {fileID: 838387310485807252}
-  - component: {fileID: 8398638817823490921}
   m_Layer: 5
   m_Name: Scrollbar Vertical
   m_TagString: Untagged
@@ -2435,6 +2435,34 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 3, y: 0}
   m_Pivot: {x: 1, y: 1}
+--- !u!114 &5934490012855958278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7645627869952720631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5c97cde8b4ed384996770e7d3762b3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.DotweenUtils.DOTweenPlayer
+  onComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  tweenData: {fileID: 11400000, guid: 2b567f4707a728147a6bca2ec503fe25, type: 2}
+--- !u!225 &838387310485807252
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7645627869952720631}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!222 &3314389722512993450
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2517,43 +2545,11 @@ MonoBehaviour:
   m_HandleRect: {fileID: 380186374988211732}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.19642857
+  m_Size: 0.2617801
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!225 &838387310485807252
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7645627869952720631}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
---- !u!114 &8398638817823490921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7645627869952720631}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de6aa7e5b74453340b4ee20546612439, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: VzDev::VzDev.DOTweenUtils.DoTweenFader
-  onComplete:
-    m_PersistentCalls:
-      m_Calls: []
-  isHideInStart: 1
-  duration: 0.3
-  delay: 0
-  ease: 1
-  canvasGroup: {fileID: 838387310485807252}
 --- !u!1 &7875560846017723695
 GameObject:
   m_ObjectHideFlags: 0
