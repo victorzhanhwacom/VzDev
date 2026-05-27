@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 598d55a77debc004891aa19d809670c9, type: 3}
+  m_Name: "Sequence - \u71B1\u96F2\u5716"
+  m_EditorClassIdentifier: Assembly-CSharp::VzDev.DotweenUtils.DOTweenSequenceData
+  duration: 0.3
+  delay: 0
+  ease: 6
+  subAnimations:
+  - {fileID: 11400000, guid: 64718191d4a3c79448efdfbd7c61de4d, type: 2}
+  - {fileID: 11400000, guid: d71ee9cc56e2e324e9db9b5fa43ef076, type: 2}

@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1aeb5dd43769c37499a76ba4f73d1d7e, type: 3}
-  m_Name: DOTweenFader
-  m_EditorClassIdentifier: Assembly-CSharp::VzDev.DotweenUtils.DOTweenFaderData
+  m_Script: {fileID: 11500000, guid: 2d991a49743d12d4095e4b026e6eb61a, type: 3}
+  m_Name: "\u74B0\u63A7 - \u5F9E\u4E0A\u5230\u4E0B"
+  m_EditorClassIdentifier: Assembly-CSharp::VzDev.DotweenUtils.DOTweenMo
   duration: 0.3
   delay: 0
   ease: 6
-  isHideOnAwake: 1
-  isForceFrom: 0
-  fromAlpha: 0
-  toAlpha: 1
+  setFromValue: 1
+  setToValue: 0
+  fromValue: {x: 0, y: 100}
+  toValue: {x: -300, y: 0}

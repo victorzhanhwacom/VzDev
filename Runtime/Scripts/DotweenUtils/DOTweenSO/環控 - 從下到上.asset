@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d991a49743d12d4095e4b026e6eb61a, type: 3}
-  m_Name: "\u74B0\u63A7 - \u9EDE\u64CA\u53F3\u908A\u7570\u5E38\u544A\u8B66\u5217\u8868\u6309\u9215"
+  m_Name: "\u74B0\u63A7 - \u5F9E\u4E0B\u5230\u4E0A"
   m_EditorClassIdentifier: Assembly-CSharp::VzDev.DotweenUtils.DOTweenMo
   duration: 0.3
   delay: 0
   ease: 6
   setFromValue: 1
   setToValue: 0
-  fromValue: {x: 300, y: 0}
+  fromValue: {x: 0, y: 300}
   toValue: {x: -300, y: 0}

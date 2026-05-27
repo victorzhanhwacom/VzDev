@@ -5,29 +5,29 @@ using UnityEngine.Events;
 
 namespace VzDev.DotweenUtils
 {
-    [CreateAssetMenu(fileName = "DOTweenFader", menuName = "VzDev/DOTween/Fader")]
-    public class DOTweenFaderData : DOTweenBaseData
+    [CreateAssetMenu(fileName = "DOTweenFadeData", menuName = "VzDev/DOTween/DOTweenFadeData")]
+    public class DOTweenFadeData : DOTweenBaseData
     {
         public bool isHideOnAwake = true;
         public bool isForceFrom;
         [ShowIf(nameof(isForceFrom))] public float fromAlpha = 0f;
         public float toAlpha = 1f;
 
-        public override ITweenWorker CreateWorker(GameObject target) => new FaderWorker(target, this);
+        public override ITweenWorker CreateWorker(GameObject target) => new FadeWorker(target, this);
     }
 
-    public class FaderWorker : ITweenWorker
+    public class FadeWorker : ITweenWorker
     {
         private CanvasGroup _cg;
-        private DOTweenFaderData _data;
+        private DOTweenFadeData _data;
         private Tween _tween;
 
-        public FaderWorker(GameObject target, DOTweenFaderData data)
+        public FadeWorker(GameObject target, DOTweenFadeData data)
         {
             if (target.TryGetComponent(out _cg))
             {
                 _data = data;
-                if (_data.isHideOnAwake) _cg.alpha = 0f;
+                if (_data.isHideOnAwake) target.SetActive(false);
             }
             else
             {
@@ -35,15 +35,16 @@ namespace VzDev.DotweenUtils
             }
         }
 
-        public void Play(UnityEvent onComplete)
+        public void Play(UnityEvent onStart, UnityEvent onComplete)
         {
             if (_cg == null) return;
             Stop();
 
             if (_data.isForceFrom) _cg.alpha = _data.fromAlpha;
-            _tween = _cg.DOFade(_data.toAlpha, _data.duration)
-                .SetEase(_data.ease)
-                .SetDelay(_data.delay)
+            _tween = _cg.DOFade(_data.toAlpha, _data.tweenData.duration)
+                .SetEase(_data.tweenData.ease)
+                .SetDelay(_data.tweenData.delay)
+                .OnStart(() => onStart?.Invoke())
                 .OnComplete(() => onComplete?.Invoke());
         }
 
@@ -58,14 +59,14 @@ namespace VzDev.DotweenUtils
             if (_cg == null) return;
 
             // 2. 同樣計算動態時間，避免淡入到一半被攔截時，突然變太慢
-            float calculatedDuration = _data.duration;
+            float calculatedDuration = _data.tweenData.duration;
             if (_tween != null && _tween.IsActive())
             {
-                calculatedDuration = _tween.ElapsedPercentage() * _data.duration;
+                calculatedDuration = _tween.ElapsedPercentage() * _data.tweenData.duration;
             }
 
             Stop();
-            _tween = _cg.DOFade(0, calculatedDuration).SetEase(_data.ease);
+            _tween = _cg.DOFade(0, calculatedDuration).SetEase(_data.tweenData.ease);
         }
     }
 }

@@ -31,8 +31,9 @@ namespace VzDev.DotweenUtils
         private int loopCounter;
         #endregion
 
-        public void Play(UnityEvent onComplete)
+        public void Play(UnityEvent onStart, UnityEvent onComplete)
         {
+            loopCounter = 0;
             UnityEvent subAnimComplete = new();
             subAnimComplete.AddListener(() =>
             {
@@ -40,11 +41,11 @@ namespace VzDev.DotweenUtils
                 if (loopCounter >= _workers.Count) onComplete?.Invoke();
             });
 
-            loopCounter = 0;
+            onStart?.Invoke();
             // 同時播放所有的子動畫（這邊可以用 Counter 來計算何時真正 onComplete）
             foreach (ITweenWorker worker in _workers)
             {
-                worker.Play(subAnimComplete);
+                worker.Play(null, subAnimComplete);
             }
         }
 

@@ -8,8 +8,9 @@ namespace VzDev.DotweenUtils
     public class DOTweenPlayer : MonoBehaviour
     {
         #region Variables
-        [Foldout("[Events]"), ShowIf(nameof(IsHaveTweenData))] public UnityEvent onComplete;
-        [Foldout("[Settings]"), Expandable, SerializeField] private DOTweenBaseData tweenData; // 可以拖入 Mover, Fader, 或是 Rotate 
+        [Foldout("[Events]"), ShowIf(nameof(IsHaveTweenData))] public UnityEvent onComplete, onStart;
+        [Foldout("[Settings]"), SerializeField, Label("OnEnabled/OnDisabled時自動播放動畫")] private bool isAutoPlayOnEnable;
+        [Foldout("[Settings]"), Expandable, SerializeField] private DOTweenBaseData tweenData; 
         private bool IsHaveTweenData => tweenData != null;
         private bool IsHaveTweenDataAndPlaying => tweenData != null && _worker != null;
         private ITweenWorker _worker;
@@ -17,7 +18,7 @@ namespace VzDev.DotweenUtils
 
 
         [Button, ShowIf(nameof(IsHaveTweenDataAndPlaying))]
-        public void PlayTween() => _worker?.Play(onComplete);
+        public void PlayTween() => _worker?.Play(onStart, onComplete);
           
         [Button, ShowIf(nameof(IsHaveTweenDataAndPlaying))]
         public void PlayBackwards() => _worker?.PlayBackwards();
@@ -33,6 +34,15 @@ namespace VzDev.DotweenUtils
                 // 讓設定檔根據我的 GameObject，生出一個專屬於我的 Worker 邏輯實例
                 _worker = tweenData.CreateWorker(gameObject);
             }
+        }
+
+        private void OnEnable()
+        {
+            if (isAutoPlayOnEnable) PlayTween();
+        }
+        private void OnDisable()
+        {
+            if (isAutoPlayOnEnable) PlayBackwards();
         }
 
         private void OnDestroy() => StopTween();

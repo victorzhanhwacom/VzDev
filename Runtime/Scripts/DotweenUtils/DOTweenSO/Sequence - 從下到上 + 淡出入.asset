@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 598d55a77debc004891aa19d809670c9, type: 3}
-  m_Name: DOTweenSequence
+  m_Name: "Sequence - \u5F9E\u4E0B\u5230\u4E0A + \u6DE1\u51FA\u5165"
   m_EditorClassIdentifier: Assembly-CSharp::VzDev.DotweenUtils.DOTweenSequenceData
   duration: 0.3
   delay: 0
   ease: 6
   subAnimations:
   - {fileID: 11400000, guid: 64718191d4a3c79448efdfbd7c61de4d, type: 2}
-  - {fileID: 11400000, guid: feee5a9ea5351c743a316d15948aed59, type: 2}
+  - {fileID: 11400000, guid: d71ee9cc56e2e324e9db9b5fa43ef076, type: 2}
