@@ -2,7 +2,7 @@ using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using VzDev.Extensions;
+using VzDev.NetLibrary.Extensions;
 
 namespace VzDev.StringUtils
 {

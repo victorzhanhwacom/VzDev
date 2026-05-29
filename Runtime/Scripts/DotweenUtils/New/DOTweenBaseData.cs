@@ -7,6 +7,6 @@ namespace VzDev.DotweenUtils1
     public class DOTweenBaseData : ScriptableObject
     {
         public float duration = 0.3f, delay;
-        public Ease easeOut = Ease.OutQuad, easeIn = Ease.InQuad;
+        public Ease easeOut = Ease.Linear, easeIn = Ease.Linear;
     }
 }

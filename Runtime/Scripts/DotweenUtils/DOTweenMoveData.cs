@@ -9,8 +9,8 @@ namespace VzDev.DotweenUtils
     [CreateAssetMenu(fileName = "DOTweenMoveData", menuName = "VzDev/DOTween/DOTweenMoveData")]
     public class DOTweenMoveData : DOTweenBaseData
     {
-        public bool setFromValue;
-        public bool setToValue = true;
+        public bool setFromValue = true;
+        public bool setToValue;
         [ShowIf(nameof(setFromValue))] public Vector2 fromValue;
 
         [ShowIf(nameof(setToValue))] public Vector2 toValue;
