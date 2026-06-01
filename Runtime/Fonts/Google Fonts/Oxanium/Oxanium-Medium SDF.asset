@@ -89,8 +89,8 @@ Material:
     - _StencilWriteMask: 255
     - _TextureHeight: 512
     - _TextureWidth: 512
-    - _UnderlayDilate: -0.15
-    - _UnderlayOffsetX: 0.17
+    - _UnderlayDilate: -0.06
+    - _UnderlayOffsetX: 0.25
     - _UnderlayOffsetY: 0.25
     - _UnderlaySoftness: 0
     - _VertexOffsetX: 0

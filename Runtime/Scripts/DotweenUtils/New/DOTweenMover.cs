@@ -35,7 +35,7 @@ namespace VzDev.DotweenUtils1
             if (rectTarget != null)
             {
                 _originalPos = rectTarget.anchoredPosition;
-                if (setFromValue) rectTarget.anchoredPosition = fromValue;
+                if (setFromValue && !setToValue) rectTarget.anchoredPosition = fromValue;
             }
         }
 

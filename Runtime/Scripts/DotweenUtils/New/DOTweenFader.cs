@@ -63,15 +63,14 @@ namespace VzDev.DotweenUtils1
         public void PlayBackwards()
         {
             if (canvasGroup == null || tweenData == null) return;
-            if (Mathf.Approximately(canvasGroup.alpha, 0f)) return;
+           // if (Mathf.Approximately(canvasGroup.alpha, 0f)) return;
             StopTween();
 
             gameObject.SetActive(true);
             SetCanvasGroupInteractable(false);
 
             _tween = canvasGroup.DOFade(0f, tweenData.duration)
-                .SetEase(tweenData.easeIn)
-                .SetDelay(tweenData.delay);
+                .SetEase(tweenData.easeIn);
         }
 
         /// 根據傳入的布林值 isOn 來決定是播放淡入動畫還是淡出動畫

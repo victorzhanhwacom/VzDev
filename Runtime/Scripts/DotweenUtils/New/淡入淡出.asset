@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: VzDev::VzDev.DotweenUtils1.DOTweenBaseData
   duration: 0.3
   delay: 0
-  easeOut: 1
-  easeIn: 1
+  easeOut: 6
+  easeIn: 5

@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 588252d0e9c8f194e8611cda00f4c10c, type: 3}
-  m_Name: "\u79FB\u52D5"
+  m_Name: "\u6DE1\u5165\u6DE1\u51FA_Tooltip"
   m_EditorClassIdentifier: VzDev::VzDev.DotweenUtils1.DOTweenBaseData
   duration: 0.3
-  delay: 0
+  delay: 0.5
   easeOut: 6
   easeIn: 5
