@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace _VictorDev.MaterialUtils
+namespace VzDev.MaterialUtils
 {
     public static class MaterialHelper
     {
@@ -10,6 +10,12 @@ namespace _VictorDev.MaterialUtils
 
         /// 存儲每個物件及其原始材質的字典 {物件Transform, 材質陣列}
         private static readonly Dictionary<Transform, Material[]> originalMaterials = new();
+
+        /// <summary>
+        /// 替換物件(陣列)為指定材質 {排除的對像(選填)}
+        /// </summary>
+        public static void ReplaceMaterial(List<Transform> targets, Material replaceMaterial, List<Transform> excludeTargets) =>
+            targets.ForEach(target => ReplaceMaterialRecursively(target, replaceMaterial, excludeTargets));
 
         /// 替換物件及其底下每層所有子物件的材質 {排除的對像(選填)}
         public static void ReplaceMaterialRecursively(Transform target, Material material,
@@ -20,7 +26,7 @@ namespace _VictorDev.MaterialUtils
                 //當目標對像不在排除名單內時
                 if (excludeTargets.Contains(target) == false)
                 {
-                    ReplaceMaterial(target, material);
+                    ReplaceMaterial(target, material, excludeTargets);
                     // 遞迴處理所有子物件
                     foreach (Transform child in target)
                     {
@@ -45,7 +51,7 @@ namespace _VictorDev.MaterialUtils
             targets.ForEach(target => ReplaceMaterial(target, replaceMaterial));
 
         /// 將目前模型的材質，替換為指定材質
-        public static void ReplaceMaterial(Transform target, Material replaceMaterial)
+        public static void ReplaceMaterial(Transform target, Material replaceMaterial, List<Transform> excludeTargets = null)
         {
             if (target == null) return;
             // 尋找所有子物件身上的 Renderer（包含 inactive）
@@ -54,6 +60,12 @@ namespace _VictorDev.MaterialUtils
             foreach (Renderer childRenderer in result)
             {
                 Transform childTrans = childRenderer.transform;
+                // 若有排除名單，且當前子物件在排除名單內，則跳過
+                if (excludeTargets != null && excludeTargets.Contains(childTrans))
+                {
+                    continue;
+                }
+                
                 // 若沒有存過原始材質，才存（避免重複覆蓋）
                 originalMaterials.TryAdd(childTrans, childRenderer.sharedMaterials);
                 

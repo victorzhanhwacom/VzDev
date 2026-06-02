@@ -2,7 +2,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using VzDev.UnityAPI.Extensions;
 
-namespace _VictorDev.Framework
+namespace VzDev.ObjectUtils
 {
     /// <summary>
     /// 將 UI 物件的 2D 錨點 (Anchor) 鎖定並跟隨指定的 3D 世界物件座標
@@ -65,6 +65,8 @@ namespace _VictorDev.Framework
 
         /// 設定可視距離
         public void SetVisibleRange(float range) => visibleRange = range;
+
+        private void Start() => OnValidate();
 
         [Button]
         public void OnValidate()

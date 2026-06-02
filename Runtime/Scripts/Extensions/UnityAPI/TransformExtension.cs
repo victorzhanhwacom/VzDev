@@ -453,7 +453,7 @@ namespace VzDev.UnityAPI.Extensions
             List<T> compList = ListPool<T>.Get();
             HashSet<Transform> seenTransforms = HashSetPool<Transform>.Get();
 
-            self.GetComponentsInChildren(includeInactive: includeInactive, compList);
+            self.GetComponentsInChildren(includeInactive, compList);
 
             int count = compList.Count;
             for (int i = 0; i < count; i++)
@@ -482,8 +482,13 @@ namespace VzDev.UnityAPI.Extensions
                 // 防止重複加入 (一個物件上有多個同類型元件時去重)
                 if (!seenTransforms.Add(target)) continue;
 
+                // 如果沒有提供關鍵字，就直接加入所有符合條件的物件
+                if (keywords == null || keywords.Length == 0)
+                {
+                    results.Add(target);
+                }
                 // 關鍵字比對
-                if (IsMatch(target.name, searchType, keywords))
+                else if (IsMatch(target.name, searchType, keywords))
                 {
                     results.Add(target);
                 }
