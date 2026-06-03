@@ -1,0 +1,201 @@
+{
+    "version": 1,
+    "name": "KeyboardInputManager",
+    "maps": [
+        {
+            "name": "DebugModeSwitcher",
+            "id": "13bcdcf5-c47d-4505-991c-9767ad865997",
+            "actions": [],
+            "bindings": []
+        },
+        {
+            "name": "MenuSwitcher",
+            "id": "b3bd8545-5abf-4ff0-af58-10a08ed67b0e",
+            "actions": [
+                {
+                    "name": "Power",
+                    "type": "Button",
+                    "id": "3860ec54-0791-45a9-81f5-ff1f0b34eefe",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Enviornment",
+                    "type": "Button",
+                    "id": "d9ca0782-25b5-4c74-839b-ffd1f9a30dfd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CCTV",
+                    "type": "Button",
+                    "id": "4cefac4a-ade4-47ed-bacf-bc1c0f41e6eb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Door",
+                    "type": "Button",
+                    "id": "fda0bf28-0cd9-43af-bb67-76742d905c99",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ClosePage",
+                    "type": "Button",
+                    "id": "31b0fcb9-6bdc-4f2b-9ac0-efb031efb56f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "OpenGraphy",
+                    "type": "Button",
+                    "id": "47e0923b-6b6c-4a2b-b986-bd33d259fd09",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CloseGraphy",
+                    "type": "Button",
+                    "id": "2979216f-a9e8-4520-9b28-786d0e2940be",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LightOn",
+                    "type": "Button",
+                    "id": "96011468-e86b-4bd6-aa4b-ec3726151b85",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LightOff",
+                    "type": "Button",
+                    "id": "d1a17277-7770-4ed8-ba49-2b35a7ba7356",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f9fc1662-e568-4fa0-90b3-360d6e489043",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Power",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d3fbb518-b025-46e0-8a35-0f3edf588f64",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Enviornment",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "722df7cc-e175-40a5-a76d-9387461a6bfc",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CCTV",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "67b29bea-2742-42b7-b16e-2d6012f1862e",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Door",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bc16e38f-dde4-4c20-8a0b-56f8bc69f9ee",
+                    "path": "<Keyboard>/equals",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ClosePage",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "38936c95-cd29-41a6-8ae0-24820a14dc85",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenGraphy",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7692d1e4-58b9-4be1-8dfd-b81699c9ffc9",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CloseGraphy",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f44f097e-feab-49e8-9a56-8aac661c9df6",
+                    "path": "<Keyboard>/semicolon",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LightOn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aa7847b8-62ec-41f1-af0d-2ed1dcfbdbad",
+                    "path": "<Keyboard>/quote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LightOff",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

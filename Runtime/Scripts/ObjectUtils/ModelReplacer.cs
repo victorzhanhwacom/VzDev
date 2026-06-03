@@ -37,6 +37,11 @@ namespace VzDev.ObjectUtils
         [Button, ShowIf(nameof(IsHaveTargetModels))]
         public void ReplaceModelsMaterial()
         {
+            if (Application.isPlaying == false)
+            {
+                Debug.LogWarning("Material replacement can only be performed in Play mode.");
+                return;
+            }
             if (excludeModels != null && excludeModels.Count > 0)
             {
                 MaterialHelper.ReplaceMaterial(targetModels, replaceMaterial, excludeModels);
@@ -52,13 +57,22 @@ namespace VzDev.ObjectUtils
         [Button, ShowIf(nameof(IsReplaceMaterial))]
         public void RestoreModelsMaterial()
         {
+            if (Application.isPlaying == false)
+            {
+                Debug.LogWarning("Material restore can only be performed in Play mode.");
+                return;
+            }
+
             MaterialHelper.RestoreMaterial(targetModels);
             _isMaterialReplaced = false;
         }
 
-        public void ReceiveData(List<Transform> models)
+        public void ToReplaceMaterial(bool isOn)
         {
-            targetModels = models;
+            if (isOn)
+                ReplaceModelsMaterial();
+            else
+                RestoreModelsMaterial();
         }
     }
 }
