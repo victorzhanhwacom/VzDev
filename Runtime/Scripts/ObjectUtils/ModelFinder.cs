@@ -22,6 +22,7 @@ namespace VzDev.ObjectUtils
         
         private bool IsHaveKeywords => keywords != null && keywords.Length > 0;
         private bool IsHaveModels => keyModels != null && keyModels.Count > 0;
+        private bool IsFoundModels  => foundModels.Count > 0;
 
         #endregion
 
@@ -70,7 +71,7 @@ namespace VzDev.ObjectUtils
         
         
 #if UNITY_EDITOR
-        [Button, ShowIf(nameof(IsHaveModels))]
+        [Button, ShowIf(nameof(IsFoundModels))]
         public void SelectObjects() => Selection.objects = foundModels.Select(t => t.gameObject).ToArray<Object>();
 #endif
 
