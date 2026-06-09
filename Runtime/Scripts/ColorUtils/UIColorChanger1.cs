@@ -9,7 +9,7 @@ namespace VzDev.ColorUtils
     /// <summary>
     /// 簡單的UI顏色切換器，支援Image和TextMeshProUGUI等Graphic元件。
     /// </summary>
-    public class UIColorChanger : MonoBehaviour
+    public class UIColorChanger1 : MonoBehaviour
     {
         #region Variables
 

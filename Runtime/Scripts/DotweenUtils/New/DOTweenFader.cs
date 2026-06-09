@@ -1,6 +1,7 @@
 using DG.Tweening;
 using NaughtyAttributes;
 using UnityEngine;
+using VzDev.DotweenUtils;
 
 namespace VzDev.DotweenUtils1
 {
@@ -12,7 +13,7 @@ namespace VzDev.DotweenUtils1
 
         [Label("[Events]"), ShowIf(nameof(IsHaveTweenData))] public DOTweenEvents events;
         [Foldout("[Settings]"), SerializeField] private bool isHideOnAwake = true;
-        [Foldout("[Settings]"), Expandable, SerializeField] private DOTweenBaseData tweenData;
+        [Foldout("[Settings]"), Expandable, SerializeField] private DOTweenSettingSO tweenData;
         [Foldout("[Components]"), SerializeField] private CanvasGroup canvasGroup;
 
         private Tween _tween;
@@ -48,9 +49,9 @@ namespace VzDev.DotweenUtils1
             gameObject.SetActive(true);
             SetCanvasGroupInteractable(false);
 
-            _tween = canvasGroup.DOFade(1f, tweenData.duration)
-                .SetEase(tweenData.easeOut)
-                .SetDelay(tweenData.delay)
+            _tween = canvasGroup.DOFade(1f, tweenData.doTweenSetting.duration)
+                .SetEase(tweenData.doTweenSetting.easeOut)
+                .SetDelay(tweenData.doTweenSetting.Delay)
                 .OnStart(() => events.onStart?.Invoke())
                 .OnComplete(() =>
                 {
@@ -69,8 +70,8 @@ namespace VzDev.DotweenUtils1
             gameObject.SetActive(true);
             SetCanvasGroupInteractable(false);
 
-            _tween = canvasGroup.DOFade(0f, tweenData.duration)
-                .SetEase(tweenData.easeIn);
+            _tween = canvasGroup.DOFade(0f, tweenData.doTweenSetting.duration)
+                .SetEase(tweenData.doTweenSetting.easeIn);
         }
 
         /// 根據傳入的布林值 isOn 來決定是播放淡入動畫還是淡出動畫

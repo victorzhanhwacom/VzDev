@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace VzDev.DotweenUtils
 {
-    public class DOTweenMover : MonoBehaviour
+    public class DOTweenMover1 : MonoBehaviour
     {
         [Foldout("[Events]")] public UnityEvent onComplete, onStart;
         [Foldout("[Settings]"), SerializeField, Label("OnEnabled/OnDisabled時自動播放動畫")] private bool isAutoPlayOnEnable = true;
