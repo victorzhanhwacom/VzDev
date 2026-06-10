@@ -778,7 +778,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2450,6 +2450,10 @@ MonoBehaviour:
   onComplete:
     m_PersistentCalls:
       m_Calls: []
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  isAutoPlayOnEnable: 0
   tweenData: {fileID: 11400000, guid: 2b567f4707a728147a6bca2ec503fe25, type: 2}
 --- !u!225 &838387310485807252
 CanvasGroup:
@@ -2545,7 +2549,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 380186374988211732}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.2617801
+  m_Size: 0.70052546
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2931,10 +2935,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.VerticalLayoutGroup
   m_Padding:
-    m_Left: 2
-    m_Right: 2
-    m_Top: 2
-    m_Bottom: 2
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 5
   m_ChildForceExpandWidth: 1
