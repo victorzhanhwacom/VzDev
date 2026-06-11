@@ -50,7 +50,14 @@ namespace VzDev.DotweenUtils
             OnValidate();
             if (rectTarget == null) Debug.LogWarning($"[DOTweenMover] `{name}` doesn't have a RectTransform component.");
 
-            _originalPos = rectTarget.anchoredPosition;
+            if (setToValueX || setToValueY) // 如果有設定結束值，就直接把物件移動到結束位置，確保在編輯器中能看到正確的起始狀態
+            {
+                _originalPos = new Vector2(setToValueX ? toValueX : _originalPos.x, setToValueY ? toValueY : _originalPos.y);
+            }
+            else
+            {
+                _originalPos = rectTarget.anchoredPosition;
+            }
             if ((setFromValueX || setFromValueY) && !(setToValueX || setToValueY)) // 如果有設定起始值，但沒有設定結束值，就安全退回到初始位置
             {
                 rectTarget.anchoredPosition = new Vector2(setFromValueX ? fromValueX : _originalPos.x, setFromValueY ? fromValueY : _originalPos.y);
@@ -67,7 +74,8 @@ namespace VzDev.DotweenUtils
         [Button, ShowIf(nameof(IsAbleToPlayTween))]
         public void PlayTween()
         {
-            if (rectTarget == null || isTweenOn) return;
+            //if (rectTarget == null || isTweenOn) return;
+            if (rectTarget == null) return;
             isTweenOn = true;
 
             Vector2 toPos = (setFromValueX || setFromValueY) ? _originalPos
@@ -85,7 +93,8 @@ namespace VzDev.DotweenUtils
         [Button, ShowIf(nameof(IsAbleToPlayTween))]
         public void PlayBackwards()
         {
-            if (rectTarget == null || !isTweenOn) return;
+            //if (rectTarget == null || !isTweenOn) return;
+            if (rectTarget == null) return;
             isTweenOn = false;
             // 1. 決定目標：如果沒勾 setFromValue，就安全退回到初始位置
             Vector2 toPos = new Vector2(setFromValueX ? fromValueX : _originalPos.x, setFromValueY ? fromValueY : _originalPos.y);
@@ -97,6 +106,7 @@ namespace VzDev.DotweenUtils
                 // 如果原本的動畫播到一半被攔截，我們按比例縮短回去的時間，避免移動速度突然變慢
                 calculatedDuration = _tween.ElapsedPercentage() * CurrentDOTweenSetting.duration;
             }
+            Debug.Log($"[DOTweenMover] Playing backwards with calculated duration: {calculatedDuration}");
             _tween = ToTween(toPos, calculatedDuration);
         }
 

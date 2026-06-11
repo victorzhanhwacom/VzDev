@@ -10,7 +10,7 @@ namespace VzDev.MediatorUtils
     {
         #region Variables
 
-        [SerializeField, Label("子項Toggle自動監聽點擊判斷")] public bool isToggleChildrenAutoListen = true;
+        // [SerializeField, Label("子項Toggle自動監聽點擊判斷")] public bool isToggleChildrenAutoListen = true;
         [Foldout("[Events] 任一Toggle On")] public UnityEvent<bool> onAnyToggleOn;
         [Foldout("[Componetns]"), SerializeField] private ToggleGroup toggleGroup;
         
@@ -29,7 +29,8 @@ namespace VzDev.MediatorUtils
             if (toggleGroup != null)
             {
                 lastStatus = toggleGroup.AnyTogglesOn();
-                if (isToggleChildrenAutoListen) AllTogglesListen();
+                AllTogglesListen();
+                // if (isToggleChildrenAutoListen) AllTogglesListen();
             }
             else
             {
