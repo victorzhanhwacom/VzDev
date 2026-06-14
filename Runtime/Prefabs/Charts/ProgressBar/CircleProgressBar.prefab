@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 96
+  m_text: 68
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9f63a78c5411d234fb4ee21fc01cf210, type: 2}
   m_sharedMaterial: {fileID: -3758166231712576370, guid: 9f63a78c5411d234fb4ee21fc01cf210, type: 2}
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3375857, g: 1, b: 0.18679237, a: 1}
+  m_Color: {r: 1, g: 0.6536602, b: 0.18823528, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -209,7 +209,7 @@ MonoBehaviour:
   m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0.857
+  m_FillAmount: 0.52
   m_FillClockwise: 1
   m_FillOrigin: 2
   m_UseSpriteMesh: 0
@@ -272,7 +272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.19607843}
+  m_Color: {r: 1, g: 0.6612629, b: 0, a: 0.19607843}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -300,6 +300,7 @@ GameObject:
   - component: {fileID: 6229657147475190295}
   - component: {fileID: 7223312994902152458}
   - component: {fileID: 2096871041040840564}
+  - component: {fileID: 9082359038048477077}
   m_Layer: 5
   m_Name: TxtNumerator
   m_TagString: Untagged
@@ -354,7 +355,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 800/1200U
+  m_text: 156 / 240 kW
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9f63a78c5411d234fb4ee21fc01cf210, type: 2}
   m_sharedMaterial: {fileID: -3758166231712576370, guid: 9f63a78c5411d234fb4ee21fc01cf210, type: 2}
@@ -363,8 +364,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294440437
+  m_fontColor: {r: 0.9607843, g: 0.9607843, b: 0.96862745, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -381,10 +382,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 13
-  m_fontSizeBase: 12
+  m_fontSize: 16
+  m_fontSizeBase: 17
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 12
   m_fontSizeMax: 13
   m_fontStyle: 0
@@ -426,6 +427,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &9082359038048477077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4307579475867946646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4713f51ed851a4498c85921745d897a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.ToolUtils.ThemeUtils.ThemedText
+  colorToken: 9
+  _fontToken: 0
 --- !u!1 &5819014129620781444
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,7 +675,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
+  m_Color: {r: 0.15471691, g: 0.15471691, b: 0.15471691, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

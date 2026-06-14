@@ -15,24 +15,24 @@ MonoBehaviour:
   fonts:
   - token: 0
     font: {fileID: 11400000, guid: 9f63a78c5411d234fb4ee21fc01cf210, type: 2}
-    fontSize: 17
+    fontSize: 16
     fontStyle: 0
   - token: 1
     font: {fileID: 11400000, guid: 9f63a78c5411d234fb4ee21fc01cf210, type: 2}
     fontSize: 28
-    fontStyle: 1
+    fontStyle: 0
   - token: 2
     font: {fileID: 11400000, guid: 9f63a78c5411d234fb4ee21fc01cf210, type: 2}
     fontSize: 22
-    fontStyle: 1
+    fontStyle: 0
   - token: 3
     font: {fileID: 11400000, guid: 9f63a78c5411d234fb4ee21fc01cf210, type: 2}
     fontSize: 17
-    fontStyle: 1
+    fontStyle: 0
   - token: 4
     font: {fileID: 11400000, guid: 9f63a78c5411d234fb4ee21fc01cf210, type: 2}
     fontSize: 40
-    fontStyle: 1
+    fontStyle: 0
   - token: 5
     font: {fileID: 11400000, guid: 9f63a78c5411d234fb4ee21fc01cf210, type: 2}
     fontSize: 13
@@ -45,7 +45,7 @@ MonoBehaviour:
   - token: 2
     color: {r: 0.050980393, g: 0.050980393, b: 0.05882353, a: 1}
   - token: 3
-    color: {r: 0.33333334, g: 0.33333334, b: 0.33333334, a: 1}
+    color: {r: 0.46666667, g: 0.46666667, b: 0.46666667, a: 1}
   - token: 4
     color: {r: 0.26666668, g: 0.26666668, b: 0.26666668, a: 1}
   - token: 5
