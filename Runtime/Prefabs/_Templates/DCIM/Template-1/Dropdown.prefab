@@ -420,7 +420,7 @@ GameObject:
   - component: {fileID: 3120539344319981071}
   - component: {fileID: 912616707613550488}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -466,7 +466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.26666668, g: 0.26666668, b: 0.26666668, a: 1}
+  m_Color: {r: 0.30516905, g: 0.31281447, b: 0.3433962, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -882,8 +882,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -10, y: -0.5}
-  m_SizeDelta: {x: -30, y: -13}
+  m_AnchoredPosition: {x: -10, y: 0}
+  m_SizeDelta: {x: -30, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3967133710137765755
 CanvasRenderer:
@@ -923,7 +923,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294440437
-  m_fontColor: {r: 0.9607843, g: 0.9607843, b: 0.96862745, a: 1}
+  m_fontColor: {r: 0.9490197, g: 0.95294124, b: 0.96470594, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -943,9 +943,9 @@ MonoBehaviour:
   m_fontSize: 16
   m_fontSizeBase: 16
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 10
-  m_fontSizeMax: 40
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 12
+  m_fontSizeMax: 16
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -997,7 +997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4713f51ed851a4498c85921745d897a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: VzDev::VzDev.ToolUtils.ThemeUtils.ThemedText
-  colorToken: 9
+  colorToken: 8
   _fontToken: 0
 --- !u!1 &6555406290213406947
 GameObject:
@@ -1033,14 +1033,14 @@ RectTransform:
   m_Children:
   - {fileID: 5277981565969831418}
   - {fileID: 7539305028911630867}
-  - {fileID: 7432636451571862393}
   - {fileID: 5663281448836811525}
+  - {fileID: 7432636451571862393}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 26}
+  m_SizeDelta: {x: 100, y: 30}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &381811914037373107
 CanvasRenderer:
@@ -1101,11 +1101,11 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 0.10980392, g: 0.10980392, b: 0.11764706, a: 1}
-    m_HighlightedColor: {r: 0.17254902, g: 0.17254902, b: 0.18039216, a: 1}
-    m_PressedColor: {r: 0.10980393, g: 0.10980393, b: 0.11764707, a: 1}
-    m_SelectedColor: {r: 0.039215688, g: 0.7058824, b: 1, a: 1}
-    m_DisabledColor: {r: 0.6313726, g: 0.6313726, b: 0.6509804, a: 1}
+    m_NormalColor: {r: 0.1254902, g: 0.13333334, b: 0.14901961, a: 1}
+    m_HighlightedColor: {r: 0.054901965, g: 0.45882356, b: 0.9568628, a: 1}
+    m_PressedColor: {r: 0, g: 0.34001276, b: 0.7584905, a: 1}
+    m_SelectedColor: {r: 0.20784315, g: 0.21960786, b: 0.2392157, a: 1}
+    m_DisabledColor: {r: 0.13165532, g: 0.14030342, b: 0.15471691, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1160,11 +1160,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: VzDev::VzDev.ToolUtils.ThemeUtils.ThemedSelectable
   colorToken: 0
-  _normalToken: 11
-  _highlightToken: 12
-  _pressedToken: 13
-  _selectedToken: 14
-  _disabledToken: 15
+  _normalToken: 13
+  _highlightToken: 14
+  _pressedToken: 15
+  _selectedToken: 16
+  _disabledToken: 17
 --- !u!1 &7981381255122661173
 GameObject:
   m_ObjectHideFlags: 0

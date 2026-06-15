@@ -9,7 +9,6 @@ namespace VzDev.ToolUtils.ThemeUtils
         Panel,
         Border,
 
-        Divider,
         Success,
         Warning,
         Error,
@@ -18,6 +17,9 @@ namespace VzDev.ToolUtils.ThemeUtils
         #region 文字顏色
         TextPrimary,
         TextSecondary,
+        TextTitle,  
+        TextInputBackground,
+        TextDisabled,
         #endregion
 
         #region Button/Toggle 專用
@@ -33,6 +35,8 @@ namespace VzDev.ToolUtils.ThemeUtils
         DCIM_StatusWarning,
         DCIM_StatusAlarm,
         #endregion
+
+        ItemSelected,
     }
 }
 
