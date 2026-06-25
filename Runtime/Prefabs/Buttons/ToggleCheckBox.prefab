@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3328494689310018966}
   - component: {fileID: 5841480603261141592}
   m_Layer: 5
-  m_Name: ToggleBox
+  m_Name: ToggleCheckBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
