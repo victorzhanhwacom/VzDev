@@ -20,11 +20,11 @@ namespace VzDev.ObjectUtils
         {
             // 根据攝影機距离对Landmark进行排序并调整Sibling Index
             // 使用預先定義好的市場比較函式，完全 0 GC
-            uiAnchorList.Sort(CompareUiAnchors);
+            uiAnchorList?.Sort(CompareUiAnchors);
 
             // 2. 調整階層（只動 active 的物件）
             int siblingIndex = 0;
-            for (int i = 0; i < uiAnchorList.Count; i++)
+            for (int i = 0; i < uiAnchorList?.Count; i++)
             {
                 if (uiAnchorList[i] != null && uiAnchorList[i].gameObject.activeInHierarchy)
                 {

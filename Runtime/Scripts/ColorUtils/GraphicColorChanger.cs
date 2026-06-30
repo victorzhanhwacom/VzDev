@@ -31,12 +31,13 @@ namespace VzDev.ColorUtils
         /// </summary>
         public void ChangeColor(bool isOn)
         {
-            if (colorIndices.Length < 2)
+            if (colorIndices?.Length < 2)
                 Debug.LogWarning($"ColorIndices count is less than 2!");
             else
                 ChangeColor(isOn ? 1 : 0);
         }
 
+        public void ChangeColor(Single index) => ChangeColor((int)index);
         public void ChangeColor(int index)
         {
             currentIndex = index;
