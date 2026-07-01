@@ -110,7 +110,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: bfbf34ca76a07244a9b03c795007f820, type: 3}
     - target: {fileID: 7438095021314886618, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7594986532739210204, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: m_Pivot.x

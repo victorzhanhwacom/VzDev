@@ -12,13 +12,14 @@ namespace VzDev.ObjectUtils
     /// 依關鍵字尋找模型
     public class ModelFinder : MonoBehaviour
     {
-        #region Variables
+        #region Fields
         [SerializeField] private string[] keywords;
         [SerializeField] private List<Transform> keyModels;
         [SerializeField] private List<Transform> foundModels;
         [Foldout("[Events]")] public UnityEvent<List<Transform>> onFoundModels;
         [Foldout("[Components]"), SerializeField] private EnumSearchType searchType = EnumSearchType.Include;
         [Foldout("[Components]"), SerializeField] private Transform targetModelsParent;
+        [Foldout("[Settings]"), SerializeField] private bool isIncludeInactive = true;
         
         private bool IsHaveKeywords => keywords != null && keywords.Length > 0;
         private bool IsHaveModels => keyModels != null && keyModels.Count > 0;
@@ -30,7 +31,7 @@ namespace VzDev.ObjectUtils
         public void FindModelsByKeywords()
         {
             foundModels?.Clear();
-            targetModelsParent.FindChildrenByKeywords<MeshRenderer>(searchType:searchType, keywords: keywords, results: foundModels);
+            targetModelsParent.FindChildrenByKeywords<MeshRenderer>(searchType:searchType, keywords: keywords, results: foundModels, includeInactive: isIncludeInactive);
             onFoundModels?.Invoke(foundModels);
             Debug.Log($"Found {foundModels.Count} target objects.", this);
         }

@@ -471,7 +471,8 @@ namespace VzDev.UnityAPI.Extensions
                     {
                         Behaviour b => b.enabled,
                         Collider c => c.enabled,
-                        Renderer r => r.enabled,
+                        Renderer r => true,
+                        // Renderer r => r.enabled,
                         _ => true
                     };
 
