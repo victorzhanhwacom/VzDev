@@ -22,7 +22,7 @@ namespace VzDev.ObjectUtils
         
         private bool IsHaveKeywords => keywords != null && keywords.Length > 0;
         private bool IsHaveModels => keyModels != null && keyModels.Count > 0;
-        private bool IsFoundModels  => foundModels.Count > 0;
+        private bool IsFoundModels  => foundModels != null && foundModels.Count > 0;
 
         #endregion
 
@@ -66,7 +66,16 @@ namespace VzDev.ObjectUtils
 
             // 3. 將結果寫入並觸發事件
             foundModels.AddRange(filtered);
-            onFoundModels?.Invoke(foundModels);
+            InvokeFoundModels();
+        }
+        
+        [Button, ShowIf(nameof(IsFoundModels))]
+        private void InvokeFoundModels()
+        {
+            if (foundModels != null && foundModels.Count > 0)
+            {
+                onFoundModels?.Invoke(foundModels);
+            }
         }
         
         

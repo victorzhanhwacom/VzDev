@@ -17,6 +17,8 @@ namespace VzDev.Mediator
         private ValueSwitchItem currentActiveItem;
         #endregion
 
+        private void Awake() => receiveValue = -1;
+
         public void SetValue(int value)
         {
             if (receiveValue == value) return;

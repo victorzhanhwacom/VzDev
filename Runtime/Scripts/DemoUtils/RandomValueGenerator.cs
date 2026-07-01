@@ -22,6 +22,7 @@ namespace VzDev.DemoUtils
         [Foldout("[Events]"), ShowIf(nameof(IsFloat))] public UnityEvent<float> OnValueChangedFloat;
         [Foldout("[Events]"), ShowIf(nameof(IsFloat01))] public UnityEvent<float> OnValueChangedFloat01;
         [Foldout("[Events]"), ShowIf(nameof(IsInt))] public UnityEvent<int> OnValueChangedInt;
+        [Foldout("[Events]"), ShowIf(nameof(IsInt))] public UnityEvent<Single> OnValueChangedSingle;
 
         [Foldout("[Settings]"), HideIf(nameof(IsInt)), SerializeField] private float minValueF, maxValueF = 100f;
         [Foldout("[Settings]"), HideIf(nameof(IsInt)), SerializeField, Range(0, 8)] private int decimalPlaces = 2;
@@ -44,7 +45,8 @@ namespace VzDev.DemoUtils
         {
             ValueType.Float => OnValueChangedFloat != null && OnValueChangedFloat.GetPersistentEventCount() > 0,
             ValueType.Float01 => OnValueChangedFloat01 != null && OnValueChangedFloat01.GetPersistentEventCount() > 0,
-            ValueType.Int => OnValueChangedInt != null && OnValueChangedInt.GetPersistentEventCount() > 0,
+            ValueType.Int => OnValueChangedInt != null && OnValueChangedInt.GetPersistentEventCount() > 0 || 
+                            OnValueChangedSingle != null && OnValueChangedSingle.GetPersistentEventCount() > 0,
             _ => false
         };
         #endregion
@@ -80,6 +82,7 @@ namespace VzDev.DemoUtils
         {
             currentValueInt = Mathf.RoundToInt(SampleValue());
             OnValueChangedInt?.Invoke(currentValueInt);
+            OnValueChangedSingle?.Invoke(currentValueInt);
         }
 
         /// <summary>
