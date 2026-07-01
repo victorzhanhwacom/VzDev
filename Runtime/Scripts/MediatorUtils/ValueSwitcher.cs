@@ -13,16 +13,29 @@ namespace VzDev.Mediator
         #region Variables
         [SerializeField, ReadOnly] private int receiveValue;
         [SerializeField] private ValueSwitchItem[] switchItems;
+        
+        private ValueSwitchItem currentActiveItem;
         #endregion
 
         public void SetValue(int value)
         {
             if (receiveValue == value) return;
+            if (currentActiveItem != null)
+            {
+                currentActiveItem.IsActiveEvent?.Invoke(false);
+                currentActiveItem.OnFalse?.Invoke();
+            }
+
             receiveValue = value;
             for(int i = 0; i < switchItems.Length; i++)
             {
-                bool isActive = switchItems[i].Value == receiveValue;
-                switchItems[i].IsActiveEvent.Invoke(isActive);
+                if(switchItems[i].Value == receiveValue)
+                {
+                    /// 僅觸發對應的事件
+                    switchItems[i].IsActiveEvent.Invoke(true);
+                    switchItems[i].OnTrue?.Invoke();
+                    currentActiveItem = switchItems[i];
+                }
             }
         }
     }
@@ -32,5 +45,6 @@ namespace VzDev.Mediator
     {
         public int Value;
         public UnityEvent<bool> IsActiveEvent;
+        public UnityEvent OnTrue, OnFalse;
     }
 }

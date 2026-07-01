@@ -84,8 +84,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7594986532739210204}
-  - component: {fileID: 6192639998792932675}
   - component: {fileID: 744397118062108305}
+  - component: {fileID: 6192639998792932675}
   - component: {fileID: 8187699588700705175}
   m_Layer: 5
   m_Name: "\u9EDE\u4F4D\u6A19\u7C64"
@@ -116,6 +116,25 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &744397118062108305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 830179462768580382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 787aca439a1ce9040a10a72406393337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::_VictorDev.Framework.UIAnchorFollower
+  target3DObject: {fileID: 0}
+  offsetPos: {x: 0, y: 0.5, z: 0}
+  visibleRange: 200
+  mainCamera: {fileID: 0}
+  rectTrans: {fileID: 7594986532739210204}
+  canvasRect: {fileID: 0}
+  container: {fileID: 5220574871614335511}
 --- !u!114 &6192639998792932675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,25 +219,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 1
   m_IsOn: 0
---- !u!114 &744397118062108305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 830179462768580382}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 787aca439a1ce9040a10a72406393337, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: VzDev::_VictorDev.Framework.UIAnchorFollower
-  target3DObject: {fileID: 0}
-  offsetPos: {x: 0, y: 0.5, z: 0}
-  visibleRange: 200
-  mainCamera: {fileID: 0}
-  rectTrans: {fileID: 7594986532739210204}
-  canvasRect: {fileID: 0}
-  container: {fileID: 5220574871614335511}
 --- !u!114 &8187699588700705175
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1151,7 +1151,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 20, y: 0}
-  m_SizeDelta: {x: 81.81, y: -10}
+  m_SizeDelta: {x: 0, y: -10}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &6408886011209109621
 MonoBehaviour:

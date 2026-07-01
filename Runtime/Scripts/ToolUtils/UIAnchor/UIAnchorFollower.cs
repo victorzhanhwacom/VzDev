@@ -14,7 +14,7 @@ namespace VzDev.ObjectUtils
         /// + 因為跟攝影機視角有關，所以不能直接加offset偏移值於座標上
         #region Variables
 
-        [Label("定位目標物件"), SerializeField] private Transform target3DObject;
+        [Label("定位目標物件"), SerializeField, Required] private Transform target3DObject;
 
         [Foldout("[設定]"), SerializeField] private Vector3 offsetPos = Vector3.up * 0.1f;
 
@@ -31,6 +31,7 @@ namespace VzDev.ObjectUtils
 
         void Update()
         {
+            if(target3DObject == null) return;
             Vector3 targetPos = target3DObject.position;
             Vector3 viewportPos = mainCamera.WorldToViewportPoint(targetPos);
             bool isInRange = Vector3.Distance(targetPos, mainCamera.transform.position) <= visibleRange;
