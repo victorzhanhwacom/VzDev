@@ -11,6 +11,7 @@ namespace VzDev.DateTimeUtils
     public class TimerController : MonoBehaviour
     {
         #region Variables
+        [Foldout("[Events]"), Tooltip("Timer開始時觸發")] public UnityEvent onTimerStart;
         [Foldout("[Events]"), Tooltip("每次Loop時觸發")] public UnityEvent<int> onTimerUpdate;
         [Foldout("[Events]"), Tooltip("循環結束時觸發"), HideIf(nameof(isInfiniteLoop))] public UnityEvent onTimerEnd;
 
@@ -81,6 +82,8 @@ namespace VzDev.DateTimeUtils
 
         private IEnumerator TimerCoroutine(float duration)
         {
+            onTimerStart?.Invoke();
+            
             float elapsed = 0f;
             float interval = timeValue * GetTimeUnitMultiplier(timeUnit); // ✅ 快取，避免每幀重複計算
 

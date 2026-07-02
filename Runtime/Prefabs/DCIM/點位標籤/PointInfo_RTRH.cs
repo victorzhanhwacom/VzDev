@@ -1,4 +1,3 @@
-using System;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -9,44 +8,59 @@ namespace VzDev.DCIMUtils
 {
     public class PointInfo_RTRH : MonoBehaviour
     {
+        #region Fields
         [SerializeField, ReadOnly] private bool _isRTMode = true;
-        [Foldout("[Events]")] public UnityEvent<int> onSwitchToMode;
+        [Foldout("[Events - Mode]")] public UnityEvent onSelectRtMode, onSelectRhMode;
+        [Foldout("[Events - Value]")] public UnityEvent<float> onRtChanged;
+        [Foldout("[Events - Value]")] public UnityEvent<int> onRhChanged;
+       // [Foldout("[Events]"), Tooltip("0:正常, 1:告警, 2:異常")] public UnityEvent<int> onStatusChanged;
         [Foldout("[Settings]"), SerializeField] private Sprite rtIcon, rhIcon;
         [Foldout("[Components]"), SerializeField] private Image icon;
         [Foldout("[Components]"), SerializeField] private TextMeshProUGUI label;
 
-        private float _lastRTValue = -1f, _lastRHValue = -1f;
+        private float _lastRTValue = -1f;
+        private int _lastRHValue = -1;
+        private readonly int txtUnitSize = 8;
+        #endregion
+
+        private void Awake()
+        {
+            icon.sprite = _isRTMode ? rtIcon : rhIcon;
+            UpdateLabel();
+        }
 
         public void SwitchMode(bool isRTMode)
         {
-            if(_isRTMode == isRTMode) return;
+            if (_isRTMode == isRTMode) return;
             _isRTMode = isRTMode;
             icon.sprite = _isRTMode ? rtIcon : rhIcon;
-            onSwitchToMode?.Invoke(_isRTMode ? 0 : 1);
+            if (_isRTMode) onSelectRtMode?.Invoke();
+            else onSelectRhMode?.Invoke();
             UpdateLabel();
         }
 
         private void UpdateLabel()
         {
-            label.text = _isRTMode ? $"{_lastRTValue} °C" : $"{_lastRHValue} %";
+            if (label == null) return;
+            label.text = _isRTMode
+                ? $"{_lastRTValue:0.#}<size={txtUnitSize}>°C</size>"
+                : $"{_lastRHValue:0.#}<size={txtUnitSize}>%</size>";
+            if (_isRTMode) onRtChanged?.Invoke(_lastRTValue);
+            else onRhChanged?.Invoke(_lastRHValue);
         }
 
         public void SetRTValue(float value)
         {
-            if (value != _lastRTValue)
-            {
-                _lastRTValue = value;
-                UpdateLabel();
-            }
+            if (Mathf.Approximately(value, _lastRTValue)) return;
+            _lastRTValue = value;
+            UpdateLabel();
         }
 
-        public void SetRHValue(float value)
+        public void SetRHValue(int value)
         {
-            if (value != _lastRHValue)
-            {
-                _lastRHValue = value;
-                UpdateLabel();
-            }
+            if (Mathf.Approximately(value, _lastRHValue)) return;
+            _lastRHValue = value;
+            UpdateLabel();
         }
 
         [Button, HideIf(nameof(_isRTMode))]

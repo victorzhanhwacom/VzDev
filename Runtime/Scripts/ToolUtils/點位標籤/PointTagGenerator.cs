@@ -12,6 +12,7 @@ namespace VzDev.ToolUtils
 
         [SerializeField] private bool isGenerateOnStart = true;
         [SerializeField] private List<Transform> targetModels;
+        [Foldout("[Events]")] public UnityEvent onTagesInitialized;
         [Foldout("[Events]")] public UnityEvent<Transform> onTagClicked;
         [Foldout("[Components]"), SerializeField] private PointTag pointTagPrefab;
         [Foldout("[Components]"), SerializeField] private Transform pointsContainer;
@@ -20,6 +21,8 @@ namespace VzDev.ToolUtils
         // 這裡使用 MonoBehaviour 以便在 Inspector 中拖拽任何實現了 IPointTagLabelGetter 的組件
         [Foldout("[Components]"), SerializeField, Required] private MonoBehaviour labelGetter;
         private IPointTagLabelGetter _labelGetter;
+
+        public PointTag[] PointTags {get; private set;}
 
         private bool IsHaveData => Application.isPlaying && pointTagPrefab != null
             && pointsContainer != null && targetModels != null && targetModels.Count > 0;
@@ -44,11 +47,14 @@ namespace VzDev.ToolUtils
         {
             ClearExistingTags();
 
+            PointTags = new PointTag[targetModels.Count];
             for (int i = 0; i < targetModels.Count; i++)
             {
                 Transform targetModel = targetModels[i];
                 // 在每個目標模型的位置生成一個UI Anchor作為Tag
                 PointTag pointTag = Instantiate(pointTagPrefab, targetModel.position, Quaternion.identity, pointsContainer);
+                PointTags[i] = pointTag;
+
                 // 可以在這裡對tag進行額外的設定，例如顯示點的座標等
                 pointTag.SetFollowerTarget(targetModel); // 假設PointTag有這樣的方法來設定目標位置
 
@@ -68,6 +74,7 @@ namespace VzDev.ToolUtils
                     });
                 }
             }
+            onTagesInitialized?.Invoke();
         }
 
         [Button, ShowIf(nameof(IsHaveData))]
@@ -81,7 +88,18 @@ namespace VzDev.ToolUtils
 
         public void SetTargetModels(List<Transform> models) => targetModels = models;
 
-        
+        /// <summary>
+        /// 設定Label是否永遠可見
+        /// </summary>
+        public void SetLabelAlwaysVisible(bool isAlwaysVisible)
+        {
+            if (PointTags == null || PointTags.Length == 0) return;
+            foreach (var pointTag in PointTags)
+            {
+                pointTag.SetLabelAlwaysVisible(isAlwaysVisible);
+            }
+        }
+
         private void OnValidate()
         {
             if (labelGetter != null && !(labelGetter is IPointTagLabelGetter))
