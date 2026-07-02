@@ -17,8 +17,8 @@ namespace VzDev.ObjectUtils
         [SerializeField] private List<Transform> keyModels;
         [SerializeField] private List<Transform> foundModels;
         [Foldout("[Events]")] public UnityEvent<List<Transform>> onFoundModels;
-        [Foldout("[Components]"), SerializeField] private EnumSearchType searchType = EnumSearchType.Include;
         [Foldout("[Components]"), SerializeField] private Transform targetModelsParent;
+        [Foldout("[Settings]"), SerializeField] private EnumSearchType searchType = EnumSearchType.Include;
         [Foldout("[Settings]"), SerializeField] private bool isIncludeInactive = true;
         
         private bool IsHaveKeywords => keywords != null && keywords.Length > 0;

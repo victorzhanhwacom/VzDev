@@ -5,34 +5,30 @@ namespace VzDev.MediatorUtils
 {
     public class TMP_DropdownMediator : MonoBehaviour
     {
-        [SerializeField] private TMP_Dropdown dropdown;
+        [SerializeField] private TMP_Dropdown target;
 
-        /// <summary>
-        /// 給 UnityEvent (Inspector) 綁定用：
-        /// 設置 Dropdown 的值，並保證觸發 onValueChanged。
-        /// </summary>
         public void SetValueAndNotify(int value)
         {
-            if (dropdown == null) return;
+            if (target == null) return;
 
-            int clamped = Mathf.Clamp(value, 0, dropdown.options.Count - 1);
+            int clamped = Mathf.Clamp(value, 0, target.options.Count - 1);
 
-            if (dropdown.value == clamped)
+            if (target.value == clamped)
             {
                 Debug.LogWarning($"Dropdown value is already {clamped}. Forcing onValueChanged event.", this);
-                dropdown.onValueChanged.Invoke(clamped);
+                target.onValueChanged.Invoke(clamped);
             }
             else
             {
-                dropdown.value = clamped;
+                target.value = clamped;
             }
         }
         
         private void OnValidate()
         {
-            if (dropdown == null)
+            if (target == null)
             {
-                dropdown = GetComponent<TMP_Dropdown>();
+                target = GetComponent<TMP_Dropdown>();
             }
         }
     }

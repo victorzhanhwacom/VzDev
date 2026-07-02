@@ -12,7 +12,7 @@ namespace VzDev.DCIMUtils
 
         private void GetInfoTags()
         {
-            if (pointTagGenerator == null)
+            if (pointTagGenerator == null && pointTagGenerator.PointTags == null)
             {
                 Debug.LogError("PointTagGenerator is not assigned.", this);
                 return;
@@ -29,7 +29,8 @@ namespace VzDev.DCIMUtils
 
         private void SetSwitchToRTMode(bool isRTMode)
         {
-        
+            if(Application.isPlaying == false) return;
+
             if(_pointInfosRtRh == null || _pointInfosRtRh.Length == 0)
             {
                 Debug.LogWarning("Getting PointInfo_RTRH components...", this);

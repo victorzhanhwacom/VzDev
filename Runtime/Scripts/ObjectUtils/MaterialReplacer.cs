@@ -20,7 +20,7 @@ namespace VzDev.ObjectUtils
                         && Application.isPlaying && !_isMaterialReplaced;
 
         private bool IsReplaceMaterial => Application.isPlaying && _isMaterialReplaced;
-
+        private HashSet<Transform> excludeModelsHashSet;
 
         #endregion
 
@@ -28,15 +28,41 @@ namespace VzDev.ObjectUtils
         /// 設定要替換材質的目標模型，這些模型將被替換為指定的材質
         /// </summary>
         public void SetTargetModels(List<Transform> models) => targetModels = models;
+
         /// <summary>
         /// 設定排除的模型，這些模型將不會被替換材質
         /// </summary>
-        public void SetExcludeModels(List<Transform> models) => excludeModels = models;
+        public void SetExcludeModels(List<Transform> models)
+        {
+            excludeModels = models;
+            excludeModelsHashSet = new HashSet<Transform>(models);
+        }
+
+        public void AddExcludeModels(List<Transform> models)
+        {
+            if (excludeModels == null) SetExcludeModels(models);
+            if (excludeModelsHashSet == null) excludeModelsHashSet = new HashSet<Transform>(excludeModels);
+            else
+            {
+                foreach (var item in models)
+                {
+                    if (excludeModelsHashSet.Add(item)) // Add 回傳 false 代表已存在
+                    {
+                        excludeModels.Add(item);
+                    }
+                }
+            }
+        }
 
         /// 將目標模型材質替換為指定材質
         [Button, ShowIf(nameof(IsHaveTargetModels))]
         public void ReplaceModelsMaterial()
         {
+            if (!Application.isPlaying) return;
+            MaterialStateService.Instance.Request(this, targetModels, replaceMaterial, excludeModels);
+            _isMaterialReplaced = true;
+            return;
+
             if (Application.isPlaying == false)
             {
                 Debug.LogWarning("Material replacement can only be performed in Play mode.");
@@ -57,6 +83,11 @@ namespace VzDev.ObjectUtils
         [Button, ShowIf(nameof(IsReplaceMaterial))]
         public void RestoreModelsMaterial()
         {
+            if (!Application.isPlaying) return;
+            MaterialStateService.Instance.Release(this, targetModels);
+            _isMaterialReplaced = false;
+            return;
+
             if (Application.isPlaying == false)
             {
                 Debug.LogWarning("Material restore can only be performed in Play mode.");

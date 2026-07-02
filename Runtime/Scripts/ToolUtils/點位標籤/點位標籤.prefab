@@ -2930,35 +2930,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3859359150456855079, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
       propertyPath: segments.Array.data[0].weight
-      value: 0.85
+      value: 0.97
       objectReference: {fileID: 0}
     - target: {fileID: 3859359150456855079, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
       propertyPath: segments.Array.data[1].weight
-      value: 0.05
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 3859359150456855079, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
       propertyPath: segments.Array.data[2].weight
-      value: 0.05
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 3859359150456855079, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
       propertyPath: segments.Array.data[3].weight
-      value: 0.05
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 3859359150456855079, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
       propertyPath: segments.Array.data[0].normalizedWeight
-      value: 0.85
+      value: 0.97
       objectReference: {fileID: 0}
     - target: {fileID: 3859359150456855079, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
       propertyPath: segments.Array.data[1].normalizedWeight
-      value: 0.05
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 3859359150456855079, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
       propertyPath: segments.Array.data[2].normalizedWeight
-      value: 0.05
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 3859359150456855079, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
       propertyPath: segments.Array.data[3].normalizedWeight
-      value: 0.05
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 3859359150456855079, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
       propertyPath: OnValueChangedSingle.m_PersistentCalls.m_Calls.Array.data[0].m_Target
