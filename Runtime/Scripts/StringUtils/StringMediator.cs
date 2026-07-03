@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace VzDev.StringUtils
         #region Fields
         [SerializeField, ReadOnly] private string receivedValue;
         [Foldout("[Events]")] public UnityEvent<bool> isHaveValueEvent;
+        [Foldout("[Events]")] public UnityEvent<int> onIntFormat;
         [Foldout("[TypeCasting]")] public UnityEvent<string> onJsonFormat;
         [Foldout("[Settings]"), SerializeField] private bool isAutoTrim = true;
         #endregion
@@ -28,11 +30,16 @@ namespace VzDev.StringUtils
 
             receivedValue = newValue;
 
-            if (onJsonFormat == null) return;
-
-            onJsonFormat.Invoke(receivedValue.TryToJsonFormat(out var formatted)
-                ? formatted
-                : txt);
+            if (onJsonFormat != null)
+            {
+                onJsonFormat.Invoke(receivedValue.TryToJsonFormat(out var formatted)
+               ? formatted
+               : txt);
+            }
+            if(onIntFormat != null)
+            {
+                onIntFormat.Invoke( int.TryParse(receivedValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedInt) ? parsedInt : 0);
+            }
         }
 
         #region 判斷文字組件的內容是否有值(純查詢,無副作用)

@@ -30,6 +30,9 @@ namespace VzDev.WebGLUtils
         public void SendToJS(string functionName, float value) => SendToJS(functionName, value.ToString("F3"));
         public void SendToJS(string functionName, bool value) => SendToJS(functionName, value ? "1" : "0");
 
+        /// <summary>
+        /// 接收 JS 傳來的訊息，需對應到 JS 端的函式名稱
+        /// </summary>
         public void OnReceiveFromJS(string payload) => OnMessageReceived?.Invoke(payload);
     }
 }

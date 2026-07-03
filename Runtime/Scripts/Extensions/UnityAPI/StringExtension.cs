@@ -33,6 +33,26 @@ namespace VzDev.UnityAPI.Extensions
                 return false; // 非合法 JSON，回傳 false
             }
         }
+        /// <summary>
+        /// 取得字串中位於指定起始與結束標記之間的子字串
+        /// </summary>
+        public static string GetStringBetweenMark(this string self, string startMark, string endMark)
+        {
+            if (string.IsNullOrEmpty(self) || string.IsNullOrEmpty(startMark) || string.IsNullOrEmpty(endMark))
+                return string.Empty;
+
+            int startIndex = self.IndexOf(startMark);
+            if (startIndex == -1)
+                return string.Empty;
+
+            startIndex += startMark.Length;
+            int endIndex = self.IndexOf(endMark, startIndex);
+            if (endIndex == -1)
+                return string.Empty;
+
+            return self.Substring(startIndex, endIndex - startIndex);
+        }
+        
 
         /// <summary>
         /// 將 JSON 字串格式化為易讀的格式（縮排、換行）

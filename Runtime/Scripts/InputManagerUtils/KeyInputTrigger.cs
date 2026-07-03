@@ -86,7 +86,5 @@ namespace VzDev.InputUtils
                 default: return null;
             }
         }
-
-        private void OnValidate() => name = $"{GetType().Name} (DevBuild Only)";
     }
 }
