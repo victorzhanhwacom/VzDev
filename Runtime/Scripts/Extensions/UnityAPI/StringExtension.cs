@@ -8,9 +8,32 @@ using UnityEngine;
 
 namespace VzDev.UnityAPI.Extensions
 {
-
     public static class StringExtension
     {
+        /// <summary>
+        /// 嘗試將字串格式化為 JSON 格式，若成功則回傳 true 並輸出格式化後的字串，否則回傳 false
+        /// </summary>
+        /// <returns></returns>
+        public static bool TryToJsonFormat(this string self, out string formattedJson)
+        {
+            formattedJson = self;
+            if (string.IsNullOrEmpty(self))
+            {
+                Debug.LogWarning($"[StringExtension] Input string is null or empty!");
+                return false;
+            }
+            try
+            {
+                formattedJson = JToken.Parse(self).ToString(Formatting.Indented);
+                return true;
+            }
+            catch (JsonReaderException)
+            {
+                Debug.LogWarning($"[StringExtension] Input string is not a valid JSON format!");
+                return false; // 非合法 JSON，回傳 false
+            }
+        }
+
         /// <summary>
         /// 將 JSON 字串格式化為易讀的格式（縮排、換行）
         /// </summary>
@@ -31,6 +54,8 @@ namespace VzDev.UnityAPI.Extensions
                 return self; // 非合法 JSON，原樣回傳
             }
         }
+
+
 
         /////////////////////////////////////////////////
 

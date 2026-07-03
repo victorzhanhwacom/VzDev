@@ -1,16 +1,13 @@
-using DG.Tweening;
-using TMPro;
 using UnityEngine;
 
 namespace VzDev.WebUtils
 {
     public class WebSystemSetting : MonoBehaviour
     {
-        public TextMeshProUGUI textMeshProUGUI;
-        private void Awake()
+        private void Start()
         {
-#if !UNITY_EDITOR && UNITY_WEBGL
-        UnityEngine.WebGLInput.captureAllKeyboardInput = false;
+#if UNITY_WEBGL && !UNITY_EDITOR
+            WebGLInput.captureAllKeyboardInput = false;
 #endif
         }
     }

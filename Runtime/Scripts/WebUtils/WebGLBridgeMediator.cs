@@ -1,22 +1,17 @@
-using System.Runtime.InteropServices;
+using System;
+using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace VzDev.WebUtils
 {
-    /// <summary>
-    /// </summary>
     public class WebGLBridgeMediator : MonoBehaviour
     {
-        public enum DataType{
-            String,
-            Int,
-            Float,
-            Bool
-        }
+        public enum DataType { String, Int, Float, Bool }
 
         #region Fields
+        [InfoBox("負責設置{JS端函式名稱}")]
         [SerializeField, ReadOnly, ShowIf(nameof(IsString))] private string receivedString;
         [SerializeField, ReadOnly, ShowIf(nameof(IsInt))] private int receivedInt;
         [SerializeField, ReadOnly, ShowIf(nameof(IsFloat))] private float receivedFloat;
@@ -28,80 +23,64 @@ namespace VzDev.WebUtils
         [Foldout("[Events]"), ShowIf(nameof(IsBool))] public UnityEvent<string, bool> sendMessageBool;
 
         [Foldout("[Settings]"), SerializeField] private DataType sendDataType = DataType.String;
-        [Foldout("[Settings]"), SerializeField] private string functionName;        
+        [Foldout("[Settings]"), SerializeField] private string functionName;
         private bool IsString => sendDataType == DataType.String;
         private bool IsInt => sendDataType == DataType.Int;
         private bool IsFloat => sendDataType == DataType.Float;
         private bool IsBool => sendDataType == DataType.Bool;
         #endregion
 
-        public void SetValue(int value)
+        public void SetFunctionName(string name) => functionName = name;
+
+        // 通用比對邏輯，可傳入自訂的比較函式（預設用 EqualityComparer）
+        private void HandleValue<T>(DataType expectedType, T newValue, ref T storedValue,
+            UnityEvent<string, T> evt, Func<T, T, bool> equalsFunc = null)
         {
-            if (sendDataType == DataType.Int && receivedInt != value)
+            if (sendDataType != expectedType)
             {
-                receivedInt = value;
-                sendMessageInt?.Invoke(functionName, receivedInt);
+                Debug.LogError($"Data type mismatch: current mode is {sendDataType}, but received {expectedType}.");
+                return;
             }
-            else
-                Debug.LogError("Data type mismatch: Expected Int.");
+
+            bool isEqual = equalsFunc != null
+                ? equalsFunc(storedValue, newValue)
+                : EqualityComparer<T>.Default.Equals(storedValue, newValue);
+
+            if (isEqual) return;
+
+            storedValue = newValue;
+            evt?.Invoke(functionName, storedValue);
         }
-        public void SetValue(float value)
-        {
-            if (sendDataType == DataType.Float && receivedFloat != value)
-            {
-                receivedFloat = value;
-                sendMessageFloat?.Invoke(functionName, receivedFloat);
-            }
-            else
-                Debug.LogError("Data type mismatch: Expected Float.");
-        }
-        public void SetValue(bool value)
-        {
-            if (sendDataType == DataType.Bool && receivedBool != value)
-            {
-                receivedBool = value;
-                sendMessageBool?.Invoke(functionName, receivedBool);
-            }
-            else
-                Debug.LogError("Data type mismatch: Expected Bool.");
-        }
+
+        public void SetValue(int value) => HandleValue(DataType.Int, value, ref receivedInt, sendMessageInt);
+
+        public void SetValue(float value) =>
+            HandleValue(DataType.Float, value, ref receivedFloat, sendMessageFloat, Mathf.Approximately);
+
+        public void SetValue(bool value) => HandleValue(DataType.Bool, value, ref receivedBool, sendMessageBool);
 
         public void SetValue(string value)
         {
             switch (sendDataType)
             {
                 case DataType.String:
-                    if(receivedString == value) return;
-                    receivedString = value;
-                    sendMessageString?.Invoke(functionName, receivedString);
+                    HandleValue(DataType.String, value, ref receivedString, sendMessageString);
                     break;
                 case DataType.Int:
                     if (int.TryParse(value, out var intValue))
-                    {
-                        if(receivedInt == intValue) return;
-                        receivedInt = intValue;
-                        sendMessageInt?.Invoke(functionName, receivedInt);
-                    }
+                        SetValue(intValue);
                     else
                         Debug.LogError($"Failed to parse '{value}' to int.");
                     break;
                 case DataType.Float:
                     if (float.TryParse(value, out var floatValue))
-                    {
-                        if(receivedFloat == floatValue) return;
-                        receivedFloat = floatValue;
-                        sendMessageFloat?.Invoke(functionName, receivedFloat);
-                    }
+                        SetValue(floatValue);
                     else
                         Debug.LogError($"Failed to parse '{value}' to float.");
                     break;
                 case DataType.Bool:
                     if (bool.TryParse(value, out var boolValue))
-                    {
-                        if(receivedBool == boolValue) return;
-                        receivedBool = boolValue;
-                        sendMessageBool?.Invoke(functionName, receivedBool);
-                    }
+                        SetValue(boolValue);
                     else
                         Debug.LogError($"Failed to parse '{value}' to bool.");
                     break;
