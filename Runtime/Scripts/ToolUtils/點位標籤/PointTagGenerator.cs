@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,7 +14,7 @@ namespace VzDev.ToolUtils
         [SerializeField] private bool isGenerateOnStart = true;
         [SerializeField] private List<Transform> targetModels;
         [Foldout("[Events]")] public UnityEvent onTagesInitialized;
-        [Foldout("[Events]")] public UnityEvent<Transform> onTagClicked;
+        [Foldout("[Events]")] public UnityEvent<bool> onToggleValueChanged;
         [Foldout("[Components]"), SerializeField] private PointTag pointTagPrefab;
         [Foldout("[Components]"), SerializeField] private Transform pointsContainer;
         [Foldout("[Components]"), SerializeField] private ToggleGroup toggleGroup;
@@ -22,7 +23,7 @@ namespace VzDev.ToolUtils
         [Foldout("[Components]"), SerializeField, Required] private MonoBehaviour labelGetter;
         private IPointTagLabelGetter _labelGetter;
 
-        public PointTag[] PointTags {get; private set;}
+        public PointTag[] PointTags { get; private set; }
 
         private bool IsHaveData => Application.isPlaying && pointTagPrefab != null
             && pointsContainer != null && targetModels != null && targetModels.Count > 0;
@@ -60,19 +61,12 @@ namespace VzDev.ToolUtils
 
                 // 使用Label Getter來決定Tag的顯示文字，如果沒有提供Label Getter，則使用模型名稱
                 pointTag.name = _labelGetter?.GetLabel(targetModel) ?? "unknown";
-
                 pointTag.SetLabel(pointTag.name);
-
-                // 為tag添加點擊事件，當tag被點擊時觸發onTagClicked事件並傳遞對應的目標模型
-                Toggle toggle = pointTag.GetComponentInChildren<Toggle>(true);
-                if (toggle != null)
+                pointTag.ToggleItem.group = toggleGroup;
+                pointTag.ToggleItem.onValueChanged.AddListener(isOn =>
                 {
-                    toggle.group = toggleGroup; // 如果有ToggleGroup，將Toggle加入其中以實現互斥選擇
-                    toggle.onValueChanged.AddListener(isOn =>
-                    {
-                        if (isOn) onTagClicked?.Invoke(pointTag.FollowerTarget);
-                    });
-                }
+                    if (isOn) onToggleValueChanged?.Invoke(pointTag.FollowerTarget);
+                });
             }
             onTagesInitialized?.Invoke();
         }

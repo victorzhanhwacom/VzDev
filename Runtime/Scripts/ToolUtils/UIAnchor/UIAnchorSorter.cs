@@ -15,6 +15,8 @@ namespace VzDev.ObjectUtils
 
         [Label("[資料項 - UIAnchor]"), SerializeField] private List<UIAnchorFollower> uiAnchorList;
 
+        public void SetAnchorList(List<UIAnchorFollower> list) => uiAnchorList = list;
+
 
         private void Update()
         {
@@ -54,6 +56,6 @@ namespace VzDev.ObjectUtils
         }
         private void Start() => GetLandmarksFromThisContainer();
         [Button]
-        private void GetLandmarksFromThisContainer() => uiAnchorList = GetComponentsInChildren<UIAnchorFollower>(isIncludeInactive).ToList();
+        public void GetLandmarksFromThisContainer() => uiAnchorList = GetComponentsInChildren<UIAnchorFollower>(isIncludeInactive).ToList();
     }
 }

@@ -15,6 +15,8 @@ namespace VzDev.Mediator
         [SerializeField] private GameObject[] excludeChildren;
         #endregion
 
+        private void Awake() => receiveValue = -1;
+
         public void SetValue(Single value) => SetValue((int)value);
         public void SetValue(int value)
         {
