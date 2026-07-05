@@ -53,7 +53,6 @@ namespace VzDev.ToolUtils
             else
             {
                 onClickModelDeviceId?.Invoke(deviceId);
-
             }
         }
     }
