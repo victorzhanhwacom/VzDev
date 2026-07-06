@@ -116,7 +116,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 30, y: 0}
+  m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &692681694826628990
 CanvasRenderer:
@@ -205,13 +205,11 @@ MonoBehaviour:
     - color: {r: 1, g: 1, b: 1, a: 1}
       graphicTargets:
       - {fileID: 6800431740622609417}
-      - {fileID: 0}
   - index: 1
     colorItems:
     - color: {r: 0.21568629, g: 0.8862746, b: 1, a: 1}
       graphicTargets:
       - {fileID: 6800431740622609417}
-      - {fileID: 0}
   duration: 0.3
   delay: 0
   ease: 6

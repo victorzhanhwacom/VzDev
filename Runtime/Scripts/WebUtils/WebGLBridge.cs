@@ -9,7 +9,7 @@ namespace VzDev.WebGLUtils
     {
         [InfoBox("Set {JS端函式名稱} 與 {傳給JS端的字串}，傳遞給JS端")]
 
-        [Header("接收到 JS 訊息時觸發")]
+        [Foldout("[Events]"), Label("接收到 JS 訊息時觸發")]
         public UnityEvent<string> OnMessageReceived;
 
 #if UNITY_WEBGL && !UNITY_EDITOR
