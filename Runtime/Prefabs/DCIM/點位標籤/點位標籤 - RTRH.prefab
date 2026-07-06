@@ -2757,11 +2757,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
---- !u!1 &3586303667698434524 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4733145292633252390, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
-  m_PrefabInstance: {fileID: 8100461425982383098}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7960010495766882647 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2169958630109989549, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
@@ -2947,7 +2942,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5869922965839507093, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6220217502474405265, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
       propertyPath: m_Maskable
@@ -2976,12 +2971,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2810346497096952747}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5869922965839507093, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5238347826367547532}
-    - targetCorrespondingSourceObject: {fileID: 5869922965839507093, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7162236375342555117}
     - targetCorrespondingSourceObject: {fileID: 3408791026658252762, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3528114343979365652}
@@ -2991,78 +2980,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5869922965839507093, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
   m_PrefabInstance: {fileID: 8834454072927069468}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5238347826367547532
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3165026660111567753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d55d9a7de9147f24581ebe0254e17b91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VzDev.DebugUtils.LifeCycleEventDispatcher
-  onEnableDisabledEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7162236375342555117}
-        m_TargetAssemblyTypeName: VzDev.MediatorUtils.BoolValueMediator, VzDev
-        m_MethodName: SetBoolValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onEnableDisabledReverseEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onEnableEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onDisableEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  onStartEvent:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &7162236375342555117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3165026660111567753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f81f2d8683297ae4fa5ae2903f17095f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: VzDev::VzDev.MediatorUtils.BoolValueMediator
-  onReversedChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3586303667698434524}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  onTrueTriggered:
-    m_PersistentCalls:
-      m_Calls: []
-  onFalseTriggered:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!224 &3382266827944655977 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6082798417147877749, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
