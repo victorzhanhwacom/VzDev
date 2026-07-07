@@ -16,25 +16,47 @@ namespace VzDev.ObjectUtils
 
         [Label("定位目標物件"), SerializeField, Required] private Transform target3DObject;
 
-        [Foldout("[設定]"), SerializeField] private Vector3 offsetPos = Vector3.up * 0.1f;
+        [Foldout("[Settings]"), SerializeField] private Vector3 offsetPos = Vector3.up * 0.1f;
 
-        [Foldout("[設定]"), SerializeField] private float visibleRange = 20f;
+        [Foldout("[Settings]"), SerializeField] private bool isAlwaysVisible = false;
+        [Foldout("[Settings]"), SerializeField, HideIf(nameof(isAlwaysVisible))] private float visibleRange = 20f;
 
-        [Foldout("[組件]"), SerializeField] private Camera mainCamera;
-        [Foldout("[組件]"), SerializeField] private RectTransform rectTrans, canvasRect;
-        [Foldout("[組件]"), SerializeField] private GameObject container;
+        [Foldout("[Components]"), SerializeField] private Camera mainCamera;
+        [Foldout("[Components]"), SerializeField] private RectTransform rectTrans, canvasRect;
+        [Foldout("[Components]"), SerializeField] private GameObject container;
 
         public Transform Target3DObject => target3DObject;
         public float DistanceFromCamera => Vector3.Distance(mainCamera.transform.position, target3DObject.position);
 
         #endregion
 
+        private bool CanSeeTarget(Renderer targetRenderer, Transform eye, Transform target, LayerMask obstacleMask)
+        {
+            return true;
+            // 第一層：Occlusion Culling 快速篩選（效能好，先擋掉大部分不可見的情況）
+            if (!targetRenderer.isVisible)
+                return false;
+
+            // 第二層：Raycast 精確驗證（只在 isVisible == true 時才做，省效能）
+            Vector3 dir = target.position - eye.position;
+            if (Physics.Raycast(eye.position, dir.normalized, out RaycastHit hit, dir.magnitude, obstacleMask))
+            {
+                Debug.DrawLine(eye.position, hit.point, Color.red);
+                Debug.Log($"Raycast hit: {hit.transform.name} (target: {target.name})", this);
+                return hit.transform == target; // 打到別的東西 = 仍被擋住
+            }
+            return true;
+        }
+
+
         void Update()
         {
-            if(target3DObject == null) return;
+            if (target3DObject == null) return;
             Vector3 targetPos = target3DObject.position;
             Vector3 viewportPos = mainCamera.WorldToViewportPoint(targetPos);
-            bool isInRange = Vector3.Distance(targetPos, mainCamera.transform.position) <= visibleRange;
+            bool isInRange = isAlwaysVisible || Vector3.Distance(targetPos, mainCamera.transform.position) <= visibleRange;
+            isInRange = isInRange && CanSeeTarget(target3DObject.GetComponent<Renderer>(), mainCamera.transform, target3DObject, LayerMask.GetMask("Default"));
+
             bool isInFrontOfCamera = viewportPos.z > 0;
             container.SetActive(isInRange && isInFrontOfCamera);
 

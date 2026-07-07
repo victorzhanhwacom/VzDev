@@ -20,10 +20,18 @@ namespace VzDev.ObjectUtils
         [Foldout("[Components]"), SerializeField] private Transform targetModelsParent;
         [Foldout("[Settings]"), SerializeField] private EnumSearchType searchType = EnumSearchType.Include;
         [Foldout("[Settings]"), SerializeField] private bool isIncludeInactive = true;
-        
+        [Foldout("[Settings]"), SerializeField] private EnumComponentType enumComponentType = EnumComponentType.MeshRenderer;
+
+        public enum EnumComponentType
+        {
+            None,
+            MeshRenderer,
+            Collider,
+        }
+
         private bool IsHaveKeywords => keywords != null && keywords.Length > 0;
         private bool IsHaveModels => keyModels != null && keyModels.Count > 0;
-        private bool IsFoundModels  => foundModels != null && foundModels.Count > 0;
+        private bool IsFoundModels => foundModels != null && foundModels.Count > 0;
 
         #endregion
 
@@ -31,7 +39,20 @@ namespace VzDev.ObjectUtils
         public void FindModelsByKeywords()
         {
             foundModels?.Clear();
-            targetModelsParent.FindChildrenByKeywords<MeshRenderer>(searchType:searchType, keywords: keywords, results: foundModels, includeInactive: isIncludeInactive);
+            switch (enumComponentType)
+            {
+                case EnumComponentType.None:
+                    targetModelsParent.FindChildrenByKeywords(searchType: searchType, keywords: keywords, results: foundModels, includeInactive: isIncludeInactive);
+                    break;
+                case EnumComponentType.MeshRenderer:
+                    targetModelsParent.FindChildrenByKeywords<MeshRenderer>(searchType: searchType, keywords: keywords, results: foundModels, includeInactive: isIncludeInactive);
+
+                    break;
+                case EnumComponentType.Collider:
+                    targetModelsParent.FindChildrenByKeywords<Collider>(searchType: searchType, keywords: keywords, results: foundModels, includeInactive: isIncludeInactive);
+
+                    break;
+            }
             onFoundModels?.Invoke(foundModels);
             Debug.Log($"Found {foundModels.Count} target objects.", this);
         }
@@ -69,7 +90,7 @@ namespace VzDev.ObjectUtils
             foundModels.AddRange(filtered);
             InvokeFoundModels();
         }
-        
+
         [Button, ShowIf(nameof(IsFoundModels))]
         private void InvokeFoundModels()
         {
@@ -78,8 +99,8 @@ namespace VzDev.ObjectUtils
                 onFoundModels?.Invoke(foundModels);
             }
         }
-        
-        
+
+
 #if UNITY_EDITOR
         [Button, ShowIf(nameof(IsFoundModels))]
         public void SelectObjects() => Selection.objects = foundModels.Select(t => t.gameObject).ToArray<Object>();
