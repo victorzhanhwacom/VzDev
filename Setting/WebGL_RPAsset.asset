@@ -54,12 +54,12 @@ MonoBehaviour:
   m_ReflectionProbeBlending: 1
   m_ReflectionProbeBoxProjection: 1
   m_ReflectionProbeAtlas: 1
-  m_ShadowDistance: 500
+  m_ShadowDistance: 100
   m_ShadowCascadeCount: 4
-  m_Cascade2Split: 0.004
-  m_Cascade3Split: {x: 0.1, y: 0.3}
-  m_Cascade4Split: {x: 0.052, y: 0.128, z: 0.56}
-  m_CascadeBorder: 0.014056224
+  m_Cascade2Split: 0.0325
+  m_Cascade3Split: {x: 0.1, y: 0.132}
+  m_Cascade4Split: {x: 0.114199996, y: 0.27725, z: 0.49335}
+  m_CascadeBorder: 0.4276486
   m_ShadowDepthBias: 0.1
   m_ShadowNormalBias: 0
   m_AnyShadowsSupported: 1
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_StoreActionsOptimization: 0
   m_UseAdaptivePerformance: 1
   m_ColorGradingMode: 0
-  m_ColorGradingLutSize: 32
+  m_ColorGradingLutSize: 65
   m_AllowPostProcessAlphaOutput: 0
   m_UseFastSRGBLinearConversion: 0
   m_SupportDataDrivenLensFlare: 1
