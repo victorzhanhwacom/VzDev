@@ -66,6 +66,35 @@ namespace VzDev.CameraUtils
         
         public void SetZoomSpeedMultiplier(float multiplier) => zoomSpeedMultiplier = multiplier;
         
+
+        private Transform _originalLookAtParent;
+        private bool isRecoveringLookAtParent = true;
+
+        public void SetFollowTarget(Transform target)
+        {
+            if (target != null)
+            {
+                Debug.Log($"RTSCameraController: SetFollowTarget to {target.name}");
+                SetIsEnableMove(false);
+                SetIsEnableZoom(false);
+                FlyToPosition(target);
+                if(isRecoveringLookAtParent)
+                {
+                    isRecoveringLookAtParent = false;
+                    _originalLookAtParent = lookAtTarget.parent;
+                    Debug.Log($"RTSCameraController: Recovering LookAtParent to { _originalLookAtParent.name}");
+                }
+                lookAtTarget.parent = target;
+            }
+        }
+        public void CancelFollowTarget()
+        {
+            SetIsEnableMove(true);
+            SetIsEnableZoom(true);
+            isRecoveringLookAtParent = true;
+            lookAtTarget.parent = _originalLookAtParent;
+        }
+
         void Start()
         {
             Vector3 angles = transform.eulerAngles;
@@ -241,6 +270,7 @@ namespace VzDev.CameraUtils
             transform.position = lookAtTarget.position + offset;
         }
 
+        public void SetTarget(Transform target) => SetTarget(target.position);
         public void SetTarget(Vector3 position, float setDistance = 1.5f)
         {
             position.y += 0.2f;

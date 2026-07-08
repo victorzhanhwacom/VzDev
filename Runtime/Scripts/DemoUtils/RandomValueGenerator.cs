@@ -24,9 +24,8 @@ namespace VzDev.DemoUtils
         [Foldout("[Events]"), ShowIf(nameof(IsInt))] public UnityEvent<int> OnValueChangedInt;
         [Foldout("[Events]"), ShowIf(nameof(IsInt))] public UnityEvent<Single> OnValueChangedSingle;
 
-        [Foldout("[Settings]"), HideIf(nameof(IsInt)), SerializeField] private float minValueF, maxValueF = 100f;
+        [Foldout("[Settings]"), SerializeField] private float minValue, maxValue = 100f;
         [Foldout("[Settings]"), HideIf(nameof(IsInt)), SerializeField, Range(0, 8)] private int decimalPlaces = 2;
-        [Foldout("[Settings]"), ShowIf(nameof(IsInt)), SerializeField] private int minValue, maxValue = 100;
 
         [Foldout("[Settings]"), SerializeField, Tooltip("是否使用加權隨機")] private bool useWeightedRandom = false;
         [Foldout("[Settings]"), ShowIf(nameof(useWeightedRandom)), Tooltip("隨機值加權設定"), SerializeField] private WeightedSegment[] segments;
@@ -73,7 +72,7 @@ namespace VzDev.DemoUtils
             float raw = SampleValue().RoundToDecimals(decimalPlaces);
             currentValueFloat = raw;
             float normalized = _range > 0f
-                ? Mathf.Clamp01((raw - minValueF) / _range).RoundToDecimals(decimalPlaces)
+                ? Mathf.Clamp01((raw - minValue) / _range).RoundToDecimals(decimalPlaces)
                 : 0f;
             OnValueChangedFloat01?.Invoke(normalized);
         }
@@ -91,7 +90,7 @@ namespace VzDev.DemoUtils
         private float SampleValue()
         {
             if (!useWeightedRandom || _segmentCDF == null || _segmentCDF.Length == 0)
-                return Random.Range(minValueF, maxValueF);
+                return Random.Range(minValue, maxValue);
 
             // 用 CDF 決定落在哪一段
             float r = Random.value;
@@ -106,8 +105,8 @@ namespace VzDev.DemoUtils
             }
 
             // 在該段內均勻取樣
-            float segMin = Mathf.Max(segments[picked].min, minValueF);
-            float segMax = Mathf.Min(segments[picked].max, maxValueF);
+            float segMin = Mathf.Max(segments[picked].min, minValue);
+            float segMax = Mathf.Min(segments[picked].max, maxValue);
             return Random.Range(segMin, segMax);
         }
 
@@ -143,7 +142,7 @@ namespace VzDev.DemoUtils
         {
             string newName = $"{GetType().Name} ({valueType})";
             if (name != newName) name = newName;
-            _range = maxValueF - minValueF;
+            _range = maxValue - minValue;
 
             if (useWeightedRandom && segments != null)
             {
@@ -152,8 +151,8 @@ namespace VzDev.DemoUtils
                     if (seg.min > seg.max)
                         Debug.LogWarning($"[{name}] 某段的 min ({seg.min}) > max ({seg.max})", this);
 
-                    if (seg.min < minValueF || seg.max > maxValueF)
-                        Debug.LogWarning($"[{name}] 某段範圍 [{seg.min}, {seg.max}] 超出全域範圍 [{minValueF}, {maxValueF}]", this);
+                    if (seg.min < minValue || seg.max > maxValue)
+                        Debug.LogWarning($"[{name}] 某段範圍 [{seg.min}, {seg.max}] 超出全域範圍 [{minValue}, {maxValue}]", this);
                 }
             }
 
@@ -162,7 +161,7 @@ namespace VzDev.DemoUtils
 
         private void Awake()
         {
-            _range = maxValueF - minValueF;
+            _range = maxValue - minValue;
             BakeCDF();
         }
 
