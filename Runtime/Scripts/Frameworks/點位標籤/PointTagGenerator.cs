@@ -63,10 +63,11 @@ namespace VzDev.ToolUtils
                 pointTag.name = _labelGetter?.GetLabel(targetModel) ?? "unknown";
                 pointTag.SetLabel(pointTag.name);
                 pointTag.ToggleItem.group = toggleGroup;
-                pointTag.ToggleItem.onValueChanged.AddListener(isOn =>
+                pointTag.ToggleItem.onValueChanged.AddListener(onToggleValueChanged.Invoke);
+                /* pointTag.ToggleItem.onValueChanged.AddListener(isOn =>
                 {
                     if (isOn) onToggleValueChanged?.Invoke(pointTag.FollowerTarget);
-                });
+                }); */
             }
             onTagesInitialized?.Invoke();
         }
