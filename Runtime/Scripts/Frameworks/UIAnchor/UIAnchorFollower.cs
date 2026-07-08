@@ -20,6 +20,7 @@ namespace VzDev.ObjectUtils
 
         [Foldout("[Settings]"), SerializeField] private bool isAlwaysVisible = false;
         [Foldout("[Settings]"), SerializeField, HideIf(nameof(isAlwaysVisible))] private float visibleRange = 20f;
+        [Foldout("[Settings]"), SerializeField, HideIf(nameof(isAlwaysVisible))] private bool visibleReverse = false;
 
         [Foldout("[Components]"), SerializeField] private Camera mainCamera;
         [Foldout("[Components]"), SerializeField] private RectTransform rectTrans, canvasRect;
@@ -55,7 +56,9 @@ namespace VzDev.ObjectUtils
             Vector3 targetPos = target3DObject.position;
             Vector3 viewportPos = mainCamera.WorldToViewportPoint(targetPos);
             bool isInRange = isAlwaysVisible || Vector3.Distance(targetPos, mainCamera.transform.position) <= visibleRange;
+
             isInRange = isInRange && CanSeeTarget(target3DObject.GetComponent<Renderer>(), mainCamera.transform, target3DObject, LayerMask.GetMask("Default"));
+            if(!isAlwaysVisible) isInRange = visibleReverse ? !isInRange : isInRange;
 
             bool isInFrontOfCamera = viewportPos.z > 0;
             container.SetActive(isInRange && isInFrontOfCamera);
