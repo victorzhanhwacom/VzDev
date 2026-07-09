@@ -11,7 +11,7 @@ namespace VzDev.ToolUtils
         #region Fields
         [Foldout("[Components]"), SerializeField] private UIAnchorFollower uiAnchorFollower;
         [Foldout("[Components]"), SerializeField] private Toggle toggle, labelToggle;
-        [Foldout("[Components]"), SerializeField] private TextMeshProUGUI label;
+        [Foldout("[Components]"), SerializeField] private TextMeshProUGUI label, label2;
         public Toggle ToggleItem => toggle;
         public Transform FollowerTarget => uiAnchorFollower != null ? uiAnchorFollower.Target3DObject : null;
         #endregion
@@ -35,6 +35,8 @@ namespace VzDev.ToolUtils
         {
             if (label != null)
                 label.text = text;
+            if (label2 != null)
+                label2.text = text;
         }
 
         private void OnValidate()
