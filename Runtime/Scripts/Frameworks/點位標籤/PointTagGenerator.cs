@@ -62,7 +62,7 @@ namespace VzDev.ToolUtils
                 // 使用Label Getter來決定Tag的顯示文字，如果沒有提供Label Getter，則使用模型名稱
                 pointTag.name = _labelGetter?.GetLabel(targetModel) ?? "unknown";
                 pointTag.SetLabel(pointTag.name);
-                pointTag.ToggleItem.group = toggleGroup;
+                if(toggleGroup != null) pointTag.ToggleItem.group = toggleGroup;
                 pointTag.ToggleItem.onValueChanged.AddListener(onToggleValueChanged.Invoke);
                 /* pointTag.ToggleItem.onValueChanged.AddListener(isOn =>
                 {
