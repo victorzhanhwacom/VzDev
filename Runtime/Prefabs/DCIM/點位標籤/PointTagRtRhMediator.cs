@@ -2,6 +2,7 @@ using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
 using VzDev.ToolUtils;
+using Debug = VzDev.ToolUtils.Debug;
 
 namespace VzDev.DCIMUtils
 {

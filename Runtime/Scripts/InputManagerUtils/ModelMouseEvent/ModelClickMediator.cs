@@ -35,19 +35,19 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         private void HandleModelEnter(GameObject targetObject)
         {
             if (targetObject.TryGetComponent<IModelHover>(out var handler))
-                handler.OnMouseEnter(targetObject);
+                handler.OnHoverEnter(targetObject);
         }
 
         private void HandleModelExit(GameObject targetObject)
         {
             if (targetObject.TryGetComponent<IModelHover>(out var handler))
-                handler.OnMouseExit(targetObject);
+                handler.OnHoverExit(targetObject);
         }
 
-        private void HandleModelDrag(GameObject targetObject, Vector3 worldPoint)
+        private void HandleModelDrag(GameObject targetObject, Vector3 point)
         {
             if (targetObject.TryGetComponent<IModelDrag>(out var handler))
-                handler.OnMouseDrag(targetObject, worldPoint);
+                handler.OnMouseDrag(targetObject, point);
         }
 
         private void HandleModelRelease(GameObject targetObject)
@@ -57,15 +57,15 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         }
     }
 
-    #region Interfaces 欲被點擊3D模型對像需實作的介面
+    #region Interfaces 欲被點擊對像需實作的介面
     public interface IModelClick
     {
         void OnModelClicked(GameObject clickedObject);
     }
     public interface IModelHover
     {
-        void OnMouseEnter(GameObject targetObject);
-        void OnMouseExit(GameObject targetObject);
+        void OnHoverEnter(GameObject targetObject);
+        void OnHoverExit(GameObject targetObject);
     }
     public interface IModelDrag
     {

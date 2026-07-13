@@ -25,7 +25,9 @@ namespace VzDev.DebugUtils
         }
         #endregion
 
+        [Foldout("[Event] - Awake")] public UnityEvent onAwakeEvent;
         [Foldout("[Event] - Start")] public UnityEvent onStartEvent;
+        private void Awake() => onAwakeEvent?.Invoke();
         private void Start() => onStartEvent?.Invoke();
     }
 }

@@ -155,6 +155,8 @@ namespace VzDev.UnityAPI.Extensions
         /// <summary>
         /// 嘗試新增元件，如果已經有了就直接回傳現有的元件；如果沒有則新增並回傳，並且回傳值的布林值代表是否是新建立的（true = 新建立的，false = 原本就有的）
         /// </summary>
+        public static bool TryAddComponent<TComponent>(this GameObject self) where TComponent : Component 
+        => TryAddComponent(self, out TComponent component);
         public static bool TryAddComponent<TComponent>(this GameObject self, out TComponent component) where TComponent : Component
         {
             if (!self.TryGetComponent(out component))
@@ -164,6 +166,7 @@ namespace VzDev.UnityAPI.Extensions
             }
             return false; // 代表原本就有了
         }
+        
         #endregion
 
         #region 包含子物件的判斷

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace VzDev.Extensions
+namespace VzDev.ToolUtils
 {
     public static class Gizmos
     {

@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using System.IO;
 using NaughtyAttributes;
 using System;
-using Debug = VzDev.Extensions.Debug;
+using Debug = VzDev.ToolUtils.Debug;
 using Cysharp.Threading.Tasks;
 using System.Threading; // 使用 VzDev 的 Debug 擴展，提供更豐富的日誌功能
 

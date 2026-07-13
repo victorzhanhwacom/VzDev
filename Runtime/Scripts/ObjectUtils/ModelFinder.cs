@@ -9,7 +9,9 @@ using static VzDev.UnityAPI.Extensions.TransformExtension;
 
 namespace VzDev.ObjectUtils
 {
-    /// 依關鍵字尋找模型
+    /// <summary>
+    /// 集中式模型搜尋器，透過關鍵字或 Transform 陣列搜尋目標物件，並觸發事件
+    /// </summary>
     public class ModelFinder : MonoBehaviour
     {
         #region Fields
