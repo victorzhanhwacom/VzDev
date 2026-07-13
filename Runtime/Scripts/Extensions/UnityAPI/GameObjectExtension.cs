@@ -4,6 +4,15 @@ namespace VzDev.UnityAPI.Extensions
 {
     public static class GameObjectExtension
     {
+        /// <summary>
+        /// 嘗試從 GameObject 上取得指定類型的組件，如果存在則返回 true，並將組件賦值給 out 參數；如果不存在則返回 false。
+        /// </summary>
+        public static bool TryGetComponent<T>(this GameObject self, out T component) where T : class
+        {
+            component = self.GetComponent<T>();
+            return component != null;
+        }
+
         /// 為GameObject的name加上標頭Header，格式為 [HeaderName] OriginalName
         public static string SetNameHeader(this GameObject self, string headerName)
         {

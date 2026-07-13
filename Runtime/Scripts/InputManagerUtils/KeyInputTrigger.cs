@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 
-namespace VzDev.InputUtils
+namespace VzDev.InteractiveUtils
 {
     /// <summary>
     /// 監聽鍵盤輸入，當按下數字鍵 (0-9 / Numpad 0-9) 或字母鍵 (A-Z) 時，觸發對應的事件。
