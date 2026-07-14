@@ -3,38 +3,52 @@ using NaughtyAttributes;
 using UnityEngine;
 using VzDev.DCIM.Deployment;
 using VzDev.InteractiveUtils.ModelMouseEvent;
+using VzDev.UnityAPI.Extensions;
 
 namespace VzDev.DCIMUtils
 {
     public class RackComponent : MonoBehaviour, IModelClick, IModelHover
     {
+        #region Fields
         [SerializeField, ReadOnly] private DCR_Asset data;
 
+        public Collider hitCollider { get; private set; }
+        private bool isHaveData => data != null;
+
+        #endregion
+
+        #region Events
         public event Action<DCR_Asset> OnModelClickedEvent;
         public event Action<DCR_Asset> OnHoverEnterEvent;
         public event Action<DCR_Asset> OnHoverExitEvent;
+        #endregion
+
+        private void Awake()
+        {
+            hitCollider = GetComponent<Collider>();
+            if (hitCollider == null)
+                Debug.LogWarning($"[{nameof(RackComponent)}] {gameObject.name} 沒有 Collider，無法進行互動。", this);
+        }
 
         public void SetRackData(DCR_Asset rackData)
         {
             data = rackData;
-            data.modelInfo.SetModelTarget(transform);
+            if (isHaveData) data.modelInfo.SetModelTarget(transform);
         }
 
         public void OnHoverEnter(GameObject targetObject)
         {
-            Debug.Log($"Hover Enter: {targetObject.name}");
-            OnHoverEnterEvent?.Invoke(data);
+            if (isHaveData) OnHoverEnterEvent?.Invoke(data);
         }
 
         public void OnHoverExit(GameObject targetObject)
         {
-            OnHoverExitEvent?.Invoke(data);
+            if (isHaveData) OnHoverExitEvent?.Invoke(data);
         }
 
         public void OnModelClicked(GameObject clickedObject)
         {
-            Debug.Log($"Model Clicked: {clickedObject.name}");
-            OnModelClickedEvent?.Invoke(data);
+            if (isHaveData) OnModelClickedEvent?.Invoke(data);
         }
     }
 }

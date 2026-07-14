@@ -21,15 +21,19 @@ namespace VzDev.ObjectUtils
         [SerializeField] private ColliderType colliderType = ColliderType.BoxCollider;
         [SerializeField, ReadOnly] private List<Transform> models;
         private bool isHaveModels => models != null && models.Count > 0;
-        #endregion  
-
-        public void SetModels(List<Transform> modelList) => models = modelList;
+        #endregion
 
         [Button, ShowIf("isHaveModels")]
         private void RemoveAndClear()
         {
             RemoveColliders();
             models = new List<Transform>();
+        }
+
+        public void SetModels(List<Transform> modelList)
+        {
+            models = modelList;
+            SetColliders();
         }
 
         [Button, ShowIf("isHaveModels")]
@@ -60,7 +64,7 @@ namespace VzDev.ObjectUtils
         }
 
         [Button, ShowIf("isHaveModels")]
-        public void SetColliders()
+        private void SetColliders()
         {
             if (!isHaveModels)
             {

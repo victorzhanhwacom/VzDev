@@ -10,7 +10,7 @@ namespace VzDev.ToolUtils
         /// <summary>
         /// 嘗試輸出Log訊息，若logEnabled為false則不輸出訊息。
         /// </summary>
-        public static void TryLog(bool logEnabled, object message, LogType logType = LogType.Log, Object callerClass = null)
+        public static void TryLog(bool logEnabled, object message, Object callerClass = null, LogType logType = LogType.Log)
         {
             if (logEnabled) LogMessage(logType, message, callerClass);
         }
