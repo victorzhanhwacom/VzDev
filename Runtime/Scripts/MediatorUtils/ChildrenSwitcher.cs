@@ -10,9 +10,11 @@ namespace VzDev.Mediator
     public class ChildrenSwitcher : MonoBehaviour
     {
         #region Variables
-        [SerializeField, ReadOnly] private int receiveValue= -1;
+        [SerializeField, ReadOnly] private int receiveValue = -1;
         [SerializeField, ReadOnly] private GameObject[] children;
         [SerializeField] private GameObject[] excludeChildren;
+
+        private bool IsHaveChildren => children != null && children.Length > 0;
         #endregion
 
         private void Awake() => receiveValue = -1;
@@ -26,6 +28,18 @@ namespace VzDev.Mediator
             for (int i = 0; i < children.Length; i++)
             {
                 bool isActive = i == receiveValue;
+                children[i].SetActive(isActive);
+            }
+        }
+
+        [Button, ShowIf(nameof(IsHaveChildren))]
+        public void SetAllChildrenActive() => SetChildrenStatus(true);
+        [Button, ShowIf(nameof(IsHaveChildren))]
+        public void SetAllChildrenInactive() => SetChildrenStatus(false);
+        public void SetChildrenStatus(bool isActive)
+        {
+            for (int i = 0; i < children.Length; i++)
+            {
                 children[i].SetActive(isActive);
             }
         }

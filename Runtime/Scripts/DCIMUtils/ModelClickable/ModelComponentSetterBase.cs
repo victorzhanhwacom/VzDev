@@ -11,7 +11,7 @@ namespace VzDev.DCIMUtils
     /// <summary>
     /// 定義模型互動的介面，提供設定DCIM資產資料、啟用/禁用 Collider，以及提供外部訂閱互動事件的功能。
     /// </summary>
-    public interface IModelComponent<TData> where TData : DCIMAssetBase
+    public interface IModelComponent<TData> where TData : DCIMAsset
     {
         void SetData(TData assetData);
         void SetColliderEnabled(bool isEnabled);
@@ -25,7 +25,7 @@ namespace VzDev.DCIMUtils
     /// </summary>
     public abstract class ModelComponentSetterBase<TData, TComponent> : MonoBehaviour
         where TComponent : MonoBehaviour, IModelComponent<TData>
-        where TData : DCIMAssetBase
+        where TData : DCIMAsset
     {
         #region Fields
         [SerializeField, Tooltip("(DEMO)是否在沒有資料的情況下也建立組件")] protected bool buildWithoutData = true;
@@ -44,13 +44,13 @@ namespace VzDev.DCIMUtils
         public static event Action<TData> OnHoverExitEvent;
         #endregion
 
-        [Button, ShowIf("isHaveModels")] private void InteractiveOn() => SetInteractable(true);
-        [Button, ShowIf("isHaveModels")] private void InteractiveOff() => SetInteractable(false);
+        [Button, ShowIf("isHaveModels")] private void InteractiveOn() => SetColliderEnabled(true);
+        [Button, ShowIf("isHaveModels")] private void InteractiveOff() => SetColliderEnabled(false);
 
         /// <summary>
         /// Component 的互動性，啟用或禁用 Collider。
         /// </summary>
-        public void SetInteractable(bool isEnabled)
+        public void SetColliderEnabled(bool isEnabled)
         {
             for (int i = 0; i < components.Count; i++)
             {
@@ -132,6 +132,7 @@ namespace VzDev.DCIMUtils
             {
                 TComponent c = components[i];
                 if (c == null) continue;
+                c.SetColliderEnabled(true);
                 c.OnModelClickedEvent += HandleModelClicked;
                 c.OnHoverEnterEvent += HandleHoverEnter;
                 c.OnHoverExitEvent += HandleHoverExit;
@@ -147,6 +148,7 @@ namespace VzDev.DCIMUtils
                 {
                     TComponent c = components[i];
                     if (c == null) continue;
+                    c.SetColliderEnabled(false);
                     c.OnModelClickedEvent -= HandleModelClicked;
                     c.OnHoverEnterEvent -= HandleHoverEnter;
                     c.OnHoverExitEvent -= HandleHoverExit;

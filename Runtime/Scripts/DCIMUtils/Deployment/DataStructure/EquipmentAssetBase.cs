@@ -7,7 +7,7 @@ namespace VzDev.DCIM.Deployment
     /// <para>包含：DCR / DCS / DCN / DCE / DCP</para>
     /// </summary>
     [Serializable]
-    public class EquipmentAssetBase : DCIMAssetBase
+    public class EquipmentAssetBase : DCIMAsset
     {
         /// <summary>
         /// 資產類別: DCR / DCS / DCN / DCE / DCP

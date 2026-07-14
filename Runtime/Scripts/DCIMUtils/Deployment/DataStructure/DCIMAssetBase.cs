@@ -7,7 +7,7 @@ namespace VzDev.DCIM.Deployment
     /// <para>包含：門禁、CCTV、消防、溫濕度感應、機櫃/設備資產類</para>
     /// </summary>
     [Serializable]
-    public class DCIMAssetBase
+    public class DCIMAsset
     {
         public AssetInfo assetInfo;
         public COBieInfo cobieInfo;

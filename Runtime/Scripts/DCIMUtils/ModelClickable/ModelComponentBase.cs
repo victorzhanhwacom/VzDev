@@ -11,7 +11,7 @@ namespace VzDev.DCIMUtils
     /// 定義了模型互動的基本功能，並利用事件將資料傳遞給外部訂閱者。它提供了設定資產資料、啟用/禁用 Collider
     /// </summary>
     public abstract class ModelComponentBase<TData> : MonoBehaviour, IModelClick, IModelHover,
-                                    IModelComponent<TData> where TData : DCIMAssetBase
+                                    IModelComponent<TData> where TData : DCIMAsset
     {
         #region Fields
         [SerializeField, ReadOnly] protected TData data;

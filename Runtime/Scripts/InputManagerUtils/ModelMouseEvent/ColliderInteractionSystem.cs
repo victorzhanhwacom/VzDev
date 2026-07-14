@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using VzDev.Helpers;
 
 namespace VzDev.InteractiveUtils.ModelMouseEvent
 {
@@ -47,18 +48,9 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         /// <summary>
         /// 失焦瞬間立刻清空 hover / drag 狀態，避免切回來後殘留舊的高亮/拖曳狀態。
         /// </summary>
-        private void OnApplicationFocus(bool hasFocus)
-        {
-            if (!hasFocus)
-            {
-                ClearHover();
-                dragTarget = null;
-            }
-        }
-
         private void Update()
         {
-            if (!Application.isFocused) return;   // 失焦時不處理滑鼠事件，避免誤觸
+            if (!Application.isFocused || MouseHelper.IsPointerOutOfScreen) return;   // 失焦時不處理滑鼠事件，避免誤觸
 
             // 擋掉 UI 上的滑鼠事件，避免誤觸 3D 物件
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
