@@ -1,26 +1,36 @@
 using System;
 using DG.Tweening;
-using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
-namespace VzDev.DotweenUtils1
+namespace VzDev.DotweenUtils
 {
-    [Serializable]
+   [Serializable]
     public class DOTweenSetting
     {
         public float duration = 0.3f;
-        [SerializeField] private float delayValue;
-        public bool IsRandomDelay;
-        public float delayRandomMin;
+        public float delaySec;
+        public bool isRandomDelay;
+        public float delayMinSecForRandom;
         public Ease easeOut = Ease.OutQuad;
         public Ease easeIn = Ease.InQuad;
         public bool isLoop;
         public int loopTimes = -1;
         public LoopType loopType = LoopType.Yoyo;
 
-        public float Delay => IsRandomDelay ? Random.Range(delayRandomMin, delayValue) : delayValue;
+        public float Delay => isRandomDelay ? Random.Range(delayMinSecForRandom, delaySec+1) : delaySec;
+
+        public Tween SetupTween(Tween tween)
+        {
+            if (tween == null) return null;
+            tween.SetEase(easeOut).SetDelay(Delay);
+            if (isLoop)
+            {
+                tween.SetLoops(loopTimes, loopType);
+            }
+            return tween;
+        }
     }
 
     [CreateAssetMenu(fileName = "DOTweenSettingSO", menuName = "VzDev/DOTween/DOTweenSettingSO")]
@@ -35,6 +45,15 @@ namespace VzDev.DotweenUtils1
     public class DOTweenEvents
     {
         public UnityEvent onComplete, onUpdate, onStart;
+
+        public Tween SetupTween(Tween tween)
+        {
+            if (tween == null) return null;
+            tween.OnStart(() => onStart?.Invoke())
+                .OnUpdate(() => onUpdate?.Invoke())
+                .OnComplete(() => onComplete?.Invoke());
+            return tween;
+        }
     }
 
     public enum EnumDOTweenDataType

@@ -7,11 +7,10 @@ namespace VzDev.DotweenUtils
 {
     public class DOTweenFader : MonoBehaviour
     {
-        [Foldout("[Events]")] public UnityEvent onComplete, onStart;
-        [Foldout("[Settings]"), SerializeField, Label("OnEnabled/OnDisabled時自動播放動畫")] private bool isAutoPlayOnEnable = true;
-        [Foldout("[Settings]"), SerializeField] private bool isHideOnAwake = true;
+        [Foldout("[Events]")] public UnityEvent onComplete;
+        [SerializeField] private DOTweenSetting tweenSetting;
+        [SerializeField] private DOTweenSetting tweenEvent;
 
-        [Foldout("[Settings]"), SerializeField] private DOTweenData tweenData;
         [Foldout("[Components]"), SerializeField] private CanvasGroup canvasGroup;
 
         private Tween _tween;
@@ -22,7 +21,6 @@ namespace VzDev.DotweenUtils
             {
                 Debug.LogWarning($"[DOTweenFader] The target `{gameObject.name}` doesn't have a CanvasGroup component.");
             }
-            if (canvasGroup != null && isHideOnAwake && !gameObject.activeSelf) gameObject.SetActive(false);
         }
 
 
@@ -32,11 +30,17 @@ namespace VzDev.DotweenUtils
             if (canvasGroup == null) return;
             Stop();
 
-            _tween = canvasGroup.DOFade(1, tweenData.duration)
-                .SetEase(tweenData.ease)
-                .SetDelay(tweenData.delay)
+            _tween = canvasGroup.DOFade(1, tweenSetting.duration);
+            _tween = tweenSetting.SetupTween(_tween);
+            _tween = tweenEvent.SetupTween(_tween);
+
+
+/* 
+            _tween = canvasGroup.DOFade(1, tweenSetting.duration)
+                .SetEase(tweenSetting.easeOut)
+                .SetDelay(tweenSetting.delay)
                 .OnStart(() => onStart?.Invoke())
-                .OnComplete(() => onComplete?.Invoke());
+                .OnComplete(() => onComplete?.Invoke()); */
         }
 
         [Button, ShowIf(nameof(IsEditPlaying))]
@@ -51,28 +55,19 @@ namespace VzDev.DotweenUtils
             if (canvasGroup == null) return;
 
             // 2. 同樣計算動態時間，避免淡入到一半被攔截時，突然變太慢
-            float calculatedDuration = tweenData.duration;
+            float calculatedDuration = tweenSetting.duration;
             if (_tween != null && _tween.IsActive())
             {
-                calculatedDuration = _tween.ElapsedPercentage() * tweenData.duration;
+                calculatedDuration = _tween.ElapsedPercentage() * tweenSetting.duration;
             }
 
             Stop();
-            _tween = canvasGroup.DOFade(0, calculatedDuration).SetEase(tweenData.ease);
+            _tween = canvasGroup.DOFade(0, calculatedDuration).SetEase(tweenSetting.ease);
         }
 
         private void OnValidate()
         {
             if (canvasGroup == null) TryGetComponent(out canvasGroup);
-        }
-
-        private void OnEnable()
-        {
-            if (isAutoPlayOnEnable) Play();
-        }
-        private void OnDisable()
-        {
-            if (isAutoPlayOnEnable) PlayBackwards();
         }
     }
 }
