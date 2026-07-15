@@ -62,7 +62,7 @@ namespace VzDev.DotweenUtils
             }
 
             Stop();
-            _tween = canvasGroup.DOFade(0, calculatedDuration).SetEase(tweenSetting.ease);
+           // _tween = canvasGroup.DOFade(0, calculatedDuration).SetEase(tweenSetting.ease);
         }
 
         private void OnValidate()

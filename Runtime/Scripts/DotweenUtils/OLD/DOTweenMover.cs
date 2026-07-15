@@ -7,7 +7,7 @@ namespace VzDev.DotweenUtils
 {
     public class DOTweenMover1 : MonoBehaviour
     {
-        [Foldout("[Events]")] public UnityEvent onComplete, onStart;
+       /*  [Foldout("[Events]")] public UnityEvent onComplete, onStart;
         [Foldout("[Settings]"), SerializeField, Label("OnEnabled/OnDisabled時自動播放動畫")] private bool isAutoPlayOnEnable = true;
         [Foldout("[Settings]"), SerializeField] private bool setFromValue = true;
         [Foldout("[Settings]"), SerializeField] private bool setToValue;
@@ -87,6 +87,6 @@ namespace VzDev.DotweenUtils
         private void OnDisable()
         {
             if (isAutoPlayOnEnable) PlayBackwards();
-        }
+        } */
     }
 }

@@ -31,12 +31,6 @@ namespace VzDev.DotweenUtils1
          // 這樣就可以直接把 DOTweenSettingSO 當成 DOTweenSetting 用了，方便在程式碼裡使用
     }
 
-    [Serializable]
-    public class DOTweenEvents
-    {
-        public UnityEvent onComplete, onUpdate, onStart;
-    }
-
     public enum EnumDOTweenDataType
     {
         ScriptableObject,

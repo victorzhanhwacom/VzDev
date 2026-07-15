@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 namespace VzDev.DotweenUtils
 {
-    /// 「動畫序列」的設定檔。可同時播放多個 DOTweenBaseData。
+   /*  /// 「動畫序列」的設定檔。可同時播放多個 DOTweenBaseData。
     [CreateAssetMenu(fileName = "DOTweenSequence", menuName = "VzDev/DOTween/Sequence")]
     public class DOTweenSequenceData : DOTweenBaseData
     {
@@ -58,5 +58,5 @@ namespace VzDev.DotweenUtils
         {
             foreach (ITweenWorker worker in _workers) worker.PlayBackwards();
         }
-    }
+    } */
 }

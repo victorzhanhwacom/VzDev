@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 namespace VzDev.DotweenUtils
-{
+{/* 
     [CreateAssetMenu(fileName = "DOTweenFadeData", menuName = "VzDev/DOTween/DOTweenFadeData")]
     public class DOTweenFadeData : DOTweenBaseData
     {
@@ -68,5 +68,5 @@ namespace VzDev.DotweenUtils
             Stop();
             _tween = _cg.DOFade(0, calculatedDuration).SetEase(_data.tweenData.ease);
         }
-    }
+    } */
 }

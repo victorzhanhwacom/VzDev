@@ -7,7 +7,7 @@ namespace VzDev.DotweenUtils
     /// Tweener 的「播放器」，負責播放tweenData動畫
     public class DOTweenPlayer : MonoBehaviour
     {
-        #region Variables
+       /*  #region Variables
         [Foldout("[Events]"), ShowIf(nameof(IsHaveTweenData))] public UnityEvent onComplete, onStart;
         [Foldout("[Settings]"), SerializeField, Label("OnEnabled/OnDisabled時自動播放動畫")] private bool isAutoPlayOnEnable;
         [Foldout("[Settings]"), Expandable, SerializeField] private DOTweenBaseData tweenData; 
@@ -45,6 +45,6 @@ namespace VzDev.DotweenUtils
             if (isAutoPlayOnEnable) PlayBackwards();
         }
 
-        private void OnDestroy() => StopTween();
+        private void OnDestroy() => StopTween(); */
     }
 }

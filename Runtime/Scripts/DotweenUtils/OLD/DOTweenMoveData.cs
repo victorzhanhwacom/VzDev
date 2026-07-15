@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace VzDev.DotweenUtils
 {
-    /// Tweener 移動的「設定檔」，負責定義動畫的內容（起點、終點、持續時間、緩動方式等等），但不直接操作場景中的物件。
+    /* /// Tweener 移動的「設定檔」，負責定義動畫的內容（起點、終點、持續時間、緩動方式等等），但不直接操作場景中的物件。
     [CreateAssetMenu(fileName = "DOTweenMoveData", menuName = "VzDev/DOTween/DOTweenMoveData")]
     public class DOTweenMoveData : DOTweenBaseData
     {
@@ -80,5 +80,5 @@ namespace VzDev.DotweenUtils
             Stop();
             _tween = _rectTarget.DOAnchorPos(targetPos, calculatedDuration).SetEase(_data.tweenData.ease);
         }
-    }
+    } */
 }
