@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using VzDev.UnityAPI.Extensions;
 using static VzDev.UnityAPI.Extensions.TransformExtension;
+using Debug = VzDev.ToolUtils.Debug;
 
 namespace VzDev.ObjectUtils
 {
@@ -15,6 +16,7 @@ namespace VzDev.ObjectUtils
     public class ModelFinder : MonoBehaviour
     {
         #region Fields
+        [SerializeField] private bool logEnabled = false;
         [SerializeField] private string[] keywords;
         [SerializeField] private List<Transform> keyModels;
         [SerializeField] private List<Transform> foundModels;
@@ -56,7 +58,7 @@ namespace VzDev.ObjectUtils
                     break;
             }
             onFoundModels?.Invoke(foundModels);
-            Debug.Log($"Found {foundModels.Count} target objects.", this);
+            Debug.TryLog(logEnabled, $"Found {foundModels.Count} target objects.", this);
         }
 
         [Button, ShowIf(nameof(IsHaveModels))]
