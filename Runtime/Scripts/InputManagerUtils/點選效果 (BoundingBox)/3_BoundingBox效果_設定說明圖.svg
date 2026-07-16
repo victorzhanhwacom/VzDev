@@ -1,0 +1,47 @@
+<svg width="680" height="560" viewBox="0 0 680 560" xmlns="http://www.w3.org/2000/svg" role="img" font-family="sans-serif">
+<title>Bounding Box 效果設定流程</title>
+<desc>展示 BoundingBoxHighlightController 的設定步驟：建立單一 Shader，掛在管理器物件上，初始化物件池，每幀同步 Hover/Selected 狀態並用矩陣運算貼合目標物件</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#5F5E5A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+
+<rect width="680" height="560" fill="#FFFFFF"/>
+
+<g>
+<rect x="60" y="40" width="560" height="56" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+<text x="340" y="60" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#3C3489">建立 Shader</text>
+<text x="340" y="80" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#534AB7">StagingBoundingBox.shader（Fresnel 玻璃感外框）</text>
+</g>
+<line x1="340" y1="96" x2="340" y2="130" stroke="#5F5E5A" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<g>
+<rect x="60" y="130" width="560" height="56" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+<text x="340" y="150" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#3C3489">掛上 BoundingBoxHighlightController</text>
+<text x="340" y="170" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#534AB7">掛在管理器物件上（跟 Hover/SelectionController 同層），拖入 Shader</text>
+</g>
+<line x1="340" y1="186" x2="340" y2="220" stroke="#5F5E5A" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<g>
+<rect x="60" y="220" width="560" height="56" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="1"/>
+<text x="340" y="240" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#633806">設定 Hover／Selected 樣式</text>
+<text x="340" y="260" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#854F0B">各自獨立的 Fill/Edge Color、Fresnel Power、Min/Max Alpha</text>
+</g>
+<line x1="340" y1="276" x2="340" y2="310" stroke="#5F5E5A" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<g>
+<rect x="60" y="310" width="560" height="56" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+<text x="340" y="330" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#2C2C2A">Awake：建立物件池</text>
+<text x="340" y="350" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#444441">Hover 常駐 1 個；Selected 池初始 8 個，不足時動態擴充</text>
+</g>
+<line x1="340" y1="366" x2="340" y2="400" stroke="#5F5E5A" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<g>
+<rect x="60" y="400" width="560" height="70" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="1"/>
+<text x="340" y="422" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#3C3489">Update：矩陣運算貼合目標</text>
+<text x="340" y="444" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#534AB7">TransformPoint + rotation + lossyScale，不 SetParent 進目標 Hierarchy</text>
+<text x="340" y="460" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#534AB7">Transform.hasChanged 判斷，靜止物件不重算</text>
+</g>
+
+<text x="340" y="500" text-anchor="middle" font-size="12" fill="#5F5E5A">外框永遠掛在 Controller 底下，不受 MaterialReplacer 等子物件遍歷系統影響</text>
+<text x="340" y="520" text-anchor="middle" font-size="12" fill="#5F5E5A">同物件重疊時：Selected 優先，Hover 外框不重複顯示</text>
+</svg>

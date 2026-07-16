@@ -1,0 +1,46 @@
+<svg width="680" height="540" viewBox="0 0 680 540" xmlns="http://www.w3.org/2000/svg" role="img" font-family="sans-serif">
+<title>輪廓線條效果設定流程</title>
+<desc>展示 Outline 系統的設定步驟：建立兩個 Shader，掛載 Renderer Feature，場景掛兩個 Controller，設定參數，最終效果依 Hover/Selected 狀態顯示對應顏色</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#5F5E5A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+
+<rect width="680" height="540" fill="#FFFFFF"/>
+
+<g>
+<rect x="60" y="40" width="560" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text x="340" y="60" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#085041">建立兩個 Shader</text>
+<text x="340" y="80" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0F6E56">OutlineMask.shader ＋ OutlineComposite.shader</text>
+</g>
+<line x1="340" y1="96" x2="340" y2="130" stroke="#5F5E5A" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<g>
+<rect x="60" y="130" width="560" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text x="340" y="150" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#085041">掛載 Renderer Feature</text>
+<text x="340" y="170" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0F6E56">URP Renderer Data → Add Outline Renderer Feature，拖入兩個 Shader</text>
+</g>
+<line x1="340" y1="186" x2="340" y2="220" stroke="#5F5E5A" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<g>
+<rect x="60" y="220" width="560" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text x="340" y="240" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#085041">場景掛兩個 Controller</text>
+<text x="340" y="260" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#0F6E56">HoverHighlightController ＋ SelectionController</text>
+</g>
+<line x1="340" y1="276" x2="340" y2="310" stroke="#5F5E5A" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<g>
+<rect x="60" y="310" width="560" height="56" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="1"/>
+<text x="340" y="330" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#633806">設定顏色與參數</text>
+<text x="340" y="350" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#854F0B">Hover Color、Selected Color、Thickness（Inspector 上調）</text>
+</g>
+<line x1="340" y1="366" x2="340" y2="400" stroke="#5F5E5A" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+<g>
+<rect x="60" y="400" width="560" height="70" rx="8" fill="#F1EFE8" stroke="#5F5E5A" stroke-width="0.5"/>
+<text x="340" y="422" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="#2C2C2A">效果顯示</text>
+<text x="340" y="444" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#444441">Hover → Hover 顏色邊緣光；Selected → Selected 顏色</text>
+<text x="340" y="460" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#444441">同一物件兩者重疊時，Selected 優先顯示</text>
+</g>
+
+<text x="340" y="500" text-anchor="middle" font-size="12" fill="#5F5E5A">機制：Mask Pass 寫入 R/G 通道 → Composite Pass 用 Sobel 邊緣偵測合成，零額外開銷（無高亮物件時不排入 Pass）</text>
+</svg>
