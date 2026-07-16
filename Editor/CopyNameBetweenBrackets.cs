@@ -19,7 +19,7 @@ using System.Text.RegularExpressions;
 /// </summary>
 public static class CopyNameBetweenBrackets
 {
-    private const string MenuPath = "VzDev Tools/複製物件名稱中的 [] 內文字 %#c";
+    private const string MenuPath = "VzDev Tools/複製物件名稱中的 [] 內文字 %#&c";
 
     [MenuItem(MenuPath)]
     private static void CopyBracketText()
