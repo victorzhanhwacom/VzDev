@@ -29,6 +29,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         public static event System.Action<GameObject> OnMouseClick;
         public static event System.Action<GameObject, Vector3> OnMouseDrag;
         public static event System.Action<GameObject> OnMouseRelease;
+        public static event System.Action OnMouseClickEmpty;
         #endregion
 
         void Awake()
@@ -56,6 +57,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
             {
                 ClearHover();
+                dragTarget = null;
                 return;
             }
 
@@ -63,10 +65,17 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
 
             HandleHover(hitObj);
 
-            if (Input.GetMouseButtonDown(0) && hitObj != null)
+            if (Input.GetMouseButtonDown(0))
             {
-                dragTarget = hitObj;
-                OnMouseClick?.Invoke(hitObj);
+                if (hitObj != null)
+                {
+                    dragTarget = hitObj;
+                    OnMouseClick?.Invoke(hitObj);
+                }
+                else
+                {
+                    OnMouseClickEmpty?.Invoke();
+                }
             }
 
             if (Input.GetMouseButton(0) && dragTarget != null)
