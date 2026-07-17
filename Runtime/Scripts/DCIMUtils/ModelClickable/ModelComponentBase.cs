@@ -21,7 +21,7 @@ namespace VzDev.DCIMUtils
         #endregion
 
         private void Awake() => colliderSetter = new ComponenetColliderSetter(transform);
-        public void SetColliderEnabled(bool isEnabled) => colliderSetter.SetColliderEnabled(isEnabled);
+        public void SetColliderEnabled(bool isEnabled) => colliderSetter?.SetColliderEnabled(isEnabled);
         public void SetData(TData assetData)
         {
             data = assetData;
@@ -50,6 +50,9 @@ namespace VzDev.DCIMUtils
         #endregion
     }
 
+    /// <summary>
+    /// 將Collider獨立出來，提供設定Collider啟用狀態的功能，允許外部控制模型的互動性。
+    /// </summary>
     public class ComponenetColliderSetter
     {
         private Collider hitCollider;

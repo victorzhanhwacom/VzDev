@@ -39,6 +39,8 @@ namespace VzDev.ObjectUtils
 
         #endregion
 
+        public void SetKeyModels(List<Transform> models) => keyModels = models;
+
         [Button, ShowIf(nameof(IsHaveKeywords))]
         public void FindModelsByKeywords()
         {

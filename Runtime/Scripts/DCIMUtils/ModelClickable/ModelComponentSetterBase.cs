@@ -14,6 +14,10 @@ namespace VzDev.DCIMUtils
     public interface IModelComponent<TData> where TData : DCIMAsset
     {
         void SetData(TData assetData);
+
+        /// <summary>
+        /// 設定Collider的啟用狀態，允許外部控制模型的互動性。
+        /// </summary>
         void SetColliderEnabled(bool isEnabled);
         event Action<TData> OnModelClickedEvent;
         event Action<TData> OnHoverEnterEvent;
