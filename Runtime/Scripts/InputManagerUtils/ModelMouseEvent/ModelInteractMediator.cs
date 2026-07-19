@@ -9,7 +9,9 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
     /// </summary>
     public class ModelInteractMediator : MonoBehaviour
     {
-        [SerializeField] private bool logEnabled = false;
+        [SerializeField] private bool logClickEnabled = false;
+        [SerializeField] private bool logHoverEnabled = false;
+        [SerializeField] private bool logDragEnabled = false;
         
         private void OnEnable()
         {
@@ -34,7 +36,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             if (targetObject.TryGetComponent<IModelClick>(out var handler))
             {
                 handler.OnModelClicked(targetObject);
-                Debug.TryLog(logEnabled, $"Model Clicked: {targetObject.name}", this);
+                Debug.TryLog(logClickEnabled, $"Model Clicked: {targetObject.name}");
             }
         }
 
@@ -43,7 +45,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             if (targetObject.TryGetComponent<IModelHover>(out var handler))
             {
                 handler.OnHoverEnter(targetObject);
-                Debug.TryLog(logEnabled, $"Hover Enter: {targetObject.name}", this);
+                Debug.TryLog(logHoverEnabled, $"Hover Enter: {targetObject.name}");
             }
         }
 
@@ -52,7 +54,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             if (targetObject.TryGetComponent<IModelHover>(out var handler))
             {
                 handler.OnHoverExit(targetObject);
-                Debug.TryLog(logEnabled, $"Hover Exit: {targetObject.name}", this);
+                Debug.TryLog(logHoverEnabled, $"Hover Exit: {targetObject.name}");
             }
         }
 
@@ -61,7 +63,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             if (targetObject.TryGetComponent<IModelDrag>(out var handler))
             {
                 handler.OnMouseDrag(targetObject, point);
-                Debug.TryLog(logEnabled, $"Mouse Drag: {targetObject.name}", this);
+                Debug.TryLog(logDragEnabled, $"Mouse Drag: {targetObject.name}");
             }
         }
 
@@ -70,7 +72,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             if (targetObject.TryGetComponent<IModelDrag>(out var handler))
             {
                 handler.OnMouseRelease(targetObject);
-                Debug.TryLog(logEnabled, $"Mouse Release: {targetObject.name}", this);
+                Debug.TryLog(logDragEnabled, $"Mouse Release: {targetObject.name}");
             }
         }
     }
