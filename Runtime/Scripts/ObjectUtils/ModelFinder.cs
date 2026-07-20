@@ -26,6 +26,8 @@ namespace VzDev.ObjectUtils
         [Foldout("[Settings]"), SerializeField] private bool isIncludeInactive = true;
         [Foldout("[Settings]"), SerializeField] private EnumComponentType enumComponentType = EnumComponentType.MeshRenderer;
 
+        public List<Transform> FoundModels => foundModels;
+
         public enum EnumComponentType
         {
             None,
@@ -38,6 +40,15 @@ namespace VzDev.ObjectUtils
         private bool IsFoundModels => foundModels != null && foundModels.Count > 0;
 
         #endregion
+
+        public void AddKeyModels(List<Transform> models)
+        {
+            if (keyModels == null)
+            {
+                keyModels = new List<Transform>();
+            }
+            keyModels.AddRange(models);
+        }
 
         public void SetKeyModels(List<Transform> models) => keyModels = models;
 

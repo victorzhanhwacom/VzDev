@@ -10,7 +10,6 @@ namespace VzDev.MediatorUtils
         public void SetToggleAndNotify(bool value)
         {
             if (target == null) return;
-
             target.isOn = value;
             target.onValueChanged.Invoke(value);
         }

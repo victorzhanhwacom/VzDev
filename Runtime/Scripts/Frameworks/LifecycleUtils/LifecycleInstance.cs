@@ -17,6 +17,7 @@ namespace VzDev.Frameworks.LifecycleUtils
         #region Fields
         [Foldout("[Events-Awake]"), SerializeField] private UnityEvent onAwakeEvent;
         [Foldout("[Events-Start]"), SerializeField] private UnityEvent onStartEvent;
+        [Foldout("[Events-Enable]"), SerializeField] private UnityEvent<bool> isEnableEvent;
         [Foldout("[Events-Enable]"), SerializeField] private UnityEvent onEnableEvent;
         [Foldout("[Events-Disable]"), SerializeField] private UnityEvent onDisableEvent;
         [Foldout("[Events-Destroy]"), SerializeField] private UnityEvent onDestroyEvent;
@@ -29,8 +30,17 @@ namespace VzDev.Frameworks.LifecycleUtils
 
         private void Awake() => onAwakeEvent?.Invoke();
         private void Start() => onStartEvent?.Invoke();
-        private void OnEnable() => onEnableEvent?.Invoke();
-        private void OnDisable() => onDisableEvent?.Invoke();
+        private void OnEnable()
+        {
+            onEnableEvent?.Invoke();
+            isEnableEvent?.Invoke(true);
+        }
+
+        private void OnDisable()
+        {
+            onDisableEvent?.Invoke();
+            isEnableEvent?.Invoke(false);
+        }
         private void OnDestroy() => onDestroyEvent?.Invoke();
 
         private void Update()
