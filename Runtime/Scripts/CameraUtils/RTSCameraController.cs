@@ -350,6 +350,14 @@ namespace VzDev.CameraUtils
                 FlyToPosition(target.position, setDistance ?? defaultFlyDistance);
         }
 
+         public void FlyToPosition(Transform target, float setDistance)
+        {
+            if (target.TryGetComponent(out Renderer render))
+                FlyToPosition(render.bounds.center, setDistance);
+            else
+                FlyToPosition(target.position, setDistance);
+        }
+
         public void FlyToPosition(Transform target) => FlyToPosition(target, defaultFlyDistance);
 
         public void FlyToPosition(Vector3 position, float? setDistance = null)
