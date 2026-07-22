@@ -8,15 +8,10 @@ namespace VzDev.CameraUtils
     /// <summary>
     /// 場景攝影機控制器（Pivot + 球座標模式）。
     /// 左鍵拖曳：沿世界水平面平移
-    /// 右鍵拖曳：環繞旋轉（Orbit）
-    /// 滾輪：動量式拉近/拉遠，抵達極限距離後轉為 Dolly，避免硬牆卡頓感
+    /// 右鍵拖曳：環繞旋轉（Orbit），按下瞬間以鼠標位置校準深度作為錨點
+    /// 滾輪：動量式拉近/拉遠，以鼠標指向的世界座標點為方向偏移 pivot，抵達極限距離後轉為 Dolly
+    /// WASD：水平移動；Q/E：垂直移動
     /// FocusOnTarget()：供外部呼叫，運鏡到指定 Transform
-    ///
-    /// 平滑策略：
-    ///   - Pan / Orbit：滑鼠拖曳每帧都有連續輸入，用 targetXxx 累積、currentXxx 用 SmoothDamp 追趕即可平滑。
-    ///   - Zoom：滾輪輸入是「離散事件」（滾一下才有一次非零值），SmoothDamp 追一個跳動的 target 仍會頓；
-    ///     改為「動量模型」：滾輪只灌入速度，速度每帧指數衰減、用速度積分距離，
-    ///     不論滾動頻率快慢都是連續運算，且只需幾個浮點數運算，效能開銷極低。
     /// </summary>
     public class CameraOrbitController : MonoBehaviour
     {
@@ -34,6 +29,8 @@ namespace VzDev.CameraUtils
         [Foldout("[Settings-Pan]"), SerializeField] private float panSpeed = 1f;
         [Foldout("[Settings-Pan]"), SerializeField, Tooltip("數值越小追趕越快、越硬；越大越慢、越有慣性感")]
         private float panSmoothTime = 0.15f;
+        [Foldout("[Settings-Pan]"), SerializeField, Tooltip("WASD水平移動、QE垂直移動的速度(單位/秒)")]
+        private float keyboardMoveSpeed = 8f;
 
         [Foldout("[Settings-Zoom]"), SerializeField, Tooltip("滾輪每單位輸入轉換成的速度量")]
         private float zoomImpulse = 20f;
@@ -50,7 +47,7 @@ namespace VzDev.CameraUtils
         [Foldout("[Settings-Focus]"), SerializeField] private Ease focusEase = Ease.OutCubic;
 
         [Foldout("[Settings-Interaction]"), SerializeField,
-         Tooltip("左鍵按下瞬間若打到此Layer的物件，視為要與模型互動，本次不觸發平移（建議設為與 ColliderInteractionSystem.interactableLayer 相同）")]
+         Tooltip("左鍵按下瞬間、右鍵校準、滾輪取鼠標世界座標點時共用的判定Layer（建議設為與 ColliderInteractionSystem.interactableLayer 相同）")]
         private LayerMask blockPanLayer;
         [Foldout("[Settings-Interaction]"), SerializeField] private float maxRaycastDistance = 200f;
 
@@ -108,6 +105,7 @@ namespace VzDev.CameraUtils
             HandleOrbitInput();
             HandlePanInput();
             HandleZoomInput();
+            HandleKeyboardMoveInput();
         }
 
         private void LateUpdate()
@@ -194,12 +192,10 @@ namespace VzDev.CameraUtils
         }
 
         /// <summary>
-        /// 右鍵按下瞬間重新校準 pivot：對游標位置做 Raycast，取得場景深度後，
-        /// 將 pivot 重新定位到「攝影機沿視線方向到該深度」的點。
-        /// 用途：消除滾輪 Dolly 造成的 pivot 漂移，讓 Orbit 半徑永遠對齊「目前實際看到的場景深度」，
-        /// 使近距離/遠距離操作時的 Orbit 手感一致。
-        /// 數學上 newPivot = camera.position + forward * newDistance，
-        /// 之後 ApplyTransform() 算出的攝影機位置會等於校準前的位置，鏡頭不會有跳動。
+        /// 右鍵按下瞬間重新校準 pivot 的「深度」（僅深度，不含左右偏移——
+        /// 因為此模型要求 pivot 必須落在攝影機正前方軸線上，否則 ApplyTransform 換算的
+        /// 攝影機位置會跳動）。用途：消除滾輪 Dolly 造成的 pivot 漂移，
+        /// 讓 Orbit 半徑對齊「目前實際看到的場景深度」，使近/遠距離操作手感一致。
         /// </summary>
         private void RecalibrateOrbitPivot()
         {
@@ -208,8 +204,6 @@ namespace VzDev.CameraUtils
 
             if (Physics.Raycast(ray, out RaycastHit hit, maxRaycastDistance, blockPanLayer))
             {
-                // 投影到攝影機前方軸線上的深度，而非直接用 hit.distance，
-                // 避免游標不在畫面正中央時，pivot 偏移到視線軸線之外
                 newDistance = Vector3.Dot(hit.point - targetCamera.transform.position, targetCamera.transform.forward);
             }
 
@@ -265,9 +259,36 @@ namespace VzDev.CameraUtils
         }
 
         /// <summary>
-        /// 滾輪只負責「灌入速度」，不直接改變距離。
-        /// 實際距離變化由 UpdateZoomMomentum() 每帧用速度積分完成，
-        /// 因此不管滾輪滾動頻率快慢，運算都是連續的，不會有跳點頓感。
+        /// WASD：沿世界水平面移動；Q/E：沿世界 Y 軸垂直移動。
+        /// 直接累加進 targetPivotPosition，交由既有的 SmoothDamp 統一平滑。
+        /// </summary>
+        private void HandleKeyboardMoveInput()
+        {
+            Vector3 flatForward = targetCamera.transform.forward;
+            flatForward.y = 0f;
+            flatForward.Normalize();
+
+            Vector3 flatRight = targetCamera.transform.right;
+            flatRight.y = 0f;
+            flatRight.Normalize();
+
+            Vector3 moveDir = Vector3.zero;
+
+            if (Input.GetKey(KeyCode.W)) moveDir += flatForward;
+            if (Input.GetKey(KeyCode.S)) moveDir -= flatForward;
+            if (Input.GetKey(KeyCode.D)) moveDir += flatRight;
+            if (Input.GetKey(KeyCode.A)) moveDir -= flatRight;
+            if (Input.GetKey(KeyCode.E)) moveDir += Vector3.up;
+            if (Input.GetKey(KeyCode.Q)) moveDir -= Vector3.up;
+
+            if (moveDir == Vector3.zero) return;
+
+            KillFocusTweens();
+            targetPivotPosition += moveDir.normalized * keyboardMoveSpeed * Time.deltaTime;
+        }
+
+        /// <summary>
+        /// 滾輪只負責「灌入速度」，不直接改變距離，避免離散輸入造成跳點頓感。
         /// </summary>
         private void HandleZoomInput()
         {
@@ -279,9 +300,9 @@ namespace VzDev.CameraUtils
         }
 
         /// <summary>
-        /// 動量式縮放：速度每帧指數衰減（framerate-independent），
-        /// 再用速度積分出距離變化。抵達 min/maxDistance 時，
-        /// 超出的位移轉換成 Dolly（pivot 沿視線方向前進/後退），避免硬牆卡頓。
+        /// 動量式縮放：速度每帧指數衰減，用速度積分距離。
+        /// 拉近/拉遠時，讓 pivot 依「本帧位移量佔目前距離的比例」朝鼠標指向的世界座標點偏移，
+        /// 使縮放方向跟隨鼠標指向而非固定朝畫面正中央。抵達 min/maxDistance 後轉為 Dolly。
         /// </summary>
         private void UpdateZoomMomentum()
         {
@@ -294,7 +315,14 @@ namespace VzDev.CameraUtils
                 return;
             }
 
-            float proposed = currentDistance + zoomVelocity * Time.deltaTime;
+            float delta = zoomVelocity * Time.deltaTime; // 負值=拉近, 正值=拉遠
+            float proposed = currentDistance + delta;
+
+            if (TryGetCursorWorldPoint(out Vector3 cursorPoint))
+            {
+                float driftFraction = Mathf.Clamp01(Mathf.Abs(delta) / Mathf.Max(currentDistance, 0.001f));
+                targetPivotPosition = Vector3.Lerp(targetPivotPosition, cursorPoint, driftFraction);
+            }
 
             if (proposed < minDistance)
             {
@@ -312,6 +340,33 @@ namespace VzDev.CameraUtils
             {
                 currentDistance = proposed;
             }
+        }
+
+        /// <summary>
+        /// 取得鼠標指向的世界座標點：優先用 Raycast 命中點；
+        /// 沒打到任何物件時（看向天花板/空地），退回用目前距離在該射線上取一點，
+        /// 至少維持方向感。denom 過小（視線幾乎與畫面平行）時放棄，避免除以極小值震盪。
+        /// </summary>
+        private bool TryGetCursorWorldPoint(out Vector3 worldPoint)
+        {
+            Ray ray = targetCamera.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out RaycastHit hit, maxRaycastDistance, blockPanLayer))
+            {
+                worldPoint = hit.point;
+                return true;
+            }
+
+            float denom = Vector3.Dot(ray.direction, targetCamera.transform.forward);
+            if (denom < 0.05f)
+            {
+                worldPoint = default;
+                return false;
+            }
+
+            float t = currentDistance / denom;
+            worldPoint = ray.origin + ray.direction * t;
+            return true;
         }
 
         /// <summary>

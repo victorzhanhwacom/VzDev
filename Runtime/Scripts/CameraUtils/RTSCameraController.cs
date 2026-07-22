@@ -368,5 +368,9 @@ namespace VzDev.CameraUtils
 
         [SerializeField] private float defaultFlyDistance = 2f;
         public void SetDefaultFlyDistance(float distance) => defaultFlyDistance = distance;
+
+        public void SetDistanceNear(float near) => SetDistance(new Vector2(near, distanceLimits.y));
+        public void SetDistanceFar(float far) => SetDistance(new Vector2(distanceLimits.x, far));
+        public void SetDistance(Vector2 distnace) => distanceLimits = distnace;
     }
 }
