@@ -45,7 +45,7 @@ namespace VzDev.ToolUtils
             if (model == null) return;
             onClickPointTagTarget?.Invoke(model);
 
-            string deviceId = model.name.GetStringBetweenMark("[", "]");
+            string deviceId = model.name.GetStringBetweenMarks("[", "]");
             if (string.IsNullOrEmpty(deviceId))
             {
                 Debug.LogWarning($"[PointTagClickMediator] Model name '{model.name}' does not contain a valid device ID.");

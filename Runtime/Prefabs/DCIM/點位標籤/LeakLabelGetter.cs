@@ -9,7 +9,7 @@ public class LeakLabelGetter : MonoBehaviour, IPointTagLabelGetter
 {
     public string GetLabel(Transform targetModel)
     {
-        string index = "LK-" +targetModel.name.GetStringBetweenMark("(", ")");
+        string index = "LK-" +targetModel.name.GetStringBetweenMarks("(", ")");
         return index;
     }
 }

@@ -36,7 +36,7 @@ namespace VzDev.UnityAPI.Extensions
         /// <summary>
         /// 取得字串中位於指定起始與結束標記之間的子字串
         /// </summary>
-        public static string GetStringBetweenMark(this string self, string startMark, string endMark)
+        public static string GetStringBetweenMarks(this string self, string startMark, string endMark)
         {
             if (string.IsNullOrEmpty(self) || string.IsNullOrEmpty(startMark) || string.IsNullOrEmpty(endMark))
                 return string.Empty;
