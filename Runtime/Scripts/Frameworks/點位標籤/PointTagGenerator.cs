@@ -12,6 +12,7 @@ namespace VzDev.ToolUtils
         #region Fields
 
         [SerializeField] private bool isGenerateOnStart = true;
+        [SerializeField] private bool removeExistingTagsOnGenerate = true;
         [SerializeField] private List<Transform> targetModels;
         [Foldout("[Events]")] public UnityEvent onTagesInitialized;
         [Foldout("[Events]")] public UnityEvent<bool> onToggleValueChanged;
@@ -21,6 +22,7 @@ namespace VzDev.ToolUtils
 
         // 這裡使用 MonoBehaviour 以便在 Inspector 中拖拽任何實現了 IPointTagLabelGetter 的組件
         [Foldout("[Components]"), SerializeField, Required] private MonoBehaviour labelGetter;
+        
         private IPointTagLabelGetter _labelGetter;
 
         public PointTag[] PointTags { get; private set; }
@@ -46,7 +48,7 @@ namespace VzDev.ToolUtils
         [Button, ShowIf(nameof(IsHaveData))]
         public void GeneratePointTags()
         {
-            ClearExistingTags();
+            if (removeExistingTagsOnGenerate) ClearExistingTags();
 
             PointTags = new PointTag[targetModels.Count];
             for (int i = 0; i < targetModels.Count; i++)

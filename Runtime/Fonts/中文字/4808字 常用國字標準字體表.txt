@@ -145,3 +145,5 @@ abcdefghijklmnopqrstuvwxyz
 
 溫度 濕度 壓差 微粒子 監控 警告 異常 正常
 機房 電流 電壓 負載 頻率 伺服器 機櫃 實驗室
+
+泵
