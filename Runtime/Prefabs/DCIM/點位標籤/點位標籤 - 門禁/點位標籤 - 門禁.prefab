@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2291241221621177059, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 105.78
       objectReference: {fileID: 0}
     - target: {fileID: 4128242811554529517, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: m_Color.a
