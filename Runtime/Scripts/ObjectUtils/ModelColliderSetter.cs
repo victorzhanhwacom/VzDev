@@ -30,7 +30,7 @@ namespace VzDev.ObjectUtils
             models = new List<Transform>();
         }
 
-        public void SetModels(List<Transform> modelList)
+        public void GenerateColliders(List<Transform> modelList)
         {
             models = modelList;
             SetColliders();

@@ -33,6 +33,7 @@ namespace VzDev.DCIMUtils
     {
         #region Fields
         [SerializeField, Tooltip("(DEMO)是否在沒有資料的情況下也建立組件")] protected bool buildWithoutData = true;
+        [SerializeField, ReadOnly] protected bool isColliderEnabled = true;
         [SerializeField, ReadOnly] protected List<Transform> models = new();
         [SerializeField, ReadOnly] protected List<TData> data = new();
         protected List<TComponent> components = new();
@@ -56,6 +57,7 @@ namespace VzDev.DCIMUtils
         /// </summary>
         public void SetColliderEnabled(bool isEnabled)
         {
+            isColliderEnabled = isEnabled;
             for (int i = 0; i < components.Count; i++)
             {
                 components[i]?.SetColliderEnabled(isEnabled);

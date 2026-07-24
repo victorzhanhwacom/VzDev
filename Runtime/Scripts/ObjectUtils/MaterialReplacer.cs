@@ -28,6 +28,11 @@ namespace VzDev.ObjectUtils
         /// 設定要替換材質的目標模型，這些模型將被替換為指定的材質
         /// </summary>
         public void SetTargetModels(List<Transform> models) => targetModels = models;
+        public void ReplaceTargetModelsMaterial(List<Transform> models)
+        {
+            targetModels = models;
+            ReplaceModelsMaterial();
+        }
 
         /// <summary>
         /// 設定排除的模型，這些模型將不會被替換材質
@@ -58,7 +63,10 @@ namespace VzDev.ObjectUtils
         [Button, ShowIf(nameof(IsHaveTargetModels))]
         public void ReplaceModelsMaterial()
         {
-            if (!Application.isPlaying) return;
+            if (!Application.isPlaying){
+                Debug.LogWarning("Material replacement can only be performed in Play mode.");
+                return;
+            }
             MaterialStateService.Instance.Request(this, targetModels, replaceMaterial, excludeModels);
             _isMaterialReplaced = true;
             return;

@@ -36,7 +36,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             if (targetObject.TryGetComponent<IModelClick>(out var handler))
             {
                 handler.OnModelClicked(targetObject);
-                Debug.TryLog(logClickEnabled, $"Model Clicked: {targetObject.name}");
+                Debug.Assert(logClickEnabled, $"Model Clicked: {targetObject.name}");
             }
         }
 
@@ -45,7 +45,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             if (targetObject.TryGetComponent<IModelHover>(out var handler))
             {
                 handler.OnHoverEnter(targetObject);
-                Debug.TryLog(logHoverEnabled, $"Hover Enter: {targetObject.name}");
+                Debug.Assert(logHoverEnabled, $"Hover Enter: {targetObject.name}");
             }
         }
 
@@ -54,7 +54,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             if (targetObject.TryGetComponent<IModelHover>(out var handler))
             {
                 handler.OnHoverExit(targetObject);
-                Debug.TryLog(logHoverEnabled, $"Hover Exit: {targetObject.name}");
+                Debug.Assert(logHoverEnabled, $"Hover Exit: {targetObject.name}");
             }
         }
 
@@ -63,7 +63,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             if (targetObject.TryGetComponent<IModelDrag>(out var handler))
             {
                 handler.OnMouseDrag(targetObject, point);
-                Debug.TryLog(logDragEnabled, $"Mouse Drag: {targetObject.name}");
+                Debug.Assert(logDragEnabled, $"Mouse Drag: {targetObject.name}");
             }
         }
 
@@ -72,7 +72,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             if (targetObject.TryGetComponent<IModelDrag>(out var handler))
             {
                 handler.OnMouseRelease(targetObject);
-                Debug.TryLog(logDragEnabled, $"Mouse Release: {targetObject.name}");
+                Debug.Assert(logDragEnabled, $"Mouse Release: {targetObject.name}");
             }
         }
     }

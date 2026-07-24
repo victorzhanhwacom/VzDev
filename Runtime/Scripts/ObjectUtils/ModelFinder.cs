@@ -4,6 +4,7 @@ using NaughtyAttributes;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
+using VzDev.ApiExtensions;
 using VzDev.UnityAPI.Extensions;
 using static VzDev.UnityAPI.Extensions.TransformExtension;
 using Debug = VzDev.ToolUtils.Debug;
@@ -27,6 +28,7 @@ namespace VzDev.ObjectUtils
         [Foldout("[Settings]"), SerializeField] private EnumComponentType enumComponentType = EnumComponentType.MeshRenderer;
 
         public List<Transform> FoundModels => foundModels;
+        public EnumSearchType SearchType => searchType;
 
         public enum EnumComponentType
         {
@@ -47,10 +49,16 @@ namespace VzDev.ObjectUtils
             {
                 keyModels = new List<Transform>();
             }
-            keyModels.AddRange(models);
+            keyModels.AddRangeWithDistinct(models);
         }
 
         public void SetKeyModels(List<Transform> models) => keyModels = models;
+
+        public void FindeModelsExceptModels(List<Transform> models)
+        {
+            keyModels = models;
+            FindModelsByTransforms();
+        }
 
         [Button, ShowIf(nameof(IsHaveKeywords))]
         public void FindModelsByKeywords()
@@ -71,7 +79,7 @@ namespace VzDev.ObjectUtils
                     break;
             }
             onFoundModels?.Invoke(foundModels);
-            Debug.TryLog(logEnabled, $"Found {foundModels.Count} target objects.", this);
+            Debug.Assert(logEnabled, $"Found {foundModels.Count} target objects.", this);
         }
 
         [Button, ShowIf(nameof(IsHaveModels))]
@@ -87,19 +95,34 @@ namespace VzDev.ObjectUtils
                                                 .Select(mr => mr.transform)
                                                 .ToList();
 
-            // 將面板上的 models 轉為 HashSet 以提升比對效能
-            HashSet<Transform> modelSet = new HashSet<Transform>(keyModels);
+            // 將面板上的 keyModels「自身 + 所有子孫」都攤平進 HashSet，
+            // 避免只比對 keyModel 本身的 Transform 參照，導致其子物件被漏判。
+            // (Bug 根因：allChildren 是 targetModelsParent 底下所有 MeshRenderer 子孫，
+            //  其中包含 keyModel 的子物件；但舊版 modelSet 只裝了 keyModel 自己，
+            //  Exclude 模式下 !modelSet.Contains(child) 會誤判為 true，把子物件也留下來)
+            HashSet<Transform> modelSet = new HashSet<Transform>();
+            for (int i = 0; i < keyModels.Count; i++)
+            {
+                Transform key = keyModels[i];
+                if (key == null) continue;
+                modelSet.Add(key);
+                Transform[] descendants = key.GetComponentsInChildren<Transform>(true);
+                for (int j = 0; j < descendants.Length; j++)
+                {
+                    modelSet.Add(descendants[j]);
+                }
+            }
 
             // 2. 根據 searchType 進行過濾
             IEnumerable<Transform> filtered;
             if (searchType == EnumSearchType.Include)
             {
-                // 包含：留下來的物件必須存在於 models 陣列中
+                // 包含：留下來的物件必須屬於某個 keyModel 的子樹（含自身）
                 filtered = allChildren.Where(t => modelSet.Contains(t));
             }
             else
             {
-                // 排除：留下來的物件必須不存在於 models 陣列中
+                // 排除：留下來的物件必須不屬於任何 keyModel 的子樹（含自身）
                 filtered = allChildren.Where(t => !modelSet.Contains(t));
             }
 
@@ -122,6 +145,5 @@ namespace VzDev.ObjectUtils
         [Button, ShowIf(nameof(IsFoundModels))]
         public void SelectObjects() => Selection.objects = foundModels.Select(t => t.gameObject).ToArray<Object>();
 #endif
-
     }
 }
