@@ -15,14 +15,15 @@ namespace VzDev
         [SerializeField, ReadOnly] private List<Transform> targetModels;
         [SerializeField] private List<ModelFinderSetting> modelFinderSettings;
         [Foldout("[Components]"), SerializeField] private MaterialReplacer materialReplacer;
-        [Foldout("[Components]"), SerializeField] private MaterialReplacer materialReplacerLight, materialReplacerCableTray;
+        [Foldout("[Components]"), SerializeField] private MaterialReplacer materialReplacerLight, materialReplacerCableTray, materialReplacerExhaustFan;
         #endregion
 
 #if UNITY_EDITOR
         #region For NaughtyAttributes
         [Foldout("[手動測試]"), SerializeField, OnValueChanged("OnShowLightModelsChanged")] private bool isShowLightModels = false;
         [Foldout("[手動測試]"), SerializeField, OnValueChanged("OnShowCableTrayModelsChanged")] private bool isShowCableTrayModels = false;
-        [Foldout("[手動測試]"), SerializeField, OnValueChanged("OnShowPowerModelsChanged")] private bool isShowPowerModels = false;
+        [Foldout("[手動測試]"), SerializeField, OnValueChanged("OnShowExhaustFanModelsChanged")] private bool isShowExhaustFanModels = false;
+        [Space, Foldout("[手動測試]"), SerializeField, OnValueChanged("OnShowPowerModelsChanged")] private bool isShowPowerModels = false;
         [Foldout("[手動測試]"), SerializeField, OnValueChanged("OnShowEnvModelsChanged")] private bool isShowEnvModels = false;
         [Foldout("[手動測試]"), SerializeField, OnValueChanged("OnShowACModelsChanged")] private bool isShowACModels = false;
         [Foldout("[手動測試]"), SerializeField, OnValueChanged("OnShowCCTVModelsChanged")] private bool isShowCCTVModels = false;
@@ -31,6 +32,7 @@ namespace VzDev
 
         private void OnShowLightModelsChanged() => SetLightModelVisible(isShowLightModels);
         private void OnShowCableTrayModelsChanged() => SetCableTrayModelVisible(isShowCableTrayModels);
+        private void OnShowExhaustFanModelsChanged() => SetExhaustFanModelVisible(isShowExhaustFanModels);
         private void OnShowPowerModelsChanged() => SetPowerModelVisible(isShowPowerModels);
         private void OnShowEnvModelsChanged() => SetEnvModelVisible(isShowEnvModels);
         private void OnShowCCTVModelsChanged() => SetCCTVModelVisible(isShowCCTVModels);
@@ -52,6 +54,11 @@ namespace VzDev
         {
             if (isVisible) materialReplacerCableTray.RestoreModelsMaterial();
             else materialReplacerCableTray.ReplaceModelsMaterial();
+        } 
+        public void SetExhaustFanModelVisible(bool isVisible)
+        {
+            if (isVisible) materialReplacerExhaustFan.RestoreModelsMaterial();
+            else materialReplacerExhaustFan.ReplaceModelsMaterial();
         }
 
         public void SetPowerModelVisible(bool isVisible)

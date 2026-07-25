@@ -3,6 +3,7 @@ using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
+using VzDev.ApiExtensions;
 
 namespace VzDev.ObjectUtils
 {
@@ -11,12 +12,22 @@ namespace VzDev.ObjectUtils
     /// </summary>
     public class UIAnchorSorter : MonoBehaviour
     {
+        #region Fields
         [SerializeField] private bool isIncludeInactive = false;
 
         [Label("[資料項 - UIAnchor]"), SerializeField] private List<UIAnchorFollower> uiAnchorList;
+        #endregion
 
         public void SetAnchorList(List<UIAnchorFollower> list) => uiAnchorList = list;
 
+        public void AddUiAnchor(List<UIAnchorFollower> list)
+        {
+            if (uiAnchorList == null)
+            {
+                uiAnchorList = new List<UIAnchorFollower>();
+            }
+            uiAnchorList.AddRangeWithDistinct(list);
+        }
 
         private void Update()
         {

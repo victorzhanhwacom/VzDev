@@ -79,7 +79,7 @@ namespace VzDev.ObjectUtils
                     break;
             }
             onFoundModels?.Invoke(foundModels);
-            Debug.Assert(logEnabled, $"Found {foundModels.Count} target objects.", this);
+            Debug.Assert(!logEnabled, $"Found {foundModels.Count} target objects.", this);
         }
 
         [Button, ShowIf(nameof(IsHaveModels))]
