@@ -8,39 +8,48 @@ namespace VzDev.DCIMUtils
 {
     public class PointTagRtRhMediator : MonoBehaviour
     {
+        #region Fields
+        [SerializeField, Tooltip("設定RT/RH模式"), OnValueChanged("OnRtRhModeChanged")] private EnumRtRhMode rtRhMode = EnumRtRhMode.RTMode;
         [Foldout("[Components]"), SerializeField] private PointTagGenerator pointTagGenerator;
-        private PointInfo_RTRH[] _pointInfosRtRh;
+        private PointInfo_RTRH[] pointTags;
+        private void OnRtRhModeChanged() => SetSwitchToRTMode(rtRhMode);
+        #endregion
 
-        private void GetInfoTags()
+        /// <summary>
+        /// 取得目前所有點位標籤
+        /// </summary>
+        public void GetPoinTags()
         {
-            if (pointTagGenerator == null && pointTagGenerator.PointTags == null)
+            if (pointTagGenerator == null || pointTagGenerator.PointTags == null)
             {
                 Debug.LogError("PointTagGenerator is not assigned.", this);
                 return;
             }
 
-            _pointInfosRtRh = pointTagGenerator.PointTags
+            pointTags = pointTagGenerator.PointTags
                 .Select(tag => tag.GetComponent<PointInfo_RTRH>())
-                .Where(info => info != null)
+                .Where(comp => comp != null)
                 .ToArray();
         }
 
-        public void SwitchToRTMode() => SetSwitchToRTMode(true);
-        public void SwitchToRHMode() => SetSwitchToRTMode(false);
+        public void SwitchToRTMode() => SetSwitchToRTMode(EnumRtRhMode.RTMode);
+        public void SwitchToRHMode() => SetSwitchToRTMode(EnumRtRhMode.RHMode);
 
-        private void SetSwitchToRTMode(bool isRTMode)
+        private void SetSwitchToRTMode(EnumRtRhMode mode)
         {
-            if(Application.isPlaying == false) return;
+            if (Application.isPlaying == false) return;
+            if (pointTags == null || pointTags.Length == 0) GetPoinTags();
+            for (int i = 0; i < pointTags.Length; i++)
+            {
+                PointInfo_RTRH pointTagInfo = pointTags[i];
+                pointTagInfo.SwitchMode(mode == EnumRtRhMode.RTMode);
+            }
+        }
 
-            if(_pointInfosRtRh == null || _pointInfosRtRh.Length == 0)
-            {
-                Debug.LogWarning("Getting PointInfo_RTRH components...", this);
-                GetInfoTags();
-            }
-            foreach (var pointInfo in _pointInfosRtRh)
-            {
-                pointInfo.SwitchMode(isRTMode);
-            }
+        public enum EnumRtRhMode
+        {
+            RTMode,
+            RHMode
         }
     }
 }

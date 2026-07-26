@@ -1,54 +1,93 @@
 using System.Collections.Generic;
-using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using VzDev.DebugUtils;
 
 namespace VzDev.ToolUtils
 {
     public class PointTagGenerator : MonoBehaviour
     {
         #region Fields
-
-        [SerializeField] private bool isGenerateOnStart = true;
-        [SerializeField] private bool removeExistingTagsOnGenerate = true;
+        [SerializeField, Tooltip("是否顯示點位標籤"), OnValueChanged("OnShowPointTagsChanged")] private bool showPointTags = false;
+        [SerializeField, Tooltip("是否總是顯示標籤文字"), OnValueChanged("OnAlwaysShowLabelChanged")] private bool alwaysShowLabel = false;
         [SerializeField] private List<Transform> targetModels;
-        [Foldout("[Events]")] public UnityEvent onTagesInitialized;
-        [Foldout("[Events]")] public UnityEvent<bool> onToggleValueChanged;
+        [Foldout("[Events]"), Tooltip("當點位標籤被選中時觸發")] public UnityEvent<PointTag> onPointTagSelected;
+        [Foldout("[Events]"), Tooltip("當點位標籤被取消選中時觸發")] public UnityEvent onPointTagDeselected;
         [Foldout("[Components]"), SerializeField] private PointTag pointTagPrefab;
         [Foldout("[Components]"), SerializeField] private Transform pointsContainer;
         [Foldout("[Components]"), SerializeField] private ToggleGroup toggleGroup;
 
         // 這裡使用 MonoBehaviour 以便在 Inspector 中拖拽任何實現了 IPointTagLabelGetter 的組件
         [Foldout("[Components]"), SerializeField, Required] private MonoBehaviour labelGetter;
-        
+
+        /// <summary>
+        /// 用於取得標籤文字的介面
+        /// </summary>
         private IPointTagLabelGetter _labelGetter;
 
         public PointTag[] PointTags { get; private set; }
 
         private bool IsHaveData => Application.isPlaying && pointTagPrefab != null
             && pointsContainer != null && targetModels != null && targetModels.Count > 0;
+
+        private PointTag currentSelectedTag;
         #endregion
-
-        private void Start()
+        private void SetLabelGetter()
         {
-            if (labelGetter != null && labelGetter is IPointTagLabelGetter getter)
-            {
-                _labelGetter = getter;
-            }
-            else
-            {
-                Debug.LogWarning("Label Getter does not implement IPointTagLabelGetter. Defaulting to model name.", this);
-            }
-
-            if (isGenerateOnStart) GeneratePointTags();
+            if (labelGetter != null && labelGetter is IPointTagLabelGetter getter) _labelGetter = getter;  
+            else Debug.LogWarning("Label Getter does not implement IPointTagLabelGetter. Defaulting to model name.", this);
         }
 
+        private void OnShowPointTagsChanged() => SetVisible(showPointTags);
+        private void OnAlwaysShowLabelChanged() => SetLabelAlwaysVisible(alwaysShowLabel);
+
+        /// <summary>
+        /// 設定點位標籤的顯示與隱藏
+        /// </summary>
+        public void SetVisible(bool isVisible)
+        {
+            showPointTags = isVisible;
+            if (PointTags == null || PointTags.Length == 0) return;
+            for (int i = 0; i < PointTags.Length; i++)
+            {
+                PointTags[i].gameObject.SetActive(isVisible);
+            }
+        }
+
+        /// <summary>
+        /// 設定Label是否永遠可見
+        /// </summary>
+        public void SetLabelAlwaysVisible(bool isVisible)
+        {
+            alwaysShowLabel = isVisible;
+            if (PointTags == null || PointTags.Length == 0) return;
+            for (int i = 0; i < PointTags.Length; i++)
+            {
+                PointTags[i].SetLabelAlwaysVisible(isVisible);
+            }
+        }
+
+
+        /// <summary>
+        /// 設定目標模型列表，並生成對應的點位標籤
+        /// </summary>
+        public void SetTargetModels(List<Transform> models) => targetModels = models;
+        public void GeneratePointTags(List<Transform> models)
+        {
+            targetModels = models;
+            GeneratePointTags();
+        }
+
+        /// <summary>
+        /// 生成點位標籤，並將其與目標模型綁定
+        /// </summary>
         [Button, ShowIf(nameof(IsHaveData))]
         public void GeneratePointTags()
         {
-            if (removeExistingTagsOnGenerate) ClearExistingTags();
+            if(_labelGetter == null) SetLabelGetter();
+            ClearExistingTags();
 
             PointTags = new PointTag[targetModels.Count];
             for (int i = 0; i < targetModels.Count; i++)
@@ -64,38 +103,36 @@ namespace VzDev.ToolUtils
                 // 使用Label Getter來決定Tag的顯示文字，如果沒有提供Label Getter，則使用模型名稱
                 pointTag.name = _labelGetter?.GetLabel(targetModel) ?? "unknown";
                 pointTag.SetLabel(pointTag.name);
-                if(toggleGroup != null) pointTag.ToggleItem.group = toggleGroup;
-                pointTag.ToggleItem.onValueChanged.AddListener(onToggleValueChanged.Invoke);
-                /* pointTag.ToggleItem.onValueChanged.AddListener(isOn =>
+                if (toggleGroup != null) pointTag.ToggleItem.group = toggleGroup;
+
+                pointTag.ToggleItem.onValueChanged.AddListener((isOn) =>
                 {
-                    if (isOn) onToggleValueChanged?.Invoke(pointTag.FollowerTarget);
-                }); */
+                    if (isOn)
+                    {
+                        currentSelectedTag = pointTag;
+                        onPointTagSelected?.Invoke(currentSelectedTag);
+                    }
+                    if (toggleGroup != null && toggleGroup.AnyTogglesOn()) onPointTagDeselected?.Invoke();
+                });
+
+                //更新顯示狀態
+                alwaysShowLabel = pointTag.LabelVisible;
+                pointTag.gameObject.SetActive(showPointTags);
             }
-            onTagesInitialized?.Invoke();
         }
 
         [Button, ShowIf(nameof(IsHaveData))]
         private void ClearExistingTags()
         {
-            foreach (Transform child in pointsContainer)
-            {
-                Destroy(child.gameObject);
-            }
-        }
-
-        public void SetTargetModels(List<Transform> models) => targetModels = models;
-
-        /// <summary>
-        /// 設定Label是否永遠可見
-        /// </summary>
-        public void SetLabelAlwaysVisible(bool isAlwaysVisible)
-        {
             if (PointTags == null || PointTags.Length == 0) return;
-            foreach (var pointTag in PointTags)
+            for (int i = PointTags.Length - 1; i >= 0; i--)
             {
-                pointTag.SetLabelAlwaysVisible(isAlwaysVisible);
+                ObjectHelper.Destroy(PointTags[i].gameObject);
             }
+            PointTags = new PointTag[0];
+            currentSelectedTag = null;
         }
+
 
         private void OnValidate()
         {

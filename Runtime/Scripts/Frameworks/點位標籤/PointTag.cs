@@ -14,6 +14,8 @@ namespace VzDev.ToolUtils
         [Foldout("[Components]"), SerializeField] private TextMeshProUGUI label, label2;
         public Toggle ToggleItem => toggle;
         public Transform FollowerTarget => uiAnchorFollower != null ? uiAnchorFollower.Target3DObject : null;
+
+        public bool LabelVisible => labelToggle != null ? labelToggle.isOn : false;
         #endregion
 
         /// <summary>

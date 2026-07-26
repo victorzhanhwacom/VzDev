@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using UnityEngine;
+using VzDev.ApiExtensions;
 using VzDev.UnityAPI.Extensions;
 
 namespace VzDev.ObjectUtils
@@ -27,9 +28,25 @@ namespace VzDev.ObjectUtils
         [Foldout("[Components]"), SerializeField] private GameObject container;
 
         public Transform Target3DObject => target3DObject;
+        private Renderer targetRenderer;
+
         public float DistanceFromCamera => Vector3.Distance(mainCamera.transform.position, target3DObject.position);
 
+        private Vector3 targetPos, viewportPos;
+        private bool isInRange, isInFrontOfCamera;
+        private Vector3 screenPos;
+        private Vector2 localPos;
+        private float scaleX, scaleY;
+
+        private float thresholdSqr = 0.0001f;
+
         #endregion
+
+        private void Start()
+        {
+            OnValidate();
+            targetRenderer = target3DObject.GetComponent<Renderer>();
+        }
 
         private bool CanSeeTarget(Renderer targetRenderer, Transform eye, Transform target, LayerMask obstacleMask)
         {
@@ -53,14 +70,17 @@ namespace VzDev.ObjectUtils
         void Update()
         {
             if (target3DObject == null) return;
-            Vector3 targetPos = target3DObject.position;
-            Vector3 viewportPos = mainCamera.WorldToViewportPoint(targetPos);
-            bool isInRange = isAlwaysVisible || Vector3.Distance(targetPos, mainCamera.transform.position) <= visibleRange;
 
-            isInRange = isInRange && CanSeeTarget(target3DObject.GetComponent<Renderer>(), mainCamera.transform, target3DObject, LayerMask.GetMask("Default"));
-            if(!isAlwaysVisible) isInRange = visibleReverse ? !isInRange : isInRange;
+            //if(targetPos.IsApproximatelySqr(target3DObject.position, thresholdSqr)) return;
 
-            bool isInFrontOfCamera = viewportPos.z > 0;
+            targetPos = target3DObject.position;
+            viewportPos = mainCamera.WorldToViewportPoint(targetPos);
+            isInRange = isAlwaysVisible || Vector3.Distance(targetPos, mainCamera.transform.position) <= visibleRange;
+
+            isInRange = isInRange && CanSeeTarget(targetRenderer, mainCamera.transform, target3DObject, LayerMask.GetMask("Default"));
+            if (!isAlwaysVisible) isInRange = visibleReverse ? !isInRange : isInRange;
+
+            isInFrontOfCamera = viewportPos.z > 0;
             container.SetActive(isInRange && isInFrontOfCamera);
 
             if (container.activeSelf == false) return;
@@ -68,16 +88,16 @@ namespace VzDev.ObjectUtils
             targetPos = target3DObject.GetModelBoundsCenter() + offsetPos;
 
             // 1. 轉換 3D 世界座標到螢幕座標
-            Vector3 screenPos = mainCamera.WorldToScreenPoint(targetPos);
+            screenPos = mainCamera.WorldToScreenPoint(targetPos);
 
             if (screenPos.z < 0) return;
 
             // 2. 取得 Canvas 尺寸
-            float scaleX = canvasRect.sizeDelta.x / Screen.width;
-            float scaleY = canvasRect.sizeDelta.y / Screen.height;
+            scaleX = canvasRect.sizeDelta.x / Screen.width;
+            scaleY = canvasRect.sizeDelta.y / Screen.height;
 
             // 3. 計算相對於 Canvas 的座標
-            Vector2 localPos = new Vector2(
+            localPos = new Vector2(
                 (screenPos.x - (Screen.width * 0.5f)) * scaleX,
                 (screenPos.y - (Screen.height * 0.5f)) * scaleY
             );
@@ -91,8 +111,6 @@ namespace VzDev.ObjectUtils
 
         /// 設定可視距離
         public void SetVisibleRange(float range) => visibleRange = range;
-
-        private void Start() => OnValidate();
 
         [Button]
         public void OnValidate()
