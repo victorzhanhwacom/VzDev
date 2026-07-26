@@ -20,6 +20,8 @@ namespace VzDev.ToolUtils
             }
         }
 
+        public void HideAll() => SetVisible(-1);
+
         [Button]
         private void GetPointTagGeneratorMediators()
         {

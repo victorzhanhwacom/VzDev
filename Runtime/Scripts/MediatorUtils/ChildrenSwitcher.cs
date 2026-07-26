@@ -1,6 +1,7 @@
 using UnityEngine;
 using NaughtyAttributes;
 using System;
+using UnityEngine.Events;
 
 namespace VzDev.Mediator
 {
@@ -13,6 +14,9 @@ namespace VzDev.Mediator
         [SerializeField, ReadOnly] private int receiveValue = -1;
         [SerializeField, ReadOnly] private GameObject[] children;
         [SerializeField] private GameObject[] excludeChildren;
+        [Foldout("[Events]")] public UnityEvent<int> onSelectedIndex;
+
+        
 
         private bool IsHaveChildren => children != null && children.Length > 0;
         #endregion
@@ -30,6 +34,7 @@ namespace VzDev.Mediator
                 bool isActive = i == receiveValue;
                 children[i].SetActive(isActive);
             }
+            onSelectedIndex?.Invoke(receiveValue);
         }
 
         [Button, ShowIf(nameof(IsHaveChildren))]

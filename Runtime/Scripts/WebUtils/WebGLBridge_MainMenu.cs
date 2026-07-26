@@ -13,6 +13,7 @@ namespace VzDev.WebGLUtils
                 public string MainMenuIndex { get; private set; } = string.Empty;
 
                 [Foldout("[Events-Custom]")] public UnityEvent<int> OnMainMenuChanged;
+                [Foldout("[Events-Custom]")] public UnityEvent GoToHomePage;
 
                 public void SetMainMenu(string mainMenuIndex)
                 {
@@ -20,7 +21,14 @@ namespace VzDev.WebGLUtils
                         if (int.TryParse(MainMenuIndex, out int index))
                         {
                                 Debug.Log($"[WebGLBridge_MainMenu] MainMenuIndex 已更新為: {index}");
-                                OnMainMenuChanged?.Invoke(index);
+                                if(index == -1)
+                                {
+                                        GoToHomePage?.Invoke();
+                                }
+                                else
+                                {
+                                        OnMainMenuChanged?.Invoke(index);
+                                }
                         }
                         else
                         {

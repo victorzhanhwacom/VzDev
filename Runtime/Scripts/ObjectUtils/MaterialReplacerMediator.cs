@@ -38,7 +38,7 @@ namespace VzDev
         private void OnShowCCTVModelsChanged() => SetCCTVModelVisible(isShowCCTVModels);
         private void OnShowDoorModelsChanged() => SetDoorModelVisible(isShowDoorModels);
         private void OnShowACModelsChanged() => SetACModelVisible(isShowACModels);
-        private void OnShowCabinetModelsChanged() => SetCabinetModelVisible(isShowCabinetModels);
+        private void OnShowCabinetModelsChanged() => SetRackModelVisible(isShowCabinetModels);
         #endregion
 #endif
 
@@ -86,36 +86,12 @@ namespace VzDev
             if (isVisible) ShowModels(EnumModelType.空調系統);
             else RestoreModelsMaterial();
         }
-        public void SetCabinetModelVisible(bool isVisible)
+        public void SetRackModelVisible(bool isVisible)
         {
             if (isVisible) ShowModels(EnumModelType.機櫃管理);
             else RestoreModelsMaterial();
         }
 
-        public void SetModelVisible(int mainmenuIndex)
-        {
-            switch (mainmenuIndex)
-            {
-                case 0:
-                    SetPowerModelVisible(true);
-                    break;
-                case 1:
-                    SetEnvModelVisible(true);
-                    break;
-                case 2:
-                    SetCCTVModelVisible(true);
-                    break;
-                case 3:
-                    SetDoorModelVisible(true);
-                    break;
-                case 4:
-                    SetACModelVisible(true);
-                    break;
-                case 5:
-                    SetCabinetModelVisible(true);
-                    break;
-            }
-        }
         /// <summary>
         /// 顯示相對應的模型，並將材質替換為指定材質
         /// </summary>

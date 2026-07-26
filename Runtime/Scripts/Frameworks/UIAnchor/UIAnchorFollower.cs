@@ -70,7 +70,6 @@ namespace VzDev.ObjectUtils
         void Update()
         {
             if (target3DObject == null) return;
-
             //if(targetPos.IsApproximatelySqr(target3DObject.position, thresholdSqr)) return;
 
             targetPos = target3DObject.position;
