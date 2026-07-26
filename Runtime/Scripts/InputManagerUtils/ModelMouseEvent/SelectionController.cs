@@ -1,4 +1,6 @@
+using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 using VzDev.InteractiveUtils.ModelMouseEvent;
 using VzDev.RenderingUtils.Outline;
 
@@ -13,6 +15,8 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
     {
         #region Fields
         [SerializeField] private KeyCode multiSelectKey = KeyCode.LeftControl;
+
+        public UnityEvent onDeselected;
         #endregion
 
         #region Lifecycle
@@ -48,9 +52,23 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             }
             else
             {
+                // 重點修正：先判斷「目前選取集合是否恰好只有這個物件」，
+                // 若是，代表這是對同一物件的重複點擊 → 取消選取；
+                // 否則才視為「覆蓋式單選」→ 清空後只選這個。
+                bool wasSoleSelection = IsSoleSelection(r);
+
                 HighlightRegistry.Clear(HighlightGroup.Selected);
-                HighlightRegistry.Add(HighlightGroup.Selected, r);
+
+                if (!wasSoleSelection)
+                    HighlightRegistry.Add(HighlightGroup.Selected, r);
             }
+        }
+
+        [Button]
+        public void CancelSelection()
+        {
+            HighlightRegistry.Clear(HighlightGroup.Selected);
+            onDeselected?.Invoke();
         }
 
         private void HandleClickEmpty()
@@ -58,6 +76,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             // 按住多選鍵時點空白處，維持既有選取不變（符合一般多選慣例）
             if (Input.GetKey(multiSelectKey)) return;
             HighlightRegistry.Clear(HighlightGroup.Selected);
+            onDeselected?.Invoke();
         }
         #endregion
 
@@ -67,6 +86,24 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             foreach (var existing in HighlightRegistry.Get(HighlightGroup.Selected))
                 if (existing == r) return true;
             return false;
+        }
+
+        /// <summary>
+        /// 判斷目前 Selected 集合是否「恰好只包含」傳入的這一個 Renderer。
+        /// 用於單選模式下辨別「重複點擊同一物件」與「切換到別的物件」。
+        /// </summary>
+        private bool IsSoleSelection(Renderer r)
+        {
+            var current = HighlightRegistry.Get(HighlightGroup.Selected);
+            int count = 0;
+            bool containsR = false;
+            foreach (var existing in current)
+            {
+                count++;
+                if (existing == r) containsR = true;
+                if (count > 1) break; // 已確定不只一個，可提早結束
+            }
+            return containsR && count == 1;
         }
 
         /// <summary>

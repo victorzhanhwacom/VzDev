@@ -1,3 +1,4 @@
+using System;
 using VzDev.DCIM.Deployment;
 
 namespace VzDev.DCIMUtils
@@ -6,6 +7,7 @@ namespace VzDev.DCIMUtils
     {
     }
 
+    [Serializable]
     public class DoorAsset: DCIMAsset
     {
     }

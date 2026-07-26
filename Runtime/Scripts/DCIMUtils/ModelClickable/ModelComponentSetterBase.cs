@@ -111,6 +111,7 @@ namespace VzDev.DCIMUtils
                 Transform model = models[i];
                 if (model == null) continue;
                 model.gameObject.TryAddComponent(out TComponent comp);
+
                 components.Add(comp);
                 AssignData(comp, model);
             }

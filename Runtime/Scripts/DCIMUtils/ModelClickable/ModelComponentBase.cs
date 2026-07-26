@@ -3,6 +3,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using VzDev.DCIM.Deployment;
 using VzDev.InteractiveUtils.ModelMouseEvent;
+using VzDev.UnityAPI.Extensions;
 
 namespace VzDev.DCIMUtils
 {
@@ -55,11 +56,11 @@ namespace VzDev.DCIMUtils
     /// </summary>
     public class ComponenetColliderSetter
     {
-        private Collider hitCollider;
+        private BoxCollider hitCollider;
         public ComponenetColliderSetter(Transform target)
         {
             if (target == null) return;
-            hitCollider = target.GetComponent<Collider>();
+            target.TryAddComponent(out hitCollider);
         }
 
         public void SetColliderEnabled(bool isEnabled)

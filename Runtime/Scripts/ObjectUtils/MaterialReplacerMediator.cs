@@ -91,6 +91,31 @@ namespace VzDev
             if (isVisible) ShowModels(EnumModelType.機櫃管理);
             else RestoreModelsMaterial();
         }
+
+        public void SetModelVisible(int mainmenuIndex)
+        {
+            switch (mainmenuIndex)
+            {
+                case 0:
+                    SetPowerModelVisible(true);
+                    break;
+                case 1:
+                    SetEnvModelVisible(true);
+                    break;
+                case 2:
+                    SetCCTVModelVisible(true);
+                    break;
+                case 3:
+                    SetDoorModelVisible(true);
+                    break;
+                case 4:
+                    SetACModelVisible(true);
+                    break;
+                case 5:
+                    SetCabinetModelVisible(true);
+                    break;
+            }
+        }
         /// <summary>
         /// 顯示相對應的模型，並將材質替換為指定材質
         /// </summary>

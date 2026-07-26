@@ -1,4 +1,6 @@
+using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 using Debug = VzDev.ToolUtils.Debug;
 
 namespace VzDev.InteractiveUtils.ModelMouseEvent
@@ -12,7 +14,11 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         [SerializeField] private bool logClickEnabled = false;
         [SerializeField] private bool logHoverEnabled = false;
         [SerializeField] private bool logDragEnabled = false;
-        
+
+        [Foldout("[Events]")] public UnityEvent<Transform> OnModelSelected;
+        [Foldout("[Events]")] public UnityEvent<Transform> OnModelDeselected;
+        private Transform lastSelectedModel;
+
         private void OnEnable()
         {
             ColliderInteractionSystem.OnMouseClick += HandleModelClick;
@@ -33,10 +39,39 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
 
         private void HandleModelClick(GameObject targetObject)
         {
+            if (lastSelectedModel != null)
+            {
+                if (lastSelectedModel == targetObject.transform)
+                {
+                    OnModelDeselected?.Invoke(lastSelectedModel);
+                    lastSelectedModel = null;
+                    return;
+                }
+                else
+                {
+                    OnModelDeselected?.Invoke(lastSelectedModel);
+                    lastSelectedModel = targetObject.transform;
+                    OnModelSelected?.Invoke(lastSelectedModel);
+                }
+            }
+            else
+            {
+                lastSelectedModel = targetObject.transform;
+                OnModelSelected?.Invoke(lastSelectedModel);
+            }
+
             if (targetObject.TryGetComponent<IModelClick>(out var handler))
             {
                 handler.OnModelClicked(targetObject);
-                Debug.Assert(logClickEnabled, $"Model Clicked: {targetObject.name}");
+                Debug.Assert(!logClickEnabled, $"Model Clicked: {targetObject.name}");
+            }
+        }
+        public void CancelSelection()
+        {
+            if (lastSelectedModel != null)
+            {
+                OnModelDeselected?.Invoke(lastSelectedModel);
+                lastSelectedModel = null;
             }
         }
 
@@ -45,7 +80,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             if (targetObject.TryGetComponent<IModelHover>(out var handler))
             {
                 handler.OnHoverEnter(targetObject);
-                Debug.Assert(logHoverEnabled, $"Hover Enter: {targetObject.name}");
+                Debug.Assert(!logHoverEnabled, $"Hover Enter: {targetObject.name}");
             }
         }
 
@@ -54,7 +89,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             if (targetObject.TryGetComponent<IModelHover>(out var handler))
             {
                 handler.OnHoverExit(targetObject);
-                Debug.Assert(logHoverEnabled, $"Hover Exit: {targetObject.name}");
+                Debug.Assert(!logHoverEnabled, $"Hover Exit: {targetObject.name}");
             }
         }
 
@@ -63,7 +98,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             if (targetObject.TryGetComponent<IModelDrag>(out var handler))
             {
                 handler.OnMouseDrag(targetObject, point);
-                Debug.Assert(logDragEnabled, $"Mouse Drag: {targetObject.name}");
+                Debug.Assert(!logDragEnabled, $"Mouse Drag: {targetObject.name}");
             }
         }
 
@@ -72,7 +107,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             if (targetObject.TryGetComponent<IModelDrag>(out var handler))
             {
                 handler.OnMouseRelease(targetObject);
-                Debug.Assert(logDragEnabled, $"Mouse Release: {targetObject.name}");
+                Debug.Assert(!logDragEnabled, $"Mouse Release: {targetObject.name}");
             }
         }
     }

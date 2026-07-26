@@ -9,6 +9,7 @@ namespace VzDev.DCIM.Deployment
     [Serializable]
     public class AssetInfo
     {
+        public string deviceCode;
         /// <summary>
         /// 資產名稱
         /// </summary>
