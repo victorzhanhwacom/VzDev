@@ -80,7 +80,7 @@ namespace VzDev.ObjectUtils
             if (!isAlwaysVisible) isInRange = visibleReverse ? !isInRange : isInRange;
 
             isInFrontOfCamera = viewportPos.z > 0;
-            container.SetActive(isInRange && isInFrontOfCamera);
+            container.SetActive(isInRange && isInFrontOfCamera && target3DObject.gameObject.activeInHierarchy);
 
             if (container.activeSelf == false) return;
 
