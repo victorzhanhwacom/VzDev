@@ -8,24 +8,26 @@ using VzDev.UnityAPI.Extensions;
 namespace VzDev.DCIMUtils
 {
     /// <summary>
-    /// ModelComponentBase 是一個抽象類別，實作了 IModelClick、IModelHover 以及 IModelComponent<TData> 介面，
-    /// 定義了模型互動的基本功能，並利用事件將資料傳遞給外部訂閱者。它提供了設定資產資料、啟用/禁用 Collider
+    /// 通用模型掛載元件，取代逐一自訂的 XxxComponent（RackComponent、FanComponent...）。
+    /// 只負責「持有 data」+「轉發滑鼠事件」，不含任何設備專屬邏輯。
+    /// 若某設備未來需要專屬行為（例如風扇要自轉動畫），再繼承本類別另外處理，
+    /// 其餘設備維持直接使用本類別即可，不需要另外寫檔案。
     /// </summary>
-    public abstract class ModelComponentBase<TData> : MonoBehaviour, IModelClick, IModelHover,
-                                    IModelComponent<TData> where TData : DCIMAsset
+    public class ModelComponent<TData> : MonoBehaviour, IModelClick, IModelHover,
+                                            IModelComponent<TData>
+        where TData : DCIMAsset
     {
         #region Fields
-        [SerializeField, ReadOnly, Tooltip("目標模型攜帶的資料項")] protected TData data;
+        [SerializeField, ReadOnly, Tooltip("目標模型攜帶的資料項")] private TData data;
         /// <summary>
-        /// 將Collider獨立出來，提供設定Collider啟用狀態的功能，允許外部控制模型的互動性。
+        /// 
         /// </summary>
         private ComponenetColliderSetter colliderSetter;
         private bool isHaveData => data != null;
-
         #endregion
 
         private void Awake() => colliderSetter = new ComponenetColliderSetter(transform);
-        public void SetColliderEnabled(bool isEnabled) => colliderSetter?.SetColliderEnabled(isEnabled);
+        public void SetColliderEnabled(bool isEnabled) => colliderSetter.SetColliderEnabled(isEnabled);
         public void SetData(TData assetData)
         {
             data = assetData;
@@ -54,7 +56,7 @@ namespace VzDev.DCIMUtils
         #endregion
     }
 
-    /* /// <summary>
+     /// <summary>
     /// 將Collider獨立出來，提供設定Collider啟用狀態的功能，允許外部控制模型的互動性。
     /// </summary>
     public class ComponenetColliderSetter
@@ -71,5 +73,5 @@ namespace VzDev.DCIMUtils
             if (hitCollider != null)
                 hitCollider.enabled = isEnabled;
         }
-    } */
+    }
 }
