@@ -92,6 +92,9 @@ MonoBehaviour:
   - {fileID: 8845048334378979630}
   - {fileID: 7234290111139415165}
   excludeChildren: []
+  onSelectedIndex:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &602195338168142017
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,6 +465,9 @@ MonoBehaviour:
   - {fileID: 8889938609643389093}
   - {fileID: 8089643918484982520}
   excludeChildren: []
+  onSelectedIndex:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8771128066794435261
 GameObject:
   m_ObjectHideFlags: 0
@@ -2575,7 +2581,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6487657247571047558, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 36.47
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6487657247571047558, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: m_SizeDelta.y
