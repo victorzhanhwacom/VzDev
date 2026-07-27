@@ -24,11 +24,29 @@ namespace VzDev.DCIMUtils
         private float _lastRTValue = -1f;
         private int _lastRHValue = -1;
         private readonly int txtUnitSize = 8;
+
+        private HeatSource heatSource;
         #endregion
 
         private void Awake()
         {
             icon.sprite = _isRTMode ? rtIcon : rhIcon;
+           
+        }
+
+        private void Start()
+        {
+             if(TryGetComponent(out UIAnchorFollower anchorFollower))
+            {
+                if(anchorFollower.Target3DObject.TryGetComponent(out heatSource) == false)
+                {
+                   Debug.LogWarning($"PointInfo_RTRH: {anchorFollower.Target3DObject.name} does not have a HeatSource component.", this);
+                }
+            }
+            else
+            {
+                Debug.LogWarning("PointInfo_RTRH: No UIAnchorFollower component found on this GameObject.", this);
+            }
             UpdateLabel();
         }
 
@@ -56,6 +74,8 @@ namespace VzDev.DCIMUtils
         {
             if (Mathf.Approximately(value, _lastRTValue)) return;
             _lastRTValue = value;
+            heatSource.SetTemperature(_lastRTValue);
+
             UpdateLabel();
         }
 
@@ -63,6 +83,7 @@ namespace VzDev.DCIMUtils
         {
             if (Mathf.Approximately(value, _lastRHValue)) return;
             _lastRHValue = value;
+            heatSource.SetTemperature(_lastRHValue);
             UpdateLabel();
         }
 

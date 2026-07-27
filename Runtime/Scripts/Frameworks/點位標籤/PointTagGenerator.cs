@@ -13,6 +13,7 @@ namespace VzDev.ToolUtils
         [SerializeField, Tooltip("是否顯示點位標籤"), OnValueChanged("OnShowPointTagsChanged")] private bool showPointTags = false;
         [SerializeField, Tooltip("是否總是顯示標籤文字"), OnValueChanged("OnAlwaysShowLabelChanged")] private bool alwaysShowLabel = false;
         [SerializeField] private List<Transform> targetModels;
+        [Foldout("[Events]"), Tooltip("當點位標籤被選中時觸發")] public UnityEvent<Transform> onPointTagSelectedTransform;
         [Foldout("[Events]"), Tooltip("當點位標籤被選中時觸發")] public UnityEvent<PointTag> onPointTagSelected;
         [Foldout("[Events]"), Tooltip("當點位標籤被取消選中時觸發")] public UnityEvent onPointTagDeselected;
         [Foldout("[Components]"), SerializeField] private PointTag pointTagPrefab;
@@ -111,6 +112,7 @@ namespace VzDev.ToolUtils
                     {
                         currentSelectedTag = pointTag;
                         onPointTagSelected?.Invoke(currentSelectedTag);
+                        onPointTagSelectedTransform?.Invoke(currentSelectedTag.FollowerTarget);
                     }
                     if (toggleGroup != null && toggleGroup.AnyTogglesOn()) onPointTagDeselected?.Invoke();
                 });

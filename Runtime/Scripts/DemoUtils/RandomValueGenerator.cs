@@ -18,6 +18,7 @@ namespace VzDev.DemoUtils
 
         [SerializeField, ReadOnly, HideIf(nameof(IsInt))] private float currentValueFloat;
         [SerializeField, ReadOnly, ShowIf(nameof(IsInt))] private int currentValueInt;
+        [Foldout("[Events]")] public UnityEvent<string> OnValueChangedString;
 
         [Foldout("[Events]"), ShowIf(nameof(IsFloat))] public UnityEvent<float> OnValueChangedFloat;
         [Foldout("[Events]"), ShowIf(nameof(IsFloat01))] public UnityEvent<float> OnValueChangedFloat01;
@@ -42,10 +43,13 @@ namespace VzDev.DemoUtils
 
         private bool IsHaveEventListener => valueType switch
         {
-            ValueType.Float => OnValueChangedFloat != null && OnValueChangedFloat.GetPersistentEventCount() > 0,
-            ValueType.Float01 => OnValueChangedFloat01 != null && OnValueChangedFloat01.GetPersistentEventCount() > 0,
+            ValueType.Float => OnValueChangedFloat != null && OnValueChangedFloat.GetPersistentEventCount() > 0 ||
+                                OnValueChangedString != null && OnValueChangedString.GetPersistentEventCount() > 0,
+            ValueType.Float01 => OnValueChangedFloat01 != null && OnValueChangedFloat01.GetPersistentEventCount() > 0 ||
+                                OnValueChangedFloat != null && OnValueChangedFloat.GetPersistentEventCount() > 0,
             ValueType.Int => OnValueChangedInt != null && OnValueChangedInt.GetPersistentEventCount() > 0 || 
-                            OnValueChangedSingle != null && OnValueChangedSingle.GetPersistentEventCount() > 0,
+                            OnValueChangedSingle != null && OnValueChangedSingle.GetPersistentEventCount() > 0 ||
+                            OnValueChangedString != null && OnValueChangedString.GetPersistentEventCount() > 0,
             _ => false
         };
         #endregion
@@ -65,16 +69,18 @@ namespace VzDev.DemoUtils
         {
             currentValueFloat = SampleValue().RoundToDecimals(decimalPlaces);
             OnValueChangedFloat?.Invoke(currentValueFloat);
+            OnValueChangedString?.Invoke(currentValueFloat.ToString());
         }
 
         private void GenerateFloat01Value()
         {
             float raw = SampleValue().RoundToDecimals(decimalPlaces);
             currentValueFloat = raw;
-            float normalized = _range > 0f
+           /*  float normalized = _range > 0f
                 ? Mathf.Clamp01((raw - minValue) / _range).RoundToDecimals(decimalPlaces)
-                : 0f;
-            OnValueChangedFloat01?.Invoke(normalized);
+                : 0f; */
+            OnValueChangedFloat01?.Invoke(currentValueFloat);
+            OnValueChangedString?.Invoke(currentValueFloat.ToString());
         }
 
         private void GenerateIntValue()
@@ -82,6 +88,7 @@ namespace VzDev.DemoUtils
             currentValueInt = Mathf.RoundToInt(SampleValue());
             OnValueChangedInt?.Invoke(currentValueInt);
             OnValueChangedSingle?.Invoke(currentValueInt);
+            OnValueChangedString?.Invoke(currentValueInt.ToString());
         }
 
         /// <summary>

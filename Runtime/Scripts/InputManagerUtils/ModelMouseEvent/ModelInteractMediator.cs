@@ -37,6 +37,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             ColliderInteractionSystem.OnMouseRelease -= HandleModelRelease;
         }
 
+        public void HandleModelClick(Transform targetModel) => HandleModelClick(targetModel.gameObject);
         private void HandleModelClick(GameObject targetObject)
         {
             if (lastSelectedModel != null)

@@ -34,6 +34,12 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         }
         #endregion
 
+        public void SetTransformClick(Transform targetModel)
+        {
+            if (targetModel == null) return;
+            HandleClick(targetModel.gameObject);
+        }
+
         #region Handlers
         private void HandleClick(GameObject go)
         {
