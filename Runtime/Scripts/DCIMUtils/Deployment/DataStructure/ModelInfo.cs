@@ -10,7 +10,7 @@ namespace VzDev.DCIM.Deployment
     public class ModelInfo
     {
         /// <summary>
-        /// 模型對像Prefab, 在Instantiating後會將實例化的對象賦值給modelTarget
+        /// 目標模型的 Transform，用來Camera定位用
         /// </summary>
         public Transform modelTarget;
 
