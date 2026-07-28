@@ -144,5 +144,30 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
                 currentHover = null;
             }
         }
+
+        #region 供外部模擬觸發（例如 UI Toggle 點位標籤系統）
+        /// <summary>
+        /// 供外部（例如 ModelToggleBinding）模擬一次「點擊此模型」，
+        /// 完整重用既有的 OnMouseClick 事件管線（SelectionController 高亮、
+        /// ModelInteractMediator 轉發、AssetDataDisplayDispatcher 面板顯示…），
+        /// 不需要在呼叫端重複這些邏輯。
+        /// 事件只能在宣告的類別內部 Invoke，這是唯一合法的外部觸發入口。
+        /// </summary>
+        public static void SimulateClick(GameObject target)
+        {
+            if (target == null) return;
+            OnMouseClick?.Invoke(target);
+        }
+
+          /// <summary>
+        /// 供外部（例如 ModelToggleBinding 在 allowSwitchOff 情境下）模擬一次
+        /// 「點擊空白處」，完整重用既有的 OnMouseClickEmpty 事件管線
+        /// （SelectionController 清空選取、AssetDataDisplayDispatcher 關閉面板…）。
+        /// </summary>
+        public static void SimulateClickEmpty()
+        {
+            OnMouseClickEmpty?.Invoke();
+        }
+        #endregion
     }
 }

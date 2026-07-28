@@ -11,7 +11,7 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
     /// 掛載資料項到目標模型上，並處理各模型的互動事件，將資料透過 ModelComponentSetterHub 轉發給其他地方訂閱。
     /// </summary>
     public abstract class ModelComponentBase<TData> : MonoBehaviour
-        , IModelClick, IModelHover, IModelComponent<TData> where TData : DCIMAsset
+        , IModelClick, IModelHover, IModelComponent<TData>, IHasDCIMAsset where TData : DCIMAsset
     {
         #region Fields
         [SerializeField, ReadOnly, Tooltip("目標模型攜帶的資料項")] protected TData data;
@@ -19,9 +19,15 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         /// 將Collider獨立出來，提供設定Collider啟用狀態的功能，允許外部控制模型的互動性。
         /// </summary>
         private ModelColliderSetter modelColliderSetter;
-        private bool isHaveData => data != null;
 
         #endregion
+
+        /// <summary>
+        /// 型別無關的資料存取入口。因為 TData 在編譯期就固定了，外部（例如只拿到 Renderer/GameObject
+        /// 的地方，像 SelectionController 廣播出來的選取結果）沒辦法知道具體是哪個 TData，
+        /// 透過這個非泛型介面統一上轉型成 DCIMAsset，就能在不知道具體型別的情況下取出資料。
+        /// </summary>
+        public DCIMAsset GetAsset() => data;
 
         public void SetColliderEnabled(bool isEnabled)
         {
@@ -32,7 +38,7 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         public void SetData(TData assetData)
         {
             data = assetData;
-            if (isHaveData) data.modelInfo.SetModelTarget(transform);
+            data?.modelInfo.SetModelTarget(transform);
         }
 
         #region Events
@@ -67,7 +73,15 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         }
     }
 
-    
+    /// <summary>
+    /// 型別無關的資料存取介面。任何掛載了 ModelComponentBase&lt;TData&gt; 的模型都會實作這個介面，
+    /// 讓外部只要用 TryGetComponent&lt;IHasDCIMAsset&gt; 就能取出資料，不需要知道具體的 TData 型別。
+    /// </summary>
+    public interface IHasDCIMAsset
+    {
+        DCIMAsset GetAsset();
+    }
+
     /// <summary>
     /// 定義目標模型的互動介面
     /// </summary>

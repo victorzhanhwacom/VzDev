@@ -11,7 +11,7 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
 {
     /// <summary>
     /// 設定目標模型掛載相對應的ModelComponent，以存取相對應的資料
-    /// <para>並處理各模型的互動事件，將資料透過 ModelComponentSetterHub 轉發給其他地方訂閱。</para>
+    /// <para>並處理各模型的互動事件。</para>
     /// </summary>
     public abstract class ModelComponentSetterBase<TData, TComponent> : MonoBehaviour
         where TComponent : ModelComponentBase<TData> where TData : DCIMAsset, new()
@@ -23,7 +23,7 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
 
         [SerializeField, ReadOnly, Tooltip("紀錄已跟EventHub訂閱事件，避免在編輯器中造成事件重複訂閱")] private bool isSubscribedEvents = false;
 
-        [Label("[目標模型巨集]"), SerializeField, ReadOnly] protected List<Transform> models = new();
+        [Label("[目標模型巨集]"), SerializeField, ] protected List<Transform> models = new();
         [Label("[資料巨集]"), SerializeField, ReadOnly] protected List<TData> data = new();
         [Label("[目標Component巨集]"), SerializeField, ReadOnly] protected List<TComponent> components = new();
 
@@ -183,23 +183,11 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
             isSubscribedEvents = isSubscribe;
         }
 
-        private void HandleModelClicked(TData asset)
-        {
-            OnModelClickedEvent?.Invoke(asset);
-            ModelComponentSetterEventHub.RaiseClicked(asset); //集中管理事件給 ModelInteractionHub，方便其他地方訂閱
-        }
+        private void HandleModelClicked(TData asset) => OnModelClickedEvent?.Invoke(asset);
 
-        private void HandleHoverEnter(TData asset)
-        {
-            OnHoverEnterEvent?.Invoke(asset);
-            ModelComponentSetterEventHub.RaiseHoverEnter(asset);  //集中管理事件給 ModelInteractionHub，方便其他地方訂閱
-        }
+        private void HandleHoverEnter(TData asset) => OnHoverEnterEvent?.Invoke(asset);
 
-        private void HandleHoverExit(TData asset)
-        {
-            OnHoverExitEvent?.Invoke(asset);
-            ModelComponentSetterEventHub.RaiseHoverExit(asset);  //集中管理事件給 ModelInteractionHub，方便其他地方訂閱
-        }
+        private void HandleHoverExit(TData asset) => OnHoverExitEvent?.Invoke(asset);
         #endregion
     }
 }
