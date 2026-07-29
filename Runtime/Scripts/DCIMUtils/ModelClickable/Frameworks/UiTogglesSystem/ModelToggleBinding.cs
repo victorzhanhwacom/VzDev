@@ -1,4 +1,6 @@
+using System;
 using NaughtyAttributes;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,12 +22,29 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         [SerializeField, Required, Tooltip("此 Toggle 代表的目標模型")]
         private GameObject targetModel;
 
-        [SerializeField, Required] private Toggle toggle;
+        [SerializeField, Required] private Toggle toggle, labelToggle;
+        [SerializeField] private TextMeshProUGUI labelText;
         [SerializeField, Required, Tooltip("共用的 ToggleGroup，用於同步時關閉其它 Toggle")]
         private ToggleGroup toggleGroup;
 
         public GameObject TargetModel => targetModel;
+
+        public Toggle ToggleItem => toggle;
+
+        public bool LabelVisible => labelToggle.isOn;
+
         #endregion
+
+        public void SetTargetModel(Transform target)
+        {
+            targetModel = target.gameObject;
+        }
+        public void SetLabel(string txt) => labelText.text = txt;
+        public void SetToggleGroup(ToggleGroup group)
+        {
+            toggleGroup = group;
+            toggle.group = group; 
+        }
 
         #region Lifecycle
         private void OnEnable()
@@ -71,6 +90,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         /// </summary>
         public void SetActiveWithoutNotify()
         {
+            Debug.Log($"SetActiveWithoutNotify: {name} (targetModel={targetModel?.name})", this);
             if (toggleGroup != null)
                 toggleGroup.SetAllTogglesOff(sendCallback: false);
             toggle.SetIsOnWithoutNotify(true);
@@ -78,8 +98,15 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
 
         public void SetInactiveWithoutNotify()
         {
+            Debug.Log($"SetInactiveWithoutNotify: {name} (targetModel={targetModel?.name})", this);
             toggle.SetIsOnWithoutNotify(false);
         }
+
+        internal void SetLabelAlwaysVisible(bool isVisible)
+        {
+            labelToggle.isOn = isVisible;
+        }
+
 
         #endregion
     }

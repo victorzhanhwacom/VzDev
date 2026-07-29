@@ -119,8 +119,6 @@ namespace VzDev.ObjectUtils
 
             rectTrans = transform as RectTransform;
             container = transform.GetChild(0).gameObject;
-            /*  if (transform.TryGetComponentInParent(out PositionTo2DPointSorter sorter))
-                 sorter.AddToSortList(this); */
         }
     }
 }
