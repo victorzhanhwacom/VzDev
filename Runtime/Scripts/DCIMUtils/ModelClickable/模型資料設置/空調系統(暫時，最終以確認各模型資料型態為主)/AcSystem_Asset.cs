@@ -7,6 +7,6 @@ namespace VzDev
     public class AcSystem_Asset : DCIMAsset
     {
         public float outputPressure, outputFlowRate, outputTemperature;
-        public float inputPressure, inputFlowRate, inputTemperature;
+        public float inputPressure, inputFlowRate, inputTemperature = 32.7f;
     }
 }

@@ -10,6 +10,7 @@ namespace VzDev.DCIM.Deployment
     public class DCR_Asset: EquipmentAssetBase
     {
         public RackPowerInfo rackPowerInfo;
+        internal int currentPowerWatt;
 
         /// <summary>
         /// 機櫃內的所有資產設備
