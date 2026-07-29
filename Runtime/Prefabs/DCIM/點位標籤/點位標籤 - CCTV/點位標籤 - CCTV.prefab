@@ -18,11 +18,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 565600320500802785, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: segments.Array.data[0].normalizedWeight
-      value: 0.8
+      value: 0.9756098
       objectReference: {fileID: 0}
     - target: {fileID: 565600320500802785, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: segments.Array.data[1].normalizedWeight
-      value: 0.1
+      value: 0.0121951215
       objectReference: {fileID: 0}
     - target: {fileID: 565600320500802785, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: segments.Array.data[2].normalizedWeight
@@ -30,11 +30,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 565600320500802785, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: segments.Array.data[3].normalizedWeight
-      value: 0.1
+      value: 0.0121951215
       objectReference: {fileID: 0}
     - target: {fileID: 744397118062108305, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: offsetPos.y
-      value: 0.05
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 830179462768580382, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: m_Name

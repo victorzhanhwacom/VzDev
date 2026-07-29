@@ -126,8 +126,6 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         /// </summary>
         public void SetActiveWithoutNotify()
         {
-            Debug.Log($"SetActiveWithoutNotify: {name} (targetModel={targetModel?.name})", this);
-
             isSyncingFromModel = true;
             toggle.isOn = true;
             isSyncingFromModel = false;
@@ -147,8 +145,6 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         /// </summary>
         public void SetInactiveWithoutNotify()
         {
-            Debug.Log($"SetInactiveWithoutNotify: {name} (targetModel={targetModel?.name})", this);
-
             bool previousAllowSwitchOff = false;
             if (toggleGroup != null)
             {

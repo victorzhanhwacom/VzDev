@@ -16,6 +16,7 @@ namespace VzDev.StringUtils
 
             int start = str.IndexOf(startStr) + 1;
             int end = str.IndexOf(endStr);
+            if(start == 0 || end == -1 || start >= end)  return null;
             string content = str.Substring(start, end - start);
             return content;
         }
