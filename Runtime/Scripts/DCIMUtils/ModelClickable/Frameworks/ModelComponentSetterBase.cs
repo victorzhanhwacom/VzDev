@@ -5,6 +5,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using VzDev.DCIM.Deployment;
 using VzDev.DebugUtils;
+using VzDev.InteractiveUtils.ModelMouseEvent;
 using VzDev.UnityAPI.Extensions;
 
 namespace VzDev.DCIMUtils.ModelInteractUtils
@@ -61,6 +62,8 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         [Button, ShowIf("isHaveModels")]
         private void SetComponents()
         {
+            Debug.Assert(Application.isPlaying, $"[{nameof(ModelComponentSetterBase<TData, TComponent>)}] 只能在Play模式下執行，請先進入Play模式");
+            
             UnsubscribeAll();
             ClearComponents();
             components ??= new List<TComponent>();
@@ -110,6 +113,17 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
             for (int i = 0; i < components.Count; i++)
             {
                 components[i]?.SetColliderEnabled(modelClickEnabled && isSubscribedEvents);
+                
+            }
+             if (!isEnabled)
+            {
+                var renderers = new List<Renderer>(components.Count);
+                foreach (var comp in components) //根據建立的Component，找出對應的Renderer，並從SelectionController中移除
+                {
+                    if (comp != null && comp.TryGetComponent<Renderer>(out var r))
+                        renderers.Add(r);
+                }
+                SelectionController.RemoveFromSelection(renderers);
             }
         }
 
@@ -143,14 +157,12 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         private void OnDisable() => UnsubscribeAll();
 
         #region 開啟/關閉ModelComponent的互動事件訂閱，避免在編輯器中造成事件重複訂閱
-        [Button, HideIf("isSubscribedEvents")]
         private void SubscribeAll()
         {
             if (isSubscribedEvents) return;
             SetSubscribe(true);
         }
 
-        [Button, ShowIf("isSubscribedEvents")]
         private void UnsubscribeAll()
         {
             if (isSubscribedEvents == false) return;

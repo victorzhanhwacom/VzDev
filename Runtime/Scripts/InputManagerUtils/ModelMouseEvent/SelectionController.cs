@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
@@ -108,7 +109,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         #endregion
 
         #region Helpers
-        private bool IsSelected(Renderer r)
+        private static bool IsSelected(Renderer r)
         {
             foreach (var existing in HighlightRegistry.Get(HighlightGroup.Selected))
                 if (existing == r) return true;
@@ -169,8 +170,45 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
                 count++;
                 if (count > 1) break;
             }
+            // sole = null 代表「沒有唯一確定的焦點」，下游應清空自己的顯示。
+            // sole
             OnSoleSelectionChanged?.Invoke(count == 1 ? sole : null);
         }
         #endregion
+
+
+         #region 供外部（非使用者點擊來源）精準移除選取
+        /// <summary>
+        /// 只把「傳入的這批 Renderer」從 Selected 集合中移除（如果原本在裡面），
+        /// 其它不相干的選取（例如別的類型的模型）完全不受影響——
+        /// 這是跟 SimulateClickEmpty() 最大的差異：後者是全域清空，這裡是精準移除。
+        ///
+        /// 用途：非使用者點擊、但仍需要讓特定目標退出選取的情境。
+        /// 例如 ModelComponentSetterBase.SetModelClickEnabled(false) 停用某類型的
+        /// Collider 互動時，若該類型底下有模型原本是被選取的，必須同步讓它退出選取，
+        /// 否則會殘留「已選取但點不到、也無法再被取消」的不一致狀態，
+        /// 而且面板/Toggle 也不會收到任何通知去同步更新自己的顯示。
+        ///
+        /// 移除後一律重新廣播結果，確保下游（Dispatcher/ToggleSync）能同步。
+        /// </summary>
+        public static void RemoveFromSelection(IEnumerable<Renderer> targets)
+        {
+            if (targets == null) return;
+ 
+            bool anyRemoved = false;
+            foreach (var r in targets)
+            {
+                if (r == null) continue;
+                if (!IsSelected(r)) continue;
+ 
+                HighlightRegistry.Remove(HighlightGroup.Selected, r);
+                anyRemoved = true;
+            }
+ 
+            if (anyRemoved) RaiseSoleSelectionChanged();
+        }
+        #endregion
+
+        
     }
 }
