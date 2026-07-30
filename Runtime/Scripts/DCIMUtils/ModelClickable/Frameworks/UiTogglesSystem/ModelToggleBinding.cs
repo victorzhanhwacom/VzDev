@@ -91,8 +91,6 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         /// </summary>
         private void HandleToggleChanged(bool isOn)
         {
-            Debug.Assert(!toggle.isOn, $"targetModel: {targetModel.name}, toggle.isOn: {toggle.isOn}, isOn: {isOn}");
-
             if (isSyncingFromModel) return;
 
             if (targetModel == null) return;
