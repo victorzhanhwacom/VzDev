@@ -602,6 +602,10 @@ PrefabInstance:
       propertyPath: offsetPos.y
       value: 1.05
       objectReference: {fileID: 0}
+    - target: {fileID: 744397118062108305, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
+      propertyPath: visibleRange
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 830179462768580382, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: m_Name
       value: "\u9EDE\u4F4D\u6A19\u7C64 - PDU ModelToggleBinding"
