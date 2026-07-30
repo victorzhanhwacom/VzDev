@@ -49,5 +49,13 @@ namespace VzDev.WebGLUtils
                                 OnDeviceFocus?.Invoke(foundModelByDeviceCode);
                         }
                 }
+                
+
+                public string testDeviceCode = string.Empty;
+                [Button]    
+                private void TestSetCameraFocus_CCTV() => SetCameraFocus_CCTV(testDeviceCode);
+                
+                [Button]    
+                private void TestSetCameraFocus_Door() => SetCameraFocus_Door(testDeviceCode);
         }
 }
