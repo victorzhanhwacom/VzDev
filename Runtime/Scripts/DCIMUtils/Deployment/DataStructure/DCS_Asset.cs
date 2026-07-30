@@ -5,7 +5,6 @@ namespace VzDev.DCIM.Deployment
     /// </summary>
     public class DCS_Asset : EquipmentAssetBase
     {
-        public EquipmentPowerInfo equipmentInfo;
         ///未來會有IP&Port類別
     }
 }

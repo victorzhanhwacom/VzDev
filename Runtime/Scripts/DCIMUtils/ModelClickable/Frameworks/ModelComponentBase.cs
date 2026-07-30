@@ -14,7 +14,7 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         , IModelClick, IModelHover, IModelComponent<TData>, IHasDCIMAsset where TData : DCIMAsset
     {
         #region Fields
-        [SerializeField, ReadOnly, Tooltip("目標模型攜帶的資料項")] protected TData data;
+        [SerializeField, Tooltip("目標模型攜帶的資料項")] protected TData data;
         /// <summary>
         /// 將Collider獨立出來，提供設定Collider啟用狀態的功能，允許外部控制模型的互動性。
         /// </summary>
@@ -35,7 +35,7 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
             modelColliderSetter.SetColliderEnabled(isEnabled);
         }
 
-        public void SetData(TData assetData)
+        public virtual void SetData(TData assetData)
         {
             data = assetData;
             data?.modelInfo.SetModelTarget(transform);
