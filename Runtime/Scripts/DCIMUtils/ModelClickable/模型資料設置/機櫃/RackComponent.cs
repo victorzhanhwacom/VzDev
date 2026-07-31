@@ -1,4 +1,4 @@
-using VzDev.DCIM.Deployment;
+using VzDev.DCIM.RevitAssetDataStructure;
 using VzDev.DCIMUtils.ModelInteractUtils;
 using VzDev.DCIMUtils.RackDeployment;
 
@@ -11,7 +11,7 @@ namespace VzDev
     /// </summary>
     public class RackComponent : ModelComponentBase<DCR_Asset>
     {
-        public override void SetData(DCR_Asset assetData)
+      /*   public override void SetData(DCR_Asset assetData)
         {
             base.SetData(assetData);
             if (isActiveAndEnabled) RackRegistry.Register(gameObject, assetData);
@@ -22,6 +22,6 @@ namespace VzDev
             if (GetAsset() is DCR_Asset rack) RackRegistry.Register(gameObject, rack);
         }
 
-        private void OnDisable() => RackRegistry.Unregister(gameObject);
+        private void OnDisable() => RackRegistry.Unregister(gameObject); */
     }
 }

@@ -1,7 +1,7 @@
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
-using VzDev.DCIM.Deployment;
+using VzDev.DCIM.RevitAssetDataStructure;
 using VzDev.DCIMUtils.ModelInteractUtils;
 using VzDev.UnityAPI.Extensions;
 using System.Linq;
@@ -27,7 +27,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         /// 沒有資料時第一個參數為 null，第二個參數是 fallback 名稱，View 應直接顯示它。
         /// </summary>
         [Foldout("[Events]"), Label("達到延遲秒數後觸發")]
-        public UnityEvent<DCIMAsset, string> OnShowTooltip;
+        public UnityEvent<RevitAsset, string> OnShowTooltip;
 
         [Foldout("[Events]"), Label("需要隱藏Tooltip時觸發（離開/切換/點擊/失焦）")]
         public UnityEvent OnHideTooltip;
@@ -65,7 +65,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             hoverTimer += Time.unscaledDeltaTime;
             if (hoverTimer < hoverDelay) return;
 
-            (DCIMAsset asset, string fallbackName) = ResolveTargetData(currentTarget);
+            (RevitAsset asset, string fallbackName) = ResolveTargetData(currentTarget);
             OnShowTooltip?.Invoke(asset, fallbackName);
             isShown = true;
         }
@@ -121,8 +121,8 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
                 var asset = provider.GetAsset();
                 if (asset != null)
                 {
-                    string nameFromAsset = !string.IsNullOrEmpty(asset.assetInfo?.assetName)
-                        ? asset.assetInfo.assetName
+                    string nameFromAsset = !string.IsNullOrEmpty(asset.companyPropertyInfo?.propertyName)
+                        ? asset.companyPropertyInfo.propertyName
                         : ResolveFallbackNameFromGameObject(target.name);
 
                     return (asset, nameFromAsset);

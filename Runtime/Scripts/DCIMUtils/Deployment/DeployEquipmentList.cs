@@ -2,11 +2,12 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using VzDev.DCIM.RevitAssetDataStructure;
 using VzDev.DCIMUtils.RackDeployment;
 
-public class DeployDevicePanel : MonoBehaviour
+public class DeployEquipmentList : MonoBehaviour
 {
-    [SerializeField] private ScrollRect scrollRect;
+   /*  [SerializeField] private ScrollRect scrollRect;
 
     [SerializeField, ReadOnly] private DeviceListItemView[] toggles;
 
@@ -14,6 +15,8 @@ public class DeployDevicePanel : MonoBehaviour
 
     private void Start() => GetToggles();
 
+    public void SetData(List<RevitAsset)
+    
     private void OnEnable()
     {
         for(int i = 0; i < toggles.Length; i++)
@@ -35,5 +38,5 @@ public class DeployDevicePanel : MonoBehaviour
     private void GetToggles()
     {
         toggles = scrollRect.content.GetComponentsInChildren<DeviceListItemView>(true);
-    }
+    } */
 }

@@ -19,12 +19,13 @@ namespace VzDev.ToolUtils
         public static void LogWarning(object message, Object callerClass = null) => LogMessage(LogType.Warning, message, callerClass);
 
         public static void LogError(object message, Object callerClass = null) => LogMessage(LogType.Error, message, callerClass);
-        public static void Assert(bool isTrue, object message, Object callerClass = null)
+        public static bool Assert(bool isTrue, object message, Object callerClass = null)
         {
             if (!isTrue)
             {
                 LogMessage(LogType.Log, message, callerClass);
             }
+            return !isTrue;
         }
 
         private static void LogMessage(LogType logType, object message, Object callerClass)

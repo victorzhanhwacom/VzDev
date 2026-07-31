@@ -10,7 +10,7 @@ namespace VzDev
 {
     public class SelectedEquipmentDisplayer : MonoBehaviour
     {
-        [SerializeField, ReadOnly] private EquipmentCatalogEntry currentEquipment;
+       /*  [SerializeField, ReadOnly] private EquipmentCatalogEntry currentEquipment;
 
         [Foldout("[Events]")] public UnityEvent<GameObject> invokeEquipmentModelCreated;
         [Foldout("[Components]"), SerializeField] private TextMeshProUGUI txtSn, txtModel;
@@ -30,6 +30,6 @@ namespace VzDev
         private void CreateAssetModel()
         {
            invokeEquipmentModelCreated?.Invoke(currentEquipment.modelPrefab);
-        }
+        } */
     }
 }

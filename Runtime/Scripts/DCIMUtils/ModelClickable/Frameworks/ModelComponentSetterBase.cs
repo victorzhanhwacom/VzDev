@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
-using VzDev.DCIM.Deployment;
+using VzDev.DCIM.RevitAssetDataStructure;
 using VzDev.DebugUtils;
 using VzDev.InteractiveUtils.ModelMouseEvent;
 using VzDev.UnityAPI.Extensions;
@@ -24,12 +24,12 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
 
         [SerializeField, ReadOnly, Tooltip("紀錄已跟EventHub訂閱事件，避免在編輯器中造成事件重複訂閱")] private bool isSubscribedEvents = false;
 
-        [Label("[目標模型巨集]"), SerializeField, ] protected List<Transform> models = new();
-        [Label("[資料巨集]"), SerializeField, ReadOnly] protected List<TData> data = new();
+        [Label("[目標模型巨集]"), SerializeField,] protected List<Transform> models = new();
+        [Label("[資料巨集]"), SerializeField, ReadOnly] protected List<TData> dcimAssetDatas = new();
         [Label("[目標Component巨集]"), SerializeField, ReadOnly] protected List<TComponent> components = new();
 
         protected bool isHaveModels => models != null && models.Count > 0;
-        protected bool isHaveData => data != null && data.Count > 0;
+        protected bool isHaveData => dcimAssetDatas != null && dcimAssetDatas.Count > 0;
         protected bool isHaveComponents => components != null && components.Count > 0;
         #endregion
 
@@ -63,7 +63,7 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         private void SetComponents()
         {
             Debug.Assert(Application.isPlaying, $"[{nameof(ModelComponentSetterBase<TData, TComponent>)}] 只能在Play模式下執行，請先進入Play模式");
-            
+
             UnsubscribeAll();
             ClearComponents();
             components ??= new List<TComponent>();
@@ -87,19 +87,15 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         protected virtual void AssignDataToComponent(TComponent comp, Transform model)
         {
             //這段下列皆為暫時測試用，實際上依WebAPI取得的資料才能正確比對
-            TData data = isHaveData ? this.data.Find(d => d.assetInfo.assetName == model.name) : default;
-            
-            if(data == null)
-            {
-                data = new TData();  
-                string raw = model.name.GetStringBetweenMarks("[","]");
-                data.assetInfo = new AssetInfo { assetName = raw.Split(':').LastOrDefault() }; 
-            }
+            //    TData data = isHaveData ? this.data.Find(d => d.assetInfo.assetName == model.name) : default;
+
+            TData data = new TData();
+            string deviceCode = model.name.GetStringBetweenMarks("[", "]");
+            data.deviceCode = deviceCode;
             /*
             待補全
             */
-
-            data.modelInfo = new ModelInfo{ modelTarget = model,};
+            data.modelInfo = new ModelInfo { modelTarget = model, };
             comp.SetData(data); // null 也明確設定，避免殘留舊資料
         }
 
@@ -113,9 +109,9 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
             for (int i = 0; i < components.Count; i++)
             {
                 components[i]?.SetColliderEnabled(modelClickEnabled && isSubscribedEvents);
-                
+
             }
-             if (!isEnabled)
+            if (!isEnabled)
             {
                 var renderers = new List<Renderer>(components.Count);
                 foreach (var comp in components) //根據建立的Component，找出對應的Renderer，並從SelectionController中移除
@@ -132,7 +128,7 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         {
             UnsubscribeAll();
             models = new List<Transform>();
-            data = new List<TData>();
+            dcimAssetDatas = new List<TData>();
             ClearComponents();
         }
         [Button, ShowIf("isHaveComponents")]

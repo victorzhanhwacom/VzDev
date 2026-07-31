@@ -1,6 +1,6 @@
  using System.Collections.Generic;
 using UnityEngine;
-using VzDev.DCIM.Deployment;
+using VzDev.DCIM.RevitAssetDataStructure;
 using VzDev.InteractiveUtils.ModelMouseEvent;
 
 namespace VzDev.DCIMUtils.ModelInteractUtils
@@ -48,7 +48,7 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
             if (selected == null) return;
             if (!selected.TryGetComponent<IHasDCIMAsset>(out var provider)) return;
 
-            DCIMAsset asset = provider.GetAsset();
+            RevitAsset asset = provider.GetAsset();
             if (asset == null) return;
 
             var handlers = AssetDataDisplayRegistry.GetHandlers(asset.GetType());

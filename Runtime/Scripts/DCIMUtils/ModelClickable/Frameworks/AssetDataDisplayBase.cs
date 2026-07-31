@@ -1,7 +1,7 @@
 using System;
 using NaughtyAttributes;
 using UnityEngine;
-using VzDev.DCIM.Deployment;
+using VzDev.DCIM.RevitAssetDataStructure;
 
 namespace VzDev.DCIMUtils.ModelInteractUtils
 {
@@ -11,7 +11,7 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
     /// <para> 當模型被取消選取時，會自動呼叫 OnModelDeselected 方法</para>
     /// </summary>
     public abstract class AssetDataDisplayBase<TData> : MonoBehaviour, IModelSelectedHandler
-        where TData : DCIMAsset
+        where TData : RevitAsset
     {
         #region Fields
         [SerializeField, ReadOnly] protected TData data;
@@ -25,7 +25,7 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         /// <summary>
         /// 當模型被選取時，會自動呼叫此方法，並傳入對應的 DCIMAsset 資料
         /// </summary>
-        public void OnModelSelected(DCIMAsset asset)
+        public void OnModelSelected(RevitAsset asset)
         {
             data = asset as TData;
             UpdateUIOnSelected();
@@ -56,7 +56,7 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         /// <summary>
         /// 模型被選取時
         /// </summary>
-        void OnModelSelected(DCIMAsset asset);
+        void OnModelSelected(RevitAsset asset);
         /// <summary>
         /// 模型被取消選取時
         /// </summary>

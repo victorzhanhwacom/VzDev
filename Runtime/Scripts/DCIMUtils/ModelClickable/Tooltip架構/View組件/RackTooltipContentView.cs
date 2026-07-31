@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using VzDev.DCIM.Deployment;
+using VzDev.DCIM.RevitAssetDataStructure;
 
 namespace VzDev.UIUtils.Tooltip.ContentViews
 {
@@ -13,18 +13,14 @@ namespace VzDev.UIUtils.Tooltip.ContentViews
 
         public void Bind(DCIMAsset asset, string fallbackName)
         {
-            if (asset is not DCR_Asset rack)
+            if (asset is not DCR_Asset rackAsset)
             {
                 Debug.LogWarning($"[{GetType().Name}] 收到非預期的資料型別：{asset?.GetType().Name}", this);
                 return;
             }
-
-            titleLabel.text = rack.assetInfo?.assetName;
-            float ratio = rack.rackPowerInfo.power_watt_Max > 0
-                ? rack.currentPowerWatt / rack.rackPowerInfo.power_watt_Max
-                : 0f;
-            progressFill.fillAmount = Mathf.Clamp01(ratio);
-            progressLabel.text = $"{rack.currentPowerWatt:F0}W / {rack.rackPowerInfo.power_watt_Max}W";
+            rackAsset.RefreshUsageInfo();
+            titleLabel.text = rackAsset.companyPropertyInfo?.propertyName;
+            progressLabel.text = $"{rackAsset.usageInfo.totalPowerWatt:#.#}W / {rackAsset.rackCapacityInfo.power_watt_Max}W";
         }
     }
 }

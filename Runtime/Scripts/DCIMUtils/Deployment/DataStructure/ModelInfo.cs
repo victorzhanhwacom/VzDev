@@ -1,10 +1,10 @@
 using System;
 using UnityEngine;
 
-namespace VzDev.DCIM.Deployment
+namespace VzDev.DCIM.RevitAssetDataStructure
 {
     /// <summary>
-    /// DCIM模型資料
+    /// Revit模型資料
     /// </summary>
     [Serializable]
     public class ModelInfo
@@ -13,7 +13,9 @@ namespace VzDev.DCIM.Deployment
         /// 目標模型的 Transform，用來Camera定位用
         /// </summary>
         public Transform modelTarget;
+        public string ModelName => modelTarget ? modelTarget.name : string.Empty;
 
         public void SetModelTarget(Transform model) => modelTarget = model;
+
     }
 }

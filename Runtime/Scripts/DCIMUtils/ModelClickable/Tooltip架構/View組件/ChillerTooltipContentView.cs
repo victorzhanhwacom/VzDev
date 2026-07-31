@@ -1,7 +1,7 @@
 // 機櫃：文字 + 用電量進度條，排版可以自己隨意設計
 using TMPro;
 using UnityEngine;
-using VzDev.DCIM.Deployment;
+using VzDev.DCIM.RevitAssetDataStructure;
 
 namespace VzDev.UIUtils.Tooltip.ContentViews
 {
@@ -19,7 +19,7 @@ namespace VzDev.UIUtils.Tooltip.ContentViews
                 return;
             }
 
-            titleLabel.text = chiller.assetInfo?.assetName;
+            titleLabel.text = chiller.companyPropertyInfo?.propertyName;
             runtimeLabel.text = $"輸入溫度：{chiller.inputTemperature}°C\n輸出溫度：{chiller.outputTemperature}°C";
         }
     }
