@@ -11,22 +11,10 @@ namespace VzDev.DCIM.RevitAssetDataStructure
     {
         public DCIMCategory category = DCIMCategory.Unknow;
         public CompanyPropertyInfo companyPropertyInfo;
-
-        /// <summary>
-        /// 自動產生財產編號
-        /// </summary>
-        public string GenerateRandomPropertyNo()
-        {
-            string prefix = "NTCGO-";
-            int n = 8;
-            int index = UnityEngine.Random.Range(0, MathHelper.GetAllNines(n));
-            companyPropertyInfo.propertyNumber = $"{prefix}{index.ToString($"D{n}")}";
-            return companyPropertyInfo.propertyNumber;
-        }
     }
 
     /// <summary>
-    /// DCIM資產類別
+    /// DCIM資產類別 DCR:機房設備 DCS:機房系統 DCN:網路設備 DCE:電力設備 DCP:週邊設備
     /// </summary>
     public enum DCIMCategory
     {
@@ -55,5 +43,16 @@ namespace VzDev.DCIM.RevitAssetDataStructure
         /// </summary>
         public string note;
 
+         /// <summary>
+        /// 自動產生財產編號 (DEMO用)
+        /// </summary>
+        public string GenerateRandomPropertyNo()
+        {
+            string prefix = "NTCGO-";
+            int n = 8;
+            int index = UnityEngine.Random.Range(0, MathHelper.GetAllNines(n));
+            propertyNumber = $"{prefix}{index.ToString($"D{n}")}";
+            return propertyNumber;
+        }
     }
 }

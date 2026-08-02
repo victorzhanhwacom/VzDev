@@ -38,7 +38,7 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         public virtual void SetData(TData assetData)
         {
             data = assetData;
-            data?.modelInfo.SetModelTarget(transform);
+            data.modelInfo.modelTarget = transform;
         }
 
         #region Events
@@ -71,6 +71,8 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
             if (hitCollider != null)
                 hitCollider.enabled = isEnabled;
         }
+
+
     }
 
     /// <summary>
@@ -80,6 +82,14 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
     public interface IHasDCIMAsset
     {
         DCIMAsset GetAsset();
+    }
+    public static class IHasDCIMAssetExtensions
+    {
+        public static bool TryGetAsset<T>(this IHasDCIMAsset provider, out T asset) where T : DCIMAsset
+        {
+            asset = provider?.GetAsset() as T;
+            return asset != null;
+        }
     }
 
     /// <summary>

@@ -1,0 +1,42 @@
+using NaughtyAttributes;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+using VzDev.DCIM.RevitAssetDataStructure;
+
+namespace VzDev.DCIMUtils.Deployment
+{
+    public class DeployEquipmentListItem : MonoBehaviour
+    {
+        #region Fields
+        [SerializeField, ReadOnly] private EquipmentAsset equipmentAsset;
+        [Foldout("[Comoponents]"), SerializeField] private Toggle toggle;
+        [Foldout("[Comoponents]"), SerializeField] private TextMeshProUGUI txtPropertyName, txtPropertyNumber, txtHeightU;
+        #endregion
+
+        public void SetEquipmentAsset(EquipmentAsset asset, ToggleGroup toggleGroup)
+        {
+            equipmentAsset = asset;
+            toggle.group = toggleGroup;
+            txtPropertyName.text = equipmentAsset.companyPropertyInfo.propertyName;
+            txtPropertyNumber.text = equipmentAsset.companyPropertyInfo.propertyNumber;
+            txtHeightU.text = equipmentAsset.equipmentUsageInfo.heightU.ToString();
+        }
+
+        public void DeselectItem() => toggle.isOn = false;
+
+        private void OnEnable() => toggle.onValueChanged.AddListener(HandleToggleValueChanged);
+        private void OnDisable() => toggle.onValueChanged.RemoveListener(HandleToggleValueChanged);
+
+        private void HandleToggleValueChanged(bool isOn)
+        {
+            if (isOn) {
+                DeployEquipmentList.SelectedEquipmentItem(equipmentAsset);
+                return;
+            }
+
+            if(toggle.group != null && toggle.group.AnyTogglesOn()) return;
+            DeployEquipmentList.DeselectEquipmentItem();
+        }
+    }
+}

@@ -43,6 +43,28 @@ namespace VzDev
         #endregion
 
         /// <summary>
+        /// 檢查機櫃內 [uIndex, uIndex + heightU - 1] 這個 U 區段，
+        /// 是否與 container 裡任何既有設備的佔用區段重疊，或超出機櫃總 U 數。
+        /// </summary>
+        public static bool CanFit(DCR_Asset rack, int uIndex, int heightU)
+        {
+            int topUIndex = uIndex + heightU - 1;
+            if (uIndex < 1 || topUIndex > rack.u_height_Max) return false;
+
+            for (int i = 0; i < rack.container.Count; i++)
+            {
+                EquipmentAsset equipment = rack.container[i];
+                if(equipment.deploymentStatus != DeploymentStatus.Deployed) continue;
+                int equipmentTop = equipment.startUIndex + equipment.equipmentUsageInfo.heightU - 1;
+
+                // 兩個區段不重疊的條件：一個完全在另一個上方，或完全在另一個下方
+                bool noOverlap = topUIndex < equipment.startUIndex || uIndex > equipmentTop;
+                if (!noOverlap) return false;
+            }
+            return true;
+        }
+
+        /// <summary>
         /// 刷新機櫃使用量資訊 (功率/重量/U高)
         /// </summary>
         internal void RefreshUsageInfo(DCR_Asset dcrAsset)
@@ -68,11 +90,11 @@ namespace VzDev
             {
                 totalPowerWatt += _dcrAsset.container[i].equipmentUsageInfo.power_watt;
                 totalWeightKG += _dcrAsset.container[i].equipmentUsageInfo.weight_kg;
-                totalHeightU += _dcrAsset.container[i].equipmentUsageInfo.u_height;
+                totalHeightU += _dcrAsset.container[i].equipmentUsageInfo.heightU;
             }
-            remainPowerWatt = _dcrAsset.rackCapacityInfo.power_watt_Max - totalPowerWatt;
-            remainWeightKG = _dcrAsset.rackCapacityInfo.weight_kg_Max - totalWeightKG;
-            remainHeightU = _dcrAsset.rackCapacityInfo.u_height_Max - totalHeightU;
+            remainPowerWatt = _dcrAsset.power_watt_Max - totalPowerWatt;
+            remainWeightKG = _dcrAsset.weight_kg_Max - totalWeightKG;
+            remainHeightU = _dcrAsset.u_height_Max - totalHeightU;
         }
 
         /// <summary>
@@ -80,12 +102,12 @@ namespace VzDev
         /// </summary>
         private void Calculate_Percent()
         {
-            totalPowerPercent = _dcrAsset.rackCapacityInfo.power_watt_Max <= 0 ? 0f : (float)totalPowerWatt / _dcrAsset.rackCapacityInfo.power_watt_Max * 100f;
-            totalWeightPercent = _dcrAsset.rackCapacityInfo.weight_kg_Max <= 0 ? 0f : (float)totalWeightKG / _dcrAsset.rackCapacityInfo.weight_kg_Max * 100f;
-            totalHeightUPercent = _dcrAsset.rackCapacityInfo.u_height_Max <= 0 ? 0f : (float)totalHeightU / _dcrAsset.rackCapacityInfo.u_height_Max * 100f;
-            remainPowerPercent = _dcrAsset.rackCapacityInfo.power_watt_Max <= 0 ? 0f : (float)remainPowerWatt / _dcrAsset.rackCapacityInfo.power_watt_Max * 100f;
-            remainWeightPercent = _dcrAsset.rackCapacityInfo.weight_kg_Max <= 0 ? 0f : (float)remainWeightKG / _dcrAsset.rackCapacityInfo.weight_kg_Max * 100f;
-            remainHeightUPercent = _dcrAsset.rackCapacityInfo.u_height_Max <= 0 ? 0f : (float)remainHeightU / _dcrAsset.rackCapacityInfo.u_height_Max * 100f;
+            totalPowerPercent = _dcrAsset.power_watt_Max <= 0 ? 0f : (float)totalPowerWatt / _dcrAsset.power_watt_Max * 100f;
+            totalWeightPercent = _dcrAsset.weight_kg_Max <= 0 ? 0f : (float)totalWeightKG / _dcrAsset.weight_kg_Max * 100f;
+            totalHeightUPercent = _dcrAsset.u_height_Max <= 0 ? 0f : (float)totalHeightU / _dcrAsset.u_height_Max * 100f;
+            remainPowerPercent = _dcrAsset.power_watt_Max <= 0 ? 0f : (float)remainPowerWatt / _dcrAsset.power_watt_Max * 100f;
+            remainWeightPercent = _dcrAsset.weight_kg_Max <= 0 ? 0f : (float)remainWeightKG / _dcrAsset.weight_kg_Max * 100f;
+            remainHeightUPercent = _dcrAsset.u_height_Max <= 0 ? 0f : (float)remainHeightU / _dcrAsset.u_height_Max * 100f;
         }
     }
 }

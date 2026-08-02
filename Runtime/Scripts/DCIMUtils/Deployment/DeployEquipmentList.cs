@@ -1,42 +1,65 @@
+using System;
+using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 using VzDev.DCIM.RevitAssetDataStructure;
-using VzDev.DCIMUtils.RackDeployment;
+using VzDev.DebugUtils;
 
-public class DeployEquipmentList : MonoBehaviour
+namespace VzDev.DCIMUtils.Deployment
 {
-   /*  [SerializeField] private ScrollRect scrollRect;
-
-    [SerializeField, ReadOnly] private DeviceListItemView[] toggles;
-
-    public UnityEvent<EquipmentCatalogEntry> onToggleSelected;
-
-    private void Start() => GetToggles();
-
-    public void SetData(List<RevitAsset)
-    
-    private void OnEnable()
+    public class DeployEquipmentList : MonoBehaviour
     {
-        for(int i = 0; i < toggles.Length; i++)
+        #region Fields
+        [SerializeField, ReadOnly] private List<EquipmentAsset> equipmentAssets;
+        [Foldout("[Comoponents]"), SerializeField] private ScrollRect scrollRect;
+        [Foldout("[Comoponents]"), SerializeField, Required] private ToggleGroup toggleGroup;
+        [Foldout("[Comoponents]"), SerializeField] private DeployEquipmentListItem listItemPrefab;
+        
+        #endregion
+
+        public void SetEquipmentAssets(List<EquipmentAsset> assets)
         {
-            int index = i;
-            toggles[index].onToggleSelected.AddListener(onToggleSelected.Invoke);
+            DeselectEquipmentItem();
+            ClearListItems();
+            equipmentAssets = assets;
+            for (int i = 0; i < equipmentAssets.Count; i++)
+            {
+                DeployEquipmentListItem item = ObjectHelper.Instantiate(listItemPrefab, scrollRect.content);
+                item.SetEquipmentAsset(equipmentAssets[i], toggleGroup);
+            }
         }
-    }
-    private void OnDisable()
-    {
-        for(int i = 0; i < toggles.Length; i++)
-        {
-            int index = i;
-            toggles[index].onToggleSelected.RemoveListener(onToggleSelected.Invoke);
-        }
-    }
 
-    [Button]
-    private void GetToggles()
-    {
-        toggles = scrollRect.content.GetComponentsInChildren<DeviceListItemView>(true);
-    } */
+        private void ClearListItems()
+        {
+            foreach (Transform child in scrollRect.content)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        private void OnEquipmentDeselectedHandler() => toggleGroup.SetAllTogglesOff(false);
+
+        private void OnEnable()
+        {
+            WebAPIManager.OnGetDeployEquipmentAssets += SetEquipmentAssets;
+            WebAPIManager.OnGetDeployEquipmentAssetsFaield += OnGetDeployEquipmentAssetsFaield;
+            OnEquipmentDeselected += OnEquipmentDeselectedHandler;
+        }
+        private void OnDisable()
+        {
+            WebAPIManager.OnGetDeployEquipmentAssets -= SetEquipmentAssets;
+            WebAPIManager.OnGetDeployEquipmentAssetsFaield -= OnGetDeployEquipmentAssetsFaield;
+            OnEquipmentDeselected -= OnEquipmentDeselectedHandler;
+        }
+
+        private void OnGetDeployEquipmentAssetsFaield(string msg) => Debug.Log($"OnGetDeployEquipmentAssetsFaield: {msg}");
+
+        #region Static Methods
+        public static void SelectedEquipmentItem(EquipmentAsset equipmentAsset) => OnEquipmentSelected?.Invoke(equipmentAsset);
+        public static void DeselectEquipmentItem() => OnEquipmentDeselected?.Invoke();
+        public static Action<EquipmentAsset> OnEquipmentSelected;
+        public static Action OnEquipmentDeselected;
+        #endregion
+    }
 }
