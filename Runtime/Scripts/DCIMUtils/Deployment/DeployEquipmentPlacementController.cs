@@ -1,3 +1,4 @@
+using System;
 using NaughtyAttributes;
 using UnityEngine;
 using VzDev.DCIM.RevitAssetDataStructure;
@@ -29,6 +30,9 @@ namespace VzDev.DCIMUtils.Deployment
         [Foldout("[Settings]"), SerializeField, Tooltip("ray.direction.y 小於此絕對值時，視為幾乎平視，不更新位置避免模型飛到極遠處")]
         private float minRayDirectionY = 0.001f;
 
+        /// <summary>
+        /// 目前選擇上架的庫存設備
+        /// </summary>
         private EquipmentAsset currentAsset;
 
         [Foldout("[Renderer]"), SerializeField, Required] private Shader stagingBoundingBoxShader;
@@ -114,7 +118,7 @@ namespace VzDev.DCIMUtils.Deployment
         private bool CheckCanDeploy(DCR_Asset rackAsset, int uIndex, EquipmentAsset asset)
         {
             if (rackAsset == null || uIndex <= 0 || asset == null) return false;
-            return UsageCaculatorOfRack.CanFit(rackAsset, uIndex, asset.equipmentUsageInfo.heightU);
+            return UsageCaculatorOfRack.IsRackUCanFit(rackAsset, uIndex, asset.equipmentUsageInfo.heightU);
         }
         #endregion
 
@@ -129,6 +133,7 @@ namespace VzDev.DCIMUtils.Deployment
                 return;
             }
             currentAsset = asset;
+            onSelectedeEquipmentToDeploy?.Invoke(currentAsset);
             previewInstance = ObjectHelper.Instantiate(currentAsset.modelInfo.modelTarget);
             CreateBoundingBoxChild();
             SetPreviewState(isSuitable: false); // 預設狀態，實際放置合法性判斷邏輯之後再接上動態切換
@@ -284,5 +289,7 @@ namespace VzDev.DCIMUtils.Deployment
             isSnapped = false;
         }
         #endregion
+
+        public static Action<EquipmentAsset> onSelectedeEquipmentToDeploy;
     }
 }

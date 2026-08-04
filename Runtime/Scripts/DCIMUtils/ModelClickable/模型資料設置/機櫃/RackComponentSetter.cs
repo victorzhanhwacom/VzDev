@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 using VzDev.DCIM.RevitAssetDataStructure;
@@ -11,7 +11,7 @@ namespace VzDev
     {
         [Foldout("[Components]"), SerializeField] private BoxCollider equipmentDeployCollider;
 
-        private void OnSetComponentsCompleted()
+        private void OnSetComponentsCompleted(List<RackComponent> list)
         {
             for(int i=0; i<models.Count; i++)
             {

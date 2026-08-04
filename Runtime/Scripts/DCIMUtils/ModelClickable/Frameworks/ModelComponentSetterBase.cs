@@ -92,7 +92,7 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
                 data.modelInfo.modelTarget = model; //將對應的模型設定到資料的modelInfo中
                 comp.SetData(data); // null 也明確設定，避免殘留舊資料
             }
-            onSetComponentsCompleted?.Invoke();
+            onSetComponentsCompleted?.Invoke(components);
             if (isActiveAndEnabled) SubscribeAll();
         }
 
@@ -197,6 +197,6 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         private void HandleHoverExit(TData asset) => OnHoverExitEvent?.Invoke(asset);
         #endregion
 
-        public static Action onSetComponentsCompleted;
+        public static Action<List<TComponent>> onSetComponentsCompleted;
     }
 }
