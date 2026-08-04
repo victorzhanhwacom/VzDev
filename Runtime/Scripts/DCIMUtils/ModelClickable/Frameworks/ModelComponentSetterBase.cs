@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
 using VzDev.DCIM.RevitAssetDataStructure;
@@ -18,15 +17,14 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         where TComponent : ModelComponentBase<TData> where TData : DCIMAsset, new()
     {
         #region Fields
-        [SerializeField, Tooltip("(DEMO)是否在沒有資料的情況下也建立組件")] protected bool buildWithoutData = true;
         [SerializeField, OnValueChanged("OnModelClickEnabledChanged"), ShowIf("isHaveComponents")] protected bool modelClickEnabled = true;
         private void OnModelClickEnabledChanged() => SetModelClickEnabled(modelClickEnabled);
 
         [SerializeField, ReadOnly, Tooltip("紀錄已跟EventHub訂閱事件，避免在編輯器中造成事件重複訂閱")] private bool isSubscribedEvents = false;
 
-        [Label("[目標模型巨集]"), SerializeField,] protected List<Transform> models = new();
-        [Label("[資料巨集]"), SerializeField, ReadOnly] protected List<TData> dcimAssetDatas = new();
-        [Label("[目標Component巨集]"), SerializeField, ReadOnly] protected List<TComponent> components = new();
+        [Label("[模型巨集]"), SerializeField,] protected List<Transform> models = new();
+        [Label("[Asset資料巨集]"), SerializeField, ReadOnly] protected List<TData> dcimAssetDatas = new();
+        [Label("[Component巨集]"), SerializeField, ReadOnly] protected List<TComponent> components = new();
 
         protected bool isHaveModels => models != null && models.Count > 0;
         protected bool isHaveData => dcimAssetDatas != null && dcimAssetDatas.Count > 0;
@@ -37,6 +35,8 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         public static event Action<TData> OnModelClickedEvent;
         public static event Action<TData> OnHoverEnterEvent;
         public static event Action<TData> OnHoverExitEvent;
+
+        private int dataGetCount = 0, dataGetCountMax = 2; //計數器，判斷資料是否都已經準備好
         #endregion
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         public void SetModels(List<Transform> modelList)
         {
             models = modelList;
-            if (isHaveModels && (isHaveData || buildWithoutData)) SetComponents();
+            SetComponents();
         }
 
         /// <summary>
@@ -53,7 +53,8 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         /// </summary>
         public void SetDatas(List<TData> assetDatas)
         {
-            if (isHaveModels && (isHaveData || buildWithoutData)) SetComponents();
+            dcimAssetDatas = assetDatas;
+            SetComponents();
         }
 
         /// <summary>
@@ -62,7 +63,12 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         [Button, ShowIf("isHaveModels")]
         private void SetComponents()
         {
-            Debug.Assert(Application.isPlaying, $"[{nameof(ModelComponentSetterBase<TData, TComponent>)}] 只能在Play模式下執行，請先進入Play模式");
+            if (Application.isPlaying == false)
+            {
+                Debug.Log($"[{nameof(ModelComponentSetterBase<TData, TComponent>)}] 只能在Play模式下執行，請先進入Play模式");
+                return;
+            }
+            if (++dataGetCount < dataGetCountMax) return; //資料尚未準備好，先不建立Component
 
             UnsubscribeAll();
             ClearComponents();
@@ -75,28 +81,19 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
                 //建置ModelComponent
                 model.gameObject.TryAddComponent(out TComponent comp);
                 components.Add(comp);
-                //設定資料
-                AssignDataToComponent(comp, model);
+
+                //比對資料巨集，將相對應的資料設定到Component上
+                TData data = isHaveData ? dcimAssetDatas.Find(d => model.name.ContainKeyword(StringComparison.OrdinalIgnoreCase, d.deviceCode)) : default;
+                if (data == null)
+                {
+                    Debug.LogWarning($"[{nameof(ModelComponentSetterBase<TData, TComponent>)}] 找不到對應的資料，請確認模型名稱是否包含資料的deviceCode，模型名稱：{model.name}");
+                    continue;
+                }
+                data.modelInfo.modelTarget = model; //將對應的模型設定到資料的modelInfo中
+                comp.SetData(data); // null 也明確設定，避免殘留舊資料
             }
+            onSetComponentsCompleted?.Invoke();
             if (isActiveAndEnabled) SubscribeAll();
-        }
-
-        /// <summary>
-        /// 比對資料巨集，將相對應的資料設定到Component上
-        /// </summary>
-        protected virtual void AssignDataToComponent(TComponent comp, Transform model)
-        {
-            //這段下列皆為暫時測試用，實際上依WebAPI取得的資料才能正確比對
-            //    TData data = isHaveData ? this.data.Find(d => d.assetInfo.assetName == model.name) : default;
-
-            TData data = new TData();
-            string deviceCode = model.name.GetStringBetweenMarks("[", "]");
-            data.deviceCode = deviceCode;
-            /*
-            待補全
-            */
-            data.modelInfo = new ModelInfo { modelTarget = model, };
-            comp.SetData(data); // null 也明確設定，避免殘留舊資料
         }
 
         /// <summary>
@@ -140,17 +137,19 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
                 {
                     if (components[i] != null)
                     {
+                        ObjectHelper.Destroy(components[i].GetComponent<BoxCollider>());
                         ObjectHelper.Destroy(components[i]);
                     }
                 }
                 components.Clear();
                 isSubscribedEvents = false;
             }
+            dataGetCount = 0; //清除Component後，重置計數器，等待資料重新準備好
         }
 
 
-        private void OnEnable() => SubscribeAll();
-        private void OnDisable() => UnsubscribeAll();
+        protected virtual void OnEnable() => SubscribeAll();
+        protected virtual void OnDisable() => UnsubscribeAll();
 
         #region 開啟/關閉ModelComponent的互動事件訂閱，避免在編輯器中造成事件重複訂閱
         private void SubscribeAll()
@@ -197,5 +196,7 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
 
         private void HandleHoverExit(TData asset) => OnHoverExitEvent?.Invoke(asset);
         #endregion
+
+        public static Action onSetComponentsCompleted;
     }
 }

@@ -1,7 +1,7 @@
 using System;
-using NaughtyAttributes;
 using UnityEngine;
 using VzDev.DCIM.RevitAssetDataStructure;
+using VzDev.DebugUtils;
 using VzDev.InteractiveUtils.ModelMouseEvent;
 using VzDev.UnityAPI.Extensions;
 
@@ -38,7 +38,14 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         public virtual void SetData(TData assetData)
         {
             data = assetData;
-            data.modelInfo.modelTarget = transform;
+            data.modelInfo.modelTarget ??= transform;
+        }
+        private void OnDestroy()
+        {
+            OnModelClickedEvent = null;
+            OnHoverEnterEvent = null;
+            OnHoverExitEvent = null;
+            modelColliderSetter?.OnDestroy();
         }
 
         #region Events
@@ -72,7 +79,11 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
                 hitCollider.enabled = isEnabled;
         }
 
-
+        public void OnDestroy()
+        {
+            if (hitCollider != null)
+                ObjectHelper.Destroy(hitCollider);
+        }
     }
 
     /// <summary>

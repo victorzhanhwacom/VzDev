@@ -103,7 +103,7 @@ namespace VzDev.DCIMUtils.Deployment
             }
             else if (isSnapped)
             {
-                previewInstance.rotation = Quaternion.identity; // 離開對齊狀態時重置方向，避免殘留機櫃的旋轉角度
+                //previewInstance.rotation = Quaternion.identity; // 離開對齊狀態時重置方向，避免殘留機櫃的旋轉角度
                 isSnapped = false;
             }
         }

@@ -95,7 +95,9 @@ namespace VzDev.UnityAPI.Extensions
             return result;
         }
 
-        /// [Extended] - 尋找字串裡是否有關鍵單字
+        /// <summary>
+        /// 判斷字串是否包含指定關鍵字，並可指定大小寫敏感或不敏感
+        /// </summary>
         public static bool ContainKeyword(this string self, StringComparison comparison, params string[] keywords)
         {
             if (string.IsNullOrEmpty(self) || keywords == null || keywords.Length == 0)

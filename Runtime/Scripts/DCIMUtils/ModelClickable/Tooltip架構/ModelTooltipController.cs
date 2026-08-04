@@ -26,10 +26,10 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         /// 有資料時傳入 DCIMAsset，View 自行決定顯示哪些欄位；
         /// 沒有資料時第一個參數為 null，第二個參數是 fallback 名稱，View 應直接顯示它。
         /// </summary>
-        [Foldout("[Events]"), Label("達到延遲秒數後觸發")]
-        public UnityEvent<RevitAsset, string> OnShowTooltip;
+        [Foldout("[Events]"), Tooltip("達到延遲秒數後觸發")]
+        public UnityEvent<DCIMAsset, string> OnShowTooltip;
 
-        [Foldout("[Events]"), Label("需要隱藏Tooltip時觸發（離開/切換/點擊/失焦）")]
+        [Foldout("[Events]"), Tooltip("需要隱藏Tooltip時觸發（離開/切換/點擊/失焦）")]
         public UnityEvent OnHideTooltip;
 
         private GameObject currentTarget;
@@ -65,7 +65,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             hoverTimer += Time.unscaledDeltaTime;
             if (hoverTimer < hoverDelay) return;
 
-            (RevitAsset asset, string fallbackName) = ResolveTargetData(currentTarget);
+            (var asset, string fallbackName) = ResolveTargetData(currentTarget);
             OnShowTooltip?.Invoke(asset, fallbackName);
             isShown = true;
         }

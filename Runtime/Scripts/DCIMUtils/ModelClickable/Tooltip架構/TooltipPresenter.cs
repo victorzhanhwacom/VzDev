@@ -49,13 +49,11 @@ namespace VzDev.UIUtils.Tooltip
         #endregion
 
         #region Fields
+        [SerializeField] private List<TooltipContentMapping> contentMappings = new();
         [Foldout("[Components]"), SerializeField] private RectTransform root;
         [Foldout("[Components]"), SerializeField] private CanvasGroup canvasGroup;
         [Foldout("[Components]"), Tooltip("內容Prefab實例化後放入的容器"), SerializeField]
         private RectTransform contentContainer;
-
-        [Foldout("[Content Mapping]"), SerializeField]
-        private List<TooltipContentMapping> contentMappings = new();
 
         [Foldout("[Content Mapping]"), Tooltip("找不到對應資料別，或目標模型沒有DCIMAsset時使用的純文字內容Prefab")]
         [SerializeField] private GameObject fallbackTextPrefab;
@@ -84,15 +82,22 @@ namespace VzDev.UIUtils.Tooltip
             parentCanvas = GetComponentInParent<Canvas>();
             canvasRect = parentCanvas != null ? parentCanvas.transform as RectTransform : null;
 
+            RefreshMappingLookup();
+
+            canvasGroup.alpha = 0f;
+            canvasGroup.blocksRaycasts = false; // Tooltip永遠不吃滑鼠事件，避免擋到底下的3D Raycast判定
+            root.gameObject.SetActive(false);
+        }
+
+        [Button]
+        private void RefreshMappingLookup()
+        {
+            mappingLookup.Clear();
             foreach (var mapping in contentMappings)
             {
                 if (string.IsNullOrEmpty(mapping.AssetTypeName) || mapping.ContentPrefab == null) continue;
                 mappingLookup[mapping.AssetTypeName] = mapping.ContentPrefab;
             }
-
-            canvasGroup.alpha = 0f;
-            canvasGroup.blocksRaycasts = false; // Tooltip永遠不吃滑鼠事件，避免擋到底下的3D Raycast判定
-            root.gameObject.SetActive(false);
         }
 
         private void Update()

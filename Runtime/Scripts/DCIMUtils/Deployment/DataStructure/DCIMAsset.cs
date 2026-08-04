@@ -10,7 +10,8 @@ namespace VzDev.DCIM.RevitAssetDataStructure
     public class DCIMAsset : RevitAsset
     {
         public DCIMCategory category = DCIMCategory.Unknow;
-        public CompanyPropertyInfo companyPropertyInfo;
+        public CompanyPropertyInfo companyPropertyInfo = new ();
+        public SizeInfo sizeInfo = new ();
     }
 
     /// <summary>
@@ -35,8 +36,6 @@ namespace VzDev.DCIM.RevitAssetDataStructure
         /// 財產編號
         /// </summary>
         public string propertyNumber;
-
-        public SizeInfo sizeInfo;
 
         /// <summary>
         /// 備註

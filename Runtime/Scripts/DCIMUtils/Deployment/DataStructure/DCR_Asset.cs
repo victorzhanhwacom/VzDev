@@ -12,11 +12,16 @@ namespace VzDev.DCIM.RevitAssetDataStructure
         public DCR_Asset() => category = DCIMCategory.DCR;
 
         /// <summary>
+        /// 機櫃本身重量
+        /// </summary>
+        public float weight_kg;
+
+        /// <summary>
         /// 機櫃最大功率
         /// </summary>
         public int power_watt_Max;
         /// <summary>
-        /// 機櫃最大重量
+        /// 機櫃最大承重
         /// </summary>
         public float weight_kg_Max;
         /// <summary>
@@ -27,9 +32,9 @@ namespace VzDev.DCIM.RevitAssetDataStructure
         /// <summary>
         /// 機櫃內的所有資產設備
         /// </summary>
-        public List<EquipmentAsset> container;
-        
-        public UsageCaculatorOfRack usageInfo;
+        public List<EquipmentAsset> container = new();
+
+        public UsageCaculatorOfRack usageInfo = new UsageCaculatorOfRack();
         /// <summary>
         /// 重新計算機櫃內的使用資訊 (功率/重量/U高)
         /// </summary>
