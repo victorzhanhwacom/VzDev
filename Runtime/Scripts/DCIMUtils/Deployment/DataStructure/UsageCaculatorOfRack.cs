@@ -185,11 +185,11 @@ namespace VzDev
         /// <para>startUIndex/endUIndex 皆為 inclusive，heightU = endUIndex - startUIndex + 1。</para>
         /// </summary>
         [Serializable]
-        public readonly struct RackFreeUSlot
+        public class RackFreeUSlot
         {
-            public readonly int startUIndex;
-            public readonly int endUIndex;
-            public readonly int heightU;
+            public int startUIndex;
+            public int endUIndex;
+            public int heightU;
 
             public RackFreeUSlot(int startUIndex, int endUIndex)
             {

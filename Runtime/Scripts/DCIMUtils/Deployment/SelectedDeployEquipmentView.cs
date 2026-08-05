@@ -36,19 +36,19 @@ namespace VzDev.DCIMUtils.Deployment
 
         private void OnEnable()
         {
-            DeployEquipmentList.OnEquipmentSelected += SetEquipmentAsset;
-            DeployEquipmentList.OnEquipmentDeselected += Clear;
+            EquipmentStockList.OnEquipmentSelected += SetEquipmentAsset;
+            EquipmentStockList.OnEquipmentDeselected += Clear;
             btnCancel.onClick.AddListener(OnCancelSelected);
         }
 
         private void OnDisable()
         {
-            DeployEquipmentList.OnEquipmentSelected -= SetEquipmentAsset;
-            DeployEquipmentList.OnEquipmentDeselected -= Clear;
+            EquipmentStockList.OnEquipmentSelected -= SetEquipmentAsset;
+            EquipmentStockList.OnEquipmentDeselected -= Clear;
             btnCancel.onClick.RemoveListener(OnCancelSelected);
         }
 
-        private void OnCancelSelected() => DeployEquipmentList.DeselectEquipmentItem();
+        private void OnCancelSelected() => EquipmentStockList.DeselectEquipmentItem();
 
         private void Clear()
         {

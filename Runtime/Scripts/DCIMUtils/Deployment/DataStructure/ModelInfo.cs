@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace VzDev.DCIM.RevitAssetDataStructure
@@ -12,8 +13,8 @@ namespace VzDev.DCIM.RevitAssetDataStructure
         /// <summary>
         /// 目標模型的 Transform，用來Camera定位用
         /// </summary>
-        [field: SerializeField]
+        [field: SerializeField, JsonIgnore]
         public Transform modelTarget;
-        public string ModelName => modelTarget ? modelTarget.name : string.Empty;
+        public string modelName;
     }
 }

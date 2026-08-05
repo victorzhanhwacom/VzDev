@@ -58,7 +58,7 @@ namespace VzDev.DCIMUtils.Deployment
         private void OnEnable()
         {
             DeployEquipmentPlacementController.onSelectedeEquipmentToDeploy += OnSelectedeEquipmentToDeploy;
-            RackComponentSetter.onSetComponentsCompleted += OnSetComponentsCompleted;
+            RackComponentSetter.OnSetComponentsCompletedAction += OnSetComponentsCompleted;
             togglePower.onValueChanged.AddListener((value) => FilterRackModels());
             toggleWeight.onValueChanged.AddListener((value) => FilterRackModels());
             toggleUSpacer.onValueChanged.AddListener((value) => FilterRackModels());
@@ -66,7 +66,7 @@ namespace VzDev.DCIMUtils.Deployment
         private void OnDisable()
         {
             DeployEquipmentPlacementController.onSelectedeEquipmentToDeploy -= OnSelectedeEquipmentToDeploy;
-            RackComponentSetter.onSetComponentsCompleted += OnSetComponentsCompleted;
+            RackComponentSetter.OnSetComponentsCompletedAction += OnSetComponentsCompleted;
             togglePower.onValueChanged.RemoveAllListeners();
             toggleWeight.onValueChanged.RemoveAllListeners();
             toggleUSpacer.onValueChanged.RemoveAllListeners();

@@ -66,6 +66,63 @@ namespace VzDev.DCIM.RevitAssetDataStructure
             };
         }
 
+        /// <summary>
+        /// ToAsset() 的反向轉換：COBieInfo → InformationDto。
+        /// 兩者欄位名稱完全對應（都是COBie標準欄位），逐一複製即可，
+        /// 不需要額外的比對表。用於 RackAssetJsonConverter.ConvertToDto 匯出JSON時，
+        /// 把 DCR_Asset.cobieInfo 還原回 DTO 格式。
+        /// </summary>
+        public static InformationDto FromCOBieInfo(COBieInfo cobie)
+        {
+            if (cobie == null) return new InformationDto();
+
+            return new InformationDto
+            {
+                component_description = cobie.component_description,
+                component_assetIdentifier = cobie.component_assetIdentifier,
+                component_serialNumber = cobie.component_serialNumber,
+                component_installationDate = cobie.component_installationDate,
+                component_tagName = cobie.component_tagName,
+                component_warrantyDurationPart = cobie.component_warrantyDurationPart,
+                component_warrantyDurationUnit = cobie.component_warrantyDurationUnit,
+                component_warrantyGuarantorLabor = cobie.component_warrantyGuarantorLabor,
+                component_warrantyStartDate = cobie.component_warrantyStartDate,
+                component_warrantyEndDate = cobie.component_warrantyEndDate,
+                document_inspection = cobie.document_inspection,
+                document_handout = cobie.document_handout,
+                document_drawing = cobie.document_drawing,
+                contact_company = cobie.contact_company,
+                contact_department = cobie.contact_department,
+                contact_email = cobie.contact_email,
+                contact_familyName = cobie.contact_familyName,
+                contact_givenName = cobie.contact_givenName,
+                contact_phone = cobie.contact_phone,
+                contact_street = cobie.contact_street,
+                facility_name = cobie.facility_name,
+                facility_projectName = cobie.facility_projectName,
+                facility_siteName = cobie.facility_siteName,
+                equipment_supplier = cobie.equipment_supplier,
+                floor_name = cobie.floor_name,
+                space_name = cobie.space_name,
+                space_roomTag = cobie.space_roomTag,
+                system_category = cobie.system_category,
+                system_name = cobie.system_name,
+                type_category = cobie.type_category,
+                type_expectedLife = cobie.type_expectedLife,
+                type_manufacturer = cobie.type_manufacturer,
+                type_modelNumber = cobie.type_modelNumber,
+                type_name = cobie.type_name,
+                type_replacementCost = cobie.type_replacementCost,
+                type_accessibilityPerformance = cobie.type_accessibilityPerformance,
+                type_shape = cobie.type_shape,
+                type_size = cobie.type_size,
+                type_color = cobie.type_color,
+                type_finish = cobie.type_finish,
+                type_grade = cobie.type_grade,
+                type_material = cobie.type_material
+            };
+        }
+
         #region 機櫃上限與目前用量
         public int watt_limit;
         public float weight_limit;
@@ -143,4 +200,3 @@ namespace VzDev.DCIM.RevitAssetDataStructure
     }
 
 }
-

@@ -61,15 +61,15 @@ namespace VzDev.DCIMUtils.Deployment
         #region Lifecycle
         private void OnEnable()
         {
-            DeployEquipmentList.OnEquipmentSelected += HandleSelected;
-            DeployEquipmentList.OnEquipmentDeselected += HandleDeselected;
+            EquipmentStockList.OnEquipmentSelected += HandleSelected;
+            EquipmentStockList.OnEquipmentDeselected += HandleDeselected;
             RackUSlotHoverDetector.OnRackUSlotChanged += HandleRackUSlotChanged;
         }
 
         private void OnDisable()
         {
-            DeployEquipmentList.OnEquipmentSelected -= HandleSelected;
-            DeployEquipmentList.OnEquipmentDeselected -= HandleDeselected;
+            EquipmentStockList.OnEquipmentSelected -= HandleSelected;
+            EquipmentStockList.OnEquipmentDeselected -= HandleDeselected;
             RackUSlotHoverDetector.OnRackUSlotChanged -= HandleRackUSlotChanged;
             ClearPreview();
         }

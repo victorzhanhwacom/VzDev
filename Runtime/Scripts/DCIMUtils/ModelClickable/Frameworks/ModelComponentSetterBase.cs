@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 using VzDev.DCIM.RevitAssetDataStructure;
 using VzDev.DebugUtils;
 using VzDev.InteractiveUtils.ModelMouseEvent;
@@ -22,22 +23,33 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
 
         [SerializeField, ReadOnly, Tooltip("紀錄已跟EventHub訂閱事件，避免在編輯器中造成事件重複訂閱")] private bool isSubscribedEvents = false;
 
-        [Label("[模型巨集]"), SerializeField,] protected List<Transform> models = new();
-        [Label("[Asset資料巨集]"), SerializeField, ReadOnly] protected List<TData> dcimAssetDatas = new();
-        [Label("[Component巨集]"), SerializeField, ReadOnly] protected List<TComponent> components = new();
+        [SerializeField,] protected List<Transform> models = new();
+        [SerializeField, ReadOnly] protected List<TData> dcimAssetDatas = new();
+        [SerializeField, ReadOnly] protected List<TComponent> modelComponents = new();
+        [Foldout("[Events]"), SerializeField, HideIf("isPlaying")] protected UnityEvent<List<TComponent>> OnSetComponentsCompletedEvent;
 
         protected bool isHaveModels => models != null && models.Count > 0;
         protected bool isHaveData => dcimAssetDatas != null && dcimAssetDatas.Count > 0;
-        protected bool isHaveComponents => components != null && components.Count > 0;
+        protected bool isHaveComponents => modelComponents != null && modelComponents.Count > 0;
+        protected bool isPlaying => Application.isPlaying;
         #endregion
 
         #region Events, 供外部透過static方式訂閱事件
-        public static event Action<TData> OnModelClickedEvent;
-        public static event Action<TData> OnHoverEnterEvent;
-        public static event Action<TData> OnHoverExitEvent;
+        public static event Action<TData> OnModelClickedAction;
+        public static event Action<TData> OnHoverEnterAction;
+        public static event Action<TData> OnHoverExitAction;
 
         private int dataGetCount = 0, dataGetCountMax = 2; //計數器，判斷資料是否都已經準備好
         #endregion
+
+        protected virtual void Awake()
+        {
+            if (isPlaying)
+            {
+                OnSetComponentsCompletedEvent.RemoveAllListeners();
+            }
+        }
+
 
         /// <summary>
         /// 設定目標模型巨集
@@ -63,16 +75,11 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         [Button, ShowIf("isHaveModels")]
         private void SetComponents()
         {
-            if (Application.isPlaying == false)
-            {
-                Debug.Log($"[{nameof(ModelComponentSetterBase<TData, TComponent>)}] 只能在Play模式下執行，請先進入Play模式");
-                return;
-            }
-            if (++dataGetCount < dataGetCountMax) return; //資料尚未準備好，先不建立Component
+            if (++dataGetCount < dataGetCountMax) return; 
 
             UnsubscribeAll();
             ClearComponents();
-            components ??= new List<TComponent>();
+            modelComponents ??= new List<TComponent>();
 
             for (int i = 0; i < models.Count; i++)
             {
@@ -80,7 +87,7 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
                 if (model == null) continue;
                 //建置ModelComponent
                 model.gameObject.TryAddComponent(out TComponent comp);
-                components.Add(comp);
+                modelComponents.Add(comp);
 
                 //比對資料巨集，將相對應的資料設定到Component上
                 TData data = isHaveData ? dcimAssetDatas.Find(d => model.name.ContainKeyword(StringComparison.OrdinalIgnoreCase, d.deviceCode)) : default;
@@ -90,10 +97,13 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
                     continue;
                 }
                 data.modelInfo.modelTarget = model; //將對應的模型設定到資料的modelInfo中
-                comp.SetData(data); // null 也明確設定，避免殘留舊資料
+                comp.SetData(data); 
             }
-            onSetComponentsCompleted?.Invoke(components);
+            SetModelClickEnabled(modelClickEnabled);
+            OnSetComponentsCompletedAction?.Invoke(modelComponents);
+            OnSetComponentsCompletedEvent?.Invoke(modelComponents);
             if (isActiveAndEnabled) SubscribeAll();
+            
         }
 
         /// <summary>
@@ -101,17 +111,17 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         /// </summary>
         public void SetModelClickEnabled(bool isEnabled)
         {
-            if (components == null || components.Count == 0) return;
+            if (modelComponents == null || modelComponents.Count == 0) return;
             modelClickEnabled = isEnabled;
-            for (int i = 0; i < components.Count; i++)
+            for (int i = 0; i < modelComponents.Count; i++)
             {
-                components[i]?.SetColliderEnabled(modelClickEnabled && isSubscribedEvents);
+                modelComponents[i]?.SetColliderEnabled(modelClickEnabled && isSubscribedEvents);
 
             }
             if (!isEnabled)
             {
-                var renderers = new List<Renderer>(components.Count);
-                foreach (var comp in components) //根據建立的Component，找出對應的Renderer，並從SelectionController中移除
+                var renderers = new List<Renderer>(modelComponents.Count);
+                foreach (var comp in modelComponents) //根據建立的Component，找出對應的Renderer，並從SelectionController中移除
                 {
                     if (comp != null && comp.TryGetComponent<Renderer>(out var r))
                         renderers.Add(r);
@@ -120,28 +130,22 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
             }
         }
 
-        [Button, ShowIf("isHaveModels")]
-        public void Clear()
-        {
-            UnsubscribeAll();
-            models = new List<Transform>();
-            dcimAssetDatas = new List<TData>();
-            ClearComponents();
-        }
         [Button, ShowIf("isHaveComponents")]
         private void ClearComponents()
         {
-            if (components != null)
+            if (modelComponents != null)
             {
-                for (int i = 0; i < components.Count; i++)
+                for (int i = 0; i < modelComponents.Count; i++)
                 {
-                    if (components[i] != null)
+                    if (modelComponents[i] != null)
                     {
-                        ObjectHelper.Destroy(components[i].GetComponent<BoxCollider>());
-                        ObjectHelper.Destroy(components[i]);
+                        if(!Application.isPlaying) modelComponents[i].OnDestroy();
+                        ObjectHelper.Destroy(modelComponents[i]);
                     }
                 }
-                components.Clear();
+                modelComponents.Clear();
+                models.Clear();
+                dcimAssetDatas.Clear();
                 isSubscribedEvents = false;
             }
             dataGetCount = 0; //清除Component後，重置計數器，等待資料重新準備好
@@ -166,11 +170,11 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
 
         private void SetSubscribe(bool isSubscribe)
         {
-            if (components != null)
+            if (modelComponents != null)
             {
-                for (int i = 0; i < components.Count; i++)
+                for (int i = 0; i < modelComponents.Count; i++)
                 {
-                    TComponent modelComp = components[i];
+                    TComponent modelComp = modelComponents[i];
                     if (modelComp == null) continue;
                     modelComp.SetColliderEnabled(isSubscribe && modelClickEnabled);
                     if (isSubscribe)
@@ -190,13 +194,13 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
             isSubscribedEvents = isSubscribe;
         }
 
-        private void HandleModelClicked(TData asset) => OnModelClickedEvent?.Invoke(asset);
+        private void HandleModelClicked(TData asset) => OnModelClickedAction?.Invoke(asset);
 
-        private void HandleHoverEnter(TData asset) => OnHoverEnterEvent?.Invoke(asset);
+        private void HandleHoverEnter(TData asset) => OnHoverEnterAction?.Invoke(asset);
 
-        private void HandleHoverExit(TData asset) => OnHoverExitEvent?.Invoke(asset);
+        private void HandleHoverExit(TData asset) => OnHoverExitAction?.Invoke(asset);
         #endregion
 
-        public static Action<List<TComponent>> onSetComponentsCompleted;
+        public static Action<List<TComponent>> OnSetComponentsCompletedAction;
     }
 }

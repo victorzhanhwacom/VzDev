@@ -39,8 +39,9 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
         {
             data = assetData;
             data.modelInfo.modelTarget ??= transform;
+            data.modelInfo.modelName ??= transform.name;
         }
-        private void OnDestroy()
+        public void OnDestroy()
         {
             OnModelClickedEvent = null;
             OnHoverEnterEvent = null;
@@ -65,7 +66,7 @@ namespace VzDev.DCIMUtils.ModelInteractUtils
     public class ModelColliderSetter
     {
         private Transform model;
-        private BoxCollider hitCollider;
+        private MeshCollider hitCollider;
         public ModelColliderSetter(Transform target)
         {
             if (target == null) return;
