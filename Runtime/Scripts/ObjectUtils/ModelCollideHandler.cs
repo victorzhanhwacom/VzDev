@@ -2,14 +2,16 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 using VzDev.UnityAPI.Extensions;
+using Debug = VzDev.ToolUtils.Debug;
 using static VzDev.UnityAPI.Extensions.TransformExtension;
+using VzDev.DebugUtils;
 
 namespace VzDev.ObjectUtils
 {
     /// <summary>
     /// 自動為模型對像添加碰撞器的工具類別，支援 BoxCollider 和 MeshCollider。
     /// </summary>
-    public class ModelColliderSetter : MonoBehaviour
+    public class ModelCollideHandler : MonoBehaviour
     {
         public enum ColliderType
         {
@@ -18,60 +20,23 @@ namespace VzDev.ObjectUtils
         }
 
         #region Fields
-        [SerializeField] private ColliderType colliderType = ColliderType.BoxCollider;
+        [SerializeField, OnValueChanged("OnColliderEnabledChanged"), ShowIf("isCreatedColliders")] private bool isColliderEnabled = true;
+        private void OnColliderEnabledChanged() => SetEnable(isColliderEnabled);
         [SerializeField, ReadOnly] private List<Transform> models;
-        private bool isHaveModels => models != null && models.Count > 0;
+        [Foldout("[Settings]"), SerializeField] private ColliderType colliderType = ColliderType.BoxCollider;
+        private List<Collider> colliders = new List<Collider>();
+        private bool isCreatedColliders => colliders != null && colliders.Count > 0;
         #endregion
-
-        [Button, ShowIf("isHaveModels")]
-        private void RemoveAndClear()
-        {
-            RemoveColliders();
-            models = new List<Transform>();
-        }
 
         public void GenerateColliders(List<Transform> modelList)
         {
             models = modelList;
+            RemoveAndClear();
             SetColliders();
         }
 
-        [Button, ShowIf("isHaveModels")]
-        public void RemoveColliders()
-        {
-            if (!isHaveModels)
-            {
-                Debug.LogWarning("No models found to remove colliders from.", this);
-                return;
-            }
-
-            foreach (var model in models)
-            {
-                if (model == null) continue;
-
-                var boxCollider = model.GetComponent<BoxCollider>();
-                if (boxCollider != null)
-                {
-                    DestroyImmediate(boxCollider);
-                }
-
-                var meshCollider = model.GetComponent<MeshCollider>();
-                if (meshCollider != null)
-                {
-                    DestroyImmediate(meshCollider);
-                }
-            }
-        }
-
-        [Button, ShowIf("isHaveModels")]
         private void SetColliders()
         {
-            if (!isHaveModels)
-            {
-                Debug.LogWarning("No models found to set colliders on.", this);
-                return;
-            }
-
             foreach (var model in models)
             {
                 if (model == null) continue;
@@ -79,7 +44,8 @@ namespace VzDev.ObjectUtils
                 switch (colliderType)
                 {
                     case ColliderType.BoxCollider:
-                        model.gameObject.TryAddComponent<BoxCollider>();
+                        model.gameObject.TryAddComponent(out BoxCollider boxCollider);
+                        colliders.Add(boxCollider);
                         break;
                     case ColliderType.MeshCollider:
                         var meshFilter = model.GetComponent<MeshFilter>();
@@ -87,6 +53,7 @@ namespace VzDev.ObjectUtils
                         {
                             model.gameObject.TryAddComponent<MeshCollider>(out MeshCollider meshCollider);
                             meshCollider.sharedMesh = meshFilter.sharedMesh;
+                            colliders.Add(meshCollider);
                         }
                         else
                         {
@@ -95,6 +62,31 @@ namespace VzDev.ObjectUtils
                         break;
                 }
             }
+        }
+
+        public void Clickable() => SetEnable(true);
+        public void Unclickable() => SetEnable(false);
+
+        public void SetEnable(bool isEnable)
+        {
+            isColliderEnabled = isEnable;
+            for (int i = 0; i < colliders.Count; i++)
+            {
+                Collider collider = colliders[i];
+                if (collider == null) continue;
+                collider.enabled = isColliderEnabled;
+            }
+        }
+
+        [Button, ShowIf("isCreatedColliders")]
+        public void RemoveAndClear()
+        {
+            foreach (var collider in colliders)
+            {
+                if (collider == null) continue;
+                ObjectHelper.Destroy(collider);
+            }
+            colliders.Clear();
         }
     }
 }

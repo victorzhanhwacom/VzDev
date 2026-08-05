@@ -14,7 +14,7 @@ namespace VzDev.UIUtils.Tooltip.ContentViews
         /// </summary>
         public void Bind(DCIMAsset asset, string fallbackName)
         {
-            txt.text = asset.companyPropertyInfo?.propertyName ?? fallbackName;
+            txt.text = asset?.companyPropertyInfo?.propertyName ?? fallbackName;
         }
     }
 }

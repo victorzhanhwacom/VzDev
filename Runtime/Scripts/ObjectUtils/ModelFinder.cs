@@ -132,7 +132,7 @@ namespace VzDev.ObjectUtils
         }
 
         [Button, ShowIf(nameof(IsFoundModels))]
-        private void InvokeFoundModels()
+        public void InvokeFoundModels()
         {
             if (foundModels != null && foundModels.Count > 0)
             {
