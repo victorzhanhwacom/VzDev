@@ -78,7 +78,7 @@ namespace VzDev.MaterialUtils
             if (renderer != null && original != null)
             {
                 renderer.sharedMaterials = original;
-                if(target.TryGetComponent(out BoxCollider boxCollider)) boxCollider.enabled = true;
+                if(target.TryGetComponent(out Collider collider)) collider.enabled = true;
             }
         }
 
@@ -94,7 +94,7 @@ namespace VzDev.MaterialUtils
             var mats = new Material[renderer.sharedMaterials.Length];
             for (int i = 0; i < mats.Length; i++) mats[i] = effective;
             renderer.sharedMaterials = mats;
-            if(target.TryGetComponent(out BoxCollider boxCollider)) boxCollider.enabled = false;
+            if(target.TryGetComponent(out Collider collider)) collider.enabled = false;
         }
     }
 }

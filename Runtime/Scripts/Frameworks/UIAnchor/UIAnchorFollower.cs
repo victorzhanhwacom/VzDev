@@ -1,6 +1,5 @@
 using NaughtyAttributes;
 using UnityEngine;
-using VzDev.ApiExtensions;
 using VzDev.UnityAPI.Extensions;
 
 namespace VzDev.ObjectUtils
@@ -60,7 +59,7 @@ namespace VzDev.ObjectUtils
             if (Physics.Raycast(eye.position, dir.normalized, out RaycastHit hit, dir.magnitude, obstacleMask))
             {
                 Debug.DrawLine(eye.position, hit.point, Color.red);
-                Debug.Log($"Raycast hit: {hit.transform.name} (target: {target.name})", this);
+                // Debug.Log($"Raycast hit: {hit.transform.name} (target: {target.name})", this);
                 return hit.transform == target; // 打到別的東西 = 仍被擋住
             }
             return true;
@@ -115,7 +114,8 @@ namespace VzDev.ObjectUtils
         public void OnValidate()
         {
             mainCamera = Camera.main;
-            canvasRect = transform.GetComponentInParent<Canvas>(true)?.transform as RectTransform;
+            canvasRect = transform.GetComponentInParent<Canvas>(true)?.rootCanvas.transform as RectTransform;
+            // canvasRect = transform.GetComponentInParent<Canvas>(true)?.transform as RectTransform;
 
             rectTrans = transform as RectTransform;
             container = transform.GetChild(0).gameObject;

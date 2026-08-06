@@ -20,13 +20,19 @@ namespace VzDev.ObjectUtils
         }
 
         #region Fields
-        [SerializeField, OnValueChanged("OnColliderEnabledChanged"), ShowIf("isCreatedColliders")] private bool isColliderEnabled = true;
+        [SerializeField, OnValueChanged("OnColliderEnabledChanged")] private bool isColliderEnabled = true;
         private void OnColliderEnabledChanged() => SetEnable(isColliderEnabled);
         [SerializeField, ReadOnly] private List<Transform> models;
+        [SerializeField, ReadOnly]private List<Collider> colliders = new List<Collider>();
         [Foldout("[Settings]"), SerializeField] private ColliderType colliderType = ColliderType.BoxCollider;
-        private List<Collider> colliders = new List<Collider>();
         private bool isCreatedColliders => colliders != null && colliders.Count > 0;
         #endregion
+
+        public void AddModels(List<Transform> modelList)
+        {
+            modelList ??= new List<Transform>();
+            models.AddRange(modelList);
+        }
 
         public void GenerateColliders(List<Transform> modelList)
         {
@@ -35,7 +41,7 @@ namespace VzDev.ObjectUtils
             SetColliders();
         }
 
-        private void SetColliders()
+        public void SetColliders()
         {
             foreach (var model in models)
             {

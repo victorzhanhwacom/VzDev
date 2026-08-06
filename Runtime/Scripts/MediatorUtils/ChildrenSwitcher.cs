@@ -40,7 +40,7 @@ namespace VzDev.Mediator
         [Button, ShowIf(nameof(IsHaveChildren))]
         public void SetAllChildrenActive() => SetChildrenStatus(true);
         [Button, ShowIf(nameof(IsHaveChildren))]
-        public void SetAllChildrenInactive() => SetChildrenStatus(false);
+        public void SetAllChildrenDeactive() => SetChildrenStatus(false);
         public void SetChildrenStatus(bool isActive)
         {
             for (int i = 0; i < children.Length; i++)

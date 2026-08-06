@@ -14,10 +14,10 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         [SerializeField] private bool logClickEnabled = false;
         [SerializeField] private bool logHoverEnabled = false;
         [SerializeField] private bool logDragEnabled = false;
+        [SerializeField, ReadOnly] private Transform lastSelectedModel;
 
         [Foldout("[Events]")] public UnityEvent<Transform> OnModelSelected;
         [Foldout("[Events]")] public UnityEvent<Transform> OnModelDeselected;
-        private Transform lastSelectedModel;
 
         private void OnEnable()
         {
@@ -67,6 +67,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
                 Debug.Assert(!logClickEnabled, $"Model Clicked: {targetObject.name}");
             }
         }
+        [Button]
         public void CancelSelection()
         {
             if (lastSelectedModel != null)

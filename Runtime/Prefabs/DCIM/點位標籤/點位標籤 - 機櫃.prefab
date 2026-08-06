@@ -38,7 +38,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 830179462768580382, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: m_Name
-      value: "\u9EDE\u4F4D\u6A19\u7C64 - PDU"
+      value: "\u9EDE\u4F4D\u6A19\u7C64 - \u6A5F\u6AC3"
       objectReference: {fileID: 0}
     - target: {fileID: 2169958630109989549, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: m_SizeDelta.x
@@ -135,7 +135,7 @@ PrefabInstance:
     - target: {fileID: 7172309759663142881, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: d2633df4bd21c044d8008f92dcf20a8d, type: 3}
+      objectReference: {fileID: 21300000, guid: e4b147d598639244cb6273da01e51782, type: 3}
     - target: {fileID: 7594986532739210204, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
