@@ -68,13 +68,13 @@ namespace VzDev.MaterialUtils
 
         private Material[] CacheOriginal(Transform target)
         {
-            var renderer = target.GetComponent<Renderer>();
+            var renderer = target.GetComponent<MeshRenderer>();
             return renderer != null ? renderer.sharedMaterials : null;
         }
 
         private void RestoreOriginal(Transform target, Material[] original)
         {
-            var renderer = target.GetComponent<Renderer>();
+            var renderer = target.GetComponent<MeshRenderer>();
             if (renderer != null && original != null)
             {
                 renderer.sharedMaterials = original;
@@ -88,7 +88,7 @@ namespace VzDev.MaterialUtils
             Material effective = null;
             foreach (var kv in entry.requesters) effective = kv.Value;
 
-            var renderer = target.GetComponent<Renderer>();
+            var renderer = target.GetComponent<MeshRenderer>();
             if (renderer == null || effective == null) return;
 
             var mats = new Material[renderer.sharedMaterials.Length];
