@@ -13,6 +13,8 @@ namespace VzDev.Frameworks.SwitchToAnchorMenuUtils
         [Foldout("[Events]")] public UnityEvent<Transform, float> onAnchorSelected;
         #endregion
 
+
+        public void SwitchToFollow(string anchorName) => SwitchToFollow(true, anchorName);
         public void SwitchToFollow(bool isSelected, string anchorName)
         {
             anchorName = anchorName.Trim();

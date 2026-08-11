@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace VzDev.MaterialUtils
@@ -75,6 +76,7 @@ namespace VzDev.MaterialUtils
         private void RestoreOriginal(Transform target, Material[] original)
         {
             var renderer = target.GetComponent<MeshRenderer>();
+            if (target.TryGetComponent(out TextMeshPro txt)) return;
             if (renderer != null && original != null)
             {
                 renderer.sharedMaterials = original;
@@ -90,6 +92,7 @@ namespace VzDev.MaterialUtils
 
             var renderer = target.GetComponent<MeshRenderer>();
             if (renderer == null || effective == null) return;
+            if (target.TryGetComponent(out TextMeshPro txt)) return;
 
             var mats = new Material[renderer.sharedMaterials.Length];
             for (int i = 0; i < mats.Length; i++) mats[i] = effective;
