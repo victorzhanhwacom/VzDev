@@ -1589,6 +1589,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RandomValueGenerator (Int)
       objectReference: {fileID: 0}
+    - target: {fileID: 9115783310971977602, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
