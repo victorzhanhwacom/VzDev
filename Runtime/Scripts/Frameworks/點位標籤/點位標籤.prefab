@@ -210,7 +210,7 @@ MonoBehaviour:
   target3DObject: {fileID: 0}
   offsetPos: {x: 0, y: 0.5, z: 0}
   isAlwaysVisible: 0
-  visibleRange: 70
+  visibleRange: 200
   visibleReverse: 0
   mainCamera: {fileID: 0}
   rectTrans: {fileID: 7594986532739210204}

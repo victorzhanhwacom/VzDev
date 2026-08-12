@@ -8,7 +8,10 @@ namespace VzDev.Frameworks.SwitchToAnchorMenuUtils
 {
     public class SwitchToAnchorMenu : MonoBehaviour
     {
-        #region Fileds
+        #region Fields
+        [SerializeField, ReadOnly] private bool _isSelected;
+        [SerializeField, ReadOnly] private string _anchorName;
+
         [SerializeField] private List<AnchorItem> anchors;
         [Foldout("[Events]")] public UnityEvent<Transform, float> onAnchorSelected;
         #endregion
@@ -17,7 +20,8 @@ namespace VzDev.Frameworks.SwitchToAnchorMenuUtils
         public void SwitchToFollow(string anchorName) => SwitchToFollow(true, anchorName);
         public void SwitchToFollow(bool isSelected, string anchorName)
         {
-            anchorName = anchorName.Trim();
+            _isSelected = isSelected;
+            _anchorName = anchorName.Trim();
             bool isTargetFloor;
             AnchorItem item;
             for (int i = 0; i < anchors.Count; i++)
@@ -29,10 +33,10 @@ namespace VzDev.Frameworks.SwitchToAnchorMenuUtils
                 }
                 item = anchors[i];
 
-                isTargetFloor = item.anchorName == anchorName;
+                isTargetFloor = item.anchorName == _anchorName;
                 if (isTargetFloor)
                 {
-                    item.InvokeEvents(isSelected);
+                    item.InvokeEvents(_isSelected);
                     onAnchorSelected?.Invoke(item.anchor, item.camDistance);
                 }
             }
