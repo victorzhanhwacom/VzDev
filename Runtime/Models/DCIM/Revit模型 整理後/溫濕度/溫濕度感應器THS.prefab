@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 275211819856104404}
-  - component: {fileID: 110219023314296359}
   - component: {fileID: 7859353716100184818}
   - component: {fileID: 7128684728835851999}
   m_Layer: 0
@@ -34,23 +33,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &110219023314296359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7369122670113091632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6170d2d33d1952747ac675f97768d6a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HeatSource
-  temperature: 27.7
-  radius: 4
-  falloff: 1
-  showGizmo: 0
-  gizmoColor: {r: 1, g: 0.4, b: 0, a: 0.35}
 --- !u!33 &7859353716100184818
 MeshFilter:
   m_ObjectHideFlags: 0

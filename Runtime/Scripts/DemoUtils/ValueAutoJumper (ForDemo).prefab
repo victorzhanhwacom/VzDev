@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3859359150456855079}
   - component: {fileID: 5156105989769034421}
   m_Layer: 0
-  m_Name: RandomValueGenerator (Int)
+  m_Name: ValueAutoJumper (ForDemo)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -562,7 +562,14 @@ namespace VzDev.UnityAPI.Extensions
         #endregion
 
         #region 從子孫物件中TryGetComponent
+        /// <summary>
         /// 嘗試從子孫物件中取得指定型別的元件
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="componentRoot"></param>
+        /// <param name="component"></param>
+        /// <param name="includeInactive"></param>
+        /// <returns></returns>
         public static bool TryGetComponentInChildren<T>(this Component componentRoot, out T component, bool includeInactive = false)
             where T : Component =>
             TryGetComponentInChildren(componentRoot.gameObject, out component, includeInactive);

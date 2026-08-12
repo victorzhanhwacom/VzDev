@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 using VzDev.DebugUtils;
 
 namespace VzDev.ObjectUtils
@@ -10,9 +11,10 @@ namespace VzDev.ObjectUtils
         #region Fields
         [SerializeField, OnValueChanged("OnVisibleChanged")] private bool visible;
         [SerializeField, ReadOnly] private List<Transform> targetModels;
-        [SerializeField, ReadOnly] private GameObject[] _instantiatedModels;
+        [SerializeField, ReadOnly] private List<GameObject> _instantiatedModels;
+        [Foldout("[Events]")] public UnityEvent<List<GameObject>> OnPrefabsInstantiated;
         [Foldout("[Components]"), SerializeField] private GameObject prefab;
-        private bool isInstantiated => _instantiatedModels != null && _instantiatedModels.Length > 0;
+        private bool isInstantiated => _instantiatedModels != null && _instantiatedModels.Count > 0;
         private bool isHaveTargetModels => targetModels != null && targetModels.Count > 0;
         private void OnVisibleChanged() => SetVisible(visible);
         #endregion
@@ -37,8 +39,8 @@ namespace VzDev.ObjectUtils
         #region Generate & Remove
         public void GeneratePrefabs(List<Transform> models)
         {
-            if(!NullCheck()) return;
             targetModels = models;
+            if(!NullCheck()) return;
             GeneratePrefabs();
         }
         [Button, ShowIf("isHaveTargetModels")]
@@ -46,15 +48,16 @@ namespace VzDev.ObjectUtils
         {
             if(!NullCheck()) return;
             if (isInstantiated) RemovePrefabs();
-            _instantiatedModels = new GameObject[targetModels.Count];
+            _instantiatedModels = new List<GameObject>();
 
             for (int i = 0; i < targetModels.Count; i++)
             {
                 var model = targetModels[i];
                 var instance = ObjectHelper.Instantiate(prefab.transform, model).gameObject;
                 instance.SetActive(visible);
-                _instantiatedModels[i] = instance;
+                _instantiatedModels.Add(instance);
             }
+            OnPrefabsInstantiated?.Invoke(_instantiatedModels);
         }
 
         [Button, ShowIf("isInstantiated")]

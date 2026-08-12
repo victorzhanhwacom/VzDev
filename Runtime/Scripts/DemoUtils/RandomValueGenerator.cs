@@ -147,8 +147,6 @@ namespace VzDev.DemoUtils
 
         private void OnValidate()
         {
-            string newName = $"{GetType().Name} ({valueType})";
-            if (name != newName) name = newName;
             _range = maxValue - minValue;
 
             if (useWeightedRandom && segments != null)

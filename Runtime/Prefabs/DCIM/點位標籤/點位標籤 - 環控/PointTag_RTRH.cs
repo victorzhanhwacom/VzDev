@@ -1,3 +1,4 @@
+using System;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -8,16 +9,13 @@ using VzDev.ObjectUtils;
 
 namespace VzDev.DCIMUtils
 {
-    public class PointInfo_RTRH : MonoBehaviour
+    public class PointTag_RTRH : MonoBehaviour
     {
         #region Fields
-        [SerializeField] private bool _isRTMode = true;
-        [Foldout("[Events - Mode]")] public UnityEvent onSelectRtMode, onSelectRhMode;
-        [Foldout("[Events - Value]")] public UnityEvent<float> onRtChanged;
-        [Foldout("[Events - Value]")] public UnityEvent<int> onRhChanged;
-       // [Foldout("[Events]"), Tooltip("0:正常, 1:告警, 2:異常")] public UnityEvent<int> onStatusChanged;
-        [Foldout("[Settings]"), SerializeField] private Sprite rtIcon, rhIcon;
-        [Foldout("[Components]"), SerializeField] private Image icon;
+        [SerializeField, OnValueChanged(nameof(SwitchMode))] private bool _isRTMode = true;
+        private void SwitchMode() => UpdateLabel();
+        [Foldout("[Events]")] public UnityEvent onSelectRtMode, onSelectRhMode;
+        [Foldout("[Events]"), Tooltip("0:正常, 1:告警, 2:異常")] public UnityEvent<int> onStatusChanged;
         [Foldout("[Components]"), SerializeField] private TextMeshProUGUI label;
 
         private float _lastRTValue = -1f;
@@ -29,7 +27,6 @@ namespace VzDev.DCIMUtils
 
         private void Awake()
         {
-            icon.sprite = _isRTMode ? rtIcon : rhIcon;
            
         }
 
@@ -51,12 +48,12 @@ namespace VzDev.DCIMUtils
 
         public void SwitchMode(bool isRTMode)
         {
-            if (_isRTMode == isRTMode) return;
+           /*  if (_isRTMode == isRTMode) return;
             _isRTMode = isRTMode;
             icon.sprite = _isRTMode ? rtIcon : rhIcon;
             if (_isRTMode) onSelectRtMode?.Invoke();
             else onSelectRhMode?.Invoke();
-            UpdateLabel();
+            UpdateLabel(); */
         }
 
         private void UpdateLabel()
@@ -65,8 +62,8 @@ namespace VzDev.DCIMUtils
             label.text = _isRTMode
                 ? $"{_lastRTValue:0.#}<size={txtUnitSize}>°C</size>"
                 : $"{_lastRHValue:0.#}<size={txtUnitSize}>%</size>";
-            if (_isRTMode) onRtChanged?.Invoke(_lastRTValue);
-            else onRhChanged?.Invoke(_lastRHValue);
+           /*  if (_isRTMode) onRtChanged?.Invoke(_lastRTValue);
+            else onRhChanged?.Invoke(_lastRHValue); */
         }
 
         public void SetRTValue(float value)
