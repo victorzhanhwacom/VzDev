@@ -73,7 +73,7 @@ namespace VzDev.DCIMUtils
         {
             if (Mathf.Approximately(value, _lastRTValue)) return;
             _lastRTValue = value;
-            heatSource.SetTemperature(_lastRTValue);
+            heatSource?.SetTemperature(_lastRTValue);
 
             UpdateLabel();
         }
@@ -82,7 +82,7 @@ namespace VzDev.DCIMUtils
         {
             if (Mathf.Approximately(value, _lastRHValue)) return;
             _lastRHValue = value;
-            heatSource.SetTemperature(_lastRHValue);
+            heatSource?.SetTemperature(_lastRHValue);
             UpdateLabel();
         }
 

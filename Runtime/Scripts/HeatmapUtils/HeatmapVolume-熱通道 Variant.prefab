@@ -1,0 +1,131 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1524967566675576338
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 362911784944657337, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.121813774
+      objectReference: {fileID: 0}
+    - target: {fileID: 362911784944657337, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.056459934
+      objectReference: {fileID: 0}
+    - target: {fileID: 362911784944657337, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.25673
+      objectReference: {fileID: 0}
+    - target: {fileID: 362911784944657337, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 362911784944657337, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 362911784944657337, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 362911784944657337, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 362911784944657337, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 362911784944657337, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 362911784944657337, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5068980898767795646, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: m_Name
+      value: "HeatmapVolume-\u71B1\u901A\u9053 Variant"
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731394710595520804, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: density
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731394710595520804, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: edgeBand
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731394710595520804, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: flowScale
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731394710595520804, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: flowSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731394710595520804, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: stepCount
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731394710595520804, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: flowOctaves
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731394710595520804, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: flowStrength
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731394710595520804, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: alphaThreshold
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731394710595520804, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: baseTemperature
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731394710595520804, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: flowDirection.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731394710595520804, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: flowDirection.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731394710595520804, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: autoRefreshSources
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731394710595520804, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: colorStops.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731394710595520804, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: colorStops.Array.data[0].color.g
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731394710595520804, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: colorStops.Array.data[0].color.r
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731394710595520804, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: colorStops.Array.data[1].color.g
+      value: 0.6413363
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731394710595520804, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: colorStops.Array.data[1].color.r
+      value: 1.4980392
+      objectReference: {fileID: 0}
+    - target: {fileID: 8731394710595520804, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}
+      propertyPath: colorStops.Array.data[1].temperature
+      value: 30
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eb7f473c700e0a64f99ab8c06ebadad0, type: 3}

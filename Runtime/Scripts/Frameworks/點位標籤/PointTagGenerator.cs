@@ -38,7 +38,7 @@ namespace VzDev.ToolUtils
         private void SetLabelGetter()
         {
             if (labelGetter != null && labelGetter is IPointTagLabelGetter getter) _labelGetter = getter;  
-            else Debug.LogWarning("Label Getter does not implement IPointTagLabelGetter. Defaulting to model name.", this);
+            //else Debug.LogWarning("Label Getter does not implement IPointTagLabelGetter. Defaulting to model name.", this);
         }
 
         private void OnShowPointTagsChanged() => SetVisible(showPointTags);
@@ -102,8 +102,10 @@ namespace VzDev.ToolUtils
                 pointTag.SetFollowerTarget(targetModel); // 假設PointTag有這樣的方法來設定目標位置
 
                 // 使用Label Getter來決定Tag的顯示文字，如果沒有提供Label Getter，則使用模型名稱
-                pointTag.name = _labelGetter?.GetLabel(targetModel) ?? "unknown";
-                pointTag.SetLabel(pointTag.name);
+                if(_labelGetter != null){
+                    pointTag.name = _labelGetter?.GetLabel(targetModel);
+                    pointTag.SetLabel(pointTag.name);
+                }
                 if (toggleGroup != null) pointTag.ToggleItem.group = toggleGroup;
 
                 pointTag.ToggleItem.onValueChanged.AddListener((isOn) =>
