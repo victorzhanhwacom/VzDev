@@ -1,6 +1,3 @@
-using System;
-using Codice.Client.Common;
-
 namespace VzDev.DCIMUtils.DataUtils
 {
     /// <summary>

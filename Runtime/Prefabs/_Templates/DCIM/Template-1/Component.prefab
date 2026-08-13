@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1609534858035979966}
   - component: {fileID: 5572400607737306577}
   - component: {fileID: 1553989954394593211}
+  - component: {fileID: 8079124856102464676}
   m_Layer: 5
   m_Name: BKG
   m_TagString: Untagged
@@ -77,6 +78,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 10
+--- !u!114 &8079124856102464676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790285357495183423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Mask
+  m_ShowMaskGraphic: 1
 --- !u!1 &3408791026658252762
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +102,6 @@ GameObject:
   - component: {fileID: 6082798417147877749}
   - component: {fileID: 8237607831905708794}
   - component: {fileID: 3196942629926507885}
-  - component: {fileID: 2148036176170019903}
   m_Layer: 5
   m_Name: Container
   m_TagString: Untagged
@@ -154,19 +167,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 10
---- !u!114 &2148036176170019903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3408791026658252762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Mask
-  m_ShowMaskGraphic: 1
 --- !u!1 &5555485562150899401
 GameObject:
   m_ObjectHideFlags: 0
