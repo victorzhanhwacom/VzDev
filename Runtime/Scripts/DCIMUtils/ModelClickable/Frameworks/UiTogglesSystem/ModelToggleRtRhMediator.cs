@@ -1,6 +1,7 @@
 using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
+using VzDev.DCIMUtils.PointInfo;
 using Debug = VzDev.ToolUtils.Debug;
 
 namespace VzDev.DCIMUtils

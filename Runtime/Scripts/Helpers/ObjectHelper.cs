@@ -15,7 +15,9 @@ namespace VzDev.DebugUtils
     /// GameObject物件處理
     public static class ObjectHelper
     {
-  /// 依照環境 Runtime/Editor 來實例化對像物件T
+        /////////////////////////////////////////20260814//////////////////////////////////////////
+
+        /// 依照環境 Runtime/Editor 來實例化對像物件T
         /// <para>+ 若container為null，則實例化在Scene根節點</para>
         public static T Instantiate<T>(T prefab, Transform container = null) where T : Component
         {
@@ -76,7 +78,7 @@ namespace VzDev.DebugUtils
         }
 
 
-///////////////////////////////////////////////////////// Refactorying //////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////// Refactorying //////////////////////////////////////////////////////////
 
         #region 依關鍵字尋找物件
         /// 根據關鍵字，針對目標物件底下所有子物件進行比對，找出名字包含關鍵字的子物件
@@ -225,7 +227,7 @@ namespace VzDev.DebugUtils
             return results;
         }
 
-      
+
 
 
         /// 檢查目標物件是否為Null

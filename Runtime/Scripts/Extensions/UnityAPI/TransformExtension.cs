@@ -11,6 +11,28 @@ namespace VzDev.UnityAPI.Extensions
     /// [Extended] 原API類別功能擴充
     public static class TransformExtension
     {
+        /// <summary>
+        /// 新增找不到元件時的警告訊息
+        /// </summary>
+        public static bool TryGetComponentAndLog<T>(this Transform self, out T component, string nullMessage = "")
+        {
+            bool isExist = self.TryGetComponent(out component);
+            if (isExist == false)
+            {
+                if (string.IsNullOrEmpty(nullMessage))
+                {
+                    Debug.Log($"{self.name}: {typeof(T).Name} component not found.");
+                }
+                else
+                {
+                    Debug.Log(nullMessage);
+                }
+            }
+            return isExist;
+        }
+
+        //////////// 20260814 /////////////
+
         private static readonly StringBuilder _stringBuilder = new StringBuilder(256);
 
         /// <summary>
@@ -155,7 +177,7 @@ namespace VzDev.UnityAPI.Extensions
         /// <summary>
         /// 嘗試新增元件，如果已經有了就直接回傳現有的元件；如果沒有則新增並回傳，並且回傳值的布林值代表是否是新建立的（true = 新建立的，false = 原本就有的）
         /// </summary>
-        public static bool TryAddComponent<TComponent>(this GameObject self) where TComponent : Component 
+        public static bool TryAddComponent<TComponent>(this GameObject self) where TComponent : Component
         => TryAddComponent(self, out TComponent component);
         /// <summary>
         /// 嘗試新增元件，如果已經有了就直接回傳現有的元件；如果沒有則新增並回傳，並且回傳值的布林值代表是否是新建立的（true = 新建立的，false = 原本就有的）
@@ -169,7 +191,7 @@ namespace VzDev.UnityAPI.Extensions
             }
             return false; // 代表原本就有了
         }
-        
+
         #endregion
 
         #region 包含子物件的判斷

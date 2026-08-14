@@ -36,13 +36,13 @@ namespace VzDev.ObjectUtils
 
         public void GenerateColliders(List<Transform> modelList)
         {
+            RemoveAndClear();
             models = modelList;
             SetColliders();
         }
 
         public void SetColliders()
         {
-            RemoveAndClear();
             foreach (var model in models)
             {
                 if (model == null) continue;

@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 3804655904070217580}
   - component: {fileID: 3584964313199474745}
   m_Layer: 0
-  m_Name: PointModelDataHandler_RTRH
+  m_Name: DataModelBinder_RTRH
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b24ad12c22607124eb6fb08fe8c42fd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: VzDev::VzDev.DCIMUtils.DataUtils.PointModelDataHandler
-  rtRhType: 2
+  rtRhMode: 0
   pointModelData:
     deviceCode: 
     timeStampData:
@@ -291,6 +291,10 @@ PrefabInstance:
     - target: {fileID: 3859359150456855079, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
       propertyPath: OnValueChangedFloat.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156105989769034421, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
+      propertyPath: timeValue
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9115783310971977602, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
       propertyPath: m_Name
@@ -533,6 +537,10 @@ PrefabInstance:
     - target: {fileID: 3859359150456855079, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
       propertyPath: OnValueChangedFloat01.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5156105989769034421, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
+      propertyPath: timeValue
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9115783310971977602, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
       propertyPath: m_Name

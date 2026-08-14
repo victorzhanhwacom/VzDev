@@ -1,25 +1,52 @@
+using System;
+using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace VzDev.MediatorUtils
 {
+    [RequireComponent(typeof(Toggle))]
     public class ToggleMediator : MonoBehaviour
     {
-        [SerializeField] private Toggle target;
+        [Foldout("[Events]")] public UnityEvent onTrueEvent, onFalseEvent;
+        [Foldout("[Events]")] public UnityEvent<bool> onReverseEvent;
+        [Foldout("[Components]"), SerializeField] private Toggle toggle;
+
+        private void Awake() => GetToggle();
 
         public void SetToggleAndNotify(bool value)
         {
-            if (target == null) return;
-            target.isOn = value;
-            target.onValueChanged.Invoke(value);
+            GetToggle();
+            toggle.SetIsOnWithoutNotify(value);
+            toggle.onValueChanged.Invoke(value);
         }
-        
-        private void OnValidate()
+
+        private void SetIsOn(bool value)
         {
-            if (target == null)
+            (value? onTrueEvent : onFalseEvent)?.Invoke();
+            onReverseEvent?.Invoke(!value);
+        }
+
+        private void GetToggle()
+        {
+            if (toggle == null)
             {
-                target = GetComponent<Toggle>();
+                toggle = GetComponent<Toggle>();
             }
         }
+
+        private void OnEnable()
+        {
+            GetToggle();
+            toggle.onValueChanged.AddListener(SetIsOn);
+        }
+
+        private void OnDisable()
+        {
+            GetToggle();
+            toggle.onValueChanged.RemoveListener(SetIsOn);
+        }
+        private void OnValidate() => GetToggle();
     }
 }
