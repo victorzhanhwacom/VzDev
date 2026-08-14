@@ -1,12 +1,11 @@
 namespace VzDev.DCIMUtils.DataUtils
 {
     /// <summary>
-    /// 點位模型資訊
+    /// 感應器資訊
     /// </summary>
-    public abstract class PointModelData
+    public abstract class SensorData
     {
         public string deviceCode;
-
         public TimeStampData timeStampData = new TimeStampData();
     }
 }

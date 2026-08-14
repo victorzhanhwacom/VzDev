@@ -1,4 +1,5 @@
 using System;
+using VzDev.DCIMUtils.DataUtils;
 
 namespace VzDev.DCIM.RevitAssetDataStructure
 {
@@ -14,5 +15,6 @@ namespace VzDev.DCIM.RevitAssetDataStructure
         public string deviceCode;
         public COBieInfo cobieInfo = new ();
         public ModelInfo modelInfo = new ();
+        public TimeStampData timeStampData = new TimeStampData();
     }
 }

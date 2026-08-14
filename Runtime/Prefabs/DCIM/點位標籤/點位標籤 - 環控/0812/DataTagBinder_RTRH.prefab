@@ -1650,10 +1650,6 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 744397118062108305, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
-      propertyPath: mainCamera
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 744397118062108305, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: offsetPos.y
       value: 0.05
       objectReference: {fileID: 0}
@@ -2010,7 +2006,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: VzDev::VzDev.DCIMUtils.EnviornmentUtils.DataTagBinder_RTRH
   rtRhMode: 0
-  value: 
   pointModelData:
     deviceCode: 
     timeStampData:

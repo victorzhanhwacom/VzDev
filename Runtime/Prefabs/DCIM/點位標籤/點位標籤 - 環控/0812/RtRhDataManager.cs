@@ -10,7 +10,7 @@ namespace VzDev.DCIMUtils.EnviornmentUtils
     public class RtRhDataManager : MonoBehaviour
     {
         [SerializeField, OnValueChanged("OnCurrentRtRhModeChanged")] private EnumRtRhMode currentRtRhMode = EnumRtRhMode.Unselect;
-        [SerializeField, ReadOnly] private List<PointModelData_RTRH> pointModelDataList = new List<PointModelData_RTRH>();
+        [SerializeField, ReadOnly] private List<SensorData_RTRH> pointModelDataList = new List<SensorData_RTRH>();
 
         private void OnCurrentRtRhModeChanged()
         {
@@ -50,7 +50,6 @@ namespace VzDev.DCIMUtils.EnviornmentUtils
 
             try
             {
-                pointModelDataList = JsonConvert.DeserializeObject<List<PointModelData_RTRH>>(json);
                 OnGetPointModelDataListAction?.Invoke(pointModelDataList);
                 isParseDataSuccessAction?.Invoke(true);
             }
@@ -62,7 +61,7 @@ namespace VzDev.DCIMUtils.EnviornmentUtils
         }
 
         #region Fields
-        public static Action<List<PointModelData_RTRH>> OnGetPointModelDataListAction;
+        public static Action<List<SensorData_RTRH>> OnGetPointModelDataListAction;
         public static Action<bool> isParseDataSuccessAction;
         public static Action<EnumRtRhMode> onRtRhModeChanged;
         #endregion

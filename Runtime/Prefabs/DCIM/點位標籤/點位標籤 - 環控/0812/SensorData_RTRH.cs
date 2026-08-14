@@ -7,7 +7,7 @@ namespace VzDev.DCIMUtils.DataUtils
     /// 溫度/濕度點位設備資訊
     /// </summary>
     [Serializable]
-    public class PointModelData_RTRH : PointModelData
+    public class SensorData_RTRH : SensorData
     {
         public float rtValue;
         public int rhValue;

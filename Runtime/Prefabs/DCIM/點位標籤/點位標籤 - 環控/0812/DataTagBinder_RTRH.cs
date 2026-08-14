@@ -18,7 +18,7 @@ namespace VzDev.DCIMUtils.EnviornmentUtils
     {
         #region Fields
         [SerializeField, ReadOnly] private EnumRtRhMode rtRhMode = EnumRtRhMode.Unselect;
-        [SerializeField, ReadOnly] private PointModelData_RTRH pointModelData;
+        [SerializeField, ReadOnly] private SensorData_RTRH pointModelData;
 
         [Foldout("[Events]-Value")] public UnityEvent<string> onValueChangedEvent;
         [Foldout("[Events]")] public UnityEvent<bool> OnRtModeEvent, onRhModeEvent;
@@ -39,7 +39,7 @@ namespace VzDev.DCIMUtils.EnviornmentUtils
             OnRtModeEvent?.Invoke(rtRhMode == EnumRtRhMode.Rt);
             onRhModeEvent?.Invoke(rtRhMode == EnumRtRhMode.Rh);
         }
-        private void OnPointModelDataChanged(PointModelData_RTRH data) => pointModelData = data;
+        private void OnPointModelDataChanged(SensorData_RTRH data) => pointModelData = data;
 
 
         #region Event Listeners

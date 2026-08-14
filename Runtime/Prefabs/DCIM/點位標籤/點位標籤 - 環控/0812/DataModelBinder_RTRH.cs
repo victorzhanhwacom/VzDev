@@ -16,10 +16,10 @@ namespace VzDev.DCIMUtils.EnviornmentUtils
     {
         #region Fields
         [SerializeField, ReadOnly] private EnumRtRhMode rtRhMode = EnumRtRhMode.Unselect;
-        [SerializeField, ReadOnly] private PointModelData_RTRH pointModelData = new();
+        [SerializeField, ReadOnly] private SensorData_RTRH pointModelData = new();
         [Foldout("[Components]"), SerializeField] private HeatSource heatSource;
 
-        public PointModelData_RTRH PointModelData => pointModelData;
+        public SensorData_RTRH PointModelData => pointModelData;
         #endregion
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace VzDev.DCIMUtils.EnviornmentUtils
         /// <summary>
         /// 當Manager取得資料時進行deviceCode比對，並更新HeatSource
         /// </summary>
-        private void OnGetPointModelDataList(List<PointModelData_RTRH> list)
+        private void OnGetPointModelDataList(List<SensorData_RTRH> list)
         {
             string deviceCode = transform.GetModelDeviceCode();
             pointModelData = list.FirstOrDefault(data => data.deviceCode == deviceCode);
@@ -108,7 +108,7 @@ namespace VzDev.DCIMUtils.EnviornmentUtils
 
         public Action<string> OnValueChangeAction;
         public Action<EnumRtRhMode> OnRtRhModeChangedAction;
-        public Action<PointModelData_RTRH> OnPointModelDataChangedAction;
+        public Action<SensorData_RTRH> OnPointModelDataChangedAction;
         #endregion
     }
 }

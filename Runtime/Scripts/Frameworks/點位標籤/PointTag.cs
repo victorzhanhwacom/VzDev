@@ -1,7 +1,9 @@
+using System;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VzDev.InteractiveUtils.ModelMouseEvent;
 using VzDev.ObjectUtils;
 
 namespace VzDev.ToolUtils
@@ -51,6 +53,39 @@ namespace VzDev.ToolUtils
                 labelToggle = GetComponentsInChildren<Toggle>(true)[1];
             if (label == null)
                 label = GetComponentInChildren<TextMeshProUGUI>(true);
+        }
+
+        private void OnEnable()
+        {
+            toggle.onValueChanged.AddListener(OnToggleValueChanged);
+            ColliderInteractionSystem.OnMouseClick += OnModelClicked;
+            ColliderInteractionSystem.OnMouseClickEmpty += OnMouseClickEmpty;
+        }
+
+        private void OnMouseClickEmpty() => toggle.isOn = false;
+
+        private void OnModelClicked(GameObject target)
+        {
+            if (target.name == uiAnchorFollower.Target3DObject.name)
+            {
+                toggle.isOn = true;
+            }
+        }
+
+        private void OnDisable() => toggle.onValueChanged.RemoveListener(OnToggleValueChanged);
+        private void OnToggleValueChanged(bool isOn)
+        {
+            if (isOn)
+            {
+                ColliderInteractionSystem.SimulateClick(uiAnchorFollower.Target3DObject.gameObject);
+            }
+            else
+            {
+                if(toggle.group != null && toggle.group.AnyTogglesOn() == false)
+                {
+                    ColliderInteractionSystem.SimulateClickEmpty();
+                }
+            }
         }
     }
 }
