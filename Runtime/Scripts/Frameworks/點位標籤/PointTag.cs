@@ -14,7 +14,15 @@ namespace VzDev.ToolUtils
         [Foldout("[Components]"), SerializeField] private UIAnchorFollower uiAnchorFollower;
         [Foldout("[Components]"), SerializeField] private Toggle toggle, labelToggle;
         [Foldout("[Components]"), SerializeField] private TextMeshProUGUI label, label2;
-        public Toggle ToggleItem => toggle;
+      
+        public Action<bool, PointTag> OnToggleChangedAction; // 外部订阅者可以监听Toggle状态变化]
+
+        public void SetToggleGroup(ToggleGroup group)
+        {
+            if (toggle != null)
+                toggle.group = group;
+        }
+
         public Transform FollowerTarget => uiAnchorFollower != null ? uiAnchorFollower.Target3DObject : null;
 
         public bool LabelVisible => labelToggle != null ? labelToggle.isOn : false;

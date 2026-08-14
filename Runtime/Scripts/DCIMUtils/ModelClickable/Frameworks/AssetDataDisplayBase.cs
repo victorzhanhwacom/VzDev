@@ -1,7 +1,7 @@
 using System;
 using NaughtyAttributes;
 using UnityEngine;
-using VzDev.DCIM.RevitAssetDataStructure;
+using VzDev.DCIMUtils.DataUtils;
 
 namespace VzDev.DCIMUtils.ModelInteractUtils
 {

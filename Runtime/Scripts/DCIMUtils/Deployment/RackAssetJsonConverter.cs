@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using UnityEngine;
-using VzDev.DCIM.RevitAssetDataStructure;
+using VzDev.DCIMUtils.DataUtils;
 using VzDev.UnityAPI.Extensions;
 using Debug = VzDev.ToolUtils.Debug;
 
-namespace VzDev.DCIM.Import
+namespace VzDev.DCIMUtils.Import
 {
     /// <summary>
     /// 解析 WebAPI 回傳的機櫃 JSON 資料，並進行DTO轉換成 DCR_Asset 清單。

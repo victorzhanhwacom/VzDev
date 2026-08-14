@@ -1,6 +1,6 @@
 using System;
 
-namespace VzDev.DCIM.RevitAssetDataStructure
+namespace VzDev.DCIMUtils.DataUtils
 {
     /// <summary>
     /// DCR機櫃內所有設備資產基底類別

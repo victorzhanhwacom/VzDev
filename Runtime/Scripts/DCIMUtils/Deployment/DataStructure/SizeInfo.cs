@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace VzDev.DCIM.RevitAssetDataStructure
+namespace VzDev.DCIMUtils.DataUtils
 {
     /// <summary>
     /// 尺吋資訊

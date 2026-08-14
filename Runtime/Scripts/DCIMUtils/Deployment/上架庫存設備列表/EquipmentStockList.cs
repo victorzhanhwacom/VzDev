@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
-using VzDev.DCIM.RevitAssetDataStructure;
+using VzDev.DCIMUtils.DataUtils;
 using VzDev.DebugUtils;
 
 namespace VzDev.DCIMUtils.Deployment

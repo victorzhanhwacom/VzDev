@@ -1,7 +1,7 @@
 // 機櫃：文字 + 用電量進度條，排版可以自己隨意設計
 using TMPro;
 using UnityEngine;
-using VzDev.DCIM.RevitAssetDataStructure;
+using VzDev.DCIMUtils.DataUtils;
 
 namespace VzDev.UIUtils.Tooltip.ContentViews
 {

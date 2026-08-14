@@ -1,6 +1,6 @@
 using System;
 
-namespace VzDev.DCIMUtils.DataUtils
+namespace VzDev.DataUtils
 {
     [Serializable]
     public class TimeStampData 

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace VzDev.DCIM.RevitAssetDataStructure
+namespace VzDev.DCIMUtils.DataUtils
 {
     /// <summary>
     /// 機櫃資產資料 (DCR專用) - DTO

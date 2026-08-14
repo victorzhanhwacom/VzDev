@@ -1,6 +1,6 @@
 using System;
 
-namespace VzDev.DCIM.RevitAssetDataStructure
+namespace VzDev.DCIMUtils.DataUtils
 {
     /// <summary>
     /// COBie資料結構

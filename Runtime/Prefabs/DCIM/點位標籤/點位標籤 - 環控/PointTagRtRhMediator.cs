@@ -21,16 +21,16 @@ namespace VzDev.DCIMUtils
         /// </summary>
         public void GetPoinTags()
         {
-            if (pointTagGenerator == null || pointTagGenerator.PointTags == null)
+          /*   if (pointTagGenerator == null || pointTagGenerator.pointTags == null)
             {
                 Debug.LogError("PointTagGenerator is not assigned.", this);
                 return;
             }
 
-            pointTags = pointTagGenerator.PointTags
+            pointTags = pointTagGenerator.pointTags
                 .Select(tag => tag.GetComponent<PointInfo_RTRH>())
                 .Where(comp => comp != null)
-                .ToArray();
+                .ToArray(); */
         }
 
         public void SwitchToRTMode() => SetSwitchToRTMode(EnumRtRhMode.RTMode);

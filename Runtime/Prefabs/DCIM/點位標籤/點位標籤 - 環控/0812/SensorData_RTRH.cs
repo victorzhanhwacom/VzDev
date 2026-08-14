@@ -1,7 +1,7 @@
 
 using System;
 
-namespace VzDev.DCIMUtils.DataUtils
+namespace VzDev.DataUtils
 {
     /// <summary>
     /// 溫度/濕度點位設備資訊

@@ -15,6 +15,20 @@ namespace VzDev.DebugUtils
     /// GameObject物件處理
     public static class ObjectHelper
     {
+
+#if UNITY_EDITOR
+        public static void SelectAndFocus(GameObject[] objects)
+        {
+            if (objects == null || objects.Length == 0)
+            {
+                Debug.LogWarning("No objects to select.");
+                return;
+            }
+            Selection.objects = objects;
+            EditorGUIUtility.PingObject(Selection.activeObject);
+        }
+#endif
+
         /////////////////////////////////////////20260814//////////////////////////////////////////
 
         /// 依照環境 Runtime/Editor 來實例化對像物件T

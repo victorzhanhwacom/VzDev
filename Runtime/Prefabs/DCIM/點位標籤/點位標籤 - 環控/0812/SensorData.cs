@@ -1,4 +1,4 @@
-namespace VzDev.DCIMUtils.DataUtils
+namespace VzDev.DataUtils
 {
     /// <summary>
     /// 感應器資訊

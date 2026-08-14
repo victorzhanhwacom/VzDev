@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
-using VzDev.DCIMUtils.DataUtils;
+using VzDev.DataUtils;
 using VzDev.DCIMUtils.Extensions;
 using VzDev.UnityAPI.Extensions;
 
@@ -97,13 +97,13 @@ namespace VzDev.DCIMUtils.EnviornmentUtils
         private void OnEnable()
         {
             RtRhDataManager.OnGetPointModelDataListAction += OnGetPointModelDataList;
-            RtRhDataManager.onRtRhModeChanged += OnRtRhTypeChanged;
+            RtRhDataManager.onRtRhModeChangedAction += OnRtRhTypeChanged;
         }
 
         private void OnDisable()
         {
             RtRhDataManager.OnGetPointModelDataListAction -= OnGetPointModelDataList;
-            RtRhDataManager.onRtRhModeChanged -= OnRtRhTypeChanged;
+            RtRhDataManager.onRtRhModeChangedAction -= OnRtRhTypeChanged;
         }
 
         public Action<string> OnValueChangeAction;

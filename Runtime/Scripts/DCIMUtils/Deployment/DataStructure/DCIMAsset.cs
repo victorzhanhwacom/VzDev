@@ -1,7 +1,7 @@
 using System;
 using VzDev.MathUtils;
 
-namespace VzDev.DCIM.RevitAssetDataStructure
+namespace VzDev.DCIMUtils.DataUtils
 {
     /// <summary>
     /// DCIM內所有資產資料

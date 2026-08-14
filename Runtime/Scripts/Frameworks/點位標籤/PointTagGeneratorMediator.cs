@@ -23,7 +23,7 @@ namespace VzDev.ToolUtils
             if (pointTagGenerators == null || pointTagGenerators.Length == 0) return;
             for (int i = 0; i < pointTagGenerators.Length; i++)
             {
-                pointTagGenerators[i].SetVisible(isVisible);
+                pointTagGenerators[i].SetTagVisible(isVisible);
             }
         }
 

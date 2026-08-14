@@ -1,7 +1,7 @@
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
-using VzDev.DCIM.RevitAssetDataStructure;
+using VzDev.DCIMUtils.DataUtils;
 using VzDev.DCIMUtils.ModelInteractUtils;
 using VzDev.UnityAPI.Extensions;
 using System.Linq;

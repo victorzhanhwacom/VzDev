@@ -1,6 +1,6 @@
 using System;
 
-namespace VzDev.DCIM.RevitAssetDataStructure
+namespace VzDev.DCIMUtils.DataUtils
 {
     /// <summary>
     /// 設備資產資料 (DCS專用) - 伺服主機

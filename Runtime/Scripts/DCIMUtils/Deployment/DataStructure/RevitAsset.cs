@@ -1,7 +1,7 @@
 using System;
-using VzDev.DCIMUtils.DataUtils;
+using VzDev.DataUtils;
 
-namespace VzDev.DCIM.RevitAssetDataStructure
+namespace VzDev.DCIMUtils.DataUtils
 {
     /// <summary>
     /// Revit模型資料

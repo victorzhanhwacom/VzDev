@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
-using VzDev.DCIM.Import;
-using VzDev.DCIM.RevitAssetDataStructure;
+using VzDev.DCIMUtils.Import;
+using VzDev.DCIMUtils.DataUtils;
 using VzDev.DCIMUtils.ModelInteractUtils;
 using VzDev.DebugUtils;
 

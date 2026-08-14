@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
-using VzDev.DCIM.Import;
-using VzDev.DCIM.RevitAssetDataStructure;
+using VzDev.DCIMUtils.Import;
+using VzDev.DCIMUtils.DataUtils;
 using Random = UnityEngine.Random;
 
 namespace VzDev.DCIMUtils.Deployment

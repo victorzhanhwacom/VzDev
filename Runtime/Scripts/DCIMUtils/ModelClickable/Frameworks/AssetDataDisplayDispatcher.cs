@@ -1,6 +1,6 @@
  using System.Collections.Generic;
 using UnityEngine;
-using VzDev.DCIM.RevitAssetDataStructure;
+using VzDev.DCIMUtils.DataUtils;
 using VzDev.InteractiveUtils.ModelMouseEvent;
 
 namespace VzDev.DCIMUtils.ModelInteractUtils
