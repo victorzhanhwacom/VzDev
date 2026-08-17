@@ -45,8 +45,7 @@ namespace VzDev.DCIMUtils.EnviornmentUtils
             if (dataModelBinder_RTRH == null)
             {
                 if (transform.TryGetComponentAndLog(out UIAnchorFollower uiAnchorFollower) == false) return false;
-                if (uiAnchorFollower.Target3DObject == null || 
-                uiAnchorFollower.Target3DObject.TryGetComponentInChildren(out dataModelBinder_RTRH) == false) return false;
+                if (uiAnchorFollower.Target3DObject.TryGetComponentInChildren(out dataModelBinder_RTRH) == false) return false;
             }
             return true;
         }
