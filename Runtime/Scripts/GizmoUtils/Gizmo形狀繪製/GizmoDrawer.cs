@@ -1,4 +1,3 @@
-#if UNITY_EDITOR
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -12,8 +11,9 @@ namespace VzDev.DrawUtils
         [Foldout("[Settings]")] public GizmoStyle style = GizmoStyle.SolidSphere;
         [Foldout("[Settings]")] public float radius = 0.5f;
         [Foldout("[Settings]")] public Vector3 cubeSize = Vector3.one * 0.5f;
-
         #endregion
+        
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (alwaysShow) DrawGizmo();
@@ -49,6 +49,7 @@ namespace VzDev.DrawUtils
             }
         }
     }
+#endif
 
     public enum GizmoStyle
     {
@@ -58,4 +59,3 @@ namespace VzDev.DrawUtils
         WireCube,
     }
 }
-#endif
