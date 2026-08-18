@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1609534858035979966}
   - component: {fileID: 5572400607737306577}
   - component: {fileID: 1553989954394593211}
-  - component: {fileID: 8079124856102464676}
+  - component: {fileID: 325812947989763015}
   m_Layer: 5
   m_Name: BKG
   m_TagString: Untagged
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 10
---- !u!114 &8079124856102464676
+--- !u!114 &325812947989763015
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
