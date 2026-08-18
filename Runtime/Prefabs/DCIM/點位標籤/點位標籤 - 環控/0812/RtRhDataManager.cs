@@ -9,35 +9,44 @@ namespace VzDev.DCIMUtils.EnviornmentUtils
 {
     public class RtRhDataManager : MonoBehaviour
     {
-        [SerializeField, OnValueChanged("OnCurrentRtRhModeChanged")] private EnumRtRhMode currentRtRhMode = EnumRtRhMode.Unselect;
+        [SerializeField, OnValueChanged("OnCurrentModeChanged")] private EnumRtRhMode currentMode = EnumRtRhMode.Unselect;
         [SerializeField, ReadOnly] private List<SensorData_RTRH> pointModelDataList = new List<SensorData_RTRH>();
-        [Foldout("[Events]")] public UnityEvent<bool> onRtModeEvent, onRhModeEvent;
+        [Foldout("[Events]-THS")] public UnityEvent<bool> onRtModeEvent, onRhModeEvent;
+        [Foldout("[Events]-WLK")] public UnityEvent<bool> onWaterLeakModeEvent;
 
-        private void OnCurrentRtRhModeChanged()
+        private void OnCurrentModeChanged()
         {
-            if (currentRtRhMode == EnumRtRhMode.Unselect)
+            if (currentMode == EnumRtRhMode.Unselect)
             {
                 Debug.LogWarning("Current RtRhMode is Unselect. No action taken.", this);
                 return;
             }
-            ToRtMode(currentRtRhMode == EnumRtRhMode.Rt);
-            ToRhMode(currentRtRhMode == EnumRtRhMode.Rh);
+            ToRtMode(currentMode == EnumRtRhMode.Rt);
+            ToRhMode(currentMode == EnumRtRhMode.Rh);
+            ToWaterLeakMode(currentMode == EnumRtRhMode.WaterLeak);
+        }
+
+        public void ToWaterLeakMode(bool isOn)
+        {
+            onWaterLeakModeEvent?.Invoke(isOn);
+            if (isOn == false) return;
+            currentMode = EnumRtRhMode.WaterLeak;
         }
 
         public void ToRtMode(bool isOn)
         {
             onRtModeEvent?.Invoke(isOn);
             if (isOn == false) return;
-            currentRtRhMode = EnumRtRhMode.Rt;
-            onRtRhModeChangedAction?.Invoke(currentRtRhMode);
+            currentMode = EnumRtRhMode.Rt;
+            onRtRhModeChangedAction?.Invoke(currentMode);
         }
 
         public void ToRhMode(bool isOn)
         {
             onRhModeEvent?.Invoke(isOn);
             if (isOn == false) return;
-            currentRtRhMode = EnumRtRhMode.Rh;
-            onRtRhModeChangedAction?.Invoke(currentRtRhMode);
+            currentMode = EnumRtRhMode.Rh;
+            onRtRhModeChangedAction?.Invoke(currentMode);
         }
 
         #region Parse JSON Data
@@ -83,5 +92,6 @@ namespace VzDev.DCIMUtils.EnviornmentUtils
         Unselect,
         Rt,
         Rh,
+        WaterLeak
     }
 }
