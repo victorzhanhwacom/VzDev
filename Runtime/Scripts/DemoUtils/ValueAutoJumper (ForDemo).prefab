@@ -48,6 +48,9 @@ MonoBehaviour:
   valueType: 2
   currentValueFloat: 0
   currentValueInt: 1
+  OnValueChangedString:
+    m_PersistentCalls:
+      m_Calls: []
   OnValueChangedFloat:
     m_PersistentCalls:
       m_Calls: []
@@ -72,11 +75,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
-  minValueF: 0
-  maxValueF: 100
-  decimalPlaces: 2
   minValue: 0
   maxValue: 3
+  decimalPlaces: 2
   useWeightedRandom: 1
   segments:
   - min: 0
@@ -107,21 +108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f518ddb4eb2eba74e8b1a4c3aabc7b47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: VzDev::VzDev.DateTimeUtils.TimerController
-  onTimerStart:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3859359150456855079}
-        m_TargetAssemblyTypeName: VzDev.DemoUtils.RandomValueGenerator, VzDev
-        m_MethodName: GenerateRandomValue
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   onTimerUpdate:
     m_PersistentCalls:
       m_Calls:
@@ -140,9 +126,24 @@ MonoBehaviour:
   onTimerEnd:
     m_PersistentCalls:
       m_Calls: []
+  onTimerStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3859359150456855079}
+        m_TargetAssemblyTypeName: VzDev.DemoUtils.RandomValueGenerator, VzDev
+        m_MethodName: GenerateRandomValue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   isActiveInStart: 1
   timeValue: 10
-  timeUnit: 0
+  timeUnit: 2
   maxLoopCount: 3
   isInfiniteLoop: 1
   loopCount: 0

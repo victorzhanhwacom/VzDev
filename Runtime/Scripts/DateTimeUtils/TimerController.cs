@@ -83,7 +83,7 @@ namespace VzDev.DateTimeUtils
         private IEnumerator TimerCoroutine(float duration)
         {
             onTimerStart?.Invoke();
-            
+
             float elapsed = 0f;
             float interval = timeValue * GetTimeUnitMultiplier(timeUnit); // ✅ 快取，避免每幀重複計算
 
@@ -109,6 +109,8 @@ namespace VzDev.DateTimeUtils
                 }
             }
         }
+
+        public void InvokeTimerUpdateEvent() => onTimerUpdate?.Invoke(0);
 
         private float GetTimeUnitMultiplier(EnumTime timeUnit)
         {

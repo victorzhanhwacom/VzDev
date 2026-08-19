@@ -33,6 +33,7 @@ namespace VzDev.ToolUtils
             if (pointTags.Count == 0) return;
             for (int i = pointTags.Count - 1; i >= 0; i--)
             {
+                if(pointTags[i] == null) continue;
                 pointTags[i].OnToggleChangedAction -= OnToggleChanged;
                 ObjectHelper.Destroy(pointTags[i].gameObject);
             }
@@ -114,6 +115,7 @@ namespace VzDev.ToolUtils
             if (pointTags == null || pointTags.Count == 0) return;
             for (int i = 0; i < pointTags.Count; i++)
             {
+                if(pointTags[i] == null) continue;
                 pointTags[i].gameObject.SetActive(isVisible);
                 if (isVisible)
                 {
