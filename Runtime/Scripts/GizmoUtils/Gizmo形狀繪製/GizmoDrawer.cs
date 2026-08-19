@@ -48,8 +48,8 @@ namespace VzDev.DrawUtils
                     break;
             }
         }
-    }
 #endif
+    }
 
     public enum GizmoStyle
     {

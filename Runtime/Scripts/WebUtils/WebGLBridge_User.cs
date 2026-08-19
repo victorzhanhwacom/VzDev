@@ -13,7 +13,7 @@ namespace VzDev.WebGLUtils
                 public void SetUserToken(string userToken)
                 {
                         UserToken = userToken;
-                        OnMessageReceived?.Invoke(UserToken);
+                        OnReceiveMessageFromJS?.Invoke(UserToken);
                 }
                 private const string MethodName_OnUnityInitialized = "OnUnityReady";
 

@@ -21,6 +21,8 @@ namespace VzDev
         private void OnEnable() => _inputField?.onSubmit.AddListener(OnSubmit);
         private void OnDisable() => _inputField?.onSubmit.RemoveListener(OnSubmit);
 
+        public void OnSubmit() => OnSubmit(_inputField.text);
+
         private void OnSubmit(string text)
         {
             OnSubmitEvent?.Invoke(text);
@@ -31,6 +33,7 @@ namespace VzDev
                 _inputField.ActivateInputField();
             }
         }
+        public void SetAutoClearOnSubmit(bool value) => isAutoClearOnSubmit = value;
 
         private void OnValidate() => _inputField ??= GetComponent<TMP_InputField>();
     }

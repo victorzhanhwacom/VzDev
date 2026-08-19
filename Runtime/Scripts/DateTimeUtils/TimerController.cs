@@ -11,9 +11,9 @@ namespace VzDev.DateTimeUtils
     public class TimerController : MonoBehaviour
     {
         #region Variables
-        [Foldout("[Events]"), Tooltip("Timer開始時觸發")] public UnityEvent onTimerStart;
         [Foldout("[Events]"), Tooltip("每次Loop時觸發")] public UnityEvent<int> onTimerUpdate;
         [Foldout("[Events]"), Tooltip("循環結束時觸發"), HideIf(nameof(isInfiniteLoop))] public UnityEvent onTimerEnd;
+        [Foldout("[Events]"), Tooltip("Timer開始時觸發")] public UnityEvent onTimerStart;
 
         [Foldout("[Settings]"), SerializeField] private bool isActiveInStart = true;
         [Foldout("[Settings]"), SerializeField] private float timeValue = 10f;
@@ -123,12 +123,5 @@ namespace VzDev.DateTimeUtils
 
         private void OnEnable() => ResumeTimer(); // ✅ 確保在物件被啟用時恢復計時器，如果之前是暫停狀態
         private void OnDisable() => PauseTimer(); // ✅ 確保在物件被禁用時停止計時器，避免 Coroutine 繼續運行
-    }
-
-    public enum EnumTime
-    {
-        秒,
-        分,
-        時
     }
 }
