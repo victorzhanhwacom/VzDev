@@ -117,6 +117,7 @@ namespace VzDev.ToolUtils
             {
                 if(pointTags[i] == null) continue;
                 pointTags[i].gameObject.SetActive(isVisible);
+                //pointTags[i].SetToggle(isVisible);
                 if (isVisible)
                 {
                     pointTags[i].OnToggleChangedAction += OnToggleChanged;

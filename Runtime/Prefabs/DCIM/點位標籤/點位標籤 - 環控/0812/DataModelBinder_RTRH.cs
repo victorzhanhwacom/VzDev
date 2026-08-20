@@ -41,7 +41,7 @@ namespace VzDev.DCIMUtils.EnviornmentUtils
                     unit = "%";
                     break;
                 default:
-                    Debug.LogWarning($"DataModelBinder_RTRH: Unselect mode. Cannot update heat source.", this);
+                    //Debug.LogWarning($"DataModelBinder_RTRH: Unselect mode. Cannot update heat source.", this);
                     return;
             }
             heatSource.SetTemperature(value);

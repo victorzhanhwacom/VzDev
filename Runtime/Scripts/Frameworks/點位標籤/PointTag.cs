@@ -23,6 +23,12 @@ namespace VzDev.ToolUtils
                 toggle.group = group;
         }
 
+        public void SetToggle(bool isOn)
+        {
+            if (toggle != null)
+                toggle.isOn = isOn;
+        }
+
         public Transform FollowerTarget => uiAnchorFollower != null ? uiAnchorFollower.Target3DObject : null;
 
         public bool LabelVisible => labelToggle != null ? labelToggle.isOn : false;
