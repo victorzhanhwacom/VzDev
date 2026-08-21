@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using NaughtyAttributes;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -14,9 +15,20 @@ namespace VzDev.WebGLUtils
     {
         #region Events
         [SerializeField, ReadOnly] private DCIM_JsPayload receivedPayload;
+        [SerializeField, ReadOnly, ShowIf("IsUserTokenPayload")] private UserTokenPayload userTokenPayload;
+        [SerializeField, ReadOnly, ShowIf("IsSwitchSystemMenuPayload")] private SwitchSystemMenuPayload switchSystemMenuPayload;
+        [SerializeField, ReadOnly, ShowIf("IsSwitchFloorPayload")] private SwitchFloorPayload switchFloorPayload;
+        [SerializeField, ReadOnly, ShowIf("IsClickModelPayload")] private ClickModelPayload clickModelPayload;
+        [SerializeField, ReadOnly, ShowIf("IsClickModelPayload")] private Transform clickModelTarget;
         [Foldout("[Events]-取得UserToken")] public UnityEvent<string> OnGetUserTokenEvent;
         [Foldout("[Events]-切換系統選單")] public UnityEvent<EnumSystemMenu> OnSwitchSystemMenuEvent;
         [Foldout("[Events]-切換樓層")] public UnityEvent<EnumFloor> OnSwitchFloorEvent;
+
+        private bool IsUserTokenPayload => receivedPayload.action == EnumJsAction.UserToken && !string.IsNullOrEmpty(receivedPayload.payload);
+        private bool IsSwitchSystemMenuPayload => receivedPayload.action == EnumJsAction.SwitchSystemMenu && !string.IsNullOrEmpty(receivedPayload.payload);
+        private bool IsSwitchFloorPayload => receivedPayload.action == EnumJsAction.SwitchToFloor && !string.IsNullOrEmpty(receivedPayload.payload);
+        private bool IsClickModelPayload => receivedPayload.action == EnumJsAction.SimulateClickModel && !string.IsNullOrEmpty(receivedPayload.payload);
+
         #endregion
 
         /*JSON解析格式
@@ -33,6 +45,9 @@ namespace VzDev.WebGLUtils
         public void ParseJsPayload(string json)
         {
             receivedPayload = new DCIM_JsPayload();
+            switchSystemMenuPayload = null;
+            switchFloorPayload = null;
+            clickModelPayload = null;
 
             JObject root;
             try
@@ -66,8 +81,6 @@ namespace VzDev.WebGLUtils
             CheckAction(receivedPayload.action, payload);
         }
 
-
-
         private void CheckAction(EnumJsAction action, JObject payload)
         {
             switch (action)
@@ -94,10 +107,9 @@ namespace VzDev.WebGLUtils
                     break;
             }
         }
-
         private void OnUserTokenAction(JObject payload)
         {
-            var userTokenPayload = payload.ToObject<UserTokenPayload>();
+            userTokenPayload = payload.ToObject<UserTokenPayload>();
             if (userTokenPayload == null)
             {
                 Debug.LogWarning($"[{GetType().Name}] UserToken 缺少 payload");
@@ -105,10 +117,9 @@ namespace VzDev.WebGLUtils
             }
             OnGetUserTokenEvent?.Invoke(userTokenPayload.userToken);
         }
-
         private void OnSwitchSystemMenuAction(JObject payload)
         {
-            var switchSystemMenuPayload = payload.ToObject<SwitchSystemMenuPayload>();
+            switchSystemMenuPayload = payload.ToObject<SwitchSystemMenuPayload>();
             if (switchSystemMenuPayload == null)
             {
                 Debug.LogWarning($"[{GetType().Name}] SwitchSystemMenu 缺少 payload");
@@ -118,7 +129,7 @@ namespace VzDev.WebGLUtils
         }
         private void OnSwitchFloorAction(JObject payload)
         {
-            var switchFloorPayload = payload.ToObject<SwitchFloorPayload>();
+            switchFloorPayload = payload.ToObject<SwitchFloorPayload>();
             if (switchFloorPayload == null)
             {
                 Debug.LogWarning($"[{GetType().Name}] SwitchToFloor 缺少 payload");
@@ -128,22 +139,25 @@ namespace VzDev.WebGLUtils
         }
         private void OnSimulateClickModelAction(JObject payload)
         {
-            var clickModelPayload = payload.ToObject<ClickModelPayload>();
+            clickModelPayload = payload.ToObject<ClickModelPayload>();
             if (clickModelPayload == null)
             {
                 Debug.LogWarning($"[{GetType().Name}] SimulateClickModel 缺少 payload");
                 return;
             }
-            Transform targetTransform = ObjectHelper.FindObjectsByName(clickModelPayload.deviceCode, NameSearchMode.Exact, true).Count > 0
-             ? ObjectHelper.FindObjectsByName(clickModelPayload.deviceCode, NameSearchMode.Exact, true)[0]
+
+            List<Transform> foundObjects = ObjectHelper.FindObjectsByDeviceCode(clickModelPayload.deviceCode, NameSearchMode.Exact, true);
+
+            clickModelTarget = foundObjects.Count > 0
+             ? foundObjects[0]
              : null;
-            if (targetTransform == null)
+            if (clickModelTarget == null)
             {
-                Debug.LogWarning($"No GameObject found with name: {clickModelPayload.deviceCode}");
+                Debug.LogWarning($"No GameObject found with device code: {clickModelPayload.deviceCode}");
                 return;
             }
             Debug.Log($"SimulateClickModel action received for device: {clickModelPayload.deviceCode}");
-            ColliderInteractionSystem.SimulateClick(targetTransform.gameObject);
+            ColliderInteractionSystem.SimulateClick(clickModelTarget.gameObject);
         }
     }
 }

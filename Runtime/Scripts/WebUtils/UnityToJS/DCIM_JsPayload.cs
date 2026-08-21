@@ -1,31 +1,35 @@
-using Newtonsoft.Json.Linq;
+using System;
 using UnityEngine;
 
 namespace VzDev.WebGLUtils
 {
-    [System.Serializable]
+    [Serializable]
     public class DCIM_JsPayload
     {
         public EnumJsAction action = EnumJsAction.Unknown;
-        public string payload;
+        [TextArea]public string payload;
     }
 
     #region 各 action 對應的 payload class
+    [Serializable]
     public class UserTokenPayload
     {
         public string userToken;
     }
 
+    [Serializable]
     public class SwitchSystemMenuPayload
     {
         public EnumSystemMenu systemMenu;
     }
 
+    [Serializable]
     public class SwitchFloorPayload
     {
         public EnumFloor floor;
     }
 
+    [Serializable]
     public class ClickModelPayload
     {
         public string deviceCode;
