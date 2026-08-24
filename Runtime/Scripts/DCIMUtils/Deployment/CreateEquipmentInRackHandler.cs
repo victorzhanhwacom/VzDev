@@ -16,13 +16,13 @@ namespace VzDev.DCIMUtils.DeploymentUtils
     {
         #region Fields
         [SerializeField, ReadOnly] private List<DCR_Asset> dcrAssets = new List<DCR_Asset>();
-        [SerializeField, ReadOnly] private List<GameObject> equipmentModels = new List<GameObject>();
+        [SerializeField, ReadOnly] private List<Transform> equipmentModels = new List<Transform>();
         private bool isHaveData => dcrAssets != null && dcrAssets.Count > 0 || equipmentModels != null && equipmentModels.Count > 0;
 
         private int dataReadyCount = 0, dataReadyTotal = 2;
         #endregion
 
-        private void SetEquipmentModels(List<GameObject> list)
+        private void SetEquipmentModels(List<Transform> list)
         {
             equipmentModels = list;
             TryCreateEquipmentAssetsInRack();

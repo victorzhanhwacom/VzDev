@@ -17,7 +17,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [SerializeField] private bool isGenerateDemoData = false;
         [SerializeField, ShowIf("isGenerateDemoData")] private int demoDataCount = 30;
         [SerializeField, ReadOnly] private List<EquipmentAsset> equipmentAssetsInStock = new List<EquipmentAsset>();
-        [SerializeField, ReadOnly] private List<GameObject> equipmentModels = new List<GameObject>();
+        [SerializeField, ReadOnly] private List<Transform> equipmentModels = new List<Transform>();
         private bool isHaveData => equipmentAssetsInStock != null && equipmentAssetsInStock.Count > 0;
 
         private int dataReadyCount = 0, dataReadyTotal = 2;
@@ -30,7 +30,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             TryCreateEquipmentAssetsInStock();
         }
 
-        public void SetEquipmentModels(List<GameObject> list)
+        public void SetEquipmentModels(List<Transform> list)
         {
             equipmentModels = list;
             TryCreateEquipmentAssetsInStock();
@@ -79,7 +79,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         /// </summary>
         private static class DEMO_EquipmentAssetInStock
         {
-            public static List<EquipmentAsset> Generate(List<GameObject> equipmentModels, int count = 30)
+            public static List<EquipmentAsset> Generate(List<Transform> equipmentModels, int count = 30)
             {
                 if (equipmentModels == null || equipmentModels.Count == 0 || count <= 0)
                 {
@@ -90,7 +90,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                 List<EquipmentAsset> result = new();
                 for (int i = 0; i < count; i++)
                 {
-                    GameObject model = equipmentModels[Random.Range(0, equipmentModels.Count)];
+                    Transform model = equipmentModels[Random.Range(0, equipmentModels.Count)];
                     string deviceCode = model.name + "+" + Random.Range(1000, 9999).ToString("D4");
 
                     EquipmentAsset equipmentAsset = new EquipmentAsset
@@ -120,7 +120,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                     };
                     equipmentAsset.modelInfo = new ModelInfo
                     {
-                        modelTarget = model.transform,
+                        modelTarget = model,
                         modelName = deviceCode
                     };
 

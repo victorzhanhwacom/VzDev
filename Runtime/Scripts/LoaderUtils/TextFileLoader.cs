@@ -18,8 +18,8 @@ namespace VzDev.LoaderUtils
     {
         #region Fields
         [Foldout("[Events]")] public UnityEvent<bool> onLoadingEvent;
-        [Foldout("[Events]")] public UnityEvent<string> onLoaded;
-        [Foldout("[Events]")] public UnityEvent<string> onFailed;
+        [Foldout("[Events]")] public UnityEvent<string> onLoadedEvent;
+        [Foldout("[Events]")] public UnityEvent<string> onFailedEvent;
         [Foldout("[Settings]"), SerializeField] private EnumLoadPath enumLoadPath = EnumLoadPath.StreamingAssets;
         [Foldout("[Settings]"), SerializeField] private string fileName = "data.json";
 
@@ -71,12 +71,12 @@ namespace VzDev.LoaderUtils
             if (isSuccess)
             {
                 Debug.Log($"[TextLoader] File Loaded (Resources):\n{result}");
-                onLoaded?.Invoke(result);
+                onLoadedEvent?.Invoke(result);
             }
             else
             {
                 Debug.LogError($"[TextLoader] Failed to load file from Resources: {result}");
-                onFailed?.Invoke(result);
+                onFailedEvent?.Invoke(result);
             }
             SetLoadingState(false);
         }
@@ -94,12 +94,12 @@ namespace VzDev.LoaderUtils
             if (isSuccess)
             {
                 Debug.Log($"[TextLoader] File Loaded ({enumLoadPath}):\n{result}");
-                onLoaded?.Invoke(result);
+                onLoadedEvent?.Invoke(result);
             }
             else
             {
                 Debug.LogError($"[TextLoader] Failed to load file from {enumLoadPath}: {result}");
-                onFailed?.Invoke(result);
+                onFailedEvent?.Invoke(result);
             }
             SetLoadingState(false);
         }

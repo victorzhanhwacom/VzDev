@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using Newtonsoft.Json;
@@ -10,23 +9,36 @@ namespace VzDev.DCIMUtils.DeploymentUtils
 {
     public class RackDcrAssetSetter : MonoBehaviour
     {
-        [SerializeField, ReadOnly] private List<DCR_Asset> rackAssets;
-        [SerializeField, ReadOnly] private List<Transform> rackModels;
-        [SerializeField, ReadOnly] private List<Transform> equipmentModels;
+        #region Fields
+        [SerializeField, OnValueChanged("OnRackClickableChanged")] private bool isRackClickable = true;
+        private void OnRackClickableChanged() => SetRackClickable(isRackClickable);
+        [SerializeField] private bool showList = true;
+        [SerializeField, ReadOnly, ShowIf("showList")] private List<DCR_Asset> rackAssets;
+        [SerializeField, ReadOnly, ShowIf("showList")] private List<Transform> rackModels;
+        [SerializeField, ReadOnly, ShowIf("showList")] private List<Transform> equipmentModels;
 
-        private bool isHaveData => (rackModels != null && rackAssets != null) || (rackModels.Count > 0 && rackAssets.Count > 0);
-        private int dataReadyCount = 0, dataReadyCountMax = 3;
+        [SerializeField, ReadOnly] private List<DataModelBinder_Rack> rackDataModelBinders = new List<DataModelBinder_Rack>();
 
-        private void Awake() => dataReadyCount = 0;
+        private bool isHaveData => isRackDataReady && isRackModelReady && isEquipmentModelReady;
+        private bool isRackDataReady => rackAssets != null && rackAssets.Count > 0;
+        private bool isRackModelReady => rackModels != null && rackModels.Count > 0;
+        private bool isEquipmentModelReady => equipmentModels != null && equipmentModels.Count > 0;
+        #endregion
 
-                /// <summary>
+        public void SetRackClickable(bool isClickable)
+        {
+            isRackClickable = isClickable;
+            rackDataModelBinders.ForEach(combiner => combiner.SetColliderEnabled(isRackClickable));
+        }
+
+        /// <summary>
         /// 解析機櫃Json資料
         /// </summary>
-        public void SetRackAssets(string jsonString) 
+        public void SetRackAssets(string jsonString)
         {
-            var rackAssetDtoList = JsonConvert.DeserializeObject<List<DCR_Asset_DTO>>(jsonString);
             rackAssets?.Clear();
             rackAssets = new List<DCR_Asset>();
+            var rackAssetDtoList = JsonConvert.DeserializeObject<List<DCR_Asset_DTO>>(jsonString);
             for (int i = 0; i < rackAssetDtoList.Count; i++)
             {
                 rackAssets.Add(rackAssetDtoList[i].ToDCRAsset());
@@ -42,7 +54,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             rackModels = models;
             for (int i = 0; i < rackModels.Count; i++)
             {
-                rackModels[i].gameObject.TryAddComponent<DataModelBinder_Rack>();
+                rackModels[i].gameObject.TryAddComponent(out DataModelBinder_Rack dataCombiner);
+                rackDataModelBinders.Add(dataCombiner);
             }
             GenerateDataCombiner();
         }
@@ -50,20 +63,16 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         /// <summary>
         /// 設定資產設備模型列表
         /// </summary>
-        private void SetEquipmentModels(List<GameObject> list)
+        public void SetEquipmentModels(List<Transform> list)
         {
-            equipmentModels = new List<Transform>();
-            for (int i = 0; i < list.Count; i++)
-            {
-                equipmentModels.Add(list[i].transform);
-            }
+            equipmentModels = list;
             GenerateDataCombiner();
         }
 
-
-         private void GenerateDataCombiner()
+        private void GenerateDataCombiner()
         {
-            if (++dataReadyCount < dataReadyCountMax) return;
+            if (!isRackDataReady || !isRackModelReady || !isEquipmentModelReady) return;
+
             for (int i = 0; i < rackAssets.Count; i++)
             {
                 DCR_Asset rackAsset = rackAssets[i];
@@ -76,7 +85,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
 
                     rackAsset.container.ForEach(equipment =>
                     {
-                        Transform equipmentModel = equipmentModels.Find(m => m.name.GetStringBetweenMarks("[", "]") == equipment.deviceCode);
+                        Transform equipmentModel = equipmentModels.Find(m => m.name.ContainKeyword(System.StringComparison.OrdinalIgnoreCase, equipment.deviceCode));
                         if (equipmentModel != null)
                         {
                             equipmentModel.gameObject.TryAddComponent(out DataModelBinder_Equipment dataCombiner_Equipment);
@@ -98,6 +107,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [Button, ShowIf("isHaveData")]
         private void ClearData()
         {
+            rackDataModelBinders.ForEach(combiner => combiner.ToDestroy());
+            rackDataModelBinders?.Clear();
             rackModels?.Clear();
             rackAssets?.Clear();
         }

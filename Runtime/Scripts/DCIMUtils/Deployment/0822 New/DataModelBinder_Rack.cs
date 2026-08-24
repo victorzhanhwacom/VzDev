@@ -1,17 +1,15 @@
-using System;
 using NaughtyAttributes;
 using UnityEngine;
 using VzDev.DCIMUtils.DataUtils;
 using VzDev.DebugUtils;
+using VzDev.UnityAPI.Extensions;
 
 namespace VzDev.DCIMUtils.DeploymentUtils
 {
-    [RequireComponent(typeof(MeshCollider))]
     public class DataModelBinder_Rack : MonoBehaviour
     {
         [SerializeField, ReadOnly] private DCR_Asset rackAsset;
         [Foldout("[Components]"), SerializeField] private MeshCollider meshCollider;
-
 
         public void SetRackAsset(DCR_Asset data)
         {
@@ -20,15 +18,21 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             rackAsset.modelInfo.modelTarget = transform;
             rackAsset.modelInfo.modelName = transform.name;
             rackAsset.RefreshUsageInfo();
+            transform.TryAddComponent(out meshCollider);
         }
 
-        private void OnValidate()
+        public void SetColliderEnabled(bool isEnabled)
         {
-            if (meshCollider == null) meshCollider = GetComponent<MeshCollider>();
+            if (meshCollider == null) return;
+            meshCollider.enabled = isEnabled;
         }
+
+        public void ToDestroy() => OnDestroy();
+
         private void OnDestroy()
         {
             if (meshCollider != null) ObjectHelper.Destroy(meshCollider);
+            ObjectHelper.Destroy(this);
         }
     }
 }

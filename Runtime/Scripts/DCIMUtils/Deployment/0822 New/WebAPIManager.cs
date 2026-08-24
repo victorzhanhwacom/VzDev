@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using NaughtyAttributes;
 using UnityEngine;
-using VzDev.UnityAPI.Extensions;
+using VzDev.FileUtils;
 
 namespace VzDev.DCIMUtils.DeploymentUtils
 {
@@ -11,7 +10,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
     {
         #region Fields
 
-        [SerializeField, Label("設備模型")] private List<GameObject> equipmentModels = new List<GameObject>();
+
+
         #endregion
 
         /// <summary>
@@ -20,17 +20,24 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [Button]
         public void GetRackListInformation()
         {
-            OnGetRackListInformationAction?.Invoke("");
+            string result = "";
+            #region For Demo
+            result = FileHelper.LoadTextFileDirectly("機房一.json", EnumFilePath.streamingAssetsPath);
+            #endregion
+            OnGetRackListInformationAction?.Invoke(result);
         }
+
+
         /// <summary>
         /// 取得上架庫存設備列表
         /// </summary>
         [Button]
         public void GetEquipmentAssetInStock()
         {
-            OnGetEquipmentAssetInStockAction?.Invoke("");
+            #region For Demo
+            #endregion
+            //OnGetEquipmentAssetInStockAction?.Invoke("");
         }
-
 
         /// <summary>
         /// 取得設備模型列表
@@ -38,8 +45,11 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [Button]
         public void GetEquipmentModels()
         {
-            OnGetEquipmentModelsAction?.Invoke(equipmentModels);
+            #region For Demo
+            #endregion
+            //OnGetEquipmentModelsAction?.Invoke(new List<Transform>());
         }
+
 
         #region Static Events
         /// <summary>
@@ -47,14 +57,13 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         /// </summary>
         public static Action<string> OnGetRackListInformationAction;
         /// <summary>
-        /// 取得設備模型列表
-        /// </summary>
-        public static Action<List<GameObject>> OnGetEquipmentModelsAction;
-        /// <summary>
         /// 設得庫存設備資料列表(json字串)
         /// </summary>
         public static Action<string> OnGetEquipmentAssetInStockAction;
-        
+         /// <summary>
+        /// 取得設備模型列表
+        /// </summary>
+        public static Action<List<Transform>> OnGetEquipmentModelsAction;
         #endregion
     }
 }
