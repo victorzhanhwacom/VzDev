@@ -59,7 +59,7 @@ namespace VzDev.DCIMUtils.Import
                 weight_kg_Max = entry.information.weight_limit,
                 power_watt_Max = entry.information.watt_limit,
                 u_height_Max = entry.information.heightU,
-                cobieInfo = entry.information.ToAsset(),
+                cobieInfo = entry.information.ToCOBieInfo(),
                 container = entry.containers
             };
             // container 依 startUIndex 遞減排序：U槽編號越大（越靠機櫃上方）排越前面。

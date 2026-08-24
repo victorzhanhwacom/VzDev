@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VzDev.DCIMUtils.DataUtils;
 
-namespace VzDev.DCIMUtils.Deployment
+namespace VzDev.DCIMUtils.DeploymentUtils
 {
     /// <summary>
     /// 機櫃條件篩選器，根據設備的尺寸和位置來篩選可放置的設備。

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using VzDev.DCIMUtils.DataUtils;
 using VzDev.DebugUtils;
 
-namespace VzDev.DCIMUtils.Deployment
+namespace VzDev.DCIMUtils.DeploymentUtils
 {
     public class EquipmentStockList : MonoBehaviour
     {

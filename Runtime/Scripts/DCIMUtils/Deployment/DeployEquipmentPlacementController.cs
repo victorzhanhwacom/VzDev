@@ -5,7 +5,7 @@ using VzDev.DCIMUtils.DataUtils;
 using VzDev.DebugUtils;
 using VzDev.RenderingUtils.Staging;
 
-namespace VzDev.DCIMUtils.Deployment
+namespace VzDev.DCIMUtils.DeploymentUtils
 {
     /// <summary>
     /// 監聽 DeployEquipmentList 的選取結果，生成待部署設備的預覽模型，

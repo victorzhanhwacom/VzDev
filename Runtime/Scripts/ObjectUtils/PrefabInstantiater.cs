@@ -10,7 +10,7 @@ namespace VzDev.ObjectUtils
     {
         #region Fields
         [SerializeField, OnValueChanged("OnVisibleChanged")] private bool visible;
-        [SerializeField, ReadOnly] private List<Transform> targetModels;
+        [SerializeField] private List<Transform> targetModels;
         [SerializeField, ReadOnly] private List<GameObject> _instantiatedModels;
         [Foldout("[Events]")] public UnityEvent<List<GameObject>> OnPrefabsInstantiated;
         [Foldout("[Components]"), SerializeField] private GameObject prefab;

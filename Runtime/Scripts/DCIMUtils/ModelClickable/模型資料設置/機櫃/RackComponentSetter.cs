@@ -7,7 +7,7 @@ using VzDev.DCIMUtils.DataUtils;
 using VzDev.DCIMUtils.ModelInteractUtils;
 using VzDev.DebugUtils;
 
-namespace VzDev.DCIMUtils.Deployment
+namespace VzDev.DCIMUtils.DeploymentUtils
 {
     public class RackComponentSetter : ModelComponentSetterBase<DCR_Asset, RackComponent>
     {
@@ -28,13 +28,8 @@ namespace VzDev.DCIMUtils.Deployment
             onSetDeployColliderCompleted?.Invoke();
         }
 
-        public void ParseRackListInformation(bool isSuccess, string json)
+        public void ParseRackListInformation(string json)
         {
-            if (!isSuccess)
-            {
-                Debug.LogError("Failed to get rack list information.");
-                return;
-            }
             SetDatas(RackAssetJsonConverter.ParseFromJson(json));
         }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 using VzDev.DCIMUtils.DataUtils;
 using VzDev.DCIMUtils.ModelInteractUtils;
 
-namespace VzDev.DCIMUtils.Deployment
+namespace VzDev.DCIMUtils.DeploymentUtils
 {
       public class EquipmentComponentSetter : ModelComponentSetterBase<EquipmentAsset, EquipmentComponent>
       {
@@ -21,7 +21,7 @@ namespace VzDev.DCIMUtils.Deployment
                   TryCreateEquipmentAssetsInStock();
             }
 
-            public void SetEquipmentModels(bool isSuccess, List<GameObject> models)
+            public void SetEquipmentModels(List<GameObject> models)
             {
                   equipmentModels = models;
                   TryCreateEquipmentAssetsInStock();

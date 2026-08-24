@@ -6,7 +6,7 @@ using UnityEngine;
 using VzDev.DCIMUtils.DataUtils;
 using Random = UnityEngine.Random;
 
-namespace VzDev.DCIMUtils.Deployment
+namespace VzDev.DCIMUtils.DeploymentUtils
 {
     /// <summary>
     /// 產生上架庫存設備列表
@@ -24,24 +24,14 @@ namespace VzDev.DCIMUtils.Deployment
         private string jsonData;
         #endregion
 
-        public void SetEquipmentAssetInStock(bool isSuccess, string json)
+        public void SetEquipmentAssetInStock(string json)
         {
-            if (!isSuccess)
-            {
-                Debug.LogError("Failed to get equipment asset in stock.");
-                return;
-            }
             jsonData = json;
             TryCreateEquipmentAssetsInStock();
         }
 
-        public void SetEquipmentModels(bool isSuccess, List<GameObject> list)
+        public void SetEquipmentModels(List<GameObject> list)
         {
-            if (!isSuccess)
-            {
-                Debug.LogError("Failed to get equipment models.");
-                return;
-            }
             equipmentModels = list;
             TryCreateEquipmentAssetsInStock();
         }
@@ -79,7 +69,9 @@ namespace VzDev.DCIMUtils.Deployment
         }
         #endregion
 
+        #region Static Event
         public static Action<List<EquipmentAsset>> OnCreateEquipmentAssetsInStockEvent;
+        #endregion
 
         #region [For Demo] 產生上架庫存設備列表
         /// <summary>
