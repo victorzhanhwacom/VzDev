@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VzDev.DCIMUtils.DataUtils;
 
-namespace VzDev.DCIMUtils.Deployment
+namespace VzDev.DCIMUtils.DeploymentUtils
 {
     /// <summary>
     /// 顯示目前所選的上架庫存設備資訊

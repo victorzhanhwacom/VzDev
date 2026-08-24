@@ -13,11 +13,26 @@ namespace VzDev.DCIMUtils.DataUtils
         public string devicePath;
         public InformationDto information;
         public List<EquipmentAsset> containers = new();
+
+        public DCR_Asset ToDCRAsset()
+        {
+            var asset = new DCR_Asset
+            {
+                deviceCode = devicePath,
+                cobieInfo = information?.ToCOBieInfo(),
+                weight_kg_Max = information?.weight_limit ?? 0,
+                power_watt_Max = information?.watt_limit ?? 0,
+                u_height_Max = information?.heightU ?? 0,
+                weight_kg = information?.weight ?? 0,
+                container = containers ?? new List<EquipmentAsset>()
+            };
+            return asset;
+        }
     }
 
     public class InformationDto
     {
-        public COBieInfo ToAsset()
+        public COBieInfo ToCOBieInfo()
         {
             return new COBieInfo
             {

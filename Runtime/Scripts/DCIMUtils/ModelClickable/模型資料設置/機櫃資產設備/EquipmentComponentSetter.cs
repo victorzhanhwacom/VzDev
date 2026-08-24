@@ -5,12 +5,12 @@ using UnityEngine;
 using VzDev.DCIMUtils.DataUtils;
 using VzDev.DCIMUtils.ModelInteractUtils;
 
-namespace VzDev.DCIMUtils.Deployment
+namespace VzDev.DCIMUtils.DeploymentUtils
 {
       public class EquipmentComponentSetter : ModelComponentSetterBase<EquipmentAsset, EquipmentComponent>
       {
             #region Fields
-            [SerializeField, ReadOnly] private List<GameObject> equipmentModels;
+            [SerializeField, ReadOnly] private List<Transform> equipmentModels;
             [SerializeField, ReadOnly] private List<RackComponent> rackComponents;
             private int dataReadyCount = 0, dataReadyTotal = 2;
             #endregion
@@ -21,7 +21,7 @@ namespace VzDev.DCIMUtils.Deployment
                   TryCreateEquipmentAssetsInStock();
             }
 
-            public void SetEquipmentModels(bool isSuccess, List<GameObject> models)
+            public void SetEquipmentModels(List<Transform> models)
             {
                   equipmentModels = models;
                   TryCreateEquipmentAssetsInStock();
@@ -50,7 +50,7 @@ namespace VzDev.DCIMUtils.Deployment
                   {
                         EquipmentAsset equipmentAsset = dcrAsset.container[i] as EquipmentAsset;
                         if (equipmentAsset == null) continue;
-                        GameObject modelPrefab = equipmentModels.Find(m => m.name.Contains(equipmentAsset.modelInfo.modelName));
+                        GameObject modelPrefab = equipmentModels.Find(m => m.name.Contains(equipmentAsset.modelInfo.modelName))?.gameObject;
                         if (modelPrefab == null) continue;
 
                         GameObject modelInstance = Instantiate(modelPrefab, dcrAsset.modelInfo.modelTarget);

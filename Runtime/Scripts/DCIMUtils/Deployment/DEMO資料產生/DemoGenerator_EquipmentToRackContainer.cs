@@ -10,7 +10,7 @@ using VzDev.DCIMUtils.ModelInteractUtils;
 using VzDev.UnityAPI.Extensions;
 using Random = UnityEngine.Random;
 
-namespace VzDev.DCIMUtils.Deployment.Demo
+namespace VzDev.DCIMUtils.DeploymentUtils.Demo
 {
     /// <summary>
     /// 產生設備群到機櫃裡 (DEMO用)。

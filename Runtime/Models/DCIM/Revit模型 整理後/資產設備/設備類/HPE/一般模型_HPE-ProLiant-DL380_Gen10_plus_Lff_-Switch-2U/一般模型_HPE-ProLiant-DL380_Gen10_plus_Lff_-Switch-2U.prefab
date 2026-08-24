@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 9032054337324764834}
   - component: {fileID: 7597071104075736487}
   - component: {fileID: 3772430444137391223}
+  - component: {fileID: -5813191813039523936}
+  - component: {fileID: 7510794796662664636}
+  - component: {fileID: 6239203547560318928}
   m_Layer: 0
   m_Name: "\u4E00\u822C\u6A21\u578B_HPE-ProLiant-DL380_Gen10_plus_Lff_-Switch-2U"
   m_TagString: Untagged
@@ -95,3 +98,186 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &-5813191813039523936
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320537684280367651}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 68a5f64354b303f4a823db34d14edff0, type: 2}
+--- !u!114 &7510794796662664636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320537684280367651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 898b6f01dd7f0d140a251341cd4ab3b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.DCIMUtils.DeploymentUtils.DataModelBinder_Rack
+  rackAsset:
+    deviceCode: 
+    cobieInfo:
+      component_description: 
+      component_assetIdentifier: 
+      component_serialNumber: 
+      component_installationDate: 
+      component_tagName: 
+      component_warrantyDurationPart: 
+      component_warrantyDurationUnit: 
+      component_warrantyGuarantorLabor: 
+      component_warrantyStartDate: 
+      component_warrantyEndDate: 
+      document_inspection: 
+      document_handout: 
+      document_drawing: 
+      contact_company: 
+      contact_department: 
+      contact_email: 
+      contact_familyName: 
+      contact_givenName: 
+      contact_phone: 
+      contact_street: 
+      facility_name: 
+      facility_projectName: 
+      facility_siteName: 
+      equipment_supplier: 
+      floor_name: 
+      space_name: 
+      space_roomTag: 
+      system_category: 
+      system_name: 
+      type_category: 
+      type_expectedLife: 
+      type_manufacturer: 
+      type_modelNumber: 
+      type_name: 
+      type_replacementCost: 
+      type_accessibilityPerformance: 
+      type_shape: 
+      type_size: 
+      type_color: 
+      type_finish: 
+      type_grade: 
+      type_material: 
+    modelInfo:
+      modelTarget: {fileID: 0}
+      modelName: 
+    timeStampData:
+      timeStamp: 
+    category: 1
+    companyPropertyInfo:
+      propertyName: 
+      propertyNumber: 
+      note: 
+    weight_kg: 0
+    power_watt_Max: 0
+    weight_kg_Max: 0
+    u_height_Max: 42
+    container: []
+    usageInfo:
+      <totalPowerWatt>k__BackingField: 0
+      <totalWeightKG>k__BackingField: 0
+      <totalHeightU>k__BackingField: 0
+      <remainPowerWatt>k__BackingField: 0
+      <remainWeightKG>k__BackingField: 0
+      <remainHeightU>k__BackingField: 0
+      <totalPowerPercent>k__BackingField: 0
+      <totalWeightPercent>k__BackingField: 0
+      <totalHeightUPercent>k__BackingField: 0
+      <remainPowerPercent>k__BackingField: 0
+      <remainWeightPercent>k__BackingField: 0
+      <remainHeightUPercent>k__BackingField: 0
+      emptyUSlots: []
+  meshCollider: {fileID: -5813191813039523936}
+--- !u!114 &6239203547560318928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320537684280367651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b0701c5ca1bbba4bbd4e0ce368d65b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.DCIMUtils.DeploymentUtils.DataModelBinder_Equipment
+  equipmentAsset:
+    deviceCode: "\u4E00\u822C\u6A21\u578B_HPE-ProLiant-DL380_Gen10_plus_Lff_-Switch-2U"
+    cobieInfo:
+      component_description: 
+      component_assetIdentifier: 
+      component_serialNumber: 
+      component_installationDate: 
+      component_tagName: 
+      component_warrantyDurationPart: 
+      component_warrantyDurationUnit: 
+      component_warrantyGuarantorLabor: 
+      component_warrantyStartDate: 
+      component_warrantyEndDate: 
+      document_inspection: 
+      document_handout: 
+      document_drawing: 
+      contact_company: 
+      contact_department: 
+      contact_email: 
+      contact_familyName: 
+      contact_givenName: 
+      contact_phone: 
+      contact_street: 
+      facility_name: 
+      facility_projectName: 
+      facility_siteName: 
+      equipment_supplier: 
+      floor_name: 
+      space_name: 
+      space_roomTag: 
+      system_category: 
+      system_name: 
+      type_category: 
+      type_expectedLife: 
+      type_manufacturer: 
+      type_modelNumber: 
+      type_name: 
+      type_replacementCost: 
+      type_accessibilityPerformance: 
+      type_shape: 
+      type_size: 
+      type_color: 
+      type_finish: 
+      type_grade: 
+      type_material: 
+    modelInfo:
+      modelTarget: {fileID: 9032054337324764834}
+      modelName: "\u4E00\u822C\u6A21\u578B_HPE-ProLiant-DL380_Gen10_plus_Lff_-Switch-2U"
+    timeStampData:
+      timeStamp: 
+    category: 3
+    companyPropertyInfo:
+      propertyName: HPE-ProLiant-DL380_Gen10_plus_Lff_-Switch-2U
+      propertyNumber: NTCGO-50494444
+      note: This is equipment 10
+    equipmentUsageInfo:
+      power_watt: 541
+      weight_kg: 42.461376
+      heightU: 2
+    deploymentStatus: 2
+    startUIndex: 7
+  meshCollider: {fileID: -5813191813039523936}

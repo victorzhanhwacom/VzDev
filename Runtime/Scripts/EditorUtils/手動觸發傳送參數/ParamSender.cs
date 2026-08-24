@@ -88,6 +88,7 @@ namespace VzDev
                     break;
             }
         }
+
         private enum EnumParamType
         {
             String,

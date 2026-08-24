@@ -6,7 +6,7 @@ using UnityEngine;
 using VzDev.DCIMUtils.DataUtils;
 using Random = UnityEngine.Random;
 
-namespace VzDev.DCIMUtils.Deployment
+namespace VzDev.DCIMUtils.DeploymentUtils
 {
     /// <summary>
     /// 產生上架庫存設備列表
@@ -17,31 +17,21 @@ namespace VzDev.DCIMUtils.Deployment
         [SerializeField] private bool isGenerateDemoData = false;
         [SerializeField, ShowIf("isGenerateDemoData")] private int demoDataCount = 30;
         [SerializeField, ReadOnly] private List<EquipmentAsset> equipmentAssetsInStock = new List<EquipmentAsset>();
-        [SerializeField, ReadOnly] private List<GameObject> equipmentModels = new List<GameObject>();
+        [SerializeField, ReadOnly] private List<Transform> equipmentModels = new List<Transform>();
         private bool isHaveData => equipmentAssetsInStock != null && equipmentAssetsInStock.Count > 0;
 
         private int dataReadyCount = 0, dataReadyTotal = 2;
         private string jsonData;
         #endregion
 
-        public void SetEquipmentAssetInStock(bool isSuccess, string json)
+        public void SetEquipmentAssetInStock(string json)
         {
-            if (!isSuccess)
-            {
-                Debug.LogError("Failed to get equipment asset in stock.");
-                return;
-            }
             jsonData = json;
             TryCreateEquipmentAssetsInStock();
         }
 
-        public void SetEquipmentModels(bool isSuccess, List<GameObject> list)
+        public void SetEquipmentModels(List<Transform> list)
         {
-            if (!isSuccess)
-            {
-                Debug.LogError("Failed to get equipment models.");
-                return;
-            }
             equipmentModels = list;
             TryCreateEquipmentAssetsInStock();
         }
@@ -79,7 +69,9 @@ namespace VzDev.DCIMUtils.Deployment
         }
         #endregion
 
+        #region Static Event
         public static Action<List<EquipmentAsset>> OnCreateEquipmentAssetsInStockEvent;
+        #endregion
 
         #region [For Demo] 產生上架庫存設備列表
         /// <summary>
@@ -87,7 +79,7 @@ namespace VzDev.DCIMUtils.Deployment
         /// </summary>
         private static class DEMO_EquipmentAssetInStock
         {
-            public static List<EquipmentAsset> Generate(List<GameObject> equipmentModels, int count = 30)
+            public static List<EquipmentAsset> Generate(List<Transform> equipmentModels, int count = 30)
             {
                 if (equipmentModels == null || equipmentModels.Count == 0 || count <= 0)
                 {
@@ -98,7 +90,7 @@ namespace VzDev.DCIMUtils.Deployment
                 List<EquipmentAsset> result = new();
                 for (int i = 0; i < count; i++)
                 {
-                    GameObject model = equipmentModels[Random.Range(0, equipmentModels.Count)];
+                    Transform model = equipmentModels[Random.Range(0, equipmentModels.Count)];
                     string deviceCode = model.name + "+" + Random.Range(1000, 9999).ToString("D4");
 
                     EquipmentAsset equipmentAsset = new EquipmentAsset
@@ -128,7 +120,7 @@ namespace VzDev.DCIMUtils.Deployment
                     };
                     equipmentAsset.modelInfo = new ModelInfo
                     {
-                        modelTarget = model.transform,
+                        modelTarget = model,
                         modelName = deviceCode
                     };
 

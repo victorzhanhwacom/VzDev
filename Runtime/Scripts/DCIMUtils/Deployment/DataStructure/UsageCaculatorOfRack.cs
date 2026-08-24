@@ -106,13 +106,15 @@ namespace VzDev
             Calculate_EachHeightOfRemainUSpacer();
         }
 
+
+
         [SerializeField, ReadOnly]
-        private List<RackFreeUSlot> freeUSlots = new();
-        public IReadOnlyList<RackFreeUSlot> FreeUSlots => freeUSlots;
+        private List<RackFreeUSlot> emptyUSlots = new();
+        public IReadOnlyList<RackFreeUSlot> FreeUSlots => emptyUSlots;
 
         private void Calculate_EachHeightOfRemainUSpacer()
         {
-            freeUSlots?.Clear();
+            emptyUSlots?.Clear();
 
             // 1. 收集所有已上架設備的佔用區段，依起始U排序
             var occupiedRanges = new List<(int start, int end)>();
@@ -134,7 +136,7 @@ namespace VzDev
                 var range = occupiedRanges[i];
 
                 if (range.start > cursor)
-                    freeUSlots.Add(new RackFreeUSlot(cursor, range.start - 1));
+                    emptyUSlots.Add(new RackFreeUSlot(cursor, range.start - 1));
 
                 if (range.end + 1 > cursor)
                     cursor = range.end + 1;
@@ -142,7 +144,7 @@ namespace VzDev
 
             // 3. 最後一個佔用區段之後，到機櫃頂部之間也是空閒
             if (cursor <= _dcrAsset.u_height_Max)
-                freeUSlots.Add(new RackFreeUSlot(cursor, _dcrAsset.u_height_Max));
+                emptyUSlots.Add(new RackFreeUSlot(cursor, _dcrAsset.u_height_Max));
         }
 
         #region 計算機櫃內設備使用量 (功率/重量/U高)

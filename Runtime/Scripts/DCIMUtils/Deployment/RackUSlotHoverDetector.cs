@@ -3,7 +3,7 @@ using UnityEngine;
 using VzDev.DCIMUtils.DataUtils;
 using VzDev.DCIMUtils.ModelInteractUtils;
 
-namespace VzDev.DCIMUtils.Deployment
+namespace VzDev.DCIMUtils.DeploymentUtils
 {
     /// <summary>
     /// 偵測滑鼠目前指向的機櫃，並計算指向第幾個 U 槽，透過 static event 廣播結果。

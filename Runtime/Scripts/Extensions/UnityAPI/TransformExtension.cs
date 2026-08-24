@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Pool;
+using VzDev.DebugUtils;
 using VzDev.NetLibrary.Extensions;
 using Object = UnityEngine.Object;
 
@@ -530,6 +531,13 @@ namespace VzDev.UnityAPI.Extensions
 
         private static bool IsMatch(string name, EnumSearchType searchType, string[] keywords)
         {
+            if(searchType == EnumSearchType.Exclude)
+            {
+                string deviceCode = name.GetStringBetweenMarks("[","]");
+                Debug.Log("!待製作");
+            }
+
+
             bool containsAny = name.ContainKeyword(keywords);
             return searchType switch
             {
@@ -542,7 +550,8 @@ namespace VzDev.UnityAPI.Extensions
         public enum EnumSearchType
         {
             Include, // 只要包含任一關鍵字即可
-            Exclude  // 不得包含任何關鍵字
+            Exclude,  // 不得包含任何關鍵字
+            Exact, // 精確比對（完全相同）
         }
         #endregion
 

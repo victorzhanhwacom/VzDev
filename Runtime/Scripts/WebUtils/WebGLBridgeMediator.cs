@@ -52,14 +52,14 @@ namespace VzDev.WebUtils
             evt?.Invoke(functionName, storedValue);
         }
 
-        public void SetValue(int value) => HandleValue(DataType.Int, value, ref receivedInt, sendMessageInt);
+        public void SendValue(int value) => HandleValue(DataType.Int, value, ref receivedInt, sendMessageInt);
 
-        public void SetValue(float value) =>
+        public void SendValue(float value) =>
             HandleValue(DataType.Float, value, ref receivedFloat, sendMessageFloat, Mathf.Approximately);
 
-        public void SetValue(bool value) => HandleValue(DataType.Bool, value, ref receivedBool, sendMessageBool);
+        public void SendValue(bool value) => HandleValue(DataType.Bool, value, ref receivedBool, sendMessageBool);
 
-        public void SetValue(string value)
+        public void SendValue(string value)
         {
             switch (sendDataType)
             {
@@ -68,19 +68,19 @@ namespace VzDev.WebUtils
                     break;
                 case DataType.Int:
                     if (int.TryParse(value, out var intValue))
-                        SetValue(intValue);
+                        SendValue(intValue);
                     else
                         Debug.LogError($"Failed to parse '{value}' to int.");
                     break;
                 case DataType.Float:
                     if (float.TryParse(value, out var floatValue))
-                        SetValue(floatValue);
+                        SendValue(floatValue);
                     else
                         Debug.LogError($"Failed to parse '{value}' to float.");
                     break;
                 case DataType.Bool:
                     if (bool.TryParse(value, out var boolValue))
-                        SetValue(boolValue);
+                        SendValue(boolValue);
                     else
                         Debug.LogError($"Failed to parse '{value}' to bool.");
                     break;
