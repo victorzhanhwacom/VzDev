@@ -89,8 +89,6 @@ namespace VzDev
             }
         }
 
-        private void OnValidate() => name = $"{GetType().Name}(For Demo)";
-
         private enum EnumParamType
         {
             String,
