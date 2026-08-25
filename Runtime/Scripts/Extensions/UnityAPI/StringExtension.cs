@@ -95,6 +95,8 @@ namespace VzDev.UnityAPI.Extensions
             return result;
         }
 
+        public static bool ContainKeyword(this string self, params string[] keywords) =>
+            ContainKeyword(self, StringComparison.OrdinalIgnoreCase, keywords);
         /// <summary>
         /// 判斷字串是否包含指定關鍵字，並可指定大小寫敏感或不敏感
         /// </summary>

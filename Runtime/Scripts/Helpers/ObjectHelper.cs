@@ -85,11 +85,11 @@ namespace VzDev.DebugUtils
             }
             else
             {
-                result = Object.Instantiate(prefab, container);
+                result = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity, container);
             }
 #else
             // 運行時使用普通的 Instantiate
-            result = Object.Instantiate(prefab, container);
+            result = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity,, container);
 #endif
             return result;
         }

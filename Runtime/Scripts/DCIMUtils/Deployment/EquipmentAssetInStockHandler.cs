@@ -58,14 +58,14 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         #region EventListener
         private void OnEnable()
         {
-            WebAPIManager.OnGetEquipmentAssetInStockAction += SetEquipmentAssetInStock;
-            WebAPIManager.OnGetEquipmentModelsAction += SetEquipmentModels;
+            WebAPIManager_EquipmentDeploy.OnGetEquipmentAssetInStockAction += SetEquipmentAssetInStock;
+            WebAPIManager_EquipmentDeploy.OnGetEquipmentModelsAction += SetEquipmentModels;
         }
 
         private void OnDisable()
         {
-            WebAPIManager.OnGetEquipmentAssetInStockAction -= SetEquipmentAssetInStock;
-            WebAPIManager.OnGetEquipmentModelsAction -= SetEquipmentModels;
+            WebAPIManager_EquipmentDeploy.OnGetEquipmentAssetInStockAction -= SetEquipmentAssetInStock;
+            WebAPIManager_EquipmentDeploy.OnGetEquipmentModelsAction -= SetEquipmentModels;
         }
         #endregion
 

@@ -30,7 +30,6 @@ namespace VzDev.FileUtils
             }
 
             string jsonContent = File.ReadAllText(fullPath);
-            Debug.Log($"讀取成功:\n{jsonContent}");
             return jsonContent;
         }
 

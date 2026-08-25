@@ -7,14 +7,32 @@ using UnityEngine;
 using Debug = VzDev.ToolUtils.Debug;
 using VzDev.NetLibrary.Extensions;
 using static VzDev.UnityAPI.Extensions.TransformExtension;
+using System.Text;
 
 namespace VzDev.ApiExtensions
 {
     /// 原API類別功能擴充
     public static class ListExtension
     {
+
         /// <summary>
-        /// [Extended] - 將collectoin中不重複的元素加入List中
+        /// [Extended] - 將List{T}轉成字串，並以separator隔開
+        /// </summary>
+        public static string CombineToString<T>(this List<T> self, bool isLineBreak = false, string separator = ",") where T : Component
+        {
+            var result = new StringBuilder();
+            foreach (T t in self)
+            {
+                result.Append(t.name);
+                if (isLineBreak) result.AppendLine();
+                else result.Append(separator);
+            }
+            return result.ToString();
+        }
+
+
+        /// <summary>
+        /// [Extended] - collectoin與self比對，將不重複的元素加入List中
         /// </summary>
         public static void AddRangeWithDistinct<T>(this List<T> self, IEnumerable<T> collection)
         {
@@ -74,7 +92,9 @@ namespace VzDev.ApiExtensions
             return self;
         }
 
-        /// [Extended] - 判斷是否已有值，若無才新增
+        ///<summary>
+        /// [Extended] - 嘗試將元素加入List中，若已存在則不加入
+        ///</summary>        
         public static bool TryAdd<T>(this List<T> self, T target) where T : Component
         {
             bool result = self.Contains(target);
@@ -126,10 +146,10 @@ namespace VzDev.ApiExtensions
         /// [Extended] - 篩選有實作IReceiveData<TData>的對像，傳送TData資料給這些對像
         public static void ReceiveData<T, TData>(this List<T> self, TData data)
         {
-       /*      foreach (IReceiveData<TData> target in self.OfType<IReceiveData<TData>>())
-            {
-                target.ReceiveData(data);
-            } */
+            /*      foreach (IReceiveData<TData> target in self.OfType<IReceiveData<TData>>())
+                 {
+                     target.ReceiveData(data);
+                 } */
         }
 
         /// [Extended] - 篩選出 MonoBehaviour List 中所有實作了TData類別或介面的元素

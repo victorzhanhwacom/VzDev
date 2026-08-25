@@ -56,14 +56,14 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         #region EventListener
         private void OnEnable()
         {
-            WebAPIManager.OnGetEquipmentModelsAction += SetEquipmentModels;
-            WebAPIManager.OnGetRackListInformationAction += ParseRackListInformation;
+            WebAPIManager_EquipmentDeploy.OnGetEquipmentModelsAction += SetEquipmentModels;
+            WebAPIManager_EquipmentDeploy.OnGetRackListInformationAction += ParseRackListInformation;
         }
 
         private void OnDisable()
         {
-            WebAPIManager.OnGetEquipmentModelsAction -= SetEquipmentModels;
-            WebAPIManager.OnGetRackListInformationAction -= ParseRackListInformation;
+            WebAPIManager_EquipmentDeploy.OnGetEquipmentModelsAction -= SetEquipmentModels;
+            WebAPIManager_EquipmentDeploy.OnGetRackListInformationAction -= ParseRackListInformation;
         }
         #endregion
 

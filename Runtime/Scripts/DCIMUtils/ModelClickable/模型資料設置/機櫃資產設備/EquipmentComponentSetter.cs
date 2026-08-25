@@ -62,14 +62,14 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             protected override void OnEnable()
             {
                   base.OnEnable();
-                  WebAPIManager.OnGetEquipmentModelsAction += SetEquipmentModels;
+                  WebAPIManager_EquipmentDeploy.OnGetEquipmentModelsAction += SetEquipmentModels;
                   RackComponentSetter.OnSetComponentsCompletedAction += SetRackComponents;
             }
 
             protected override void OnDisable()
             {
                   base.OnDisable();
-                  WebAPIManager.OnGetEquipmentModelsAction -= SetEquipmentModels;
+                  WebAPIManager_EquipmentDeploy.OnGetEquipmentModelsAction -= SetEquipmentModels;
                   RackComponentSetter.OnSetComponentsCompletedAction -= SetRackComponents;
             }
             #endregion
