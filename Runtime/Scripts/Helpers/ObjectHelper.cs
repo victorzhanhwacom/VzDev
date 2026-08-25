@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 using Debug = VzDev.ToolUtils.Debug;
 using VzDev.Helpers;
+using VzDev.UnityAPI.Extensions;
 
 namespace VzDev.DebugUtils
 {
@@ -47,6 +48,39 @@ namespace VzDev.DebugUtils
 
             return result;
         }
+
+         /// <summary>
+        /// 依照名稱DeviceCode搜尋場景中所有物件
+        /// </summary>
+        public static List<Transform> FindObjectsByDeviceCode(string searchStr, NameSearchMode mode = NameSearchMode.Contains,
+            bool includeInactive = true)
+        {
+            static void SearchRecursive(Transform t, string searchStr, NameSearchMode mode, List<Transform> result,
+            bool includeInactive)
+            {
+                if (!includeInactive && !t.gameObject.activeSelf)
+                    return;
+
+                bool isMatch = mode == NameSearchMode.Exact
+                    ? string.Equals(t.name.GetStringBetweenMarks("[", "]"), searchStr, StringComparison.OrdinalIgnoreCase)
+                    : t.name.IndexOf(searchStr, StringComparison.OrdinalIgnoreCase) >= 0;
+
+                if (isMatch)
+                    result.Add(t);
+
+                for (int i = 0; i < t.childCount; i++)
+                    SearchRecursive(t.GetChild(i), searchStr, mode, result, includeInactive);
+            }
+
+            var result = new List<Transform>();
+            var roots = SceneManager.GetActiveScene().GetRootGameObjects();
+
+            foreach (var root in roots)
+                SearchRecursive(root.transform, searchStr, mode, result, includeInactive);
+
+            return result;
+        }
+
 
 #if UNITY_EDITOR
         /// <summary>
