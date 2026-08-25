@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Pool;
-using VzDev.DebugUtils;
-using VzDev.NetLibrary.Extensions;
 using Object = UnityEngine.Object;
 
 namespace VzDev.UnityAPI.Extensions
@@ -12,6 +10,7 @@ namespace VzDev.UnityAPI.Extensions
     /// [Extended] 原API類別功能擴充
     public static class TransformExtension
     {
+       
         /// <summary>
         /// 新增找不到元件時的警告訊息
         /// </summary>
@@ -531,10 +530,9 @@ namespace VzDev.UnityAPI.Extensions
 
         private static bool IsMatch(string name, EnumSearchType searchType, string[] keywords)
         {
-            if(searchType == EnumSearchType.Exclude)
+            if (searchType == EnumSearchType.Exclude)
             {
-                string deviceCode = name.GetStringBetweenMarks("[","]");
-                Debug.Log("!待製作");
+                string deviceCode = name.GetStringBetweenMarks("[", "]");
             }
 
 

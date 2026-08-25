@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1082873164556330413}
   - component: {fileID: 3845085718563779649}
   m_Layer: 16
-  m_Name: EquipmentDeployColliderInRack
+  m_Name: RackSlotCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

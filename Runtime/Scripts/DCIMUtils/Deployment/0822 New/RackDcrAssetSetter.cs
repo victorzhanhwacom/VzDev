@@ -14,8 +14,12 @@ namespace VzDev.DCIMUtils.DeploymentUtils
     public class RackDcrAssetSetter : MonoBehaviour
     {
         #region Fields
-        [SerializeField, OnValueChanged("OnRackClickableChanged")] private bool isRackClickable = true;
-        private void OnRackClickableChanged() => SetRackClickable(isRackClickable);
+        [SerializeField, OnValueChanged("OnRackSelectableChanged")] private bool isRackSelectable = true;
+        [SerializeField, OnValueChanged("OnRackDeployable")] private bool isRackDeployable = true;
+        private void OnRackSelectableChanged() => SetRackSelectable(isRackSelectable);
+        private void OnRackDeployable() => SetRackDeployable(isRackDeployable);
+        [SerializeField] private BoxCollider rackSlotColliderPrefab;
+
         private List<DCR_Asset> rackAssets;
         private List<Transform> rackModels;
         private List<Transform> equipmentModels;
@@ -29,13 +33,23 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         #endregion
 
         /// <summary>
-        /// 設置機櫃是否可點擊
+        /// 設置機櫃是否可被選取
         /// </summary>
-        public void SetRackClickable(bool isClickable)
+        public void SetRackSelectable(bool isClickable)
         {
-            isRackClickable = isClickable;
-            rackDataModelBinders.ForEach(combiner => combiner.SetColliderEnabled(isRackClickable));
+            isRackSelectable = isClickable;
+            rackDataModelBinders.ForEach(combiner => combiner.SetRackColliderEnabled(isRackSelectable));
         }
+
+        /// <summary>
+        /// 設置機櫃是否可被部署設備
+        /// </summary>
+        public void SetRackDeployable(bool isDeployable)
+        {
+            isRackDeployable = isDeployable;
+            rackDataModelBinders.ForEach(combiner => combiner.SetRackSlotColliderEnabled(isRackDeployable));
+        }
+        
 
         /// <summary>
         /// 解析機櫃Json資料
@@ -85,26 +99,14 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                     Debug.LogWarning($"找不到對應的機櫃模型: {rackAsset.deviceCode}");
                     continue;
                 }
-
                 // 將 DCR_Asset 資料與對應的機櫃模型綁定
-                rackModel.gameObject.TryAddComponent(out DataModelBinder_Rack dataCombiner);
-                dataCombiner.SetRackAsset(rackAsset);
+                rackModel.gameObject.TryAddComponent(out DataModelBinder_Rack rackDataCombiner);
+                rackDataCombiner.SetRackAsset(rackAsset);
 
-                if (Application.isPlaying == false) continue; // 編輯模式下不生成設備模型，避免場景中出現多餘的物件
+                if (Application.isPlaying == false) continue; // 編輯模式下不生成模型，避免場景中出現多餘的物件
 
-                // 生成機櫃內的設備與對應的設備模型綁定
-                rackAsset.container.ForEach(equipmentData =>
-                {
-                    Transform equipmentModel = equipmentModels.Find(m => m.name.ContainKeyword(equipmentData.deviceCode));
-                    if (equipmentModel == null)
-                    {
-                        Debug.LogWarning($"[{GetType().Name}]找不到對應的設備模型: {equipmentData.deviceCode}");
-                        return;
-                    }
-                    Transform equipment = ObjectHelper.Instantiate(equipmentModel, rackModel);
-                    equipment.TryAddComponent(out DataModelBinder_Equipment dataCombiner_Equipment);
-                    dataCombiner_Equipment.SetEquipmentAsset(equipmentData);
-                });
+                rackDataCombiner.GenerateRackSlotCollider(rackSlotColliderPrefab);
+                rackDataCombiner.GenerateEquipmentInContainer(equipmentModels);
             }
         }
 

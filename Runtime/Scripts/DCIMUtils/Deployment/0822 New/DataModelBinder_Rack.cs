@@ -1,5 +1,8 @@
+using System;
+using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
+using VzDev.DcimUtils;
 using VzDev.DCIMUtils.DataUtils;
 using VzDev.DebugUtils;
 using VzDev.UnityAPI.Extensions;
@@ -10,6 +13,40 @@ namespace VzDev.DCIMUtils.DeploymentUtils
     {
         [SerializeField, ReadOnly] private DCR_Asset rackAsset;
         [Foldout("[Components]"), SerializeField] private MeshCollider meshCollider;
+        [Foldout("[Components]"), SerializeField] private BoxCollider rackSlotCollider;
+
+
+        /// <summary>
+        /// 生成機櫃內的槽位碰撞器，並與 DataModelBinder_Rack 綁定
+        /// </summary>
+        public void GenerateRackSlotCollider(BoxCollider colliderPrefab)
+        {
+            if (rackSlotCollider != null) ObjectHelper.Destroy(rackSlotCollider);
+            rackSlotCollider = Instantiate(colliderPrefab, transform);
+        }
+        /// <summary>
+        /// 生成機櫃內的設備與對應的設備模型綁定
+        /// </summary>
+        public void GenerateEquipmentInContainer(List<Transform> equipmentModels)
+        {
+            if (rackAsset == null || rackAsset.container == null) return;
+
+            foreach (var equipmentData in rackAsset.container)
+            {
+                Transform model = equipmentModels.Find(m => m.name == equipmentData.modelInfo.modelName);
+                if (model == null)
+                {
+                    Debug.LogWarning($"Equipment model not found for {equipmentData.modelInfo.modelName}");
+                    continue;
+                }
+
+                Transform equipmentModel = ObjectHelper.Instantiate(model, transform);
+                equipmentModel.TryAddComponent(out DataModelBinder_Equipment dataCombiner_Equipment);
+                dataCombiner_Equipment.SetEquipmentAsset(equipmentData);
+
+                DcimHelper.SetEquipmentSnapToRackSlot(equipmentModel, rackAsset, rackSlotCollider, equipmentData.startUIndex, equipmentData.equipmentUsageInfo.heightU);
+            }
+        }
 
         public void SetRackAsset(DCR_Asset data)
         {
@@ -21,10 +58,15 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             transform.TryAddComponent(out meshCollider);
         }
 
-        public void SetColliderEnabled(bool isEnabled)
+        public void SetRackColliderEnabled(bool isEnabled)
         {
             if (meshCollider == null) return;
             meshCollider.enabled = isEnabled;
+        }
+        public void SetRackSlotColliderEnabled(bool isEnabled)
+        {
+            if (rackSlotCollider == null) return;
+            rackSlotCollider.enabled = isEnabled;
         }
 
         public void ToDestroy() => OnDestroy();
@@ -34,5 +76,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             if (meshCollider != null) ObjectHelper.Destroy(meshCollider);
             ObjectHelper.Destroy(this);
         }
+
+
+
     }
 }
