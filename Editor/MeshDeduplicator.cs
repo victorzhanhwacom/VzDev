@@ -37,6 +37,7 @@ public class MeshDeduplicator : EditorWindow
     }
 
     // ── GUI ───────────────────────────────────────────────────
+    [System.Obsolete]
     private void OnGUI()
     {
         EditorGUILayout.Space(8);
@@ -101,6 +102,7 @@ public class MeshDeduplicator : EditorWindow
     }
 
     // ── 掃描 ─────────────────────────────────────────────────
+    [System.Obsolete]
     private void Analyze()
     {
         _groups = new List<MeshGroup>();
