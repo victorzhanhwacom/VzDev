@@ -105,7 +105,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                         },
                     };
 
-                    equipmentAsset.companyPropertyInfo.GenerateRandomPropertyNo();
+                    equipmentAsset.companyPropertyInfo.GenerateRandomPropertyNo("NTCGO");
                     equipmentAsset.sizeInfo = new SizeInfo
                     {
                         width_mm = Random.Range(400, 600),

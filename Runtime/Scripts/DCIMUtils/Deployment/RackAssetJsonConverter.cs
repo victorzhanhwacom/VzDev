@@ -70,7 +70,7 @@ namespace VzDev.DCIMUtils.Import
             result.container ??= new List<EquipmentAsset>();
             result.container.Sort((a, b) => b.startUIndex.CompareTo(a.startUIndex));
             result.companyPropertyInfo.propertyName = entry.devicePath.Split(":").LastOrDefault().Trim();
-            result.companyPropertyInfo.GenerateRandomPropertyNo();
+            result.companyPropertyInfo.GenerateRandomPropertyNo("NTCGO");
             result.RefreshUsageInfo();
             return result;
         }

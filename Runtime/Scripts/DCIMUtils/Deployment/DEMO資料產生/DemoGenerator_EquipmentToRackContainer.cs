@@ -92,7 +92,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils.Demo
             RackComponentSetter.onSetDeployColliderCompleted += TryGenerateDemoData;
         }
 
-       
+
         private void OnDisable()
         {
             if (isGenerateDemoData == false) return;
@@ -101,10 +101,10 @@ namespace VzDev.DCIMUtils.DeploymentUtils.Demo
         }
         #endregion
 
-            #region 生成邏輯
-            /// <summary>
-            /// 依序走過每個機櫃，隨機抽範本設備塞入，直到達到本次隨機數量或嘗試次數上限。
-            /// </summary>
+        #region 生成邏輯
+        /// <summary>
+        /// 依序走過每個機櫃，隨機抽範本設備塞入，直到達到本次隨機數量或嘗試次數上限。
+        /// </summary>
         private void GenerateEquipmentIntoRacks()
         {
             createEquipmentAssets.Clear();
@@ -351,7 +351,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils.Demo
                     note = template.companyPropertyInfo.note,
                 },
             };
-            clone.companyPropertyInfo.GenerateRandomPropertyNo();
+            clone.companyPropertyInfo.GenerateRandomPropertyNo("NTCGO");
             return clone;
         }
         #endregion

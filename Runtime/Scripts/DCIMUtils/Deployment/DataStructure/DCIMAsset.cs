@@ -45,12 +45,10 @@ namespace VzDev.DCIMUtils.DataUtils
          /// <summary>
         /// 自動產生財產編號 (DEMO用)
         /// </summary>
-        public string GenerateRandomPropertyNo()
+        public string GenerateRandomPropertyNo(string prefix, int length = 8)
         {
-            string prefix = "NTCGO-";
-            int n = 8;
-            int index = UnityEngine.Random.Range(0, MathHelper.GetAllNines(n));
-            propertyNumber = $"{prefix}{index.ToString($"D{n}")}";
+            int number = UnityEngine.Random.Range(0, MathHelper.GetAllNines(length));
+            propertyNumber = $"{prefix}-{number.ToString($"D{length}")}";
             return propertyNumber;
         }
     }

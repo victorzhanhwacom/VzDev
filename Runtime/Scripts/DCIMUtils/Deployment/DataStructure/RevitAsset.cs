@@ -13,6 +13,10 @@ namespace VzDev.DCIMUtils.DataUtils
         /// 模型索引碼
         /// </summary>
         public string deviceCode;
+        /// <summary>
+        /// 模型名稱
+        /// </summary>
+        public string deviceName;
         public COBieInfo cobieInfo = new ();
         public ModelInfo modelInfo = new ();
         public TimeStampData timeStampData = new TimeStampData();
