@@ -13,7 +13,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
     public class WebAPIManager_EquipmentDeploy : MonoBehaviour
     {
         #region Fields
-        public ForDemo forDemo;
+        public ForDemo_RackInfo forDemo;
+        public ForDemo_StockEquipment forDemo_StockEquipment;
         #endregion
 
         /// <summary>
@@ -37,7 +38,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             Debug.Log($"{GetType().Name}-GetEquipmentAssetInStock:\n{result}");
             OnGetEquipmentAssetInStockAction?.Invoke(result);
         }
-    
+
         /// <summary>
         /// 取得設備模型列表
         /// </summary>
@@ -48,6 +49,29 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             Debug.Log($"{GetType().Name}-GetEquipmentModels:\n{result.CombineToString(true)}");
             OnGetEquipmentModelsAction?.Invoke(result);
         }
+
+        /// <summary>
+        /// 取得庫存設備資料列表
+        /// </summary>
+        [Button]
+        public void GetStockEquipmentList()
+        {
+            string result = forDemo_StockEquipment.GetStockEquipmentList();
+            Debug.Log($"{GetType().Name}-GetStockEquipmentList:\n{result}");
+            OnGetStockEquipmentListAction?.Invoke(result);
+        }
+
+        /// <summary>
+        /// 取得庫存設備模型列表
+        /// </summary>
+        [Button]
+        public void GetStockEquipmentModels()
+        {
+            List<Transform> result = forDemo_StockEquipment.GetStockEquipmentModels();
+            Debug.Log($"{GetType().Name}-GetStockEquipmentModels:\n{result.CombineToString(true)}");
+            OnGetStockEquipmentModelsAction?.Invoke(result);
+        }
+
 
         #region Static Events
         /// <summary>
@@ -62,18 +86,27 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         /// 取得設備模型列表
         /// </summary>
         public static Action<List<Transform>> OnGetEquipmentModelsAction;
+        /// <summary>
+        /// 取得庫存設備列表
+        /// </summary>
+        public static Action<string> OnGetStockEquipmentListAction;
+
+        /// <summary>
+        /// 取得庫存設備模型列表
+        /// </summary>
+        public static Action<List<Transform>> OnGetStockEquipmentModelsAction;
         #endregion
 
         [Serializable]
-        public class ForDemo
+        public class ForDemo_RackInfo
         {
-            public string jsonFileName = "機房一.json";
+            public string jsonFileName_DCRList = "機房一.json";
             public List<Transform> equipmentModels;
 
             /// <summary>
             /// 取得機房內機櫃群資訊
             /// </summary>
-            public string GetRackListInformation() => FileHelper.LoadTextFileDirectly(jsonFileName, EnumFilePath.streamingAssetsPath);
+            public string GetRackListInformation() => FileHelper.LoadTextFileDirectly(jsonFileName_DCRList, EnumFilePath.streamingAssetsPath);
 
             /// <summary>
             /// 取得上架庫存設備列表
@@ -84,6 +117,20 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             /// 取得設備模型列表
             /// </summary>
             public List<Transform> GetEquipmentModels() => equipmentModels;
+        }
+
+
+        [Serializable]
+        public class ForDemo_StockEquipment
+        {
+            public string jsonFileName_StockEquipment = "全球人壽/全球人壽_設備型號清單.json";
+            public List<Transform> stockEquipmentModels;
+
+            /// <summary>
+            /// 取得庫存設備列表
+            /// </summary>
+            public string GetStockEquipmentList() => FileHelper.LoadTextFileDirectly(jsonFileName_StockEquipment, EnumFilePath.streamingAssetsPath);
+            public List<Transform> GetStockEquipmentModels() => stockEquipmentModels;
         }
     }
 }

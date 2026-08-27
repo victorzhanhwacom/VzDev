@@ -52,7 +52,7 @@ namespace VzDev.UnityAPI.Extensions
 
             return self.Substring(startIndex, endIndex - startIndex);
         }
-        
+
 
         /// <summary>
         /// 將 JSON 字串格式化為易讀的格式（縮排、換行）
@@ -66,7 +66,7 @@ namespace VzDev.UnityAPI.Extensions
             }
             try
             {
-                 return JToken.Parse(self).ToString(Formatting.Indented);
+                return JToken.Parse(self).ToString(Formatting.Indented);
             }
             catch (JsonReaderException)
             {
@@ -95,6 +95,10 @@ namespace VzDev.UnityAPI.Extensions
             return result;
         }
 
+
+        /// <summary>
+        /// 判斷字串是否包含指定關鍵字，並可指定大小寫敏感或不敏感
+        /// </summary>
         public static bool ContainKeyword(this string self, params string[] keywords) =>
             ContainKeyword(self, StringComparison.OrdinalIgnoreCase, keywords);
         /// <summary>

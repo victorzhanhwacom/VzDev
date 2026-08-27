@@ -7,10 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using VzDev.DateTimeUtils;
 using JetBrains.Annotations;
-//using SFB;
 using UnityEditor;
 using UnityEngine;
-using Debug = VzDev.ToolUtils.Debug;
+using Debug = UnityEngine.Debug;
 using VzDev.NetUtils;
 
 namespace VzDev.FileUtils
@@ -18,11 +17,107 @@ namespace VzDev.FileUtils
     public static class FileHelper
     {
         /// <summary>
+        /// 將Asset資料夾路徑在Project視窗中選取並高亮 (待修正)
+        /// </summary>
+        public static void PinAssetFolder(EnumFilePath enumFilePath, string folderName = "")
+        {
+            string absolutePath = GetAssetPath(enumFilePath, folderName);
+            string relativePath = AbsoluteToAssetPath(absolutePath);
+
+            if (relativePath == null)
+            {
+                Debug.LogWarning($"[VzDev] 絕對路徑不在本專案 Assets 資料夾內: {absolutePath}");
+                return;
+            }
+
+            var asset = AssetDatabase.LoadAssetAtPath<TextAsset>(relativePath);
+            if (asset == null)
+            {
+                Debug.LogWarning($"[VzDev] 找不到資產，可能尚未被 AssetDatabase 匯入: {relativePath}");
+                return;
+            }
+
+            Selection.activeObject = asset;
+            EditorGUIUtility.PingObject(asset);
+            ActiveEditorTracker.sharedTracker.isLocked = true;
+            ActiveEditorTracker.sharedTracker.ForceRebuild();
+        }
+
+        /// <summary>
+        /// 將任意絕對路徑轉換為專案相對路徑 (Assets/...)。
+        /// 若路徑不在 Assets 資料夾底下則回傳 null。
+        /// </summary>
+        public static string AbsoluteToAssetPath(string absolutePath)
+        {
+            string normalizedAbsolute = Path.GetFullPath(absolutePath).Replace('\\', '/');
+            string dataPath = Path.GetFullPath(Application.dataPath).Replace('\\', '/'); // .../Assets
+
+            if (!normalizedAbsolute.StartsWith(dataPath, System.StringComparison.OrdinalIgnoreCase))
+                return null;
+
+            string relative = "Assets" + normalizedAbsolute.Substring(dataPath.Length);
+            return relative;
+        }
+
+
+        /// <summary>
+        /// 將檔案在檔案總管中選取並高亮
+        /// </summary>
+        public static void PinAssetInExplorer(EnumFilePath enumFilePath, string filePath = "")
+        {
+            string path = GetAssetPath(enumFilePath, filePath);
+            if (!File.Exists(path))
+            {
+                Debug.LogWarning($"PinFileInExplorer: path '{path}' does not exist.");
+                return;
+            }
+            EditorUtility.RevealInFinder(path);
+        }
+
+        /// <summary>
+        /// 將Asset檔案在Project視窗中選取並高亮
+        /// </summary> 
+        public static void PinAssetTarget(UnityEngine.Object asset)
+        {
+            if (asset == null)
+            {
+                Debug.LogWarning("PinAssetTarget: asset is null, cannot pin.");
+                return;
+            }
+
+            Selection.activeObject = asset;
+            EditorGUIUtility.PingObject(asset);
+
+            ActiveEditorTracker.sharedTracker.isLocked = true;
+            ActiveEditorTracker.sharedTracker.ForceRebuild();
+        }
+
+        /// <summary>
+        /// 取得Asset絕對路徑
+        /// </summary>
+        public static string GetAssetPath(EnumFilePath enumFilePath, string assetName = "")
+        {
+            string result = enumFilePath switch
+            {
+                EnumFilePath.streamingAssetsPath => Application.streamingAssetsPath,
+                EnumFilePath.persistentDataPath => Application.persistentDataPath,
+                EnumFilePath.dataPath => Application.dataPath,
+                _ => throw new ArgumentOutOfRangeException(nameof(enumFilePath), enumFilePath, null)
+            };
+            if (!string.IsNullOrEmpty(assetName))
+            {
+                result = Path.Combine(result, assetName);
+            }
+            return result;
+        }
+
+        /// <summary>
         /// 直接讀取文字檔案內容，不考慮讀取時間
         /// </summary>
         public static string LoadTextFileDirectly(string filePath, EnumFilePath enumFilePath = EnumFilePath.streamingAssetsPath)
         {
-            string fullPath = GetFullPath(filePath, enumFilePath);
+            string fullPath = GetAssetPath(enumFilePath);
+            fullPath = Path.Combine(fullPath, filePath);
             if (!File.Exists(fullPath))
             {
                 Debug.LogError($"找不到檔案: {fullPath}");
@@ -33,22 +128,7 @@ namespace VzDev.FileUtils
             return jsonContent;
         }
 
-        /// <summary>
-        /// 取得檔案完整路徑
-        /// </summary>
-        public static string GetFullPath(string filePath, EnumFilePath enumFilePath)
-        {
-            string basePath = enumFilePath switch
-            {
-                EnumFilePath.streamingAssetsPath => Application.streamingAssetsPath,
-                EnumFilePath.persistentDataPath => Application.persistentDataPath,
-                EnumFilePath.dataPath => Application.dataPath,
-                _ => throw new ArgumentOutOfRangeException(nameof(enumFilePath), enumFilePath, null)
-            };
-            return Path.Combine(basePath, filePath);
-        }
-
-        ///////// 20260824 /////////
+        ///////////////////////////////// 20260824 //////////////////////////////////
 
         #region 檔案產生與存儲
 
