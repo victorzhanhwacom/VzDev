@@ -11,7 +11,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
     /// <summary>
     /// 機櫃條件篩選器，根據設備的尺寸和位置來篩選可放置的設備。
     /// </summary>
-    public class RackUsageFilter : MonoBehaviour
+    public class RackUsageFilter_OLD : MonoBehaviour
     {
         #region Fields
         [SerializeField, ReadOnly] private EquipmentAsset currentSelectedEquipment;

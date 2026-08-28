@@ -100,7 +100,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [Serializable]
         public class ForDemo_RackInfo
         {
-            public string jsonFileName_DCRList = "機房一.json";
+            public string jsonFileName_DCRList = "機房一data.json";
             public List<Transform> equipmentModels;
 
             /// <summary>

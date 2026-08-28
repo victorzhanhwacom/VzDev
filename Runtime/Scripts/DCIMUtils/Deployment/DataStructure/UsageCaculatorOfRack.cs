@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
-using VzDev.DCIMUtils.DataUtils;
 using Debug = VzDev.ToolUtils.Debug;
 
-namespace VzDev
+namespace VzDev.DCIMUtils.DataUtils
 {
     /// <summary>
     /// 機櫃使用量資訊 (功率/重量/U高)

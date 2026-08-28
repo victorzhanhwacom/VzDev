@@ -36,8 +36,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
 
         private void OnEnable()
         {
-            EquipmentStockList.OnEquipmentSelected += SetEquipmentAsset;
-            EquipmentStockList.OnEquipmentDeselected += Clear;
+            StockEquipmentList.OnStockEquipmentSelectedAction += SetEquipmentAsset;
+            StockEquipmentList.OnStockEquipmentDeselectedAction += Clear;
             btnCancel.onClick.AddListener(OnCancelSelected);
         }
 

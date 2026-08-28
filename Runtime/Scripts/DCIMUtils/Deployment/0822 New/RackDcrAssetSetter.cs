@@ -49,7 +49,6 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             isRackDeployable = isDeployable;
             rackDataModelBinders.ForEach(combiner => combiner.SetRackSlotColliderEnabled(isRackDeployable));
         }
-        
 
         /// <summary>
         /// 解析機櫃Json資料
@@ -108,6 +107,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                 rackDataCombiner.GenerateRackSlotCollider(rackSlotColliderPrefab);
                 rackDataCombiner.GenerateEquipmentInContainer(equipmentModels);
             }
+            OnRackDataCombinerGeneratedAction?.Invoke(rackDataModelBinders);
         }
 
         [Button, ShowIf("isHaveData")]
@@ -131,5 +131,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             WebAPIManager_EquipmentDeploy.OnGetRackListInformationAction -= SetRackAssets;
             WebAPIManager_EquipmentDeploy.OnGetEquipmentModelsAction -= SetEquipmentModels;
         }
+        
+        public static Action<List<DataModelBinder_Rack>> OnRackDataCombinerGeneratedAction;
     }
 }
