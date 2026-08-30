@@ -18,7 +18,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
     ///    Collider（非機櫃外殼），其世界座標高度範圍即視為可用 U 槽區間。
     /// 2. 假設機櫃僅繞世界 Y 軸旋轉（直立擺放），故直接使用世界座標 Bounds。
     /// </summary>
-    public class RackUSlotHoverDetector : MonoBehaviour
+    public class RackUSlotHoverDetector_OLD : MonoBehaviour
     {
         #region Fields
         [Foldout("[Components]"), SerializeField] private Camera mainCamera;
@@ -39,7 +39,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         public static event System.Action<DCR_Asset, int, Collider> OnRackUSlotChanged;
         #endregion
 
-        private static RackUSlotHoverDetector instanceRef;
+        private static RackUSlotHoverDetector_OLD instanceRef;
 
         #region Lifecycle
         private void Awake()
@@ -47,7 +47,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             if (instanceRef != null)
             {
                 Debug.LogError(
-                    $"{nameof(RackUSlotHoverDetector)} 場景上重複存在，此 instance 將被銷毀：{gameObject.name}", this);
+                    $"{nameof(RackUSlotHoverDetector_OLD)} 場景上重複存在，此 instance 將被銷毀：{gameObject.name}", this);
                 isDuplicate = true;
                 Destroy(gameObject);
                 return;

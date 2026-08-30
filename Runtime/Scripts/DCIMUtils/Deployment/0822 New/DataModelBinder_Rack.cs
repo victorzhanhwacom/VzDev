@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
@@ -11,11 +10,13 @@ namespace VzDev.DCIMUtils.DeploymentUtils
 {
     public class DataModelBinder_Rack : MonoBehaviour
     {
+        #region Fields
         [SerializeField, ReadOnly] private DCR_Asset rackAsset;
         [Foldout("[Components]"), SerializeField] private MeshCollider meshCollider;
         [Foldout("[Components]"), SerializeField] private BoxCollider rackSlotCollider;
 
         public DCR_Asset RackAsset => rackAsset;
+        #endregion
 
         /// <summary>
         /// 生成機櫃內的槽位碰撞器，並與 DataModelBinder_Rack 綁定

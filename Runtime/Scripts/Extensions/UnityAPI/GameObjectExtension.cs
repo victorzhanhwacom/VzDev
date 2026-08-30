@@ -4,6 +4,24 @@ namespace VzDev.UnityAPI.Extensions
 {
     public static class GameObjectExtension
     {
+        #region 從父祖物件中TryGetComponent
+        public static bool TryGetComponentInParent<T>(this Component self, out T component, bool includeInactive = false)
+            where T : class
+        {
+            component = self.GetComponentInParent<T>(includeInactive);
+            return component != null;
+        }
+
+        public static bool TryGetComponentInParent<T>(this GameObject self, out T component, bool includeInactive = false)
+            where T : class
+        {
+            component = self.GetComponentInParent<T>(includeInactive);
+            return component != null;
+        }
+        #endregion
+
+        ///////////////////// 20260830 //////////////////////////
+
         /// <summary>
         /// 嘗試從 GameObject 上取得指定類型的組件，如果存在則返回 true，並將組件賦值給 out 參數；如果不存在則返回 false。
         /// </summary>

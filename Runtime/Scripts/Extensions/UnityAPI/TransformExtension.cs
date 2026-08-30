@@ -10,7 +10,6 @@ namespace VzDev.UnityAPI.Extensions
     /// [Extended] 原API類別功能擴充
     public static class TransformExtension
     {
-       
         /// <summary>
         /// 新增找不到元件時的警告訊息
         /// </summary>
@@ -20,13 +19,9 @@ namespace VzDev.UnityAPI.Extensions
             if (isExist == false)
             {
                 if (string.IsNullOrEmpty(nullMessage))
-                {
                     Debug.Log($"{self.name}: {typeof(T).Name} component not found.");
-                }
                 else
-                {
                     Debug.Log(nullMessage);
-                }
             }
             return isExist;
         }
@@ -553,42 +548,7 @@ namespace VzDev.UnityAPI.Extensions
         }
         #endregion
 
-        #region 從父祖物件中TryGetComponent
-
-        /// <summary>
-        /// 嘗試從「真正的父物件」開始往上取得指定型別的元件（不包含自己）。
-        /// </summary>
-        public static bool TryGetComponentInParent<T>(this Transform self, out T component, bool includeInactive = true)
-            where T : Component
-        {
-            if (self.parent == null)
-            {
-                component = null;
-                return false;
-            }
-            return TryGetComponentInParent(self.gameObject, out component, includeInactive);
-        }
-
-        /// <summary>
-        /// 嘗試從「真正的父物件」開始往上取得指定型別的元件（不包含自己）。
-        /// </summary>
-        public static bool TryGetComponentInParent<T>(this GameObject self, out T component, bool includeInactive = true)
-            where T : Component
-        {
-            // 從父物件的 Transform 開始呼叫 Unity 原生的 GetComponentInParent
-            Transform parentTransform = self.transform.parent;
-
-            if (parentTransform != null)
-            {
-                component = parentTransform.GetComponentInParent<T>(includeInactive);
-                return component != null;
-            }
-
-            component = null;
-            return false;
-        }
-
-        #endregion
+       
 
         #region 從子孫物件中TryGetComponent
         /// <summary>

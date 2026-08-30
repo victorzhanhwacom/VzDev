@@ -14,6 +14,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         #region Fields
         [SerializeField, ReadOnly, Label("選取的庫存設備")] private EquipmentAsset selectedStockEquipment;
         [SerializeField, ReadOnly, Label("選取的機櫃資產")] private DCR_Asset selectedRackAsset;
+
         #endregion
 
         #region Event Listener
@@ -36,7 +37,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             selectedStockEquipment = asset;
             ColliderInteractionSystem.SimulateClickEmpty();
             ColliderInteractionSystem.OnMouseClick += OnSelecRackTarget;
-            ColliderInteractionSystem.OnMouseClickEmpty += DeselectRackTarget;
+            // ColliderInteractionSystem.OnMouseClickEmpty += DeselectRackTarget;
             OnDeselectRackTargetAction += SetRackTargetNull;
         }
         private void OnStockEquipmentItemDeselectedHandler()
@@ -44,7 +45,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             selectedStockEquipment = null;
             ColliderInteractionSystem.SimulateClickEmpty();
             ColliderInteractionSystem.OnMouseClick -= OnSelecRackTarget;
-            ColliderInteractionSystem.OnMouseClickEmpty -= DeselectRackTarget;
+            //ColliderInteractionSystem.OnMouseClickEmpty -= DeselectRackTarget;
             OnDeselectRackTargetAction -= SetRackTargetNull;
         }
 
@@ -56,16 +57,15 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             if (target.TryGetComponent(out DataModelBinder_Rack rackDataBinder))
             {
                 selectedRackAsset = rackDataBinder.RackAsset;
-                // ColliderInteractionSystem.SetMouseClickEnabled(false);
+                ColliderInteractionSystem.SetMouseInteractable(false);
                 OnSelectRackTargetAction?.Invoke(selectedRackAsset);
             }
-            else
-                ColliderInteractionSystem.SimulateClickEmpty();
         }
         private void SetRackTargetNull() => selectedRackAsset = null;
         public static void DeselectRackTarget()
         {
-            // ColliderInteractionSystem.SetMouseClickEnabled(true);
+            ColliderInteractionSystem.SetMouseInteractable(true);
+            ColliderInteractionSystem.SimulateClickEmpty();
             OnDeselectRackTargetAction?.Invoke();
         }
 

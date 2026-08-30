@@ -8,19 +8,8 @@ using VzDev.ColorUtils.Staging;
 namespace VzDev.DCIMUtils.DeploymentUtils
 {
     /// <summary>
-    /// 監聽 DeployEquipmentList 的選取結果，生成待部署設備的預覽模型，
-    /// 並讓它跟隨滑鼠在一個固定高度的水平面上移動，作為部署前的視覺預覽。
-    ///
-    /// 刻意不用 Physics.Raycast 打地板 Collider：
-    /// 固定高度水平面用純數學求交點，不依賴場景是否正確設置地板 Collider。
-    ///
-    /// 【材質策略修正】不直接替換模型本身的材質（原模型可能有多個 Renderer/
-    /// 多個材質 slot，逐一替換容易漏掉或處理複雜），改成在模型底下加一個
-    /// 依整體 Bounds 縮放的外框子物件，套用 StagingBoundingBox Shader
-    /// 顯示合適/不合適的顏色狀態。外框大小只依賴模型整體 Bounds，
-    /// 完全不受模型內部材質數量影響。
     /// </summary>
-    public class DeployEquipmentPlacementController : MonoBehaviour
+    public class DeployEquipmentIndicator : MonoBehaviour
     {
         #region Fields
         [Foldout("[Components]"), SerializeField] private Camera mainCamera;
@@ -58,21 +47,27 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         private bool deviceForwardIsPositiveZ = false;
         #endregion
 
-        #region Lifecycle
+        #region Event Listener
         private void OnEnable()
         {
-            EquipmentStockList.OnEquipmentSelected += HandleSelected;
-            EquipmentStockList.OnEquipmentDeselected += HandleDeselected;
-            RackUSlotHoverDetector_OLD.OnRackUSlotChanged += HandleRackUSlotChanged;
+            StockEquipmentList.OnStockEquipmentItemSelectedAction += OnSelectStockEquipmentItem;
+            StockEquipmentList.OnStockEquipmentItemDeselectedAction += OnDeselectStockEquipmentItem;
+            DeployToRackSelector.OnDeselectRackTargetAction += SetRackTargetNull;
+            RackUSlotHoverDetector.OnRackUSlotChanged += HandleRackUSlotChanged;
         }
+
+       
 
         private void OnDisable()
         {
-            EquipmentStockList.OnEquipmentSelected -= HandleSelected;
-            EquipmentStockList.OnEquipmentDeselected -= HandleDeselected;
-            RackUSlotHoverDetector_OLD.OnRackUSlotChanged -= HandleRackUSlotChanged;
+            StockEquipmentList.OnStockEquipmentItemSelectedAction -= OnSelectStockEquipmentItem;
+            StockEquipmentList.OnStockEquipmentItemDeselectedAction -= OnDeselectStockEquipmentItem;
+            DeployToRackSelector.OnDeselectRackTargetAction -= SetRackTargetNull;
+            RackUSlotHoverDetector.OnRackUSlotChanged -= HandleRackUSlotChanged;
             ClearPreview();
         }
+
+        private void SetRackTargetNull() => previewInstance.gameObject.SetActive(false);
 
         private void OnDestroy()
         {
@@ -95,8 +90,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         /// </summary>
         private void HandleRackUSlotChanged(DCR_Asset rackAsset, int uIndex, Collider rackCollider)
         {
-            if (currentAsset == null || previewInstance == null) return;
-
+            //if (currentAsset == null || previewInstance == null) return;
             bool isDeployable = CheckCanDeploy(rackAsset, uIndex, currentAsset);
             SetPreviewState(isDeployable);
 
@@ -110,6 +104,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                 //previewInstance.rotation = Quaternion.identity; // 離開對齊狀態時重置方向，避免殘留機櫃的旋轉角度
                 isSnapped = false;
             }
+            previewInstance.gameObject.SetActive(isDeployable);
         }
 
         /// <summary>
@@ -123,23 +118,27 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         #endregion
 
         #region Handlers
-        private void HandleSelected(EquipmentAsset asset)
+        /// <summary>
+        /// 當選取庫存設備項目時，生成預覽模型並跟隨滑鼠。
+        /// </summary>
+        private void OnSelectStockEquipmentItem(EquipmentAsset equipmentAsset)
         {
             ClearPreview();
 
-            if (asset?.modelInfo?.modelTarget == null)
+            if (equipmentAsset?.modelInfo?.modelTarget == null)
             {
-                Debug.LogWarning($"[{nameof(DeployEquipmentPlacementController)}] 選取的設備沒有設定 modelTarget，無法生成預覽模型");
+                Debug.LogWarning($"[{GetType().Name}] 選取的設備沒有設定 modelTarget，無法生成預覽模型");
                 return;
             }
-            currentAsset = asset;
+            currentAsset = equipmentAsset;
             onSelectedeEquipmentToDeploy?.Invoke(currentAsset);
             previewInstance = ObjectHelper.Instantiate(currentAsset.modelInfo.modelTarget);
+            previewInstance.gameObject.SetActive(false);
             CreateBoundingBoxChild();
             SetPreviewState(isSuitable: false); // 預設狀態，實際放置合法性判斷邏輯之後再接上動態切換
         }
 
-        private void HandleDeselected()
+        private void OnDeselectStockEquipmentItem()
         {
             ClearPreview();
             currentAsset = null;

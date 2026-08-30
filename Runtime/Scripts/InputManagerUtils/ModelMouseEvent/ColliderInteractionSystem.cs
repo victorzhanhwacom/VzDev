@@ -61,11 +61,17 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
                 return;
             }
 
+            // 如果暫時關閉 MouseClick，則不處理滑鼠事件，避免誤觸 3D 物件
+            /* if (isMouseInteractable == false)
+            {
+                return;
+            } */
+
             GameObject hitObj = TryGetHitObject();
 
             HandleHover(hitObj);
 
-            if (Input.GetMouseButtonDown(0) && isMouseClickEnabled)
+            if (Input.GetMouseButtonDown(0) && isMouseInteractable)
             {
                 if (hitObj != null)
                 {
@@ -146,9 +152,8 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         }
 
         #region 設定是否允許MouseClick
-        private static bool isMouseClickEnabled = true;
-        public static void SetMouseClickEnabled(bool isEnabled) => isMouseClickEnabled = isEnabled;
-        public static bool IsMouseClickEnabled() => isMouseClickEnabled;
+        private static bool isMouseInteractable = true;
+        public static void SetMouseInteractable(bool isInteractable) => isMouseInteractable = isInteractable;
         #endregion
 
 
@@ -162,19 +167,19 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         /// </summary>
         public static void SimulateClick(GameObject target)
         {
-            if(!isMouseClickEnabled) return; // 如果暫時關閉 MouseClick，則不觸發事件
+            if (!isMouseInteractable) return; // 如果暫時關閉 MouseClick，則不觸發事件
             if (target == null) return;
             OnMouseClick?.Invoke(target);
         }
 
-          /// <summary>
+        /// <summary>
         /// 供外部（例如 ModelToggleBinding 在 allowSwitchOff 情境下）模擬一次
         /// 「點擊空白處」，完整重用既有的 OnMouseClickEmpty 事件管線
         /// （SelectionController 清空選取、AssetDataDisplayDispatcher 關閉面板…）。
         /// </summary>
         public static void SimulateClickEmpty()
         {
-            if(!isMouseClickEnabled) return; // 如果暫時關閉 MouseClick，則不觸發事件
+            if (!isMouseInteractable) return; // 如果暫時關閉 MouseClick，則不觸發事件
             OnMouseClickEmpty?.Invoke();
         }
         #endregion
