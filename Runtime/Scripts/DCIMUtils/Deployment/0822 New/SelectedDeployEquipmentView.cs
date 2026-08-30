@@ -9,7 +9,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
     /// <summary>
     /// 顯示目前所選的上架庫存設備資訊
     /// </summary>
-    public class SelectedDeployEquipmentView : MonoBehaviour
+    public class SelectedStockEquipmentToDeployView : MonoBehaviour
     {
         #region Fields
         [SerializeField, ReadOnly] private EquipmentAsset equipmentAsset;
@@ -31,27 +31,27 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             txtPowerWatt.text = equipmentAsset.equipmentUsageInfo.power_watt.ToString();
             txtWeightKG.text = equipmentAsset.equipmentUsageInfo.weight_kg.ToString();
             txtCategory.text = equipmentAsset.category.ToString();
+            btnCancel.onClick.AddListener(OnCancelSelected);
             root.SetActive(true);
         }
 
         private void OnEnable()
         {
-            StockEquipmentList.OnStockEquipmentSelectedAction += SetEquipmentAsset;
-            StockEquipmentList.OnStockEquipmentDeselectedAction += Clear;
-            btnCancel.onClick.AddListener(OnCancelSelected);
+            StockEquipmentList.OnStockEquipmentItemSelectedAction += SetEquipmentAsset;
+            StockEquipmentList.OnStockEquipmentItemDeselectedAction += Clear;
         }
 
         private void OnDisable()
         {
             EquipmentStockList.OnEquipmentSelected -= SetEquipmentAsset;
             EquipmentStockList.OnEquipmentDeselected -= Clear;
-            btnCancel.onClick.RemoveListener(OnCancelSelected);
         }
 
         private void OnCancelSelected() => EquipmentStockList.DeselectEquipmentItem();
 
         private void Clear()
         {
+            btnCancel.onClick.RemoveListener(OnCancelSelected);
             root.SetActive(false);
             equipmentAsset = null;
             txtPropertyName.text = string.Empty;

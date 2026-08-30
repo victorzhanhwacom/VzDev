@@ -1,7 +1,7 @@
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace VzDev.RenderingUtils.Staging
+namespace VzDev.ColorUtils.Staging
 {
     /// <summary>
     /// 掛在待上架設備模型上，新增兩個子物件分別疊加「半透明色調」與「三角網格線」，

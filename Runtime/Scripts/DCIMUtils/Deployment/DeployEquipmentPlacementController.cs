@@ -3,7 +3,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using VzDev.DCIMUtils.DataUtils;
 using VzDev.DebugUtils;
-using VzDev.RenderingUtils.Staging;
+using VzDev.ColorUtils.Staging;
 
 namespace VzDev.DCIMUtils.DeploymentUtils
 {

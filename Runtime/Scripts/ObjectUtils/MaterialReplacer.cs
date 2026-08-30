@@ -71,7 +71,7 @@ namespace VzDev.ObjectUtils
             _isMaterialReplaced = true;
             return;
 
-            if (Application.isPlaying == false)
+           /*  if (Application.isPlaying == false)
             {
                 Debug.LogWarning("Material replacement can only be performed in Play mode.");
                 return;
@@ -84,7 +84,7 @@ namespace VzDev.ObjectUtils
             {
                 MaterialHelper.ReplaceMaterial(targetModels, replaceMaterial);
             }
-            _isMaterialReplaced = true;
+            _isMaterialReplaced = true; */
         }
 
         /// 將材質恢復為原始材質
@@ -96,14 +96,14 @@ namespace VzDev.ObjectUtils
             _isMaterialReplaced = false;
             return;
 
-            if (Application.isPlaying == false)
+          /*   if (Application.isPlaying == false)
             {
                 Debug.LogWarning("Material restore can only be performed in Play mode.");
                 return;
             }
 
             MaterialHelper.RestoreMaterial(targetModels);
-            _isMaterialReplaced = false;
+            _isMaterialReplaced = false; */
         }
 
         public void ToReplaceMaterial(bool isOn)

@@ -49,12 +49,16 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             }
         }
 
+        /// <summary>
+        /// 設定機櫃資料與機櫃模型
+        /// </summary>
         public void SetRackAsset(DCR_Asset data)
         {
             rackAsset = data;
             rackAsset.modelInfo ??= new ModelInfo();
             rackAsset.modelInfo.modelTarget = transform;
             rackAsset.modelInfo.modelName = transform.name;
+            rackAsset.GenerateDeviceNameIfEmpty();
             rackAsset.RefreshUsageInfo();
             transform.TryAddComponent(out meshCollider);
         }

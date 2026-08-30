@@ -13,7 +13,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
     {
         #region Fields
         [Foldout("[Components]"), SerializeField] private BoxCollider equipmentDeployCollider;
-        private int dataReadyCount = 0, dataReadyTotal = 2;
+      //  private int dataReadyCount = 0, dataReadyTotal = 2;
         #endregion
 
         private void OnSetComponentsCompletedHandler(List<RackComponent> list)

@@ -3,7 +3,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
 using VzDev.InteractiveUtils.ModelMouseEvent;
-using VzDev.RenderingUtils.Outline;
+using VzDev.ColorUtils.Outline;
 
 namespace VzDev.InteractiveUtils.ModelMouseEvent
 {

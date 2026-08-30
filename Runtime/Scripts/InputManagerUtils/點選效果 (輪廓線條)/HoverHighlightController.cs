@@ -1,5 +1,5 @@
 using UnityEngine;
-using VzDev.RenderingUtils.Outline;
+using VzDev.ColorUtils.Outline;
 
 namespace VzDev.InteractiveUtils.ModelMouseEvent
 {

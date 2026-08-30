@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VzDev.ColorUtils;
 using VzDev.DCIMUtils.DataUtils;
+using VzDev.ColorUtils.ColorState;
 
 namespace VzDev.DCIMUtils.DeploymentUtils
 {
@@ -41,23 +42,26 @@ namespace VzDev.DCIMUtils.DeploymentUtils
 
                 bool isSuitable = true;
                 float totalRemainPercent = 0f;
+                int counter = 0;
                 if (togglePower.isOn)
                 {
                     isSuitable &= rackUsage.IsRackUCanFit_Power(selectedStockEquipment.equipmentUsageInfo.power_watt, out float remainPowerPercent);
                     totalRemainPercent += remainPowerPercent;
+                    counter++;
                 }
                 if (toggleWeight.isOn)
                 {
                     isSuitable &= rackUsage.IsRackUCanFit_Weight(selectedStockEquipment.equipmentUsageInfo.weight_kg, out float remainWeightPercent);
-                    totalRemainPercent = (totalRemainPercent + remainWeightPercent) * 0.5f; // 將重量剩餘百分比加權計算
+                    totalRemainPercent += totalRemainPercent + remainWeightPercent; 
+                    counter++;
                 }
                 if (toggleHeightU.isOn)
                 {
                     isSuitable &= rackUsage.IsRackUCanFit_Height(selectedStockEquipment.equipmentUsageInfo.heightU, out float remainHeightPercent);
-                    totalRemainPercent = (totalRemainPercent + remainHeightPercent) * 0.5f; // 將高度剩餘百分比加權計算
+                    totalRemainPercent += totalRemainPercent + remainHeightPercent; 
+                    counter++;
                 }
-
-                Debug.Log($"Rack: {rackAsset.modelInfo.modelName}, Suitable: {isSuitable}, Total Remain Percent: {totalRemainPercent}");
+                totalRemainPercent = counter > 0 ? totalRemainPercent / counter : 0f;
                 SetRackModelColor(rackAsset.modelInfo.modelTarget, isSuitable, totalRemainPercent);
             });
         }
@@ -65,16 +69,11 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         private void SetRackModelColor(Transform modelTarget, bool isSuitable, float totalRemainPercent)
         {
             if (modelTarget == null) return;
-            Renderer[] renderers = modelTarget.GetComponentsInChildren<Renderer>();
-            Color colorToApply = isSuitable 
+            Renderer renderer = modelTarget.GetComponent<Renderer>();
+            Color colorToApply = isSuitable
             ? ColorHelper.GetColorLerpFromThresholds(totalRemainPercent, colorThresholds) : colorThresholds[0].color;
-            foreach (var renderer in renderers)
-            {
-                if (renderer.material.HasProperty("_Color"))
-                {
-                    renderer.material.color = colorToApply;
-                }
-            }
+
+            ModelColorStateManager.SetColorSingle(renderer, colorToApply);
         }
 
         /// <summary>
@@ -86,6 +85,9 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             {
                 DCR_Asset rackAsset = combiner.RackAsset;
                 UsageCaculatorOfRack rackUsage = rackAsset?.usageInfo;
+
+                Renderer renderer = rackAsset.modelInfo.modelTarget.GetComponentsInChildren<Renderer>()[0];
+                ModelColorStateManager.RestoreColorSingle(renderer);
             });
         }
 
@@ -115,14 +117,14 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         private void OnSetComponentsCompleted(List<DataModelBinder_Rack> list) => rackDataCombiners = list;
         private void OnEnable()
         {
-            StockEquipmentList.OnStockEquipmentSelectedAction += OnSelectedeEquipmentToDeploy;
-            StockEquipmentList.OnStockEquipmentDeselectedAction += OnStockEquipmentDeselected;
+            StockEquipmentList.OnStockEquipmentItemSelectedAction += OnSelectedeEquipmentToDeploy;
+            StockEquipmentList.OnStockEquipmentItemDeselectedAction += OnStockEquipmentDeselected;
             RackDcrAssetSetter.OnRackDataCombinerGeneratedAction += OnSetComponentsCompleted;
         }
         private void OnDisable()
         {
-            StockEquipmentList.OnStockEquipmentSelectedAction -= OnSelectedeEquipmentToDeploy;
-            StockEquipmentList.OnStockEquipmentDeselectedAction -= OnStockEquipmentDeselected;
+            StockEquipmentList.OnStockEquipmentItemSelectedAction -= OnSelectedeEquipmentToDeploy;
+            StockEquipmentList.OnStockEquipmentItemDeselectedAction -= OnStockEquipmentDeselected;
             RackDcrAssetSetter.OnRackDataCombinerGeneratedAction -= OnSetComponentsCompleted;
         }
         #endregion

@@ -1,7 +1,7 @@
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace VzDev.RenderingUtils.Staging
+namespace VzDev.ColorUtils.Staging
 {
     /// <summary>
     /// 掛在待上架設備模型上，依模型 Bounding Box 生成一個外框子物件，

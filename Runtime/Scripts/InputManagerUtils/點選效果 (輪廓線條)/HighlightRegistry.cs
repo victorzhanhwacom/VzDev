@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace VzDev.RenderingUtils.Outline
+namespace VzDev.ColorUtils.Outline
 {
     /// <summary>
     /// 支援多個高亮群組（例如 Hover / Selected），各自可設定不同顏色。

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using VzDev.DCIMUtils.DataUtils;
 using VzDev.DebugUtils;
+using VzDev.InteractiveUtils.ModelMouseEvent;
 
 namespace VzDev.DCIMUtils.DeploymentUtils
 {
@@ -14,23 +15,25 @@ namespace VzDev.DCIMUtils.DeploymentUtils
     public class StockEquipmentList : MonoBehaviour
     {
         #region Fields
-        [SerializeField] private List<EquipmentAsset> stockEquipment;
-        [SerializeField, ReadOnly] private EquipmentAsset selectedStockEquipment;
+        [SerializeField] private List<EquipmentAsset> stockEquipmentData;
         [Foldout("[Comoponents]"), SerializeField] private StockEquipmentListItem listItemPrefab;
         [Foldout("[Comoponents]"), SerializeField] private ScrollRect scrollRect;
         [Foldout("[Comoponents]"), SerializeField, Required] private ToggleGroup toggleGroup;
 
         #endregion
 
-        public void SetEquipmentAssets(List<EquipmentAsset> assets)
+        /// <summary>
+        /// 建立庫存設備列表
+        /// </summary>
+        public void GenerateEquipmentAssetList(List<EquipmentAsset> assets)
         {
             DeselectStockEquipmentItem();
             ClearListItems();
-            stockEquipment = assets;
-            for (int i = 0; i < stockEquipment.Count; i++)
+            stockEquipmentData = assets;
+            for (int i = 0; i < stockEquipmentData.Count; i++)
             {
                 StockEquipmentListItem item = ObjectHelper.Instantiate(listItemPrefab, scrollRect.content);
-                item.SetEquipmentAsset(stockEquipment[i]);
+                item.SetEquipmentAsset(stockEquipmentData[i]);
                 item.SetToggleGroup(toggleGroup);
             }
         }
@@ -43,40 +46,47 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             }
         }
 
-         /// <summary>
-        /// 選取庫存設備 (列表)
-        /// </summary>
-        public static void SelectStockEquipmentItem(EquipmentAsset stockEquipment) => OnStockEquipmentSelectedAction?.Invoke(stockEquipment);
         /// <summary>
-        /// 取消選取庫存設備 (列表)
+        /// 點選列表上的庫存設備
         /// </summary>
-        public static void DeselectStockEquipmentItem() => OnStockEquipmentDeselectedAction?.Invoke();
+        public static void SelectStockEquipmentItem(EquipmentAsset stockEquipment) => OnStockEquipmentItemSelectedAction?.Invoke(stockEquipment);
+
+        /// <summary>
+        /// 取消選取列表上的庫存設備
+        /// </summary>
+        public static void DeselectStockEquipmentItem() => OnStockEquipmentItemDeselectedAction?.Invoke();
+
 
         #region Event Listener
         private void OnEnable()
         {
-            StockEquipementHandler.OnGetStockEquipmentListAction += SetEquipmentAssets;
-            OnStockEquipmentSelectedAction += OnStockEquipmentSelectedHandler;
-            OnStockEquipmentDeselectedAction += OnStockEquipmentDeselectedHandler;
+            StockEquipementHandler.OnCombineStockeEquipmentAndModelAction += GenerateEquipmentAssetList;
+            OnStockEquipmentItemDeselectedAction += OnStockEquipmentItemDeselectedHandler;
         }
         private void OnDisable()
         {
-            StockEquipementHandler.OnGetStockEquipmentListAction -= SetEquipmentAssets;
-            OnStockEquipmentSelectedAction -= OnStockEquipmentSelectedHandler;
-            OnStockEquipmentDeselectedAction -= OnStockEquipmentDeselectedHandler;
+            StockEquipementHandler.OnCombineStockeEquipmentAndModelAction -= GenerateEquipmentAssetList;
+            OnStockEquipmentItemDeselectedAction -= OnStockEquipmentItemDeselectedHandler;
         }
-
-        private void OnStockEquipmentSelectedHandler(EquipmentAsset asset) => selectedStockEquipment = asset;
-        private void OnStockEquipmentDeselectedHandler()
+        /// <summary>
+        /// For非從Toggle控制的取消選取庫存設備事件
+        /// </summary>
+        private void OnStockEquipmentItemDeselectedHandler()
         {
-            selectedStockEquipment = null;
-            if(toggleGroup.AnyTogglesOn() == false) toggleGroup.SetAllTogglesOff(false);
+            if (toggleGroup.AnyTogglesOn() == false) toggleGroup.SetAllTogglesOff(false);
         }
         #endregion
 
         #region Static Methods
-        public static Action<EquipmentAsset> OnStockEquipmentSelectedAction;
-        public static Action OnStockEquipmentDeselectedAction;
+        /// <summary>
+        /// 選取庫存設備 (列表)
+        /// </summary>
+        public static Action<EquipmentAsset> OnStockEquipmentItemSelectedAction;
+        /// <summary>
+        /// 取消選取庫存設備 (列表)
+        /// </summary>
+        public static Action OnStockEquipmentItemDeselectedAction;
+
         #endregion
     }
 }

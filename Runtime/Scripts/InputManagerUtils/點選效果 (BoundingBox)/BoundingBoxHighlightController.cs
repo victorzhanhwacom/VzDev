@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using VzDev.RenderingUtils.Outline;
+using VzDev.ColorUtils.Outline;
 
-namespace VzDev.RenderingUtils.Staging
+namespace VzDev.ColorUtils.Staging
 {
     /// <summary>
     /// 監聽 HighlightRegistry 的 Hover/Selected 狀態，用物件池 + 單位立方體 Mesh 的方式

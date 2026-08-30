@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.Experimental.Rendering;
 using System.Collections.Generic;
 
-namespace VzDev.RenderingUtils.Outline
+namespace VzDev.ColorUtils.Outline
 {
     public class OutlineRendererFeature : ScriptableRendererFeature
     {

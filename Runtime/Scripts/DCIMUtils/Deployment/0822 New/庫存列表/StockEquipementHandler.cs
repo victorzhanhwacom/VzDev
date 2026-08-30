@@ -73,7 +73,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                     stockEquipmentList.Add(equipmentAsset);
                 }
             });
-            OnGetStockEquipmentListAction?.Invoke(stockEquipmentList);
+            OnCombineStockeEquipmentAndModelAction?.Invoke(stockEquipmentList);
         }
 
         [Button, ShowIf("IsDataReady")]
@@ -98,7 +98,10 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         #endregion
 
         #region Static Events
-        public static event Action<List<EquipmentAsset>> OnGetStockEquipmentListAction;
+        /// <summary>
+        /// 在庫存設備資料與模型結合完成後觸發，傳遞結合後的庫存設備列表
+        /// </summary>
+        public static event Action<List<EquipmentAsset>> OnCombineStockeEquipmentAndModelAction;
         #endregion
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using VzDev.UnityAPI.Extensions;
 
 namespace VzDev.DCIMUtils.DataUtils
 {
@@ -10,6 +11,11 @@ namespace VzDev.DCIMUtils.DataUtils
     public class DCR_Asset : DCIMAsset
     {
         public DCR_Asset() => category = DCIMCategory.DCR;
+
+        /// <summary>
+        /// 所在位置
+        /// </summary>
+        public string location;
 
         /// <summary>
         /// 機櫃本身重量
@@ -42,6 +48,19 @@ namespace VzDev.DCIMUtils.DataUtils
         {
             usageInfo ??= new UsageCaculatorOfRack();
             usageInfo.RefreshUsageInfo(this);
+        }
+
+        /// <summary>
+        /// 若設備名稱為空則自動從模型名稱取得
+        /// </summary>
+        public void GenerateDeviceNameIfEmpty()
+        {
+            if (string.IsNullOrEmpty(deviceName) && modelInfo?.modelTarget != null)
+            {
+                deviceName = modelInfo.modelTarget.name.GetStringBetweenMarks("[", "]").Split(":")[1];
+                companyPropertyInfo.propertyName = deviceName;
+                companyPropertyInfo.GenerateRandomPropertyNo("NTCGO");
+            }
         }
     }
 }

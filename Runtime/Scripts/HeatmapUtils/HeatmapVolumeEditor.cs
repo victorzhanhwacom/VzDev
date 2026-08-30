@@ -11,7 +11,7 @@ public class HeatmapVolumeEditor : Editor
     private Texture2D _rampTex;
 
     // Foldout states
-    private bool _showFlow = true;
+    // private bool _showFlow = true;
 
     public override void OnInspectorGUI()
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace VzDev.RenderingUtils.Staging
+namespace VzDev.ColorUtils.Staging
 {
     /// <summary>
     /// 依 Mesh 的本地空間 Bounding Box，生成一個六面體外框 Mesh。

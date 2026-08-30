@@ -65,7 +65,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
 
             HandleHover(hitObj);
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && isMouseClickEnabled)
             {
                 if (hitObj != null)
                 {
@@ -145,6 +145,13 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             }
         }
 
+        #region 設定是否允許MouseClick
+        private static bool isMouseClickEnabled = true;
+        public static void SetMouseClickEnabled(bool isEnabled) => isMouseClickEnabled = isEnabled;
+        public static bool IsMouseClickEnabled() => isMouseClickEnabled;
+        #endregion
+
+
         #region 供外部模擬觸發（例如 UI Toggle 點位標籤系統）
         /// <summary>
         /// 供外部（例如 ModelToggleBinding）模擬一次「點擊此模型」，
@@ -155,6 +162,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         /// </summary>
         public static void SimulateClick(GameObject target)
         {
+            if(!isMouseClickEnabled) return; // 如果暫時關閉 MouseClick，則不觸發事件
             if (target == null) return;
             OnMouseClick?.Invoke(target);
         }
@@ -166,6 +174,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         /// </summary>
         public static void SimulateClickEmpty()
         {
+            if(!isMouseClickEnabled) return; // 如果暫時關閉 MouseClick，則不觸發事件
             OnMouseClickEmpty?.Invoke();
         }
         #endregion

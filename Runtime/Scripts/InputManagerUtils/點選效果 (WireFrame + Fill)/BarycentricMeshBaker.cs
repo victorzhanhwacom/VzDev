@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace VzDev.RenderingUtils.Staging
+namespace VzDev.ColorUtils.Staging
 {
     /// <summary>
     /// 將任意 Mesh 轉換成「每三角面獨立頂點」版本，並把重心座標 (1,0,0)/(0,1,0)/(0,0,1)
