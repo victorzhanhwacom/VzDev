@@ -11,9 +11,13 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [SerializeField, ReadOnly] private EquipmentAsset equipmentAsset;
         [Foldout("[Components]"), SerializeField] private MeshCollider meshCollider;
 
+        public EquipmentAsset EquipmentAsset => equipmentAsset;
+
         public void SetEquipmentAsset(EquipmentAsset data)
         {
-            equipmentAsset = data;
+            equipmentAsset = (data.deviceCode.Contains("DCS") || data.deviceCode.Contains("Server")) ?
+            data.ToDCSAsset() : data.ToDCNAsset();
+
             equipmentAsset.modelInfo ??= new ModelInfo();
             equipmentAsset.modelInfo.modelTarget = transform;
             equipmentAsset.modelInfo.modelName = transform.name;

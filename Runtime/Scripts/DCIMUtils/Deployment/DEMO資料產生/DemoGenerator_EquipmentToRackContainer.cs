@@ -337,7 +337,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils.Demo
             var clone = new EquipmentAsset
             {
                 deviceCode = template.deviceCode,
-                category = template.category,
+                system = template.system,
                 equipmentUsageInfo = template.equipmentUsageInfo, // struct，直接複製值
                 sizeInfo = new SizeInfo
                 {

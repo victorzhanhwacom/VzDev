@@ -30,7 +30,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             txtHeightU.text = equipmentAsset.equipmentUsageInfo.heightU.ToString();
             txtPowerWatt.text = equipmentAsset.equipmentUsageInfo.power_watt.ToString();
             txtWeightKG.text = equipmentAsset.equipmentUsageInfo.weight_kg.ToString();
-            txtCategory.text = equipmentAsset.category.ToString();
+            txtCategory.text = equipmentAsset.system.ToString();
             btnCancel.onClick.AddListener(OnCancelSelected);
             root.SetActive(true);
         }

@@ -22,7 +22,9 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         /// <summary>
         /// 目前選擇上架的庫存設備
         /// </summary>
-        private EquipmentAsset currentAsset;
+        private EquipmentAsset currentEquipmentAsset;
+        private DCR_Asset currentRackAsset;
+        private int currentUIndex = -1;
 
         [Foldout("[Renderer]"), SerializeField, Required] private Shader stagingBoundingBoxShader;
         [Foldout("[Renderer]"), SerializeField, ColorUsage(true, true)] private Color previewColor_Deployable = new Color(0f, 1f, 0f);
@@ -54,10 +56,17 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             StockEquipmentList.OnStockEquipmentItemDeselectedAction += OnDeselectStockEquipmentItem;
             DeployToRackSelector.OnDeselectRackTargetAction += SetRackTargetNull;
             RackUSlotHoverDetector.OnRackUSlotChanged += HandleRackUSlotChanged;
+
+            DeployConfirm.onConfirmDeploy += () =>
+            {
+                Debug.Log($"{GetType().Name} - 進行上架");
+                RackUSlotHoverDetector.OnRackUSlotChanged -= HandleRackUSlotChanged;
+            };
+            DeployConfirm.onCancelDeploy += () =>
+            {
+                RackUSlotHoverDetector.OnRackUSlotChanged += HandleRackUSlotChanged;
+            };
         }
-
-       
-
         private void OnDisable()
         {
             StockEquipmentList.OnStockEquipmentItemSelectedAction -= OnSelectStockEquipmentItem;
@@ -66,9 +75,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             RackUSlotHoverDetector.OnRackUSlotChanged -= HandleRackUSlotChanged;
             ClearPreview();
         }
-
         private void SetRackTargetNull() => previewInstance.gameObject.SetActive(false);
-
         private void OnDestroy()
         {
             if (boxMaterial != null) Destroy(boxMaterial);
@@ -77,6 +84,12 @@ namespace VzDev.DCIMUtils.DeploymentUtils
 
         private void Update()
         {
+            ///點選確定上架
+            if (previewInstance != null && previewInstance.gameObject.activeSelf && Input.GetMouseButtonDown(0))
+            {
+                RackUSlotHoverDetector.OnRackUSlotChanged -= HandleRackUSlotChanged;
+                onSelectedeEquipmentToDeploy?.Invoke(new EquipmentDeployInfo(currentEquipmentAsset, currentRackAsset, currentUIndex));
+            }
             if (previewInstance == null || isSnapped) return; // 已對齊時，位置改由 SnapToSlot 決定，不再跟隨滑鼠
 
             if (TryGetPlacementPoint(out Vector3 point))
@@ -91,12 +104,14 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         private void HandleRackUSlotChanged(DCR_Asset rackAsset, int uIndex, Collider rackCollider)
         {
             //if (currentAsset == null || previewInstance == null) return;
-            bool isDeployable = CheckCanDeploy(rackAsset, uIndex, currentAsset);
+            bool isDeployable = CheckCanDeploy(rackAsset, uIndex, currentEquipmentAsset);
             SetPreviewState(isDeployable);
 
             if (isDeployable)
             {
-                SnapToSlot(rackAsset, uIndex, rackCollider, currentAsset.equipmentUsageInfo.heightU);
+                currentRackAsset = rackAsset;
+                currentUIndex = uIndex;
+                SnapToSlot(rackAsset, uIndex, rackCollider, currentEquipmentAsset.equipmentUsageInfo.heightU);
                 isSnapped = true;
             }
             else if (isSnapped)
@@ -130,9 +145,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                 Debug.LogWarning($"[{GetType().Name}] 選取的設備沒有設定 modelTarget，無法生成預覽模型");
                 return;
             }
-            currentAsset = equipmentAsset;
-            onSelectedeEquipmentToDeploy?.Invoke(currentAsset);
-            previewInstance = ObjectHelper.Instantiate(currentAsset.modelInfo.modelTarget);
+            currentEquipmentAsset = equipmentAsset;
+            previewInstance = ObjectHelper.Instantiate(currentEquipmentAsset.modelInfo.modelTarget);
             previewInstance.gameObject.SetActive(false);
             CreateBoundingBoxChild();
             SetPreviewState(isSuitable: false); // 預設狀態，實際放置合法性判斷邏輯之後再接上動態切換
@@ -141,7 +155,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         private void OnDeselectStockEquipmentItem()
         {
             ClearPreview();
-            currentAsset = null;
+            currentEquipmentAsset = null;
         }
         #endregion
 
@@ -289,6 +303,20 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         }
         #endregion
 
-        public static Action<EquipmentAsset> onSelectedeEquipmentToDeploy;
+        public static Action<EquipmentDeployInfo> onSelectedeEquipmentToDeploy;
+    }
+
+    public class EquipmentDeployInfo
+    {
+        public EquipmentAsset equipmentAsset;
+        public DCR_Asset rackAsset;
+        public int uIndex;
+
+        public EquipmentDeployInfo(EquipmentAsset equipmentAsset, DCR_Asset rackAsset, int uIndex)
+        {
+            this.equipmentAsset = equipmentAsset;
+            this.rackAsset = rackAsset;
+            this.uIndex = uIndex;
+        }
     }
 }

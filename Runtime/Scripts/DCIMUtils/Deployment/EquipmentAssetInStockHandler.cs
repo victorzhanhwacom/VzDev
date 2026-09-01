@@ -97,7 +97,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                     {
                         deviceCode = deviceCode,
                         deploymentStatus = DeploymentStatus.InStock,
-                        category = model.name.Contains("Server") ? DCIMCategory.DCS : DCIMCategory.DCN,
+                        system = model.name.Contains("Server") ? DCIMCategory.DCS : DCIMCategory.DCN,
                         companyPropertyInfo = new CompanyPropertyInfo
                         {
                             propertyName = deviceCode,

@@ -19,7 +19,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         private void OnRackDeployable() => SetRackDeployable(isRackDeployable);
         [SerializeField] private BoxCollider rackSlotColliderPrefab;
 
-        private List<DCR_Asset> rackAssets;
+        [SerializeField] private List<DCR_Asset> rackAssets;
         private List<Transform> rackModels;
         private List<Transform> equipmentModels;
 
@@ -130,7 +130,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             WebAPIManager_EquipmentDeploy.OnGetRackListInformationAction -= SetRackAssets;
             WebAPIManager_EquipmentDeploy.OnGetEquipmentModelsAction -= SetEquipmentModels;
         }
-        
+
         public static Action<List<DataModelBinder_Rack>> OnRackDataCombinerGeneratedAction;
     }
 }

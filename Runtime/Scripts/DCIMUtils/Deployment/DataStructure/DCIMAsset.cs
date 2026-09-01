@@ -9,7 +9,7 @@ namespace VzDev.DCIMUtils.DataUtils
     [Serializable]
     public class DCIMAsset : RevitAsset
     {
-        public DCIMCategory category = DCIMCategory.Unknow;
+        public DCIMCategory system = DCIMCategory.Unknow;
         public CompanyPropertyInfo companyPropertyInfo = new ();
         public SizeInfo sizeInfo = new ();
     }

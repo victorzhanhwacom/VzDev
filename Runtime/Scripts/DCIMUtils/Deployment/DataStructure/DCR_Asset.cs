@@ -10,7 +10,7 @@ namespace VzDev.DCIMUtils.DataUtils
     [Serializable]
     public class DCR_Asset : DCIMAsset
     {
-        public DCR_Asset() => category = DCIMCategory.DCR;
+        public DCR_Asset() => system = DCIMCategory.DCR;
 
         /// <summary>
         /// 所在位置

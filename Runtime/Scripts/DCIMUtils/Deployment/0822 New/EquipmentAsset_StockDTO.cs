@@ -61,7 +61,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             {
                 deviceCode = deviceCode,
                 deviceName = modelName,
-                category = (DCIMCategory)Enum.Parse(typeof(DCIMCategory), system),
+                system = (DCIMCategory)Enum.Parse(typeof(DCIMCategory), system),
                 deploymentStatus = DeploymentStatus.InStock,
                 companyPropertyInfo = companyPropertyInfo,
                 cobieInfo = cobieInfo,

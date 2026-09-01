@@ -33,7 +33,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         {
             if (rackAsset == null || rackAsset.container == null) return;
 
-            foreach (var equipmentData in rackAsset.container)
+            foreach (EquipmentAsset equipmentData in rackAsset.container)
             {
                 Transform model = equipmentModels.Find(m => m.name == equipmentData.modelInfo.modelName);
                 if (model == null)

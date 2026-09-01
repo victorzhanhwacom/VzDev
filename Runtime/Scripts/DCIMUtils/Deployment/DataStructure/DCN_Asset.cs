@@ -8,7 +8,7 @@ namespace VzDev.DCIMUtils.DataUtils
     [Serializable]
     public class DCN_Asset : EquipmentAsset
     {
-        public DCN_Asset() => category = DCIMCategory.DCN;
+        public DCN_Asset() => system = DCIMCategory.DCN;
         
         ///未來會有路由表類別
     }
