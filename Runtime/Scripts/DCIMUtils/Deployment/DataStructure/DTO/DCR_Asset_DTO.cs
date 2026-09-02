@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace VzDev.DCIMUtils.DataUtils
 {
@@ -12,7 +13,7 @@ namespace VzDev.DCIMUtils.DataUtils
     {
         public string devicePath;
         public InformationDto information;
-        public List<EquipmentAsset> containers = new();
+        public List<EquipmentAsset_DTO> containers = new();
 
         public DCR_Asset ToDCRAsset()
         {
@@ -24,7 +25,7 @@ namespace VzDev.DCIMUtils.DataUtils
                 power_watt_Max = information?.watt_limit ?? 0,
                 u_height_Max = information?.heightU ?? 0,
                 weight_kg = information?.weight ?? 0,
-                container = containers ?? new List<EquipmentAsset>()
+                container = containers.Select(dto => dto.ToEquipmentAsset()).ToList() ?? new List<EquipmentAsset>()
             };
             return asset;
         }

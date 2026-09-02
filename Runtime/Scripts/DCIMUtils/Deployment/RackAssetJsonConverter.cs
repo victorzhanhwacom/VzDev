@@ -60,7 +60,7 @@ namespace VzDev.DCIMUtils.Import
                 power_watt_Max = entry.information.watt_limit,
                 u_height_Max = entry.information.heightU,
                 cobieInfo = entry.information.ToCOBieInfo(),
-                container = entry.containers
+                container = entry.containers.Select(dto => dto.ToEquipmentAsset()).ToList()
             };
             // container 依 startUIndex 遞減排序：U槽編號越大（越靠機櫃上方）排越前面。
             // 直接在 List 上 Sort，不額外配置新清單；container 跟 entry.containers 是同一個
@@ -101,7 +101,7 @@ namespace VzDev.DCIMUtils.Import
             {
                 devicePath = asset.deviceCode,
                 information = InformationDto.FromCOBieInfo(asset.cobieInfo),
-                containers = asset.container ?? new List<EquipmentAsset>(),
+                //containers = asset.container ?? new List<EquipmentAsset_DTO>(),
             };
 
             dto.information.watt_limit = asset.power_watt_Max;

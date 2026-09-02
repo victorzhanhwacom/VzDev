@@ -9,6 +9,8 @@ namespace VzDev.DCIMUtils.DataUtils
     [Serializable]
     public class EquipmentAsset : DCIMAsset
     {
+        public string rackDevicePath;
+
         public EquipmentUsageInfo equipmentUsageInfo;
         public DeploymentStatus deploymentStatus = DeploymentStatus.Unknow;
         public int startUIndex; // 部署在機櫃裡的起始 U 位置，未部署時為 0 或 -1
