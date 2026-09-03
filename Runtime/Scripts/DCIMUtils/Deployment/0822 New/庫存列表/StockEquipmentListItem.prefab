@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6528282363412402397
 RectTransform:
   m_ObjectHideFlags: 0
@@ -667,11 +667,12 @@ MonoBehaviour:
       modelName: 
     timeStampData:
       timeStamp: 
-    category: 0
+    system: 0
     companyPropertyInfo:
       propertyName: 
       propertyNumber: 
       note: 
+    rackDevicePath: 
     equipmentUsageInfo:
       power_watt: 0
       weight_kg: 0

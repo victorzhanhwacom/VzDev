@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 
+#if UNITY_EDITOR
 namespace VzDev.EditorUtils
 {
     public class ModelThumbnailGeneratorWindow : UnityEditor.EditorWindow
@@ -215,3 +216,4 @@ namespace VzDev.EditorUtils
         }
     }
 }
+#endif

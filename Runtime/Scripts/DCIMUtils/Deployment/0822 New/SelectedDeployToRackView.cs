@@ -13,25 +13,31 @@ namespace VzDev.DCIMUtils.DeploymentUtils
     {
         #region Fields
         [SerializeField, ReadOnly] private DCR_Asset selectedRackAsset;
-        [Foldout("[Comoponents]"), SerializeField] private GameObject root;
+        [Foldout("[Comoponents]"), SerializeField] private GameObject rootView;
         [Foldout("[Comoponents]"), SerializeField] private Button btnCancel;
         [Foldout("[Comoponents]"), SerializeField]
         private TextMeshProUGUI
-        txtPropertyName, txtPropertyNumber, remainHeightU, remainPowerWatt, remainWeightKG;
+        txtDeviceName, totalHeightU, totalPowerWatt, totalWeightKG, remainHeightU, remainPowerWatt, remainWeightKG;
         #endregion
 
-        private void Awake() => Clear();
+        private void Awake()
+        {
+            rootView.SetActive(false);
+            Clear();
+        }
 
         public void SetRackAsset(DCR_Asset rackAsset)
         {
             selectedRackAsset = rackAsset;
-            txtPropertyName.text = selectedRackAsset.companyPropertyInfo.propertyName;
-            txtPropertyNumber.text = selectedRackAsset.companyPropertyInfo.propertyNumber;
+            txtDeviceName.text = selectedRackAsset.deviceName;
+            totalHeightU.text = selectedRackAsset.usageInfo.totalHeightU.ToString();
+            totalPowerWatt.text = selectedRackAsset.usageInfo.totalPowerWatt.ToString();
+            totalWeightKG.text = selectedRackAsset.usageInfo.totalWeightKG.ToString();
             remainHeightU.text = selectedRackAsset.usageInfo.remainHeightU.ToString();
             remainPowerWatt.text = selectedRackAsset.usageInfo.remainPowerWatt.ToString();
             remainWeightKG.text = selectedRackAsset.usageInfo.remainWeightKG.ToString();
             btnCancel.onClick.AddListener(OnCancelSelected);
-            root.SetActive(true);
+            rootView.SetActive(true);
         }
 
 
@@ -53,10 +59,12 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         private void Clear()
         {
             btnCancel.onClick.RemoveListener(OnCancelSelected);
-            root.SetActive(false);
+            rootView.SetActive(false);
             selectedRackAsset = null;
-            txtPropertyName.text = string.Empty;
-            txtPropertyNumber.text = string.Empty;
+            txtDeviceName.text = string.Empty;
+            totalHeightU.text = string.Empty;
+            totalPowerWatt.text = string.Empty;
+            totalWeightKG.text = string.Empty;
             remainHeightU.text = string.Empty;
             remainPowerWatt.text = string.Empty;
             remainWeightKG.text = string.Empty;

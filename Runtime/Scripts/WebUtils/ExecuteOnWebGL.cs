@@ -6,19 +6,16 @@ namespace VzDev.WebGLUtils
 {
     public class ExecuteOnWebGL : MonoBehaviour
     {
-        [Foldout("[Event]"), SerializeField] private UnityEvent onWebGLAwake;
-        [SerializeField] private GameObject[] objectsToHide;
+        [SerializeField] private UnityEvent onWebGLAwake;
 
         void Awake()
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
-            foreach (var obj in objectsToHide)
-            {
-                if (obj != null)
-                    obj.SetActive(false);
-            }
-            onWebGLAwake?.Invoke();
+            InvokeEvent();
 #endif
         }
+
+        [Button("Simulate Event")]
+        private void InvokeEvent() => onWebGLAwake?.Invoke();
     }
 }

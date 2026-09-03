@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7173626381170513836}
   - component: {fileID: 380676318790113209}
   - component: {fileID: 6834993386954689861}
-  - component: {fileID: 7017318504633551626}
   m_Layer: 5
   m_Name: 'Title '
   m_TagString: Untagged
@@ -93,7 +92,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
+  m_fontSize: 14
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
@@ -138,20 +137,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &7017318504633551626
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4175597263157443933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4713f51ed851a4498c85921745d897a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: VzDev::VzDev.ToolUtils.ThemeUtils.ThemedText
-  colorToken: 9
-  _fontToken: 0
 --- !u!1001 &5226101242793635339
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.IO;
 using UnityEngine;
 using UnityEditor;
@@ -184,3 +185,4 @@ namespace VzDev.EditorUtils
         }
     }
 }
+#endif

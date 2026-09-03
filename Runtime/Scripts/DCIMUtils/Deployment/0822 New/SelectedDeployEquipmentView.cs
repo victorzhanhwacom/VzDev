@@ -13,26 +13,27 @@ namespace VzDev.DCIMUtils.DeploymentUtils
     {
         #region Fields
         [SerializeField, ReadOnly] private EquipmentAsset equipmentAsset;
-        [Foldout("[Comoponents]"), SerializeField] private GameObject root;
-        [Foldout("[Comoponents]"), SerializeField] private Button btnCancel;
+        [Foldout("[Comoponents]"), SerializeField] private GameObject rootView;
         [Foldout("[Comoponents]"), SerializeField]
         private TextMeshProUGUI
-        txtPropertyName, txtPropertyNumber, txtHeightU, txtPowerWatt, txtWeightKG, txtCategory;
+        txtDeviceName, txtHeightU, txtPowerWatt, txtWeightKG, txtSystem;
         #endregion
 
-        private void Awake() => Clear();
+        private void Awake()
+        {
+            rootView.SetActive(false);
+            Clear();
+        }
 
         public void SetEquipmentAsset(EquipmentAsset equipmentAsset)
         {
             this.equipmentAsset = equipmentAsset;
-            txtPropertyName.text = equipmentAsset.companyPropertyInfo.propertyName;
-            txtPropertyNumber.text = equipmentAsset.companyPropertyInfo.propertyNumber;
+            txtDeviceName.text = equipmentAsset.deviceName;
             txtHeightU.text = equipmentAsset.equipmentUsageInfo.heightU.ToString();
             txtPowerWatt.text = equipmentAsset.equipmentUsageInfo.power_watt.ToString();
             txtWeightKG.text = equipmentAsset.equipmentUsageInfo.weight_kg.ToString();
-            txtCategory.text = equipmentAsset.system.ToString();
-            btnCancel.onClick.AddListener(OnCancelSelected);
-            root.SetActive(true);
+            txtSystem.text = equipmentAsset.system.ToString();
+            rootView.SetActive(true);
         }
 
         private void OnEnable()
@@ -51,15 +52,13 @@ namespace VzDev.DCIMUtils.DeploymentUtils
 
         private void Clear()
         {
-            btnCancel.onClick.RemoveListener(OnCancelSelected);
-            root.SetActive(false);
+            rootView.SetActive(false);
             equipmentAsset = null;
-            txtPropertyName.text = string.Empty;
-            txtPropertyNumber.text = string.Empty;
+            txtDeviceName.text = string.Empty;
             txtHeightU.text = string.Empty;
             txtPowerWatt.text = string.Empty;
             txtWeightKG.text = string.Empty;
-            txtCategory.text = string.Empty;
+            txtSystem.text = string.Empty;
         }
     }
 }

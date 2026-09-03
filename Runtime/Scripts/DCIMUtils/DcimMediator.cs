@@ -5,7 +5,7 @@ using VzDev.UnityAPI.Extensions;
 
 namespace VzDev.DCIMUtils
 {
-    public class DcimMediator : MonoBehaviour
+    public class DCIM_ClickModelMediator : MonoBehaviour
     {
         [Foldout("[Receive]"), SerializeField] private Transform clickedModel;
         [Foldout("[Events]")] public UnityEvent<string> invokeClickModelDeviceCode;

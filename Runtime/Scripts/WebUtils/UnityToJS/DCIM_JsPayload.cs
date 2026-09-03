@@ -61,8 +61,9 @@ namespace VzDev.WebGLUtils
         [InspectorName("BMS-消防")] FS,
         [InspectorName("CCTV")] CCTV,
         [InspectorName("門禁")] ACS,
+        [InspectorName("設備資產")] ICT,
         [InspectorName("配置管理")] EquipmentDeployment,
-        [InspectorName("告警")] Alarm,
+        [InspectorName("告警管理")] Alarm,
     }
 
     public enum EnumFloor

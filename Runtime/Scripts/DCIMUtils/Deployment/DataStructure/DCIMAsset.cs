@@ -12,6 +12,8 @@ namespace VzDev.DCIMUtils.DataUtils
         public DCIMCategory system = DCIMCategory.Unknow;
         public CompanyPropertyInfo companyPropertyInfo = new ();
         public SizeInfo sizeInfo = new ();
+        
+        public string DeviceCategory => system.ToString();
     }
 
     /// <summary>

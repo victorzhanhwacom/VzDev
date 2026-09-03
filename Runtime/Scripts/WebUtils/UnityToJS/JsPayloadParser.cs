@@ -13,16 +13,33 @@ namespace VzDev.WebGLUtils
 {
     public class JsPayloadParser : MonoBehaviour
     {
-        #region Events
+        #region Events & StaticaActions
+        [Foldout("[Events]-取得UserToken")] public UnityEvent<string> OnReceiveUserTokenEvent;
+        [Foldout("[Events]-切換系統選單")] public UnityEvent<EnumSystemMenu> OnReceiveSwitchSystemMenuEvent;
+        [Foldout("[Events]-切換樓層")] public UnityEvent<EnumFloor> OnReceiveSwitchFloorEvent;
+
+        /// <summary>
+        /// 取得UserToken
+        /// </summary>
+        public static Action<string> OnReceiveUserTokenAction;
+        /// <summary>
+        /// 切換系統選單
+        /// </summary>
+        public static Action<EnumSystemMenu> OnReceiveSwitchSystemMenuAction;
+        /// <summary>
+        /// 切換樓層
+        /// </summary>
+        public static Action<EnumFloor> OnReceiveSwitchFloorAction;
+
+        #endregion
+
+        #region Fields
         [SerializeField, ReadOnly] private DCIM_JsPayload receivedPayload;
         [SerializeField, ReadOnly, ShowIf("IsUserTokenPayload")] private UserTokenPayload userTokenPayload;
         [SerializeField, ReadOnly, ShowIf("IsSwitchSystemMenuPayload")] private SwitchSystemMenuPayload switchSystemMenuPayload;
         [SerializeField, ReadOnly, ShowIf("IsSwitchFloorPayload")] private SwitchFloorPayload switchFloorPayload;
         [SerializeField, ReadOnly, ShowIf("IsClickModelPayload")] private ClickModelPayload clickModelPayload;
         [SerializeField, ReadOnly, ShowIf("IsClickModelPayload")] private Transform clickModelTarget;
-        [Foldout("[Events]-取得UserToken")] public UnityEvent<string> OnGetUserTokenEvent;
-        [Foldout("[Events]-切換系統選單")] public UnityEvent<EnumSystemMenu> OnSwitchSystemMenuEvent;
-        [Foldout("[Events]-切換樓層")] public UnityEvent<EnumFloor> OnSwitchFloorEvent;
 
         private bool IsUserTokenPayload => receivedPayload.action == EnumJsAction.UserToken && !string.IsNullOrEmpty(receivedPayload.payload);
         private bool IsSwitchSystemMenuPayload => receivedPayload.action == EnumJsAction.SwitchSystemMenu && !string.IsNullOrEmpty(receivedPayload.payload);
@@ -34,14 +51,11 @@ namespace VzDev.WebGLUtils
         /*JSON解析格式
         {
             action: "{EnumJsAction}",       //動作
-            deviceCode: "{deviceCode}",     //模型deviceCode (For點擊模型Action)
-            systemMenu: "{EnumSystemMenu}"  //系統選單 (For切換系統選單Action)
-            floor: "{EnumFloor}"            //樓層 (For切換樓層Action)
+            payload: "{各動作的payload json}" //動作的參數
         }
         */
-        /// <summary>
-        /// JSON解析
-        /// </summary>
+
+        #region 解析json與判斷行為
         public void ParseJsPayload(string json)
         {
             receivedPayload = new DCIM_JsPayload();
@@ -107,6 +121,11 @@ namespace VzDev.WebGLUtils
                     break;
             }
         }
+        #endregion
+
+        /// <summary>
+        /// 取得UserToken
+        /// </summary>
         private void OnUserTokenAction(JObject payload)
         {
             userTokenPayload = payload.ToObject<UserTokenPayload>();
@@ -115,8 +134,12 @@ namespace VzDev.WebGLUtils
                 Debug.LogWarning($"[{GetType().Name}] UserToken 缺少 payload");
                 return;
             }
-            OnGetUserTokenEvent?.Invoke(userTokenPayload.userToken);
+            OnReceiveUserTokenEvent?.Invoke(userTokenPayload.userToken);
+            OnReceiveUserTokenAction?.Invoke(userTokenPayload.userToken);
         }
+        /// <summary>
+        /// 切換系統選單
+        /// </summary>
         private void OnSwitchSystemMenuAction(JObject payload)
         {
             switchSystemMenuPayload = payload.ToObject<SwitchSystemMenuPayload>();
@@ -125,8 +148,12 @@ namespace VzDev.WebGLUtils
                 Debug.LogWarning($"[{GetType().Name}] SwitchSystemMenu 缺少 payload");
                 return;
             }
-            OnSwitchSystemMenuEvent?.Invoke(switchSystemMenuPayload.systemMenu);
+            OnReceiveSwitchSystemMenuEvent?.Invoke(switchSystemMenuPayload.systemMenu);
+            OnReceiveSwitchSystemMenuAction?.Invoke(switchSystemMenuPayload.systemMenu);
         }
+        /// <summary>
+        /// 切換樓層
+        /// </summary>
         private void OnSwitchFloorAction(JObject payload)
         {
             switchFloorPayload = payload.ToObject<SwitchFloorPayload>();
@@ -135,8 +162,13 @@ namespace VzDev.WebGLUtils
                 Debug.LogWarning($"[{GetType().Name}] SwitchToFloor 缺少 payload");
                 return;
             }
-            OnSwitchFloorEvent?.Invoke(switchFloorPayload.floor);
+            OnReceiveSwitchFloorEvent?.Invoke(switchFloorPayload.floor);
+            OnReceiveSwitchFloorAction?.Invoke(switchFloorPayload.floor);
         }
+
+        /// <summary>
+        /// 模擬點擊模型
+        /// </summary>
         private void OnSimulateClickModelAction(JObject payload)
         {
             clickModelPayload = payload.ToObject<ClickModelPayload>();
