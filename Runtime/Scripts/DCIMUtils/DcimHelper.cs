@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using VzDev.DebugUtils;
 using UnityEngine;
 using VzDev.DCIMUtils.DataUtils;
+using VzDev.UnityAPI.Extensions;
 
 namespace VzDev.DcimUtils
 {
@@ -11,6 +12,31 @@ namespace VzDev.DcimUtils
     /// </summary>
     public static class DcimHelper
     {
+        #region 從DeviceName / DeviceCode取得模型名稱
+        /// <summary>
+        /// 從DeviceName取得模型名稱
+        /// </summary>
+        public static string GetModelNameFromDeviceName(string deviceName)
+        => GetModelNameFromDeviceCode(deviceName.GetStringBetweenMarks("[", "]"));
+
+        /// <summary>
+        /// 從DeviceCode取得模型名稱
+        /// </summary>
+        public static string GetModelNameFromDeviceCode(string deviceCode)
+        {
+            if (string.IsNullOrEmpty(deviceCode)) return string.Empty;
+
+            string[] parts = deviceCode.Split(":");
+            if (parts.Length < 2)
+            {
+                Debug.LogWarning($"Device code '{deviceCode}' does not contain a model name.");
+                return string.Empty;
+            }
+            return parts[1].Split("+")[0].Trim();
+        }
+        #endregion
+
+
         #region 設備模型對齊到機櫃槽位的工具方法
         /// <summary>
         /// 將設備模型對齊到機櫃的指定槽位

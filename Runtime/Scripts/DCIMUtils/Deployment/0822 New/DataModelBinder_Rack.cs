@@ -35,10 +35,11 @@ namespace VzDev.DCIMUtils.DeploymentUtils
 
             foreach (EquipmentAsset equipmentData in rackAsset.container)
             {
-                Transform model = equipmentModels.Find(m => m.name == equipmentData.modelInfo.modelName);
+                ///資產設備之模型比對與綁定
+                Transform model = equipmentModels.Find(m => m.name.IndexOf(equipmentData.modelInfo.modelName) >= 0);
                 if (model == null)
                 {
-                    Debug.LogWarning($"Equipment model not found for {equipmentData.modelInfo.modelName}");
+                    Debug.LogWarning($"Equipment model not found for\t{equipmentData.modelInfo.modelName}");
                     continue;
                 }
 
