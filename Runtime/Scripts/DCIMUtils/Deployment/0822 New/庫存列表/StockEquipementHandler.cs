@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using Newtonsoft.Json;
 using UnityEngine;
+using VzDev.DCIMUtils;
 using VzDev.DCIMUtils.DataUtils;
 using VzDev.UnityAPI.Extensions;
 
@@ -59,7 +60,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             stockEquipmentList = new List<EquipmentAsset>();
             stockEquipmentData.ForEach(stockEquipment =>
             {
-                Transform model = stockEquipmentModels.Find(model => model.name.ContainKeyword(stockEquipment.modelName));
+                Transform model = stockEquipmentModels.Find(model => DCIM_Helper.CompareEquipmentModelName(model.name, stockEquipment.modelName));
                 if (model == null)
                 {
                     Debug.LogWarning($"[StockEquipementHandler] 找不到對應的設備模型: {stockEquipment.modelName}");

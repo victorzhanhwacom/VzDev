@@ -1,17 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using VzDev.DebugUtils;
 using UnityEngine;
 using VzDev.DCIMUtils.DataUtils;
 using VzDev.UnityAPI.Extensions;
 
-namespace VzDev.DcimUtils
+namespace VzDev.DCIMUtils
 {
     /// <summary>
     /// DCIM Helper：提供機櫃、設備、模型相關的工具方法
     /// </summary>
-    public static class DcimHelper
+    public static class DCIM_Helper
     {
+        #region 設備模型名稱String比對
+        /// <summary>
+        /// 設備模型比對邏輯, 處理名稱裡有空格或底線的情況
+        /// </summary>
+        public static bool CompareEquipmentModelName(string modelName, string equipmentModelName)
+        {
+            bool result = modelName.IndexOf(equipmentModelName, StringComparison.OrdinalIgnoreCase) >= 0;
+            if (result) return result;
+            modelName = modelName.Replace(" ", "_");
+            //equipmentModelName = equipmentModelName.Replace(" ", "_");
+            result = modelName.IndexOf(equipmentModelName, StringComparison.OrdinalIgnoreCase) >= 0;
+            return result;
+        }
+        #endregion
+
         #region 從DeviceName / DeviceCode取得模型名稱
         /// <summary>
         /// 從DeviceName取得模型名稱
@@ -35,7 +48,6 @@ namespace VzDev.DcimUtils
             return parts[1].Split("+")[0].Trim();
         }
         #endregion
-
 
         #region 設備模型對齊到機櫃槽位的工具方法
         /// <summary>
@@ -97,7 +109,7 @@ namespace VzDev.DcimUtils
         }
         #endregion
 
-
+        /////////// 20260902//////////////////////////
         #region Enum
         public enum EnumAlignType
         {

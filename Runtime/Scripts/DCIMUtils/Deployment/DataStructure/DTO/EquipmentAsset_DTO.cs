@@ -1,5 +1,5 @@
 using System;
-using VzDev.DcimUtils;
+using VzDev.DCIMUtils;
 
 namespace VzDev.DCIMUtils.DataUtils
 {
@@ -32,7 +32,7 @@ namespace VzDev.DCIMUtils.DataUtils
                 },
                 modelInfo = new ModelInfo
                 {
-                    modelName = DcimHelper.GetModelNameFromDeviceCode(devicePath)
+                    modelName = DCIM_Helper.GetModelNameFromDeviceCode(devicePath)
                 }
             };
             return asset;

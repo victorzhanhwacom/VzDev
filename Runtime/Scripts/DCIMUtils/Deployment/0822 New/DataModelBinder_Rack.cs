@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
-using VzDev.DcimUtils;
+using VzDev.DCIMUtils;
 using VzDev.DCIMUtils.DataUtils;
 using VzDev.DebugUtils;
 using VzDev.UnityAPI.Extensions;
@@ -36,18 +36,16 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             foreach (EquipmentAsset equipmentData in rackAsset.container)
             {
                 ///資產設備之模型比對與綁定
-                Transform model = equipmentModels.Find(m => m.name.IndexOf(equipmentData.modelInfo.modelName) >= 0);
+                Transform model = equipmentModels.Find(m => DCIM_Helper.CompareEquipmentModelName(m.name, equipmentData.modelInfo.modelName));
                 if (model == null)
                 {
                     Debug.LogWarning($"Equipment model not found for\t{equipmentData.modelInfo.modelName}");
                     continue;
                 }
-
                 Transform equipmentModel = ObjectHelper.Instantiate(model, transform);
                 equipmentModel.TryAddComponent(out DataModelBinder_Equipment dataCombiner_Equipment);
                 dataCombiner_Equipment.SetEquipmentAsset(equipmentData);
-
-                DcimHelper.SetEquipmentSnapToRackSlot(equipmentModel, rackAsset, rackSlotCollider, equipmentData.startUIndex, equipmentData.equipmentUsageInfo.heightU);
+                DCIM_Helper.SetEquipmentSnapToRackSlot(equipmentModel, rackAsset, rackSlotCollider, equipmentData.startUIndex, equipmentData.equipmentUsageInfo.heightU);
             }
         }
 
