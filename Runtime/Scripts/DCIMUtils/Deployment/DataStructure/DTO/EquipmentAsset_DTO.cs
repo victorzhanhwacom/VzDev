@@ -1,5 +1,7 @@
 using System;
+using UnityEngine;
 using VzDev.DCIMUtils;
+using VzDev.EnumUtils;
 
 namespace VzDev.DCIMUtils.DataUtils
 {
@@ -17,13 +19,12 @@ namespace VzDev.DCIMUtils.DataUtils
 
         public EquipmentAsset ToEquipmentAsset()
         {
-            var asset = new EquipmentAsset
+            EquipmentAsset result = new EquipmentAsset
             {
                 rackDevicePath = rackDevicePath,
                 deviceCode = devicePath,
                 cobieInfo = information?.ToCOBieInfo(),
                 startUIndex = rackLocation,
-                system = (devicePath?.Contains("DCS") ?? false) ? DCIMCategory.DCS : DCIMCategory.DCN,
                 equipmentUsageInfo = new EquipmentUsageInfo
                 {
                     heightU = information?.heightU ?? 0,
@@ -33,9 +34,12 @@ namespace VzDev.DCIMUtils.DataUtils
                 modelInfo = new ModelInfo
                 {
                     modelName = DCIM_Helper.GetModelNameFromDeviceCode(devicePath)
-                }
+                },
+                deploymentStatus = DeploymentStatus.Deployed
+
             };
-            return asset;
+            result.CheckSystemAndCategory();
+            return result;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace VzDev.WebGLUtils
 #if UNITY_WEBGL && !UNITY_EDITOR
             Unity_SendToJS(functionName, payload);
 #else
-                        Debug.Log($"[WebGLBridge] (Editor模擬) : {functionName} -> {payload}");
+                       // Debug.Log($"[WebGLBridge] (Editor模擬) : {functionName} -> {payload}");
 #endif
                         OnSendMessageToJS?.Invoke(payload);
                 }

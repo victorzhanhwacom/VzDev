@@ -1,4 +1,6 @@
 using System;
+using UnityEngine;
+using VzDev.EnumUtils;
 
 namespace VzDev.DCIMUtils.DataUtils
 {
@@ -14,7 +16,6 @@ namespace VzDev.DCIMUtils.DataUtils
         public EquipmentUsageInfo equipmentUsageInfo;
         public DeploymentStatus deploymentStatus = DeploymentStatus.Unknow;
         public int startUIndex; // 部署在機櫃裡的起始 U 位置，未部署時為 0 或 -1
-
 
         public DCN_Asset ToDCNAsset()
         {

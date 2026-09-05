@@ -1,4 +1,5 @@
 using System;
+using VzDev.EnumUtils;
 using VzDev.MathUtils;
 
 namespace VzDev.DCIMUtils.DataUtils
@@ -9,19 +10,34 @@ namespace VzDev.DCIMUtils.DataUtils
     [Serializable]
     public class DCIMAsset : RevitAsset
     {
-        public DCIMCategory system = DCIMCategory.Unknow;
-        public CompanyPropertyInfo companyPropertyInfo = new ();
-        public SizeInfo sizeInfo = new ();
-        
+        public DCIM_Catetory category = DCIM_Catetory.Unknow;
+        public DCIM_System system = DCIM_System.Unknow;
+        public CompanyPropertyInfo companyPropertyInfo = new();
+        public SizeInfo sizeInfo = new();
         public string DeviceCategory => system.ToString();
+
+        /// <summary>
+        /// 檢查設備的系統類別與設備類別(For Demo)
+        /// </summary>
+        public void CheckSystemAndCategory()
+        {
+            category = EnumHelper<DCIM_Catetory>.GetEnumFromString(modelInfo.modelName ?? deviceCode);
+            system = EnumHelper<DCIM_System>.GetEnumFromString(deviceCode);
+            companyPropertyInfo.GenerateRandomPropertyNo("NTCGO");
+        }
     }
 
     /// <summary>
     /// DCIM資產類別 DCR:機房設備 DCS:機房系統 DCN:網路設備 DCE:電力設備 DCP:週邊設備
     /// </summary>
-    public enum DCIMCategory
+    public enum DCIM_System
     {
         Unknow, DCR, DCS, DCN, DCE, DCP
+    }
+    public enum DCIM_Catetory
+    {
+        Unknow, Rack, Server, Switch, Router,
+        Storage, Firewall, UPS, PDU, Patch_Panel, PatchPanel
     }
 
     /// <summary>
@@ -44,14 +60,14 @@ namespace VzDev.DCIMUtils.DataUtils
         /// </summary>
         public string note;
 
-         /// <summary>
+        /// <summary>
         /// 自動產生財產編號 (DEMO用)
         /// </summary>
-        public string GenerateRandomPropertyNo(string prefix, int length = 8)
+        public void GenerateRandomPropertyNo(string prefix, int length = 8)
         {
+            if (string.IsNullOrEmpty(propertyNumber) == false) return;
             int number = UnityEngine.Random.Range(0, MathHelper.GetAllNines(length));
             propertyNumber = $"{prefix}-{number.ToString($"D{length}")}";
-            return propertyNumber;
         }
     }
 }

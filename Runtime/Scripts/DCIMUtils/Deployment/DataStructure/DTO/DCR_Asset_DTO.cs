@@ -17,7 +17,7 @@ namespace VzDev.DCIMUtils.DataUtils
 
         public DCR_Asset ToDCRAsset()
         {
-            var asset = new DCR_Asset
+            DCR_Asset result = new DCR_Asset
             {
                 deviceCode = devicePath,
                 cobieInfo = information?.ToCOBieInfo(),
@@ -27,7 +27,8 @@ namespace VzDev.DCIMUtils.DataUtils
                 weight_kg = information?.weight ?? 0,
                 container = containers.Select(dto => dto.ToEquipmentAsset()).ToList() ?? new List<EquipmentAsset>()
             };
-            return asset;
+            result.CheckSystemAndCategory();
+            return result;
         }
     }
 

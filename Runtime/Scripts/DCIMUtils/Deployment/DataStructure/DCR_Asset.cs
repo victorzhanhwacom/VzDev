@@ -10,7 +10,11 @@ namespace VzDev.DCIMUtils.DataUtils
     [Serializable]
     public class DCR_Asset : DCIMAsset
     {
-        public DCR_Asset() => system = DCIMCategory.DCR;
+        public DCR_Asset()
+        {
+            system = DCIM_System.DCR;
+            category = DCIM_Catetory.Rack;
+        }
 
         /// <summary>
         /// 所在位置

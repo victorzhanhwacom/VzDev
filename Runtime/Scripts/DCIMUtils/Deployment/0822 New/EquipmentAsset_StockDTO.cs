@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
 using VzDev.DCIMUtils.DataUtils;
+using VzDev.EnumUtils;
 
 namespace VzDev.DCIMUtils.DeploymentUtils
 {
-     /// <summary>
+    /// <summary>
     /// 庫存設備資料格式DTO
     /// </summary>
     [Serializable]
@@ -37,36 +38,34 @@ namespace VzDev.DCIMUtils.DeploymentUtils
 
         public EquipmentAsset ToEquipmentAsset()
         {
-            COBieInfo cobieInfo = new COBieInfo
-            {
-                type_modelNumber = modelName,
-                type_manufacturer = brand,
-                system_category = system,
-            };
-            EquipmentUsageInfo usageInfo = new EquipmentUsageInfo
-            {
-                power_watt = power,
-                weight_kg = weight,
-                heightU = heightU
-            };
-            CompanyPropertyInfo companyPropertyInfo = new CompanyPropertyInfo
-            {
-                propertyName = modelName,
-            };
-
-            /// For Demo
-            companyPropertyInfo.GenerateRandomPropertyNo("NTCGO");
-
-            return new EquipmentAsset
+            EquipmentAsset result = new EquipmentAsset
             {
                 deviceCode = deviceCode,
                 deviceName = modelName,
-                system = (DCIMCategory)Enum.Parse(typeof(DCIMCategory), system),
                 deploymentStatus = DeploymentStatus.InStock,
-                companyPropertyInfo = companyPropertyInfo,
-                cobieInfo = cobieInfo,
-                equipmentUsageInfo = usageInfo,
+                companyPropertyInfo = new CompanyPropertyInfo
+                {
+                    propertyName = modelName,
+                },
+                cobieInfo = new COBieInfo
+                {
+                    type_modelNumber = modelName,
+                    type_manufacturer = brand,
+                    system_category = system,
+                },
+                equipmentUsageInfo = new EquipmentUsageInfo
+                {
+                    power_watt = power,
+                    weight_kg = weight,
+                    heightU = heightU
+                },
+                modelInfo = new ModelInfo
+                {
+                    modelName = modelName,
+                }
             };
+            result.CheckSystemAndCategory();
+            return result;
         }
     }
 }

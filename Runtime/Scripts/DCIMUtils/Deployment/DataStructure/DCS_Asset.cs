@@ -8,7 +8,7 @@ namespace VzDev.DCIMUtils.DataUtils
     [Serializable]
     public class DCS_Asset : EquipmentAsset
     {
-        public DCS_Asset() => system = DCIMCategory.DCS;
+        public DCS_Asset() => system = DCIM_System.DCS;
            
         ///未來會有IP&Port類別
     }

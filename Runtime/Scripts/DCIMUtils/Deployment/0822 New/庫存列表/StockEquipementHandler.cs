@@ -64,13 +64,11 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                 if (model == null)
                 {
                     Debug.LogWarning($"[StockEquipementHandler] 找不到對應的設備模型: {stockEquipment.modelName}");
-
                 }
                 else
                 {
                     EquipmentAsset equipmentAsset = stockEquipment.ToEquipmentAsset();
                     equipmentAsset.modelInfo.modelTarget = model;
-                    equipmentAsset.modelInfo.modelName = stockEquipment.modelName;
                     stockEquipmentList.Add(equipmentAsset);
                 }
             });

@@ -18,7 +18,6 @@ namespace VzDev.DCIMUtils.Import
         /// </summary>
         public static List<DCR_Asset> ParseFromJson(string json)
         {
-            Debug.Log("22:" +json.ToJsonFormat());
             List<DCR_Asset_DTO> entries = JsonConvert.DeserializeObject<List<DCR_Asset_DTO>>(json);
             return ConvertAll(entries);
         }
@@ -70,7 +69,6 @@ namespace VzDev.DCIMUtils.Import
             result.container ??= new List<EquipmentAsset>();
             result.container.Sort((a, b) => b.startUIndex.CompareTo(a.startUIndex));
             result.companyPropertyInfo.propertyName = entry.devicePath.Split(":").LastOrDefault().Trim();
-            result.companyPropertyInfo.GenerateRandomPropertyNo("NTCGO");
             result.RefreshUsageInfo();
             return result;
         }
