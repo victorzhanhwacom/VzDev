@@ -1,48 +1,62 @@
 using System;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VzDev.DCIMUtils.DataUtils;
 
 namespace VzDev.DCIMUtils.DeploymentUtils
 {
     public class DeployConfirm : MonoBehaviour
     {
-        public TextMeshProUGUI txtRack, txtUIndex, txtEquipmentPropertyName, txtEquipmentPropertyNumber;
+        #region Fields
+        [Foldout("[Components]"), SerializeField] private GameObject rootView, confirmView;
+        [Foldout("[Components]"), SerializeField] private TextMeshProUGUI txtDeployU;
+        [Foldout("[Components]"), SerializeField] private Button btnConfirm, btnCancel;
 
-        public Button buttonConfirm, buttonCancel;
-
-        public GameObject container;
+        private string deployU;
+        #endregion
 
         private void Awake()
         {
-            container.SetActive(false);
-            buttonConfirm.onClick.AddListener(() =>
-            {
-                container.SetActive(false);
-                onConfirmDeploy?.Invoke();
-                Debug.Log("Deploy equipment confirmed.");
-            });
+            rootView.SetActive(false);
+            confirmView.SetActive(false);
 
-            buttonCancel.onClick.AddListener(() =>
-            {
-                container.SetActive(false);
-                onCancelDeploy?.Invoke();
-                Debug.Log("Deploy equipment canceled.");
-            });
         }
 
-        private void OnEnable() => DeployEquipmentIndicator.onSelectedeEquipmentToDeploy += UpdateDeployInfo;
-        private void OnDisable() => DeployEquipmentIndicator.onSelectedeEquipmentToDeploy -= UpdateDeployInfo;
-
-        private void UpdateDeployInfo(EquipmentDeployInfo info)
+        private void OnEnable()
         {
-            container.SetActive(true);
-            txtRack.text = info.rackAsset != null ? info.rackAsset.deviceName : info.rackAsset.companyPropertyInfo.propertyName;
-            txtUIndex.text = info.uIndex.ToString();
-            txtEquipmentPropertyName.text = info.equipmentAsset != null ? info.equipmentAsset.deviceName : info.equipmentAsset.companyPropertyInfo.propertyName;
-            txtEquipmentPropertyNumber.text = info.equipmentAsset != null ? info.equipmentAsset.companyPropertyInfo.propertyNumber : "{null}";
+            DeployEquipmentIndicator.onConfirmToDeployAction += UpdateDeployInfo;
         }
 
-        public static Action onConfirmDeploy, onCancelDeploy;
+        private void OnDisable()
+        {
+            DeployEquipmentIndicator.onConfirmToDeployAction -= UpdateDeployInfo;
+        }
+
+        private void UpdateDeployInfo(EquipmentAsset data)
+        {
+            btnConfirm.onClick.AddListener(OnClickConfirmBtn);
+            btnCancel.onClick.AddListener(OnClickCancelBtn);
+
+            deployU = $"U{data.startUIndex} ~ U{data.equipmentUsageInfo.heightU + data.startUIndex - 1}";
+            txtDeployU.SetText(deployU);
+            rootView.SetActive(true);
+        }
+
+        private void OnClickConfirmBtn()
+        {
+            onConfirmDeployAction?.Invoke();
+            rootView.SetActive(false);
+            confirmView.SetActive(true);
+        }
+
+        private void OnClickCancelBtn()
+        {
+            rootView.SetActive(false);
+            onCancelDeployAction?.Invoke();
+        }
+
+        public static Action onConfirmDeployAction, onCancelDeployAction;
     }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 using VzDev.DCIMUtils.DataUtils;
 using VzDev.DebugUtils;
 using VzDev.ColorUtils.Staging;
+using VzDev.ApiExtensions;
+using UnityEngine.Events;
 
 namespace VzDev.DCIMUtils.DeploymentUtils
 {
@@ -13,6 +15,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
     {
         #region Fields
         [Foldout("[Components]"), SerializeField] private Camera mainCamera;
+        [Foldout("[Comoponents]"), SerializeField] private RackLayoutItem rackLayoutItemDeploy;
+
         [Foldout("[Settings]"), SerializeField, Tooltip("預覽模型跟隨滑鼠時所在的固定世界高度(Y)")]
         private float placementHeight = 1.9f;
 
@@ -32,6 +36,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [Foldout("[Renderer]"), SerializeField, Range(0.001f, 0.2f), Tooltip("外框比實際 Bounds 稍微放大的比例，避免緊貼模型表面")]
         private float boundsPadding = 0.001f;
 
+        public UnityEvent<Transform> focusTargeEvent;
+
         private Transform previewInstance;
         private Material boxMaterial;
         private Mesh unitCubeMesh;
@@ -49,6 +55,12 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         private bool deviceForwardIsPositiveZ = false;
         #endregion
 
+        private void Awake()
+        {
+            rackLayoutItemDeploy.gameObject.SetActive(false);
+            rackLayoutItemDeploy.IsDeployMode(true);
+        }
+
         #region Event Listener
         private void OnEnable()
         {
@@ -56,16 +68,6 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             StockEquipmentList.OnStockEquipmentItemDeselectedAction += OnDeselectStockEquipmentItem;
             DeployToRackSelector.OnDeselectRackTargetAction += SetRackTargetNull;
             RackUSlotHoverDetector.OnRackUSlotChanged += HandleRackUSlotChanged;
-
-            DeployConfirm.onConfirmDeploy += () =>
-            {
-                Debug.Log($"{GetType().Name} - 進行上架");
-                RackUSlotHoverDetector.OnRackUSlotChanged -= HandleRackUSlotChanged;
-            };
-            DeployConfirm.onCancelDeploy += () =>
-            {
-                RackUSlotHoverDetector.OnRackUSlotChanged += HandleRackUSlotChanged;
-            };
         }
         private void OnDisable()
         {
@@ -75,25 +77,67 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             RackUSlotHoverDetector.OnRackUSlotChanged -= HandleRackUSlotChanged;
             ClearPreview();
         }
-        private void SetRackTargetNull() => previewInstance.gameObject.SetActive(false);
+
+
+        private void SetRackTargetNull()
+        {
+            if (isClickedRack) return; // 確定上架後，暫時不清掉 rackTarget，避免點擊空白處取消選取時，預覽模型消失
+            previewInstance?.gameObject.SetActive(false);
+        }
+
         private void OnDestroy()
         {
             if (boxMaterial != null) Destroy(boxMaterial);
             if (unitCubeMesh != null) Destroy(unitCubeMesh);
         }
 
+
+        private bool isClickedRack = false;
+
         private void Update()
         {
             ///點選確定上架
-            if (previewInstance != null && previewInstance.gameObject.activeSelf && Input.GetMouseButtonDown(0))
+            if (previewInstance != null && previewInstance.gameObject.activeSelf && Input.GetMouseButtonDown(0) && !isClickedRack)
             {
+                isClickedRack = true;
                 RackUSlotHoverDetector.OnRackUSlotChanged -= HandleRackUSlotChanged;
-                onSelectedeEquipmentToDeploy?.Invoke(new EquipmentDeployInfo(currentEquipmentAsset, currentRackAsset, currentUIndex));
+                Debug.Log("DeployEquipmentIndicator - 點選確定上架");
+
+                currentEquipmentAsset.rackDevicePath = currentRackAsset.deviceCode;
+                currentEquipmentAsset.startUIndex = currentUIndex;
+                onConfirmToDeployAction?.Invoke(currentEquipmentAsset);
+
+                DeployConfirm.onConfirmDeployAction += OnConfirmDeployAction;
+                DeployConfirm.onCancelDeployAction += OnCancelDeployAction;
+                DeployToRackSelector.SetMouseInteractable(false);
+
+                focusTargeEvent?.Invoke(previewInstance);
             }
             if (previewInstance == null || isSnapped) return; // 已對齊時，位置改由 SnapToSlot 決定，不再跟隨滑鼠
 
             if (TryGetPlacementPoint(out Vector3 point))
                 previewInstance.position = point;
+        }
+        private void OnConfirmDeployAction()
+        {
+            DeployConfirm.onConfirmDeployAction -= OnConfirmDeployAction;
+            DeployConfirm.onCancelDeployAction -= OnCancelDeployAction;
+            previewInstance.RemoveAllChildren();
+            previewInstance = null;
+            StockEquipmentList.DeselectStockEquipmentItem();
+            DeployToRackSelector.DeselectRackTarget();
+            Debug.Log("DeployEquipmentIndicator - 確定上架，清除預覽模型");
+            isClickedRack = false;
+            RackUSlotHoverDetector.OnRackUSlotChanged += HandleRackUSlotChanged;
+            DeployToRackSelector.SetMouseInteractable(true);
+        }
+        private void OnCancelDeployAction()
+        {
+            RackUSlotHoverDetector.OnRackUSlotChanged += HandleRackUSlotChanged;
+            DeployConfirm.onConfirmDeployAction -= OnConfirmDeployAction;
+            DeployConfirm.onCancelDeployAction -= OnCancelDeployAction;
+            DeployToRackSelector.SetMouseInteractable(true);
+            isClickedRack = false;
         }
 
         /// <summary>
@@ -119,7 +163,10 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                 //previewInstance.rotation = Quaternion.identity; // 離開對齊狀態時重置方向，避免殘留機櫃的旋轉角度
                 isSnapped = false;
             }
-            previewInstance.gameObject.SetActive(isDeployable);
+            previewInstance?.gameObject.SetActive(isDeployable);
+
+            rackLayoutItemDeploy.gameObject.SetActive(isDeployable);
+            rackLayoutItemDeploy.SetStartUIndex(uIndex);
         }
 
         /// <summary>
@@ -150,6 +197,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             previewInstance.gameObject.SetActive(false);
             CreateBoundingBoxChild();
             SetPreviewState(isSuitable: false); // 預設狀態，實際放置合法性判斷邏輯之後再接上動態切換
+
+            rackLayoutItemDeploy.SetEquipmentAsset(currentEquipmentAsset);
         }
 
         private void OnDeselectStockEquipmentItem()
@@ -303,20 +352,6 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         }
         #endregion
 
-        public static Action<EquipmentDeployInfo> onSelectedeEquipmentToDeploy;
-    }
-
-    public class EquipmentDeployInfo
-    {
-        public EquipmentAsset equipmentAsset;
-        public DCR_Asset rackAsset;
-        public int uIndex;
-
-        public EquipmentDeployInfo(EquipmentAsset equipmentAsset, DCR_Asset rackAsset, int uIndex)
-        {
-            this.equipmentAsset = equipmentAsset;
-            this.rackAsset = rackAsset;
-            this.uIndex = uIndex;
-        }
+        public static Action<EquipmentAsset> onConfirmToDeployAction;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -39,7 +40,6 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             btnCancel.onClick.AddListener(OnCancelSelected);
             rootView.SetActive(true);
         }
-
 
         #region Event Listener
         private void OnEnable()

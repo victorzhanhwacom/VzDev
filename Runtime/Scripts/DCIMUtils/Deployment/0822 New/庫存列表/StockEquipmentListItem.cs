@@ -12,7 +12,16 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [SerializeField, ReadOnly] private EquipmentAsset equipmentAsset;
         [Foldout("[Comoponents]"), SerializeField] private Toggle toggle;
         [Foldout("[Comoponents]"), SerializeField] private TextMeshProUGUI txtPropertyName, txtPropertyNumber, txtHeightU;
+        public EquipmentAsset EquipmentAsset => equipmentAsset;
         #endregion
+
+        public void SetToggle(bool isOn, bool isNotify = true)
+        {
+            if (isNotify)
+                toggle.isOn = isOn;
+            else
+                toggle.SetIsOnWithoutNotify(isOn);
+        }
 
         public void SetEquipmentAsset(EquipmentAsset asset)
         {
@@ -31,7 +40,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         private void HandleToggleValueChanged(bool isOn)
         {
             if (isOn)
-                StockEquipmentList.SelectStockEquipmentItem(equipmentAsset);
+                StockEquipmentList.SelectStockEquipmentItem(this);
             else
                 StockEquipmentList.DeselectStockEquipmentItem();
         }

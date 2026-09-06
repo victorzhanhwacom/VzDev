@@ -52,13 +52,13 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                 if (toggleWeight.isOn)
                 {
                     isSuitable &= rackUsage.IsRackUCanFit_Weight(selectedStockEquipment.equipmentUsageInfo.weight_kg, out float remainWeightPercent);
-                    totalRemainPercent += totalRemainPercent + remainWeightPercent; 
+                    totalRemainPercent += totalRemainPercent + remainWeightPercent;
                     counter++;
                 }
                 if (toggleHeightU.isOn)
                 {
                     isSuitable &= rackUsage.IsRackUCanFit_Height(selectedStockEquipment.equipmentUsageInfo.heightU, out float remainHeightPercent);
-                    totalRemainPercent += totalRemainPercent + remainHeightPercent; 
+                    totalRemainPercent += totalRemainPercent + remainHeightPercent;
                     counter++;
                 }
                 totalRemainPercent = counter > 0 ? totalRemainPercent / counter : 0f;
@@ -120,12 +120,27 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             StockEquipmentList.OnStockEquipmentItemSelectedAction += OnSelectedeEquipmentToDeploy;
             StockEquipmentList.OnStockEquipmentItemDeselectedAction += OnStockEquipmentDeselected;
             RackDcrAssetSetter.OnRackDataCombinerGeneratedAction += OnSetComponentsCompleted;
+            DeployToRackSelector.OnSelectRackTargetAction += OnRackTargetSelected;
+            DeployToRackSelector.OnDeselectRackTargetAction += OnRackTargetDeselected;
         }
+
+        private void OnRackTargetDeselected()
+        {
+            container.SetActive(true);
+        }
+
+        private void OnRackTargetSelected(DCR_Asset asset)
+        {
+            container.SetActive(false);
+        }
+
         private void OnDisable()
         {
             StockEquipmentList.OnStockEquipmentItemSelectedAction -= OnSelectedeEquipmentToDeploy;
             StockEquipmentList.OnStockEquipmentItemDeselectedAction -= OnStockEquipmentDeselected;
             RackDcrAssetSetter.OnRackDataCombinerGeneratedAction -= OnSetComponentsCompleted;
+            DeployToRackSelector.OnSelectRackTargetAction -= OnRackTargetSelected;
+            DeployToRackSelector.OnDeselectRackTargetAction -= OnRackTargetDeselected;
         }
         #endregion
 

@@ -36,7 +36,9 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         {
             selectedStockEquipment = asset;
             ColliderInteractionSystem.SimulateClickEmpty();
-            ColliderInteractionSystem.OnMouseClick += OnSelecRackTarget;
+            ColliderInteractionSystem.OnMouseEnter += OnSelecRackTarget;
+            ColliderInteractionSystem.OnMouseExit += DeselectRackTarget;
+            // ColliderInteractionSystem.OnMouseClick += OnSelecRackTarget;
             // ColliderInteractionSystem.OnMouseClickEmpty += DeselectRackTarget;
             OnDeselectRackTargetAction += SetRackTargetNull;
         }
@@ -44,9 +46,24 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         {
             selectedStockEquipment = null;
             ColliderInteractionSystem.SimulateClickEmpty();
-            ColliderInteractionSystem.OnMouseClick -= OnSelecRackTarget;
+            ColliderInteractionSystem.OnMouseEnter -= OnSelecRackTarget;
+            ColliderInteractionSystem.OnMouseExit -= DeselectRackTarget;
             //ColliderInteractionSystem.OnMouseClickEmpty -= DeselectRackTarget;
             OnDeselectRackTargetAction -= SetRackTargetNull;
+        }
+
+        public static void SetMouseInteractable(bool isInteractable)
+        {
+            if (isInteractable)
+            {
+                //  ColliderInteractionSystem.OnMouseEnter += OnSelecRackTarget;
+                ColliderInteractionSystem.OnMouseExit += DeselectRackTarget;
+            }
+            else
+            {
+                // ColliderInteractionSystem.OnMouseEnter -= OnSelecRackTarget;
+                ColliderInteractionSystem.OnMouseExit -= DeselectRackTarget;
+            }
         }
 
         /// <summary>
@@ -62,7 +79,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             }
         }
         private void SetRackTargetNull() => selectedRackAsset = null;
-        public static void DeselectRackTarget()
+        public static void DeselectRackTarget(GameObject target = null)
         {
             ColliderInteractionSystem.SetMouseInteractable(true);
             ColliderInteractionSystem.SimulateClickEmpty();

@@ -46,15 +46,27 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             }
         }
 
+        private static StockEquipmentListItem currentStockEquipmentListItem;
+
         /// <summary>
         /// 點選列表上的庫存設備
         /// </summary>
-        public static void SelectStockEquipmentItem(EquipmentAsset stockEquipment) => OnStockEquipmentItemSelectedAction?.Invoke(stockEquipment);
+        public static void SelectStockEquipmentItem(StockEquipmentListItem stockEquipmentItem)
+        {
+            currentStockEquipmentListItem = stockEquipmentItem;
+            OnStockEquipmentItemSelectedAction?.Invoke(currentStockEquipmentListItem.EquipmentAsset);
+        }
 
         /// <summary>
         /// 取消選取列表上的庫存設備
         /// </summary>
-        public static void DeselectStockEquipmentItem() => OnStockEquipmentItemDeselectedAction?.Invoke();
+        public static void DeselectStockEquipmentItem()
+        {
+            ObjectHelper.Destroy(currentStockEquipmentListItem?.gameObject);
+            currentStockEquipmentListItem?.SetToggle(false);
+            currentStockEquipmentListItem = null;
+            OnStockEquipmentItemDeselectedAction?.Invoke();
+        }
 
 
         #region Event Listener
@@ -71,7 +83,13 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         /// <summary>
         /// For非從Toggle控制的取消選取庫存設備事件
         /// </summary>
-        private void OnStockEquipmentItemDeselectedHandler() => toggleGroup.SetAllTogglesOff(true);
+        private void OnStockEquipmentItemDeselectedHandler()
+        {
+            if (toggleGroup.AnyTogglesOn() == false)
+            {
+                toggleGroup.SetAllTogglesOff(true);
+            }
+        }
         #endregion
 
         #region Static Methods
