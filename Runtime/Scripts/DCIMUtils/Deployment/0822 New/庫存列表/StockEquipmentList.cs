@@ -71,10 +71,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         /// <summary>
         /// For非從Toggle控制的取消選取庫存設備事件
         /// </summary>
-        private void OnStockEquipmentItemDeselectedHandler()
-        {
-            if (toggleGroup.AnyTogglesOn() == false) toggleGroup.SetAllTogglesOff(false);
-        }
+        private void OnStockEquipmentItemDeselectedHandler() => toggleGroup.SetAllTogglesOff(true);
         #endregion
 
         #region Static Methods

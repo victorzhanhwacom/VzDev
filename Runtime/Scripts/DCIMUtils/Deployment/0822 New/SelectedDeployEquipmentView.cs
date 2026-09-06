@@ -14,6 +14,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         #region Fields
         [SerializeField, ReadOnly] private EquipmentAsset equipmentAsset;
         [Foldout("[Comoponents]"), SerializeField] private GameObject rootView;
+        [Foldout("[Comoponents]"), SerializeField] private Button btnCancelSelected;
+        [Foldout("[Comoponents]"), SerializeField] private Toggle toggleEditoInfo;
         [Foldout("[Comoponents]"), SerializeField]
         private TextMeshProUGUI
         txtDeviceName, txtHeightU, txtPowerWatt, txtWeightKG, txtSystem;
@@ -33,6 +35,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             txtPowerWatt.text = equipmentAsset.equipmentUsageInfo.power_watt.ToString();
             txtWeightKG.text = equipmentAsset.equipmentUsageInfo.weight_kg.ToString();
             txtSystem.text = equipmentAsset.system.ToString();
+            toggleEditoInfo.isOn = false;
             rootView.SetActive(true);
         }
 
@@ -40,15 +43,17 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         {
             StockEquipmentList.OnStockEquipmentItemSelectedAction += SetEquipmentAsset;
             StockEquipmentList.OnStockEquipmentItemDeselectedAction += Clear;
+            btnCancelSelected.onClick.AddListener(OnCancelSelected);
         }
 
         private void OnDisable()
         {
-            EquipmentStockList.OnEquipmentSelected -= SetEquipmentAsset;
-            EquipmentStockList.OnEquipmentDeselected -= Clear;
+            StockEquipmentList.OnStockEquipmentItemSelectedAction -= SetEquipmentAsset;
+            StockEquipmentList.OnStockEquipmentItemDeselectedAction -= Clear;
+            btnCancelSelected.onClick.RemoveListener(OnCancelSelected);
         }
 
-        private void OnCancelSelected() => EquipmentStockList.DeselectEquipmentItem();
+        private void OnCancelSelected() => StockEquipmentList.DeselectStockEquipmentItem();
 
         private void Clear()
         {
