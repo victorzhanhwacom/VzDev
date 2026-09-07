@@ -21,7 +21,7 @@ namespace VzDev.CanvasUtils
         public void SetCanvasGroupAlpha(float alpha)
         {
             canvasGroup.alpha = alpha;
-            SetCanvasGroupInteractable(alpha > 0f);
+            SetCanvasGroupInteractable(Mathf.Approximately(alpha, 1f));
         }
 
         public void SetCanvasGroupInteractable(bool interactable)
