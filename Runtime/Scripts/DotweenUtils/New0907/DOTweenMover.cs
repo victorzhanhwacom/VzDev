@@ -6,15 +6,6 @@ namespace VzDev.DOTweenUtils
 {
     public class DOTweenMover : DOTweenBase
     {
-        private enum EnumPosType
-        {
-            OffsetPos, AnchorPos
-        }
-        private enum EnumType
-        {
-            From, To
-        }
-
         #region Fields
 
         [SerializeField, ReadOnly] private Vector2 originalPos, destinationPos;
@@ -66,5 +57,16 @@ namespace VzDev.DOTweenUtils
 
         private void OnValidate() => Awake();
         private void OnDisable() => tween?.Kill();
+
+        #region Enums
+        private enum EnumPosType
+        {
+            OffsetPos, AnchorPos
+        }
+        private enum EnumType
+        {
+            From, To
+        }
+        #endregion
     }
 }

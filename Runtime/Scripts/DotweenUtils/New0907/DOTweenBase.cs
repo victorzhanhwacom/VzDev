@@ -13,7 +13,7 @@ namespace VzDev.DOTweenUtils
         #endregion
 
         #region TweenParams Fields
-
+        [SerializeField] private bool isAutoShowOnEnable = true;
         [Foldout("[Tween]"), SerializeField, Label(">>Tween數值設定檔SO"), Expandable] protected DOTweeParamsSO tweenParamsSO;
         private bool isHaveSO => tweenParamsSO != null;
         [Space(10)]
@@ -71,6 +71,12 @@ namespace VzDev.DOTweenUtils
             if (tween != null && tween.IsActive()) tween.Kill();
             tween = null;
         }
+
+        private void OnEnable()
+        {
+            if (isAutoShowOnEnable) Show();
+        }
+
     }
 
     public interface IVisible

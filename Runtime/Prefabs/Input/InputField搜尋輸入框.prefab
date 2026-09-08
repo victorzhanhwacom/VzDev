@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3946766952808314514}
   - component: {fileID: 8659617195066888900}
   m_Layer: 5
-  m_Name: "InputField\u8F38\u5165\u6846"
+  m_Name: "InputField\u641C\u5C0B\u8F38\u5165\u6846"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
