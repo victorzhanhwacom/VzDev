@@ -167,11 +167,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12
+  m_fontSize: 10
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 12
+  m_fontSizeMin: 10
   m_fontSizeMax: 14
   m_fontStyle: 16
   m_HorizontalAlignment: 2
@@ -523,7 +523,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 15, y: -130}
-  m_SizeDelta: {x: 100, y: 20}
+  m_SizeDelta: {x: 80, y: 20}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &3783424955577726863
 CanvasRenderer:
@@ -1129,6 +1129,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1559449400338702945, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1863253769407088926, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
       propertyPath: m_Name
       value: BKG_Blur
@@ -1211,7 +1215,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2529501411716961004, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 75.1
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 2529501411716961004, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1225,7 +1229,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2610426866782942770, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -45
+      objectReference: {fileID: 0}
     - target: {fileID: 2697290648639676853, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2976463574157653551, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -1249,9 +1261,45 @@ PrefabInstance:
       propertyPath: m_PixelsPerUnitMultiplier
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6652636580118741360, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_text
+      value: "\u78BA\u8A8D\u4E0B\u67B6"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6988043528241931043, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_Name
+      value: "btn\u78BA\u8A8D\u4E0B\u67B6"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7783865497214754732, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7783865497214754732, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_Color.b
+      value: 0.18187965
+      objectReference: {fileID: 0}
+    - target: {fileID: 7783865497214754732, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_Color.g
+      value: 0.18187965
+      objectReference: {fileID: 0}
+    - target: {fileID: 7783865497214754732, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_Color.r
+      value: 0.735849
+      objectReference: {fileID: 0}
     - target: {fileID: 8268441552203551542, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
       propertyPath: m_fontSizeBase
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791541713882374895, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791541713882374895, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791541713882374895, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 9215917600786879240, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
@@ -1355,8 +1403,8 @@ MonoBehaviour:
   isLoop: 0
   loopTimes: -1
   loopType: 1
-  originalPos: {x: -769, y: 45.1}
-  destinationPos: {x: -769, y: 75.1}
+  originalPos: {x: -769, y: 45}
+  destinationPos: {x: -769, y: 75}
   posType: 0
   enumType: 0
   fromOffset: {x: 0, y: -30}
