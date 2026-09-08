@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1609534858035979966}
   - component: {fileID: 5572400607737306577}
   - component: {fileID: 1553989954394593211}
-  - component: {fileID: 325812947989763015}
   m_Layer: 5
   m_Name: BKG
   m_TagString: Untagged
@@ -68,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 61c5462aaae57be4d9d74b7c952d61fb, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -78,19 +77,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 10
---- !u!114 &325812947989763015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 790285357495183423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Mask
-  m_ShowMaskGraphic: 1
 --- !u!1 &3408791026658252762
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,8 +88,13 @@ GameObject:
   - component: {fileID: 6082798417147877749}
   - component: {fileID: 8237607831905708794}
   - component: {fileID: 3196942629926507885}
+  - component: {fileID: 950274791608263949}
+  - component: {fileID: 9132456598612332101}
+  - component: {fileID: 4512080006111645981}
+  - component: {fileID: 8723399841108786676}
+  - component: {fileID: 7581067222409063691}
   m_Layer: 5
-  m_Name: Container
+  m_Name: RootView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -167,6 +158,119 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 10
+--- !u!225 &950274791608263949
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3408791026658252762}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &9132456598612332101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3408791026658252762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Mask
+  m_ShowMaskGraphic: 1
+--- !u!114 &4512080006111645981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3408791026658252762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccf9dc39f989b7c40bf57cf3ac182b14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.CanvasUtils.CanvasGroupMediator
+  canvasGroup: {fileID: 950274791608263949}
+--- !u!114 &8723399841108786676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3408791026658252762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc1b253332be8047a046c21a593177a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.DOTweenUtils.DOTweenFader
+  onComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  isAutoShowOnEnable: 1
+  tweenParamsSO: {fileID: 0}
+  duration: 0.3
+  easeOut: 6
+  easeIn: 5
+  isRandomDelay: 0
+  delay: 0
+  delayRandomRange: {x: 0, y: 0.3}
+  isLoop: 0
+  loopTimes: -1
+  loopType: 1
+  canvasGroup: {fileID: 950274791608263949}
+  canvasGroupMediator: {fileID: 4512080006111645981}
+--- !u!114 &7581067222409063691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3408791026658252762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63cb29f374d729f42a1650c50d74e28e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.DOTweenUtils.DOTweenMover
+  onComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  isAutoShowOnEnable: 1
+  tweenParamsSO: {fileID: 0}
+  duration: 0.3
+  easeOut: 6
+  easeIn: 5
+  isRandomDelay: 0
+  delay: 0
+  delayRandomRange: {x: 0, y: 0.3}
+  isLoop: 0
+  loopTimes: -1
+  loopType: 1
+  originalPos: {x: 0, y: -30}
+  destinationPos: {x: 0, y: 0}
+  posType: 0
+  enumType: 0
+  fromOffset: {x: 0, y: -30}
+  toOffset: {x: 0, y: 0}
+  fromPos: {x: 0, y: 0}
+  toPos: {x: 0, y: 0}
+  rectTransform: {fileID: 6082798417147877749}
 --- !u!1 &5555485562150899401
 GameObject:
   m_ObjectHideFlags: 0

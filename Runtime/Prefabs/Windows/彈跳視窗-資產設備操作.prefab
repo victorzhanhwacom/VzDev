@@ -586,7 +586,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: firewall
+  m_text: '{txtCategory}'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9f63a78c5411d234fb4ee21fc01cf210, type: 2}
   m_sharedMaterial: {fileID: -3758166231712576370, guid: 9f63a78c5411d234fb4ee21fc01cf210, type: 2}
@@ -613,11 +613,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
+  m_fontSize: 10
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 12
+  m_fontSizeMin: 10
   m_fontSizeMax: 14
   m_fontStyle: 16
   m_HorizontalAlignment: 2
@@ -1227,7 +1227,7 @@ GameObject:
   - component: {fileID: 4484101785656101411}
   - component: {fileID: 5174082405884528818}
   m_Layer: 5
-  m_Name: Header
+  m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1889,7 +1889,7 @@ PrefabInstance:
       addedObject: {fileID: 6962192381214965916}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4781156907964354484, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
-      insertIndex: 1
+      insertIndex: -1
       addedObject: {fileID: 2568683776336588314}
   m_SourcePrefab: {fileID: 100100000, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
 --- !u!224 &2925395332950255436 stripped

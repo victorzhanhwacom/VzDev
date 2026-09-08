@@ -56,7 +56,11 @@ namespace VzDev.DOTweenUtils
         }
 
         private void OnValidate() => Awake();
-        private void OnDisable() => tween?.Kill();
+        private void OnDisable()
+        {
+            rectTransform.anchoredPosition = originalPos;
+            tween?.Kill();
+        }
 
         #region Enums
         private enum EnumPosType

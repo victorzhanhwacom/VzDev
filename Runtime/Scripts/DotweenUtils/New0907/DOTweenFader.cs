@@ -29,10 +29,16 @@ namespace VzDev.DOTweenUtils
         private void OnValidate() => Awake();
 
         #region Event Listeners
-        private void OnEnable() => onUpdate.AddListener(OnUpdateHandler);
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+            onUpdate.AddListener(OnUpdateHandler);
+        }
+
         private void OnDisable()
         {
             StopTween();
+            canvasGroupMediator.SetCanvasGroupAlpha(0);
             onUpdate.RemoveListener(OnUpdateHandler);
         }
 

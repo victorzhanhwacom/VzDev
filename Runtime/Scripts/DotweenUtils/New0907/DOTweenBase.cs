@@ -72,7 +72,7 @@ namespace VzDev.DOTweenUtils
             tween = null;
         }
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             if (isAutoShowOnEnable) Show();
         }
