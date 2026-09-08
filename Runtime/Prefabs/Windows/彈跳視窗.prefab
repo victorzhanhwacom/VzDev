@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.1562478, g: 0.16754457, b: 0.20754719, a: 0.9019608}
+  m_Color: {r: 0.1562478, g: 0.16754457, b: 0.20754719, a: 0.9607843}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -727,6 +727,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1553989954394593211, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1553989954394593211, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1553989954394593211, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1553989954394593211, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
       propertyPath: m_Material
       value: 
       objectReference: {fileID: 2100000, guid: f6d46f1e916b3486c90a448a441fac6a, type: 2}
@@ -741,6 +753,10 @@ PrefabInstance:
     - target: {fileID: 3196942629926507885, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
       propertyPath: m_Material
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3196942629926507885, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3408791026658252762, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
       propertyPath: m_Name
@@ -878,7 +894,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 325812947989763015, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6082798417147877749, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}

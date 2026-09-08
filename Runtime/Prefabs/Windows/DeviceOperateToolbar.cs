@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace VzDev
+namespace VzDev.DCIMUtils.DeploymentUtils
 {
     public class DeviceOperateToolbar : MonoBehaviour
     {
