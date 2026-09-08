@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using VzDev.EnumUtils;
 using VzDev.MathUtils;
 
@@ -21,9 +22,11 @@ namespace VzDev.DCIMUtils.DataUtils
         /// </summary>
         public void CheckSystemAndCategory()
         {
-            category = EnumHelper<DCIM_Catetory>.GetEnumFromString(modelInfo.modelName ?? deviceCode);
+            category = EnumHelper<DCIM_Catetory>.GetEnumFromString(deviceCode ?? modelInfo.modelName);
             system = EnumHelper<DCIM_System>.GetEnumFromString(deviceCode);
             companyPropertyInfo.GenerateRandomPropertyNo("NTCGO");
+            deviceName ??= modelInfo.modelName;
+            companyPropertyInfo.propertyName ??= modelInfo.modelName;
         }
     }
 

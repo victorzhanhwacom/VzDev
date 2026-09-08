@@ -44,6 +44,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                 }
                 Transform equipmentModel = ObjectHelper.Instantiate(model, transform);
                 equipmentModel.TryAddComponent(out DataModelBinder_Equipment dataCombiner_Equipment);
+                equipmentModel.name = $"{model.name}[{equipmentData.deviceCode}]";
                 dataCombiner_Equipment.SetEquipmentAsset(equipmentData);
                 DCIM_Helper.SetEquipmentSnapToRackSlot(equipmentModel, rackAsset, rackSlotCollider, equipmentData.startUIndex, equipmentData.equipmentUsageInfo.heightU);
             }

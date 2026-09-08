@@ -1,6 +1,4 @@
 using System;
-using UnityEngine;
-using VzDev.EnumUtils;
 
 namespace VzDev.DCIMUtils.DataUtils
 {
@@ -26,6 +24,8 @@ namespace VzDev.DCIMUtils.DataUtils
                 cobieInfo = cobieInfo,
                 modelInfo = modelInfo,
                 timeStampData = timeStampData,
+                category = category,
+                system = system,
                 companyPropertyInfo = companyPropertyInfo,
                 equipmentUsageInfo = equipmentUsageInfo,
                 deploymentStatus = deploymentStatus,
@@ -43,6 +43,8 @@ namespace VzDev.DCIMUtils.DataUtils
                 cobieInfo = cobieInfo,
                 modelInfo = modelInfo,
                 timeStampData = timeStampData,
+                category = category,
+                system = system,
                 companyPropertyInfo = companyPropertyInfo,
                 equipmentUsageInfo = equipmentUsageInfo,
                 deploymentStatus = deploymentStatus,

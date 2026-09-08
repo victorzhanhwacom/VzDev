@@ -202,6 +202,15 @@ public static class ModelExtractorTool
         }
 
         GameObject instance = Object.Instantiate(selected);
+        // 【世界座標保留】Object.Instantiate(selected) 在沒有指定 parent 時，
+        // 複製出來的新物件會直接照抄 selected 的「Local」Position/Rotation/Scale。
+        // 如果 selected 在場景 Hierarchy 裡本來就巢狀在某個有旋轉/縮放的父物件底下
+        // （例如場景佈局用的容器物件），複製出來的 instance 因為沒有父物件，
+        // Local 值會直接變成世界值，跟原本「肉眼看到」的視覺朝向/位置對不上，
+        // 導致抽出來的模型無故轉了角度。這裡強制對齊回 selected 原本真正的世界座標，
+        // 確保不論 selected 巢狀在哪一層，抽出來的結果都跟原本視覺呈現一致。
+        instance.transform.SetPositionAndRotation(selected.transform.position, selected.transform.rotation);
+        instance.transform.localScale = selected.transform.lossyScale;
         instance.name = cleanName;
 
         // 每個物件各自建立獨立資料夾：Assets/ExtractedModels/<ModelName>/
@@ -252,17 +261,16 @@ public static class ModelExtractorTool
             }
         }
 
-        // 【Pivot對齊】依目前的 horizontalAlign / verticalAlign 設定，把模型包一層新的
-        // 根節點，讓根節點原點對齊到指定位置（例如 水平置中 + 底部貼齊）。
-        // 兩軸都設為「維持原本」時，直接回傳 instance 本身，不會多包一層。
-        GameObject prefabRoot = ApplyPivotAlignment(instance);
-        if (prefabRoot != instance) instance.name = "Model"; // 讓 Hierarchy 好辨識：外層是Pivot根節點，內層才是實際模型
+        // 【Pivot對齊】依目前的 horizontalAlign / verticalAlign 設定，直接把
+        // instance 本身的世界座標移動到計算出來的 Pivot 位置——不會額外包一層
+        // GameObject，輸出的 Prefab 不會有 "Model" 子物件，instance 自己就是根節點。
+        ApplyPivotAlignment(instance, meshFilters);
 
         // 另存為 Prefab（targetFolder 一定是全新建立的，不會有舊檔衝突）
         string prefabPath = $"{targetFolder}/{cleanName}.prefab";
-        prefab = PrefabUtility.SaveAsPrefabAsset(prefabRoot, prefabPath, out bool success);
+        prefab = PrefabUtility.SaveAsPrefabAsset(instance, prefabPath, out bool success);
 
-        Object.DestroyImmediate(prefabRoot);
+        Object.DestroyImmediate(instance);
 
         return success;
     }
@@ -271,25 +279,32 @@ public static class ModelExtractorTool
 
     #region Pivot Alignment 實作
     /// <summary>
-    /// 依 horizontalAlign / verticalAlign 設定，重新調整模型的 Pivot 位置。
+    /// 依 horizontalAlign / verticalAlign 設定，直接把 instance 本身的世界座標
+    /// 移動到計算出來的 Pivot 位置，<b>不會額外包一層 GameObject</b>。
     /// <para>
-    /// 不改動任何 Mesh 頂點資料：而是額外包一層空的 GameObject 當作新的 Prefab 根節點，
-    /// 把 instance 變成它的子物件，並把 instance 的 localPosition 扣掉「該當作 Pivot
-    /// 的世界座標點」，讓那個點剛好落在新根節點的原點 (0,0,0) 上。
-    /// 只涉及位移運算，不會動到旋轉/縮放，模型外觀、朝向完全不變。
+    /// 【做法】不用「加一層父物件再位移」的方式，而是先把 instance 即將位移的
+    /// 向量 (deltaP)，反向轉換進每一個 MeshFilter 的 Local 空間後烘焙進 Mesh
+    /// 頂點資料，再把 instance.transform.position 直接設成新的 Pivot 世界座標。
+    /// 烘焙前後，所有頂點的「世界座標」完全不變，只是 instance 自己的 Local
+    /// 原點換到了新的位置——最終輸出的 Prefab 就是 instance 自己，不會有額外的
+    /// "Model" 子物件。
     /// </para>
     /// <para>
-    /// 若水平與垂直都設定為「維持原本」，或模型底下找不到任何 Renderer（沒有 Bounds
-    /// 可以對齊），直接回傳 instance 本身，不會多包一層空節點。
+    /// 只處理位移（Translation），不涉及旋轉/縮放，法線/切線方向不受影響，
+    /// 不需要另外重算。
+    /// </para>
+    /// <para>
+    /// 若水平與垂直都設定為「維持原本」、模型底下找不到任何 Renderer（沒有
+    /// Bounds 可以對齊），或算出來剛好不需要移動，則不做任何事。
     /// </para>
     /// </summary>
-    private static GameObject ApplyPivotAlignment(GameObject instance)
+    private static void ApplyPivotAlignment(GameObject instance, MeshFilter[] meshFilters)
     {
         if (horizontalAlign == HorizontalPivotAlign.KeepOriginal && verticalAlign == VerticalPivotAlign.KeepOriginal)
-            return instance;
+            return;
 
         if (!TryGetCombinedWorldBounds(instance, out Bounds worldBounds))
-            return instance;
+            return;
 
         Vector3 originalWorldPos = instance.transform.position;
 
@@ -304,18 +319,31 @@ public static class ModelExtractorTool
         };
 
         Vector3 pivotWorldPos = new Vector3(pivotX, pivotY, pivotZ);
+        Vector3 deltaP = pivotWorldPos - originalWorldPos;
 
-        GameObject pivotRoot = new GameObject(instance.name);
-        pivotRoot.transform.position = Vector3.zero;
-        pivotRoot.transform.rotation = Quaternion.identity;
+        if (deltaP == Vector3.zero) return; // 剛好就在目標位置上，不需要搬動
 
-        // worldPositionStays: true，先讓 instance 維持目前世界座標不變地變成子物件，
-        // 再手動扣掉 pivotWorldPos，把「該當作 Pivot 的世界座標點」平移到 (0,0,0)，
-        // 也就是 pivotRoot 的原點。
-        instance.transform.SetParent(pivotRoot.transform, worldPositionStays: true);
-        instance.transform.localPosition -= pivotWorldPos;
+        foreach (MeshFilter mf in meshFilters)
+        {
+            Mesh mesh = mf.sharedMesh;
+            if (mesh == null) continue;
 
-        return pivotRoot;
+            // 把「instance 即將位移的向量」轉換到這個 MeshFilter 的 Local 空間，
+            // 頂點要反向位移，才能在 instance 真正移動之後，世界座標維持不變。
+            // 用 MultiplyVector（只套用矩陣的旋轉/縮放部分，忽略位移），
+            // 因為 deltaP 是一段位移量，不是世界座標中的某個點。
+            Vector3 localOffset = mf.transform.worldToLocalMatrix.MultiplyVector(deltaP);
+
+            Vector3[] vertices = mesh.vertices;
+            for (int i = 0; i < vertices.Length; i++)
+                vertices[i] -= localOffset;
+            mesh.vertices = vertices;
+
+            mesh.RecalculateBounds();
+            EditorUtility.SetDirty(mesh);
+        }
+
+        instance.transform.position = pivotWorldPos;
     }
 
     /// <summary>
@@ -506,4 +534,155 @@ public static class ModelExtractorTool
             current = next;
         }
     }
+
+    #region Axis Correction — 事後校正已提取模型的軸向
+    /// <summary>
+    /// 選取一個或多個已提取的模型（Project 視窗裡的 Prefab，或場景中的物件皆可），
+    /// 執行此選單即可讓整個模型繞著自己的 Pivot 旋轉指定角度。
+    /// <para>
+    /// 用途：少數模型的 Mesh 本身（源自 Revit/Blender 匯出）帶著跟其他模型不一致的
+    /// 軸向慣例（例如深度方向實際存在 Local X 而不是 Local Z），肉眼看起來就是
+    /// 「轉了 90 度」。這個工具直接把校正旋轉烘焙進 Mesh 頂點/法線/切線資料，
+    /// Transform 本身的 Rotation 完全不動（維持 Identity），不需要重新從 FBX 提取。
+    /// </para>
+    /// </summary>
+    private const string CorrectionMenuRoot = "VzDev/Tools/Model Extractor/Axis Correction/";
+
+    [MenuItem(CorrectionMenuRoot + "旋轉校正 +90° (Y軸)")]
+    private static void CorrectRotationPlus90() => ApplyAxisCorrectionToSelection(90f);
+
+    [MenuItem(CorrectionMenuRoot + "旋轉校正 +90° (Y軸)", true)]
+    private static bool ValidateCorrectRotationPlus90() => Selection.gameObjects != null && Selection.gameObjects.Length > 0;
+
+    [MenuItem(CorrectionMenuRoot + "旋轉校正 -90° (Y軸)")]
+    private static void CorrectRotationMinus90() => ApplyAxisCorrectionToSelection(-90f);
+
+    [MenuItem(CorrectionMenuRoot + "旋轉校正 -90° (Y軸)", true)]
+    private static bool ValidateCorrectRotationMinus90() => Selection.gameObjects != null && Selection.gameObjects.Length > 0;
+
+    [MenuItem(CorrectionMenuRoot + "旋轉校正 180° (Y軸)")]
+    private static void CorrectRotation180() => ApplyAxisCorrectionToSelection(180f);
+
+    [MenuItem(CorrectionMenuRoot + "旋轉校正 180° (Y軸)", true)]
+    private static bool ValidateCorrectRotation180() => Selection.gameObjects != null && Selection.gameObjects.Length > 0;
+
+    /// <summary>
+    /// 對目前選取的所有物件執行旋轉校正。會先跳出確認對話框，
+    /// 因為這個動作會直接改寫 Mesh 資產的頂點資料，不在 Undo 系統的追蹤範圍內。
+    /// </summary>
+    private static void ApplyAxisCorrectionToSelection(float yAngleDegrees)
+    {
+        GameObject[] selectedObjects = Selection.gameObjects;
+        if (selectedObjects == null || selectedObjects.Length == 0)
+        {
+            EditorUtility.DisplayDialog("Axis Correction", "請先選擇要校正的模型（Project 視窗中的 Prefab，或場景中的物件皆可，支援多選）。", "OK");
+            return;
+        }
+
+        bool confirmed = EditorUtility.DisplayDialog(
+            "Axis Correction",
+            $"即將把選取的 {selectedObjects.Length} 個模型繞 Y 軸旋轉 {yAngleDegrees}°，\n" +
+            $"直接烘焙進 Mesh 頂點資料（無法透過 Ctrl+Z 復原）。\n\n確定要繼續嗎？",
+            "確定", "取消");
+        if (!confirmed) return;
+
+        Quaternion correction = Quaternion.Euler(0f, yAngleDegrees, 0f);
+        int fixedCount = 0;
+        int skippedMeshCount = 0;
+
+        foreach (GameObject root in selectedObjects)
+        {
+            if (BakeRotationCorrection(root, correction, ref skippedMeshCount))
+                fixedCount++;
+        }
+
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+
+        string message = $"完成！已校正 {fixedCount} 個模型（旋轉 {yAngleDegrees}°）。";
+        if (skippedMeshCount > 0)
+            message += $"\n\n有 {skippedMeshCount} 個 Mesh 因為不是 {RootFolder} 底下的獨立資產而被跳過" +
+                       "（避免誤改到原始 FBX 內建的 Mesh），詳情請看 Console 的警告訊息。";
+
+        EditorUtility.DisplayDialog("Axis Correction", message, "OK");
+    }
+
+    /// <summary>
+    /// 把 <paramref name="correction"/> 這個旋轉，繞著 <paramref name="root"/>
+    /// 目前的世界座標為中心，烘焙進它底下所有 MeshFilter 參照的 Mesh 頂點資料。
+    /// <para>
+    /// 【數學原理】對每個 MeshFilter，先用它目前（不變動）的
+    /// localToWorldMatrix 算出頂點現在的世界座標，套用「以 root 為中心的旋轉」，
+    /// 再用 worldToLocalMatrix 換算回它自己的 Local 空間存回去——因為 Unity
+    /// 的 Transform 矩陣鏈本身完全沒有被更動，這個換算對任意巢狀深度都成立，
+    /// 不需要另外遞迴處理子物件。
+    /// </para>
+    /// <para>
+    /// 【安全性】只允許處理路徑在 <see cref="RootFolder"/> 底下的 Mesh 資產
+    /// （也就是本工具自己複製出來的獨立資產），避免誤改到原始 FBX 內建的
+    /// sub-asset，或被多個模型共用而牽連到不相關的模型。
+    /// </para>
+    /// </summary>
+    private static bool BakeRotationCorrection(GameObject root, Quaternion correction, ref int skippedMeshCount)
+    {
+        MeshFilter[] meshFilters = root.GetComponentsInChildren<MeshFilter>(true);
+        if (meshFilters == null || meshFilters.Length == 0) return false;
+
+        Vector3 pivotWorldPos = root.transform.position;
+        Matrix4x4 worldRotationAroundPivot =
+            Matrix4x4.Translate(pivotWorldPos) * Matrix4x4.Rotate(correction) * Matrix4x4.Translate(-pivotWorldPos);
+
+        bool anyBaked = false;
+
+        foreach (MeshFilter mf in meshFilters)
+        {
+            Mesh mesh = mf.sharedMesh;
+            if (mesh == null) continue;
+
+            string assetPath = AssetDatabase.GetAssetPath(mesh).Replace('\\', '/');
+            if (string.IsNullOrEmpty(assetPath) || !assetPath.StartsWith(RootFolder + "/"))
+            {
+                Debug.LogWarning($"[Axis Correction] 跳過 {mf.name}：Mesh「{mesh.name}」不是 {RootFolder} 底下的獨立資產，" +
+                                  "為避免誤改原始 FBX 資料，不會處理。", mf);
+                skippedMeshCount++;
+                continue;
+            }
+
+            // 換算回這個 MeshFilter 自己的 Local 空間；Transform 完全不動，
+            // 只有 Mesh 頂點資料被改寫。
+            Matrix4x4 finalBake = mf.transform.worldToLocalMatrix * worldRotationAroundPivot * mf.transform.localToWorldMatrix;
+
+            Vector3[] vertices = mesh.vertices;
+            for (int i = 0; i < vertices.Length; i++)
+                vertices[i] = finalBake.MultiplyPoint3x4(vertices[i]);
+            mesh.vertices = vertices;
+
+            Vector3[] normals = mesh.normals;
+            if (normals != null && normals.Length == vertices.Length)
+            {
+                Matrix4x4 normalMatrix = finalBake.inverse.transpose;
+                for (int i = 0; i < normals.Length; i++)
+                    normals[i] = normalMatrix.MultiplyVector(normals[i]).normalized;
+                mesh.normals = normals;
+            }
+
+            Vector4[] tangents = mesh.tangents;
+            if (tangents != null && tangents.Length == vertices.Length)
+            {
+                for (int i = 0; i < tangents.Length; i++)
+                {
+                    Vector3 t = finalBake.MultiplyVector(new Vector3(tangents[i].x, tangents[i].y, tangents[i].z)).normalized;
+                    tangents[i] = new Vector4(t.x, t.y, t.z, tangents[i].w);
+                }
+                mesh.tangents = tangents;
+            }
+
+            mesh.RecalculateBounds();
+            EditorUtility.SetDirty(mesh);
+            anyBaked = true;
+        }
+
+        return anyBaked;
+    }
+    #endregion
 }

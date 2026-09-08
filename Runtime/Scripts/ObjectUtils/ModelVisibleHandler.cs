@@ -2,34 +2,36 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 
-public class ModelVisibleHandler : MonoBehaviour
+namespace VzDev.ObjectUtils
 {
-    [SerializeField] private List<Transform> targetModels;
-    private bool isHaveModels => targetModels != null && targetModels.Count > 0;
-
-    public void SetTargetModels(List<Transform> models) => targetModels = models;
-    public void HideModels(List<Transform> models)
+    public class ModelVisibleHandler : MonoBehaviour
     {
-        SetTargetModels(models);
-        SetVisible(false);
-    }
+        [SerializeField] private List<Transform> targetModels;
+        private bool isHaveModels => targetModels != null && targetModels.Count > 0;
 
-    [Button, ShowIf("isHaveModels")]
-    public void ShowModels() => SetVisible(true);
-    [Button, ShowIf("isHaveModels")]
-    public void HideModels() => SetVisible(false);
-
-    public void SetVisible(bool isVisible)
-    {
-        if (targetModels == null || targetModels.Count == 0) return;
-
-        foreach (var model in targetModels)
+        public void SetTargetModels(List<Transform> models) => targetModels = models;
+        public void HideModels(List<Transform> models)
         {
-            if (model != null)
+            SetTargetModels(models);
+            SetVisible(false);
+        }
+
+        [Button, ShowIf("isHaveModels")]
+        public void ShowModels() => SetVisible(true);
+        [Button, ShowIf("isHaveModels")]
+        public void HideModels() => SetVisible(false);
+
+        public void SetVisible(bool isVisible)
+        {
+            if (targetModels == null || targetModels.Count == 0) return;
+
+            foreach (var model in targetModels)
             {
-                model.gameObject.SetActive(isVisible);
+                if (model != null)
+                {
+                    model.gameObject.SetActive(isVisible);
+                }
             }
         }
     }
-
 }

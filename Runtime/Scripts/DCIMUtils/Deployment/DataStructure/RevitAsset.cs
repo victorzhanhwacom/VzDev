@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using VzDev.DataUtils;
 
 namespace VzDev.DCIMUtils.DataUtils
@@ -17,6 +18,9 @@ namespace VzDev.DCIMUtils.DataUtils
         /// 模型名稱
         /// </summary>
         public string deviceName;
+
+        public Sprite assetPhotoSprite;
+
         public COBieInfo cobieInfo = new ();
         public ModelInfo modelInfo = new ();
         public TimeStampData timeStampData = new TimeStampData();

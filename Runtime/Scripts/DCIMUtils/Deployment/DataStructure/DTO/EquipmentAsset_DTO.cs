@@ -12,6 +12,7 @@ namespace VzDev.DCIMUtils.DataUtils
     [Serializable]
     public class EquipmentAsset_DTO
     {
+        public string deviceName;
         public string rackDevicePath;
         public string devicePath;
         public int rackLocation;
@@ -21,6 +22,7 @@ namespace VzDev.DCIMUtils.DataUtils
         {
             EquipmentAsset result = new EquipmentAsset
             {
+                deviceName = deviceName,
                 rackDevicePath = rackDevicePath,
                 deviceCode = devicePath,
                 cobieInfo = information?.ToCOBieInfo(),

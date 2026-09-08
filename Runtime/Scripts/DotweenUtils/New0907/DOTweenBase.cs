@@ -9,7 +9,11 @@ namespace VzDev.DOTweenUtils
     public abstract class DOTweenBase : MonoBehaviour, IVisible
     {
         #region Events
-        [Foldout("[Tween Event]")] public UnityEvent onComplete, onUpdate, onStart;
+        /// <summary>
+        /// onComplete, bool true: EaseOut / false: EaseIn
+        /// </summary>
+        [Foldout("[Tween Event]")] public UnityEvent<bool> onComplete;
+        [Foldout("[Tween Event]")] public UnityEvent onUpdate, onStart;
         #endregion
 
         #region TweenParams Fields
@@ -61,7 +65,7 @@ namespace VzDev.DOTweenUtils
             }
             tween.OnStart(() => onStart?.Invoke());
             tween.OnUpdate(() => onUpdate?.Invoke());
-            tween.OnComplete(() => onComplete?.Invoke());
+            tween.OnComplete(() => onComplete?.Invoke(isEaseOut));
             return tween;
         }
 

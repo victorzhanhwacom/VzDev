@@ -203,7 +203,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 33e1c638c614ea04997c554c41825c07, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0094c933c1fe2614bb3575fd97a9b8fe, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1372,6 +1372,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8082931929920488465, guid: b41b4270222b96042b8a9a34b1358115, type: 3}
+      propertyPath: m_Colors.m_NormalColor.a
+      value: 0.039215688
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1382,6 +1386,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6689397115352220732, guid: b41b4270222b96042b8a9a34b1358115, type: 3}
   m_PrefabInstance: {fileID: 140075958090619163}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8204979716797668618 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8082931929920488465, guid: b41b4270222b96042b8a9a34b1358115, type: 3}
+  m_PrefabInstance: {fileID: 140075958090619163}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!1001 &3690710289702569609
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1868,6 +1883,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4351117528644892411, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4781156907964354484, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
       propertyPath: m_Name
       value: "\u5F48\u8DF3\u8996\u7A97-\u8CC7\u7522\u8A2D\u5099\u64CD\u4F5C"
@@ -1892,6 +1911,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2568683776336588314}
   m_SourcePrefab: {fileID: 100100000, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+--- !u!114 &431459972648354765 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7648113658180361429, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+  m_PrefabInstance: {fileID: 8061254590137769752}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6033998867760720355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc1b253332be8047a046c21a593177a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.DOTweenUtils.DOTweenFader
 --- !u!224 &2925395332950255436 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5135867023027599444, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
@@ -1914,3 +1944,99 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9e33985cbf48e64ea49c9410d21de14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: VzDev::VzDev.DeviceOperateToolbar
+  equipmentAsset:
+    deviceCode: 
+    deviceName: 
+    assetPhotoSprite: {fileID: 0}
+    cobieInfo:
+      component_description: 
+      component_assetIdentifier: 
+      component_serialNumber: 
+      component_installationDate: 
+      component_tagName: 
+      component_warrantyDurationPart: 
+      component_warrantyDurationUnit: 
+      component_warrantyGuarantorLabor: 
+      component_warrantyStartDate: 
+      component_warrantyEndDate: 
+      document_inspection: 
+      document_handout: 
+      document_drawing: 
+      contact_company: 
+      contact_department: 
+      contact_email: 
+      contact_familyName: 
+      contact_givenName: 
+      contact_phone: 
+      contact_street: 
+      facility_name: 
+      facility_projectName: 
+      facility_siteName: 
+      equipment_supplier: 
+      floor_name: 
+      space_name: 
+      space_roomTag: 
+      system_category: 
+      system_name: 
+      type_category: 
+      type_expectedLife: 
+      type_manufacturer: 
+      type_modelNumber: 
+      type_name: 
+      type_replacementCost: 
+      type_accessibilityPerformance: 
+      type_shape: 
+      type_size: 
+      type_color: 
+      type_finish: 
+      type_grade: 
+      type_material: 
+    modelInfo:
+      modelTarget: {fileID: 0}
+      modelName: 
+    timeStampData:
+      timeStamp: 
+    category: 0
+    system: 0
+    companyPropertyInfo:
+      propertyName: 
+      propertyNumber: 
+      note: 
+    rackDevicePath: 
+    equipmentUsageInfo:
+      power_watt: 0
+      weight_kg: 0
+      heightU: 0
+    deploymentStatus: 0
+    startUIndex: 0
+  rectTransform: {fileID: 5532052529591553524}
+  rootView: {fileID: 6033998867760720355}
+  txtDeviceName: {fileID: 3315987555242645448}
+  txtCategory: {fileID: 5059735146118171042}
+  imgDevicePhoto: {fileID: 1726476613056147300}
+  btnLocation: {fileID: 8204979716797668618}
+  btnRemove: {fileID: 916043761651197612}
+  btnMove: {fileID: 4400260712075846235}
+  btnClose: {fileID: 4443625506148161763}
+  tweenFader: {fileID: 431459972648354765}
+--- !u!114 &4443625506148161763 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5941859294901536763, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+  m_PrefabInstance: {fileID: 8061254590137769752}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!224 &5532052529591553524 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2529501411716961004, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+  m_PrefabInstance: {fileID: 8061254590137769752}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6033998867760720355 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4351117528644892411, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+  m_PrefabInstance: {fileID: 8061254590137769752}
+  m_PrefabAsset: {fileID: 0}
