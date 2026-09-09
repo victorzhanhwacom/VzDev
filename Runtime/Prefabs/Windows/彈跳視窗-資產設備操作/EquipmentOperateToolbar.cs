@@ -93,6 +93,11 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                     lastEquipmentBinder = binder;
                 }
             }
+            else
+            {
+                Hide();
+                lastEquipmentBinder = null;
+            }
         }
 
         private void OnMouseClickEmptyHandler()

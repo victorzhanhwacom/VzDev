@@ -25,6 +25,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
 
         [SerializeField, ReadOnly] private List<DataModelBinder_Rack> rackDataModelBinders = new List<DataModelBinder_Rack>();
 
+        public List<DataModelBinder_Rack> RackDataModelBinders => rackDataModelBinders;
         private bool isHaveData => isRackDataReady && isRackModelReady && isEquipmentModelReady;
         private bool isRackDataReady => rackAssets != null && rackAssets.Count > 0;
         private bool isRackModelReady => rackModels != null && rackModels.Count > 0;

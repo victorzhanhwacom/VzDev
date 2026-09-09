@@ -28,6 +28,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [Foldout("[Components]"), SerializeField] private GameObject container;
         [Foldout("[Components]"), SerializeField] private Toggle togglePower, toggleWeight, toggleHeightU;
         private List<DataModelBinder_Rack> rackDataCombiners;
+
+        public RackDcrAssetSetter rackDcrAssetSetter;
         #endregion
 
         /// <summary>
@@ -35,6 +37,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         /// </summary>
         public void FilterRackModels(bool isOn = true)
         {
+            rackDataCombiners ??= rackDcrAssetSetter.RackDataModelBinders;
+
             rackDataCombiners.ForEach(combiner =>
             {
                 DCR_Asset rackAsset = combiner.RackAsset;
@@ -131,7 +135,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
 
         private void OnRackTargetSelected(DCR_Asset asset)
         {
-            container.SetActive(false);
+            //container.SetActive(false);
         }
 
         private void OnDisable()

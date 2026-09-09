@@ -1492,11 +1492,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7594986532739210204, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 97.76843
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7594986532739210204, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 196.78955
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7594986532739210204, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1531,10 +1531,68 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2169958630109989549, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       insertIndex: 8
       addedObject: {fileID: 6178611643124322822}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 830179462768580382, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 491083851231467595}
   m_SourcePrefab: {fileID: 100100000, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
+--- !u!114 &2677013001696197453 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6146348734429730999, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
+  m_PrefabInstance: {fileID: 8100461425982383098}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!224 &7960010495766882647 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2169958630109989549, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
   m_PrefabInstance: {fileID: 8100461425982383098}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8808547755565104491 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 744397118062108305, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
+  m_PrefabInstance: {fileID: 8100461425982383098}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8930635231200441572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 787aca439a1ce9040a10a72406393337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::_VictorDev.Framework.UIAnchorFollower
+--- !u!1 &8930635231200441572 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 830179462768580382, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
+  m_PrefabInstance: {fileID: 8100461425982383098}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &491083851231467595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8930635231200441572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fb6329fe50c15c469e1ddeaefd133b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TEMP_VESP_ForceAlart
+  anchorFollower: {fileID: 8808547755565104491}
+  onAlert:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2677013001696197453}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Slider, UnityEngine.UI
+        m_MethodName: set_value
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 2
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

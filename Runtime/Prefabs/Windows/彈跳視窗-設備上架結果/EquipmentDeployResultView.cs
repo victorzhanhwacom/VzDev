@@ -35,6 +35,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             txtDeviceName.SetText(equipmentAsset.deviceName);
             txtRackName.SetText(rackAsset.deviceName);
             txtULocation.SetText(equipmentAsset.uRange);
+            StockEquipmentList.DeselectStockEquipmentItem();
             rootView.SetActive(true);
         }
     }
