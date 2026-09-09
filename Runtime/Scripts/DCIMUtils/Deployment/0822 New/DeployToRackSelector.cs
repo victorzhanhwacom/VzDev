@@ -79,6 +79,14 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             }
         }
         private void SetRackTargetNull() => selectedRackAsset = null;
+
+        public void DeselectRackTarget_TEMP()
+        {
+            SetRackTargetNull();
+         /*    ColliderInteractionSystem.SetMouseInteractable(true);
+            ColliderInteractionSystem.SimulateClickEmpty(); 
+            OnDeselectRackTargetAction?.Invoke();*/
+        }
         public static void DeselectRackTarget(GameObject target = null)
         {
             ColliderInteractionSystem.SetMouseInteractable(true);

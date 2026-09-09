@@ -130,9 +130,9 @@ namespace VzDev.DCIMUtils.DeploymentUtils
 
             //傳遞上架完畢的相關資料
             var cloneAsset = currentEquipmentAsset.ToClone();
+            currentEquipmentAsset = null;
             cloneAsset.modelInfo.modelTarget = previewInstance;
             currentRackAsset.AddEquipmentAsset(cloneAsset);
-            currentEquipmentAsset = null;
 
             previewInstance.RemoveAllChildren();
             previewInstance = null;
@@ -146,6 +146,15 @@ namespace VzDev.DCIMUtils.DeploymentUtils
 
 
             onDeployEquipmentSuccessAction?.Invoke(cloneAsset, currentRackAsset);
+        }
+
+        public void TEMP()
+        {
+            DeployConfirm.onConfirmDeployAction -= OnConfirmDeployAction;
+            DeployConfirm.onCancelDeployAction -= OnCancelDeployAction;
+           /*  RackUSlotHoverDetector.OnRackUSlotChanged += HandleRackUSlotChanged;
+            DeployToRackSelector.SetMouseInteractable(true); */
+            isClickedRack = false;
         }
 
 

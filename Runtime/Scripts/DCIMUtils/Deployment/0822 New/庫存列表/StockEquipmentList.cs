@@ -62,7 +62,6 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         /// </summary>
         public static void DeselectStockEquipmentItem()
         {
-            ObjectHelper.Destroy(currentStockEquipmentListItem?.gameObject);
             currentStockEquipmentListItem?.SetToggle(false);
             currentStockEquipmentListItem = null;
             OnStockEquipmentItemDeselectedAction?.Invoke();

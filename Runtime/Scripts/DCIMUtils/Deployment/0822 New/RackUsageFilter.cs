@@ -79,7 +79,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         /// <summary>
         /// 當取消選取庫存設備時，恢復所有機櫃模型的顏色。
         /// </summary>
-        private void RecoverRackModelColor()
+        public void RecoverRackModelColor()
         {
             rackDataCombiners?.ForEach(combiner =>
             {

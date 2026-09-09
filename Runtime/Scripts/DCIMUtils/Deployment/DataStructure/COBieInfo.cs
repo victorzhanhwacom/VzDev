@@ -50,5 +50,55 @@ namespace VzDev.DCIMUtils.DataUtils
         public string type_finish = "";
         public string type_grade = "";
         public string type_material = "";
+
+        internal static COBieInfo ToClone(COBieInfo cobieInfo)
+        {
+            COBieInfo newData = new COBieInfo
+            {
+                component_description = cobieInfo.component_description,
+                component_assetIdentifier = cobieInfo.component_assetIdentifier,
+                component_serialNumber = cobieInfo.component_serialNumber,
+                component_installationDate = cobieInfo.component_installationDate,
+                component_tagName = cobieInfo.component_tagName,
+                component_warrantyDurationPart = cobieInfo.component_warrantyDurationPart,
+                component_warrantyDurationUnit = cobieInfo.component_warrantyDurationUnit,
+                component_warrantyGuarantorLabor = cobieInfo.component_warrantyGuarantorLabor,
+                component_warrantyStartDate = cobieInfo.component_warrantyStartDate,
+                component_warrantyEndDate = cobieInfo.component_warrantyEndDate,
+                document_inspection = cobieInfo.document_inspection,
+                document_handout = cobieInfo.document_handout,
+                document_drawing = cobieInfo.document_drawing,
+                contact_company = cobieInfo.contact_company,
+                contact_department = cobieInfo.contact_department,
+                contact_email = cobieInfo.contact_email,
+                contact_familyName = cobieInfo.contact_familyName,
+                contact_givenName = cobieInfo.contact_givenName,
+                contact_phone = cobieInfo.contact_phone,
+                contact_street = cobieInfo.contact_street,
+                facility_name = cobieInfo.facility_name,
+                facility_projectName = cobieInfo.facility_projectName,
+                facility_siteName = cobieInfo.facility_siteName,
+                equipment_supplier = cobieInfo.equipment_supplier,
+                floor_name = cobieInfo.floor_name,
+                space_name =cobieInfo.space_name,
+                space_roomTag =cobieInfo.space_roomTag,
+                system_category =cobieInfo.system_category,
+                system_name =cobieInfo.system_name,
+                type_category =cobieInfo.type_category,
+                type_expectedLife =cobieInfo.type_expectedLife,
+                type_manufacturer =cobieInfo.type_manufacturer,
+                type_modelNumber =cobieInfo.type_modelNumber,
+                type_name =cobieInfo.type_name,
+                type_replacementCost =cobieInfo.type_replacementCost,
+                type_accessibilityPerformance =cobieInfo.type_accessibilityPerformance,
+                type_shape =cobieInfo.type_shape,
+                type_size =cobieInfo.type_size,
+                type_color =cobieInfo.type_color,
+                type_finish =cobieInfo.type_finish,
+                type_grade =cobieInfo.type_grade,
+                type_material =cobieInfo.type_material
+            };
+            return newData;     
+        }
     }
 }

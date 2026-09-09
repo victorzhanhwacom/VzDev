@@ -16,5 +16,15 @@ namespace VzDev.DCIMUtils.DataUtils
         [field: SerializeField, JsonIgnore]
         public Transform modelTarget;
         public string modelName;
+
+        public static ModelInfo ToClone(ModelInfo modelInfo)
+        {
+            ModelInfo newData = new ModelInfo
+            {
+                modelTarget = modelInfo.modelTarget,
+                modelName = modelInfo.modelName
+            }; 
+            return newData;
+        }
     }
 }
