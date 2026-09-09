@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 559fc12e2577ad043ba91e52ab31e3da, type: 3}
   m_Name: "\u5F48\u8DF3\u8996\u7A97_DOTweenParams"
   m_EditorClassIdentifier: VzDev::VzDev.DOTweenUtils.DOTweeParamsSO
-  duration: 0.1
+  duration: 0.3
   easeOut: 6
   easeIn: 5
   isRandomDelay: 1
   delay: 0
-  delayRandomRange: {x: 0, y: 0.2}
+  delayRandomRange: {x: 0, y: 0.3}
   isLoop: 0
   loopTimes: -1
   loopType: 1

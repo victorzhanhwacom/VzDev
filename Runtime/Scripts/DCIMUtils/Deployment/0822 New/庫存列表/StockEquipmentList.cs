@@ -54,6 +54,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         public static void SelectStockEquipmentItem(StockEquipmentListItem stockEquipmentItem)
         {
             currentStockEquipmentListItem = stockEquipmentItem;
+            Debug.Log($"Selected Stock Equipment: {currentStockEquipmentListItem.EquipmentAsset.deviceName}");
             OnStockEquipmentItemSelectedAction?.Invoke(currentStockEquipmentListItem.EquipmentAsset);
         }
 

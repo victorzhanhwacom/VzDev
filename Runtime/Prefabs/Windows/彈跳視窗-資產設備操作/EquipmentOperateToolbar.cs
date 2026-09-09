@@ -60,6 +60,21 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         {
             ColliderInteractionSystem.OnMouseClick += OnMouseClickHandler;
             ColliderInteractionSystem.OnMouseClickEmpty += OnMouseClickEmptyHandler;
+            RemoveEquipmentConfirm.onConfirmRemoveAction += OnConfirmRemoveHandler;
+            StockEquipmentList.OnStockEquipmentItemSelectedAction += OnStockEquipmentItemSelectedHandler;
+        }
+
+        private void OnStockEquipmentItemSelectedHandler(EquipmentAsset asset)
+        {
+            Hide();
+            lastEquipmentBinder = null;
+
+        }
+
+        private void OnConfirmRemoveHandler(EquipmentAsset equipmentAsset, DCR_Asset rackAsset)
+        {
+            Hide();
+            lastEquipmentBinder = null;
         }
 
         private void OnMouseClickHandler(GameObject target)
@@ -89,6 +104,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         {
             ColliderInteractionSystem.OnMouseClick -= OnMouseClickHandler;
             ColliderInteractionSystem.OnMouseClickEmpty -= OnMouseClickEmptyHandler;
+            RemoveEquipmentConfirm.onConfirmRemoveAction -= OnConfirmRemoveHandler;
+            StockEquipmentList.OnStockEquipmentItemSelectedAction -= OnStockEquipmentItemSelectedHandler;
         }
         #endregion
 

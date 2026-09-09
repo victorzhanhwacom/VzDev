@@ -59,7 +59,7 @@ namespace VzDev.DOTweenUtils
             }
             else
             {
-                tween.SetDelay(isRandomDelay ? Random.Range(delayRandomRange.x, delayRandomRange.y) : delay);
+                if(isEaseOut)tween.SetDelay(isRandomDelay ? Random.Range(delayRandomRange.x, delayRandomRange.y) : delay);
                 tween.SetEase(isEaseOut ? easeOut : easeIn);
                 if (isLoop) tween.SetLoops(loopTimes, loopType);
             }

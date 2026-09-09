@@ -77,7 +77,7 @@ namespace VzDev.DCIMUtils.DataUtils
             if (equipmentAsset == null) return;
             if (container == null) container = new List<EquipmentAsset>();
             container.Add(equipmentAsset);
-           
+
 
             Transform equipmentModel = equipmentAsset.modelInfo.modelTarget;
             Transform rackModel = modelInfo.modelTarget;
@@ -98,7 +98,12 @@ namespace VzDev.DCIMUtils.DataUtils
         {
             if (equipmentAsset == null) return;
             if (container == null) container = new List<EquipmentAsset>();
-            else container.Remove(equipmentAsset);
+            else
+            {
+                EquipmentAsset targetEquipment = container.Find(e => e.deviceCode == equipmentAsset.deviceCode);
+                if (targetEquipment != null)
+                    container.Remove(targetEquipment);
+            }
             RefreshUsageInfo();
         }
     }

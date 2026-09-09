@@ -23,8 +23,8 @@ namespace VzDev.DOTweenUtils
         public override void SetVisible(bool isVisible)
         {
             StopTween();
-            if(isVisible) canvasGroup.gameObject.SetActive(true);
-            tween = SetTweenParams(canvasGroup.DOFade(isVisible ? 1f : 0f, Duration), isVisible);
+            if (isVisible) canvasGroup.gameObject.SetActive(true);
+            tween = SetTweenParams(canvasGroup.DOFade(isVisible ? 1f : 0f, isVisible ? Duration : 0f), isVisible);
         }
 
         private void OnValidate() => Awake();
