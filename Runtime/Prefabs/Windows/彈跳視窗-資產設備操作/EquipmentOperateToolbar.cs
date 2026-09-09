@@ -57,7 +57,6 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         {
             ColliderInteractionSystem.OnMouseClick += OnMouseClickHandler;
             ColliderInteractionSystem.OnMouseClickEmpty += OnMouseClickEmptyHandler;
-            tweenFader.onComplete.AddListener(OnTweenComplete);
         }
 
         private void OnMouseClickHandler(GameObject target)
@@ -75,7 +74,6 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         {
             ColliderInteractionSystem.OnMouseClick -= OnMouseClickHandler;
             ColliderInteractionSystem.OnMouseClickEmpty -= OnMouseClickEmptyHandler;
-            tweenFader.onComplete.RemoveListener(OnTweenComplete);
         }
         #endregion
 
@@ -86,7 +84,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             btnRemove.onClick.AddListener(OnClickRemove);
             btnMove.onClick.AddListener(OnClickMove);
             btnClose.onClick.AddListener(OnClickClose);
-            tweenFader.gameObject.SetActive(true);
+            tweenFader.Show();
+            // tweenFader.gameObject.SetActive(true);
         }
 
         private void OnTweenComplete(bool isEaseOut) => rootView.SetActive(isEaseOut);

@@ -105,7 +105,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
 
                 currentEquipmentAsset.rackDevicePath = currentRackAsset.deviceCode;
                 currentEquipmentAsset.startUIndex = currentUIndex;
-                onConfirmToDeployAction?.Invoke(currentEquipmentAsset);
+                onConfirmToDeployAction?.Invoke(currentEquipmentAsset, currentRackAsset, previewInstance);
 
                 DeployConfirm.onConfirmDeployAction += OnConfirmDeployAction;
                 DeployConfirm.onCancelDeployAction += OnCancelDeployAction;
@@ -118,19 +118,37 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             if (TryGetPlacementPoint(out Vector3 point))
                 previewInstance.position = point;
         }
+
+        /// <summary>
+        /// 上架完畢(ForDemo)
+        /// </summary>
         private void OnConfirmDeployAction()
         {
             DeployConfirm.onConfirmDeployAction -= OnConfirmDeployAction;
             DeployConfirm.onCancelDeployAction -= OnCancelDeployAction;
+
+
+            //傳遞上架完畢的相關資料
+            var cloneAsset = currentEquipmentAsset.ToClone();
+            cloneAsset.modelInfo.modelTarget = previewInstance;
+            currentRackAsset.AddEquipmentAsset(cloneAsset);
+            currentEquipmentAsset = null;
+
             previewInstance.RemoveAllChildren();
             previewInstance = null;
+
+
             StockEquipmentList.DeselectStockEquipmentItem();
             DeployToRackSelector.DeselectRackTarget();
-            Debug.Log("DeployEquipmentIndicator - 確定上架，清除預覽模型");
             isClickedRack = false;
             RackUSlotHoverDetector.OnRackUSlotChanged += HandleRackUSlotChanged;
             DeployToRackSelector.SetMouseInteractable(true);
+
+
+            onDeployEquipmentSuccessAction?.Invoke(cloneAsset, currentRackAsset);
         }
+
+
         private void OnCancelDeployAction()
         {
             RackUSlotHoverDetector.OnRackUSlotChanged += HandleRackUSlotChanged;
@@ -204,7 +222,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         private void OnDeselectStockEquipmentItem()
         {
             ClearPreview();
-            currentEquipmentAsset = null;
+            //currentEquipmentAsset = null;
         }
         #endregion
 
@@ -352,6 +370,15 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         }
         #endregion
 
-        public static Action<EquipmentAsset> onConfirmToDeployAction;
+
+        /// <summary>
+        /// 點擊任一機櫃的U位時Invokes
+        /// </summary>
+        public static Action<EquipmentAsset, DCR_Asset, Transform> onConfirmToDeployAction;
+
+        /// <summary>
+        /// 上架成功後的Invoke，會傳出上架的設備資產與機櫃資產，方便其他系統做後續處理。
+        /// </summary>
+        public static Action<EquipmentAsset, DCR_Asset> onDeployEquipmentSuccessAction;
     }
 }

@@ -1891,6 +1891,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u5F48\u8DF3\u8996\u7A97-\u8CC7\u7522\u8A2D\u5099\u64CD\u4F5C"
       objectReference: {fileID: 0}
+    - target: {fileID: 7648113658180361429, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: onComplete.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7648113658180361429, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7648113658180361429, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6033998867760720355}
+    - target: {fileID: 7648113658180361429, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7648113658180361429, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 7648113658180361429, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7648113658180361429, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: onComplete.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1904083828137191871, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
@@ -2019,6 +2047,9 @@ MonoBehaviour:
   btnMove: {fileID: 4400260712075846235}
   btnClose: {fileID: 4443625506148161763}
   tweenFader: {fileID: 431459972648354765}
+  equipmentModelEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4443625506148161763 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5941859294901536763, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}

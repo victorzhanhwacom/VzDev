@@ -466,6 +466,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2219451243817454360, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2219451243817454360, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2219451243817454360, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 516267291746245753}
+    - target: {fileID: 2219451243817454360, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2219451243817454360, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 2219451243817454360, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2219451243817454360, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2529501411716961004, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -608,7 +636,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4781156907964354484, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
       propertyPath: m_Name
-      value: "\u5F48\u8DF3\u8996\u7A97-\u8A2D\u5099\u4E0A\u67B6\u6210\u529F"
+      value: "\u5F48\u8DF3\u8996\u7A97-\u8A2D\u5099\u4E0A\u67B6\u7D50\u679C"
       objectReference: {fileID: 0}
     - target: {fileID: 5719241578179537090, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
       propertyPath: m_text
@@ -617,6 +645,34 @@ PrefabInstance:
     - target: {fileID: 5719241578179537090, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
       propertyPath: m_HorizontalAlignment
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5941859294901536763, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5941859294901536763, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5941859294901536763, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 516267291746245753}
+    - target: {fileID: 5941859294901536763, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5941859294901536763, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 5941859294901536763, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.GameObject, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5941859294901536763, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6439523539380628986, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
       propertyPath: m_Type
@@ -739,8 +795,181 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5135867023027599444, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
       insertIndex: 4
       addedObject: {fileID: 6394390356453904177}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4781156907964354484, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 18550554336631853}
   m_SourcePrefab: {fileID: 100100000, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+--- !u!1 &516267291746245753 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4351117528644892411, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+  m_PrefabInstance: {fileID: 4271769847381797506}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8724163982211179830 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4781156907964354484, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}
+  m_PrefabInstance: {fileID: 4271769847381797506}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &18550554336631853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8724163982211179830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9fb5e9bbbf192249a952c810d2061b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.DCIMUtils.DeploymentUtils.EquipmentDeployResultView
+  equipmentAsset:
+    deviceCode: 
+    deviceName: 
+    assetPhotoSprite: {fileID: 0}
+    cobieInfo:
+      component_description: 
+      component_assetIdentifier: 
+      component_serialNumber: 
+      component_installationDate: 
+      component_tagName: 
+      component_warrantyDurationPart: 
+      component_warrantyDurationUnit: 
+      component_warrantyGuarantorLabor: 
+      component_warrantyStartDate: 
+      component_warrantyEndDate: 
+      document_inspection: 
+      document_handout: 
+      document_drawing: 
+      contact_company: 
+      contact_department: 
+      contact_email: 
+      contact_familyName: 
+      contact_givenName: 
+      contact_phone: 
+      contact_street: 
+      facility_name: 
+      facility_projectName: 
+      facility_siteName: 
+      equipment_supplier: 
+      floor_name: 
+      space_name: 
+      space_roomTag: 
+      system_category: 
+      system_name: 
+      type_category: 
+      type_expectedLife: 
+      type_manufacturer: 
+      type_modelNumber: 
+      type_name: 
+      type_replacementCost: 
+      type_accessibilityPerformance: 
+      type_shape: 
+      type_size: 
+      type_color: 
+      type_finish: 
+      type_grade: 
+      type_material: 
+    modelInfo:
+      modelTarget: {fileID: 0}
+      modelName: 
+    timeStampData:
+      timeStamp: 
+    category: 0
+    system: 0
+    companyPropertyInfo:
+      propertyName: 
+      propertyNumber: 
+      note: 
+    rackDevicePath: 
+    equipmentUsageInfo:
+      power_watt: 0
+      weight_kg: 0
+      heightU: 0
+    deploymentStatus: 0
+    startUIndex: 0
+  rackAsset:
+    deviceCode: 
+    deviceName: 
+    assetPhotoSprite: {fileID: 0}
+    cobieInfo:
+      component_description: 
+      component_assetIdentifier: 
+      component_serialNumber: 
+      component_installationDate: 
+      component_tagName: 
+      component_warrantyDurationPart: 
+      component_warrantyDurationUnit: 
+      component_warrantyGuarantorLabor: 
+      component_warrantyStartDate: 
+      component_warrantyEndDate: 
+      document_inspection: 
+      document_handout: 
+      document_drawing: 
+      contact_company: 
+      contact_department: 
+      contact_email: 
+      contact_familyName: 
+      contact_givenName: 
+      contact_phone: 
+      contact_street: 
+      facility_name: 
+      facility_projectName: 
+      facility_siteName: 
+      equipment_supplier: 
+      floor_name: 
+      space_name: 
+      space_roomTag: 
+      system_category: 
+      system_name: 
+      type_category: 
+      type_expectedLife: 
+      type_manufacturer: 
+      type_modelNumber: 
+      type_name: 
+      type_replacementCost: 
+      type_accessibilityPerformance: 
+      type_shape: 
+      type_size: 
+      type_color: 
+      type_finish: 
+      type_grade: 
+      type_material: 
+    modelInfo:
+      modelTarget: {fileID: 0}
+      modelName: 
+    timeStampData:
+      timeStamp: 
+    category: 1
+    system: 1
+    companyPropertyInfo:
+      propertyName: 
+      propertyNumber: 
+      note: 
+    location: 
+    weight_kg: 0
+    power_watt_Max: 0
+    weight_kg_Max: 0
+    u_height_Max: 42
+    container: []
+    usageInfo:
+      <totalPowerWatt>k__BackingField: 0
+      <totalWeightKG>k__BackingField: 0
+      <totalHeightU>k__BackingField: 0
+      <remainPowerWatt>k__BackingField: 0
+      <remainWeightKG>k__BackingField: 0
+      <remainHeightU>k__BackingField: 0
+      <totalPowerPercent>k__BackingField: 0
+      <totalWeightPercent>k__BackingField: 0
+      <totalHeightUPercent>k__BackingField: 0
+      <remainPowerPercent>k__BackingField: 0
+      <remainWeightPercent>k__BackingField: 0
+      <remainHeightUPercent>k__BackingField: 0
+      emptyUSlots: []
+  rootView: {fileID: 516267291746245753}
+  txtDeviceName: {fileID: 947938688567544975}
+  txtRackName: {fileID: 5612757087414687153}
+  txtULocation: {fileID: 8627324229858645932}
+  imgDevicePhoto: {fileID: 0}
 --- !u!224 &8939121702380065494 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5135867023027599444, guid: 0c154abb7f411e3439dba09c615fde93, type: 3}

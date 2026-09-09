@@ -1,4 +1,6 @@
 using System;
+using VzDev.MathUtils;
+using Random = UnityEngine.Random;
 
 namespace VzDev.DCIMUtils.DataUtils
 {
@@ -14,6 +16,39 @@ namespace VzDev.DCIMUtils.DataUtils
         public EquipmentUsageInfo equipmentUsageInfo;
         public DeploymentStatus deploymentStatus = DeploymentStatus.Unknow;
         public int startUIndex; // 部署在機櫃裡的起始 U 位置，未部署時為 0 或 -1
+
+        /// <summary>
+        /// 佔用U位範圍
+        /// </summary>
+        public string uRange => $"U{startUIndex} ~ U{startUIndex + equipmentUsageInfo.heightU - 1}";
+
+        /// <summary>
+        /// 複制一個新的設備資產，並保留原本的屬性值
+        /// </summary>
+        public EquipmentAsset ToClone()
+        {
+            var cloneAsset = new EquipmentAsset
+            {
+                deviceCode = deviceCode,
+                rackDevicePath = rackDevicePath,
+                deviceName = deviceName,
+                cobieInfo = cobieInfo,
+                modelInfo = modelInfo,
+                timeStampData = timeStampData,
+                category = category,
+                system = system,
+                companyPropertyInfo = companyPropertyInfo,
+                equipmentUsageInfo = equipmentUsageInfo,
+                deploymentStatus = deploymentStatus,
+                startUIndex = startUIndex
+            };
+
+            if (string.IsNullOrEmpty(cloneAsset.deviceCode))
+            {
+                cloneAsset.deviceCode = $"{deviceName}[{deviceName}-{Random.Range(0,MathHelper.GetAllNines(3))}]";
+            }
+            return cloneAsset;
+        }
 
         public DCN_Asset ToDCNAsset()
         {

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
+using VzDev.DCIMUtils.DeploymentUtils;
 using VzDev.UnityAPI.Extensions;
 
 namespace VzDev.DCIMUtils.DataUtils
@@ -65,6 +67,39 @@ namespace VzDev.DCIMUtils.DataUtils
                 companyPropertyInfo.propertyName = deviceName;
                 companyPropertyInfo.GenerateRandomPropertyNo("NTCGO");
             }
+        }
+
+        /// <summary>
+        /// 新增設備資產到機櫃內
+        /// </summary>
+        public void AddEquipmentAsset(EquipmentAsset equipmentAsset)
+        {
+            if (equipmentAsset == null) return;
+            if (container == null) container = new List<EquipmentAsset>();
+            container.Add(equipmentAsset);
+           
+
+            Transform equipmentModel = equipmentAsset.modelInfo.modelTarget;
+            Transform rackModel = modelInfo.modelTarget;
+            equipmentModel.SetParent(rackModel);
+
+            if (equipmentModel.TryAddComponent(out DataModelBinder_Equipment equipmentBinder))
+            {
+                equipmentBinder.SetEquipmentAsset(equipmentAsset);
+                equipmentAsset.deploymentStatus = DeploymentStatus.Deployed;
+            }
+
+            RefreshUsageInfo();
+        }
+        /// <summary>
+        /// 移除機櫃內的設備資產
+        /// </summary>
+        public void RemoveEquipmentAsset(EquipmentAsset equipmentAsset)
+        {
+            if (equipmentAsset == null) return;
+            if (container == null) container = new List<EquipmentAsset>();
+            else container.Remove(equipmentAsset);
+            RefreshUsageInfo();
         }
     }
 }
