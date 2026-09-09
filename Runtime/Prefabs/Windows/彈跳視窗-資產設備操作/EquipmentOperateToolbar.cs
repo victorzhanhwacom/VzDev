@@ -21,6 +21,9 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [Foldout("[Components]"), SerializeField] private Image imgDevicePhoto;
         [Foldout("[Components]"), SerializeField] private Button btnLocation, btnRemove, btnMove, btnClose;
         [Foldout("[Components]"), SerializeField] private DOTweenFader tweenFader;
+
+        private DataModelBinder_Equipment lastEquipmentBinder;
+
         #endregion
 
         private void Awake()
@@ -63,12 +66,24 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         {
             if (target.TryGetComponent(out DataModelBinder_Equipment binder))
             {
-                SetEquipmentAsset(binder.EquipmentAsset);
-                Show();
+                if (rootView.activeSelf && lastEquipmentBinder == binder)
+                {
+                    Hide();
+                    lastEquipmentBinder = null;
+                }
+                else
+                {
+                    SetEquipmentAsset(binder.EquipmentAsset);
+                    Show();
+                    lastEquipmentBinder = binder;
+                }
             }
         }
 
-        private void OnMouseClickEmptyHandler() => Hide();
+        private void OnMouseClickEmptyHandler()
+        {
+            // Hide();
+        }
 
         private void OnDisable()
         {
@@ -101,7 +116,12 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         private void OnClickLocation() => RTSCameraController.CameraToPosition(equipmentAsset.modelInfo.modelTarget.transform);
         private void OnClickRemove() => OnRemoveEquipmentAssetAction?.Invoke(equipmentAsset);
         private void OnClickMove() => OnMoveEquipmentAssetAction?.Invoke(equipmentAsset);
-        private void OnClickClose() => ColliderInteractionSystem.SimulateClickEmpty();
+        private void OnClickClose()
+        {
+            Hide();
+            lastEquipmentBinder = null;
+            ColliderInteractionSystem.SimulateClickEmpty();
+        }
         #endregion
 
         public static Action<EquipmentAsset> OnRemoveEquipmentAssetAction, OnMoveEquipmentAssetAction;
