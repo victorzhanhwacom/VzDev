@@ -7,6 +7,7 @@ using VzDev.DCIMUtils.DataUtils;
 using VzDev.UnityAPI.Extensions;
 using System.Linq;
 using VzDev.ApiExtensions;
+using UnityEngine.Events;
 
 namespace VzDev.DCIMUtils.DeploymentUtils
 {
@@ -108,7 +109,10 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                 rackDataCombiner.GenerateEquipmentInContainer(equipmentModels);
             }
             OnRackDataCombinerGeneratedAction?.Invoke(rackDataModelBinders);
+            onRackDataCombinerGeneratedEvent?.Invoke();
         }
+
+        public UnityEvent onRackDataCombinerGeneratedEvent;
 
         [Button, ShowIf("isHaveData")]
         private void ClearData()

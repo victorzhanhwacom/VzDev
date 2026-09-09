@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Networking;
 using VzDev.ApiExtensions;
 using VzDev.FileUtils;
@@ -95,7 +96,6 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [Button]
         public void GetStockEquipmentList()
         {
-
             string result = forDemo_StockEquipment.GetStockEquipmentList();
 
             StartCoroutine(ReadJsonFile(result, (json) =>
