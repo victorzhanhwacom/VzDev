@@ -1,7 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Networking;
 using VzDev.ApiExtensions;
 using VzDev.FileUtils;
 
@@ -24,8 +27,15 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         public void GetRackListInformation()
         {
             string result = forDemo.GetRackListInformation();
-            Debug.Log($"{GetType().Name}-GetRackListInformation:\n{result}");
-            OnGetRackListInformationAction?.Invoke(result);
+
+            StartCoroutine(ReadJsonFile(result, (json) =>
+            {
+                Debug.Log($"{GetType().Name}-GetRackListInformation:\n{json}");
+                OnGetRackListInformationAction?.Invoke(json);
+            }));
+
+            /* Debug.Log($"{GetType().Name}-GetRackListInformation:\n{result}");
+            OnGetRackListInformationAction?.Invoke(result); */
         }
 
         /// <summary>
@@ -34,9 +44,42 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [Button]
         public void GetEquipmentAssetInStock()
         {
-            string result = forDemo.GetEquipmentAssetInStock();
-            Debug.Log($"{GetType().Name}-GetEquipmentAssetInStock:\n{result}");
-            OnGetEquipmentAssetInStockAction?.Invoke(result);
+            string result = forDemo_StockEquipment.GetStockEquipmentList();
+
+            StartCoroutine(ReadJsonFile(result, (json) =>
+            {
+                Debug.Log($"{GetType().Name}-GetEquipmentAssetInStock:\n{json}");
+                OnGetEquipmentAssetInStockAction?.Invoke(json);
+            }));
+
+
+           /*  Debug.Log($"{GetType().Name}-GetEquipmentAssetInStock:\n{result}");
+            OnGetEquipmentAssetInStockAction?.Invoke(result); */
+        }
+
+
+        /// <summary>
+        /// 讀取機架清單 JSON(WebGL 平台下透過 UnityWebRequest 非同步讀取 StreamingAssets)。
+        /// </summary>
+        /// <param name="onComplete">讀取完成後呼叫，參數為 JSON 字串；失敗時為 null。</param>
+        private IEnumerator ReadJsonFile(string path, Action<string> onComplete)
+        {
+            string url = Path.Combine(Application.streamingAssetsPath, path);
+            Debug.Log($"ReadJsonFile: {url} \t {path}");
+
+            using (UnityWebRequest req = UnityWebRequest.Get(url))
+            {
+                yield return req.SendWebRequest();
+
+                if (req.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.LogError($"找不到檔案: {url} ({req.error})");
+                    onComplete?.Invoke(null);
+                    yield break;
+                }
+
+                onComplete?.Invoke(req.downloadHandler.text);
+            }
         }
 
         /// <summary>
@@ -56,9 +99,17 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [Button]
         public void GetStockEquipmentList()
         {
+
             string result = forDemo_StockEquipment.GetStockEquipmentList();
+
+            StartCoroutine(ReadJsonFile(result, (json) =>
+            {
+                Debug.Log($"{GetType().Name}-GetStockEquipmentList:\n{json}");
+                OnGetStockEquipmentListAction?.Invoke(json);
+            }));
+/* 
             Debug.Log($"{GetType().Name}-GetStockEquipmentList:\n{result}");
-            OnGetStockEquipmentListAction?.Invoke(result);
+            OnGetStockEquipmentListAction?.Invoke(result); */
         }
 
         /// <summary>
@@ -106,7 +157,11 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             /// <summary>
             /// 取得機房內機櫃群資訊
             /// </summary>
-            public string GetRackListInformation() => FileHelper.LoadTextFileDirectly(jsonFileName_DCRList, EnumFilePath.streamingAssetsPath);
+            public string GetRackListInformation()
+            {
+                return jsonFileName_DCRList;
+                return FileHelper.LoadTextFileDirectly(jsonFileName_DCRList, EnumFilePath.streamingAssetsPath);
+            }
 
             /// <summary>
             /// 取得上架庫存設備列表
@@ -129,7 +184,12 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             /// <summary>
             /// 取得庫存設備列表
             /// </summary>
-            public string GetStockEquipmentList() => FileHelper.LoadTextFileDirectly(jsonFileName_StockEquipment, EnumFilePath.streamingAssetsPath);
+            public string GetStockEquipmentList()
+            {
+                return jsonFileName_StockEquipment;
+                return FileHelper.LoadTextFileDirectly(jsonFileName_StockEquipment, EnumFilePath.streamingAssetsPath);
+            }
+
             public List<Transform> GetStockEquipmentModels() => stockEquipmentModels;
         }
     }

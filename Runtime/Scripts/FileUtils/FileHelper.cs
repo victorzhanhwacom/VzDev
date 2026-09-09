@@ -11,6 +11,7 @@ using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using VzDev.NetUtils;
+using System.Collections;
 
 namespace VzDev.FileUtils
 {
@@ -21,7 +22,7 @@ namespace VzDev.FileUtils
         /// </summary>
         public static void PinAssetFolder(EnumFilePath enumFilePath, string folderName = "")
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             string absolutePath = GetAssetPath(enumFilePath, folderName);
             string relativePath = AbsoluteToAssetPath(absolutePath);
 
@@ -42,7 +43,7 @@ namespace VzDev.FileUtils
             EditorGUIUtility.PingObject(asset);
             ActiveEditorTracker.sharedTracker.isLocked = true;
             ActiveEditorTracker.sharedTracker.ForceRebuild();
-            #endif
+#endif
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace VzDev.FileUtils
         /// </summary>
         public static string AbsoluteToAssetPath(string absolutePath)
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             string normalizedAbsolute = Path.GetFullPath(absolutePath).Replace('\\', '/');
             string dataPath = Path.GetFullPath(Application.dataPath).Replace('\\', '/'); // .../Assets
 
@@ -60,9 +61,9 @@ namespace VzDev.FileUtils
 
             string relative = "Assets" + normalizedAbsolute.Substring(dataPath.Length);
             return relative;
-            #else
+#else
             return null;
-            #endif
+#endif
         }
 
 
@@ -71,7 +72,7 @@ namespace VzDev.FileUtils
         /// </summary>
         public static void PinAssetInExplorer(EnumFilePath enumFilePath, string filePath = "")
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             string path = GetAssetPath(enumFilePath, filePath);
             if (!File.Exists(path))
             {
@@ -79,7 +80,7 @@ namespace VzDev.FileUtils
                 return;
             }
             EditorUtility.RevealInFinder(path);
-            #endif
+#endif
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace VzDev.FileUtils
         /// </summary> 
         public static void PinAssetTarget(UnityEngine.Object asset)
         {
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             if (asset == null)
             {
                 Debug.LogWarning("PinAssetTarget: asset is null, cannot pin.");
@@ -99,7 +100,7 @@ namespace VzDev.FileUtils
 
             ActiveEditorTracker.sharedTracker.isLocked = true;
             ActiveEditorTracker.sharedTracker.ForceRebuild();
-            #endif
+#endif
         }
 
         /// <summary>
@@ -137,7 +138,6 @@ namespace VzDev.FileUtils
             string jsonContent = File.ReadAllText(fullPath);
             return jsonContent;
         }
-
         ///////////////////////////////// 20260824 //////////////////////////////////
 
         #region 檔案產生與存儲
