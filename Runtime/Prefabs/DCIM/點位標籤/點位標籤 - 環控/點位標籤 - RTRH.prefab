@@ -955,10 +955,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8930635231200441572}
     - target: {fileID: 3859359150456855079, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
-      propertyPath: OnValueChangedFloat.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 7807097424356628861}
-    - target: {fileID: 3859359150456855079, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
       propertyPath: OnValueChangedInt.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 1
       objectReference: {fileID: 0}
@@ -1351,14 +1347,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3859359150456855079, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
-      propertyPath: OnValueChangedInt.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 7807097424356628861}
-    - target: {fileID: 3859359150456855079, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
-      propertyPath: OnValueChangedFloat.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 7807097424356628861}
-    - target: {fileID: 3859359150456855079, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
       propertyPath: OnValueChangedFloat01.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 0
       objectReference: {fileID: 0}
@@ -1370,10 +1358,6 @@ PrefabInstance:
       propertyPath: OnValueChangedSingle.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 6146348734429730999, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
-    - target: {fileID: 3859359150456855079, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
-      propertyPath: OnValueChangedFloat01.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 7807097424356628861}
     - target: {fileID: 3859359150456855079, guid: a391671bc99cea246bf2605a5281ccae, type: 3}
       propertyPath: OnValueChangedInt.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetRHValue
@@ -2107,6 +2091,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\u4F4D\u7F6E:"
       objectReference: {fileID: 0}
+    - target: {fileID: 7988124720137823842, guid: a5afd47e1c239ad4db728ba1de7072dc, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4288780437
+      objectReference: {fileID: 0}
     - target: {fileID: 9045969170817924254, guid: a5afd47e1c239ad4db728ba1de7072dc, type: 3}
       propertyPath: m_text
       value: "A\u6A5F\u623F Aisle J"
@@ -2412,10 +2400,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8930635231200441572}
     - target: {fileID: 565600320500802785, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
-      propertyPath: OnValueChangedFloat.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 7807097424356628861}
-    - target: {fileID: 565600320500802785, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: OnValueChangedInt.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 1
       objectReference: {fileID: 0}
@@ -2553,7 +2537,7 @@ PrefabInstance:
       objectReference: {fileID: 3165026660111567753}
     - target: {fileID: 6192639998792932675, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6192639998792932675, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
@@ -2719,6 +2703,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8187699588700705175, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
+      propertyPath: currentIndex
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8404275800982958529, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -2752,33 +2740,8 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2169958630109989549, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       insertIndex: 1
       addedObject: {fileID: 5380924401828271825}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 830179462768580382, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
-      insertIndex: 3
-      addedObject: {fileID: 7807097424356628861}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
---- !u!114 &694981730496361741 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8777388732093306615, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
-  m_PrefabInstance: {fileID: 8100461425982383098}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
---- !u!114 &1433190344570623003 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7172309759663142881, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
-  m_PrefabInstance: {fileID: 8100461425982383098}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!224 &1804904125425842214 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7594986532739210204, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
@@ -2805,83 +2768,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 830179462768580382, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
   m_PrefabInstance: {fileID: 8100461425982383098}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7807097424356628861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8930635231200441572}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2b42d831d5516447998440f3f220058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: VzDev::VzDev.PointInfo_RTRH
-  _isRTMode: 1
-  onSelectRtMode:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 345432387302260115}
-        m_TargetAssemblyTypeName: VzDev.Mediator.ChildrenSwitcher, VzDev
-        m_MethodName: SetValue
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
-  onSelectRhMode:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 345432387302260115}
-        m_TargetAssemblyTypeName: VzDev.Mediator.ChildrenSwitcher, VzDev
-        m_MethodName: SetValue
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
-  onRtChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3148724780582232565}
-        m_TargetAssemblyTypeName: VzDev.MediatorUtils.RangeValueMediator, VzDev
-        m_MethodName: SetValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
-  onRhChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6413581594827062136}
-        m_TargetAssemblyTypeName: VzDev.MediatorUtils.RangeValueMediator, VzDev
-        m_MethodName: SetValue
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
-  rtIcon: {fileID: 21300000, guid: 91b4fcf1e2205a348962fa9fd08f303a, type: 3}
-  rhIcon: {fileID: 21300000, guid: f519c354b19d1f647806c37d1a0fc783, type: 3}
-  icon: {fileID: 1433190344570623003}
-  label: {fileID: 694981730496361741}
 --- !u!1001 &8834454072927069468
 PrefabInstance:
   m_ObjectHideFlags: 0

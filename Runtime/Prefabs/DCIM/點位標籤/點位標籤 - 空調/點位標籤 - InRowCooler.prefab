@@ -1995,6 +1995,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 16.01
       objectReference: {fileID: 0}
+    - target: {fileID: 2291241221621177059, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 9.3
+      objectReference: {fileID: 0}
     - target: {fileID: 3474318843541357321, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -2056,8 +2060,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6072748509159658778}
     - target: {fileID: 6192639998792932675, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6192639998792932675, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6192639998792932675, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName

@@ -1309,6 +1309,10 @@ PrefabInstance:
       propertyPath: m_text
       value: "\u4F4D\u7F6E:"
       objectReference: {fileID: 0}
+    - target: {fileID: 7988124720137823842, guid: a5afd47e1c239ad4db728ba1de7072dc, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4288780437
+      objectReference: {fileID: 0}
     - target: {fileID: 9045969170817924254, guid: a5afd47e1c239ad4db728ba1de7072dc, type: 3}
       propertyPath: m_text
       value: "A\u6A5F\u623F Aisle J"
@@ -1755,7 +1759,7 @@ PrefabInstance:
       objectReference: {fileID: 3165026660111567753}
     - target: {fileID: 6192639998792932675, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[3].m_CallState
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6192639998792932675, guid: 20565f9e8f1c92b44bc134c7882e0f8e, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
