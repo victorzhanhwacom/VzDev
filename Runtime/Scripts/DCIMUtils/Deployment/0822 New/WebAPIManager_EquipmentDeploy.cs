@@ -41,7 +41,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         /// <summary>
         /// 取得上架庫存設備列表
         /// </summary>
-        [Button]
+     /*    [Button]
         public void GetEquipmentAssetInStock()
         {
             string result = forDemo_StockEquipment.GetStockEquipmentList();
@@ -51,11 +51,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                 Debug.Log($"{GetType().Name}-GetEquipmentAssetInStock:\n{json}");
                 OnGetEquipmentAssetInStockAction?.Invoke(json);
             }));
-
-
-           /*  Debug.Log($"{GetType().Name}-GetEquipmentAssetInStock:\n{result}");
-            OnGetEquipmentAssetInStockAction?.Invoke(result); */
-        }
+        } */
 
 
         /// <summary>
@@ -132,7 +128,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         /// <summary>
         /// 設得庫存設備資料列表(json字串)
         /// </summary>
-        public static Action<string> OnGetEquipmentAssetInStockAction;
+//        public static Action<string> OnGetEquipmentAssetInStockAction;
         /// <summary>
         /// 取得設備模型列表
         /// </summary>
