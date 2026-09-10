@@ -3,7 +3,7 @@ using System;
 using UnityEngine.Events;
 using NaughtyAttributes;
 
-namespace VzDev.Mediator
+namespace VzDev.MediatorUtils
 {
     /// <summary>
     /// 根據傳入的整數值，觸發對應的事件，並將其他不匹配的事件設為非活動狀態。

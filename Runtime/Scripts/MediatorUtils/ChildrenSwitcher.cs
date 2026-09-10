@@ -3,7 +3,7 @@ using NaughtyAttributes;
 using System;
 using UnityEngine.Events;
 
-namespace VzDev.Mediator
+namespace VzDev.MediatorUtils
 {
     /// <summary>
     /// 取得所有子物件，並依照傳入的值切換子物件的顯示狀態
@@ -11,24 +11,24 @@ namespace VzDev.Mediator
     public class ChildrenSwitcher : MonoBehaviour
     {
         #region Variables
-        [SerializeField, ReadOnly] private int receiveValue = -1;
+        [SerializeField, OnValueChanged("OnReceiveValueChanged"), Range(0, 6)] private int receiveValue = -1;
+        private void OnReceiveValueChanged() => SetValue(receiveValue);
         [SerializeField, ReadOnly] private GameObject[] children;
         [SerializeField] private GameObject[] excludeChildren;
         [Foldout("[Events]")] public UnityEvent<int> onSelectedIndex;
-
-        
-
         private bool IsHaveChildren => children != null && children.Length > 0;
         #endregion
 
-        private void Awake() => receiveValue = -1;
-
+        #region 設定值 SetValue
         public void SetValue(Boolean value) => SetValue(value ? 1 : 0);
         public void SetValue(Single value) => SetValue((int)value);
         public void SetValue(int value)
         {
-            if (receiveValue == value) return;
-            receiveValue = value;
+            if (receiveValue < 0 || receiveValue >= children.Length)
+            {
+                Debug.LogWarning($"[ChildrenSwitcher] receiveValue {receiveValue} is out of range. Children length: {children.Length}");
+                return;
+            }
             for (int i = 0; i < children.Length; i++)
             {
                 bool isActive = i == receiveValue;
@@ -36,7 +36,9 @@ namespace VzDev.Mediator
             }
             onSelectedIndex?.Invoke(receiveValue);
         }
+        #endregion
 
+        #region 顯示 / 隱藏所有子物件
         [Button, ShowIf(nameof(IsHaveChildren))]
         public void SetAllChildrenActive() => SetChildrenStatus(true);
         [Button, ShowIf(nameof(IsHaveChildren))]
@@ -48,6 +50,7 @@ namespace VzDev.Mediator
                 children[i].SetActive(isActive);
             }
         }
+        #endregion
 
         [Button, ContextMenu("Get Children")]
         private void GetChildren()
