@@ -11,20 +11,78 @@ using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 using VzDev.NetUtils;
-using System.Collections;
 
 namespace VzDev.FileUtils
 {
     public static class FileHelper
     {
+        #region 打開檔案/資料夾選擇面板
+        /// <summary>
+        /// 打開檔案選擇面板，並返回所選檔案的路徑
+        /// <para> 預設為 StreamingAssets 資料夾，副檔名為 json,txt </para>
+        /// </summary>
+        public static string BrowseFilePanel(string folderPath = "", string extension = "json,txt")
+        {
+            if (string.IsNullOrEmpty(folderPath)) folderPath = Application.streamingAssetsPath;
+            string filePath = EditorUtility.OpenFilePanel("選擇檔案", folderPath, extension);
+            return filePath;
+        }
+
+        /// <summary>
+        /// 打開資料夾選擇面板，並返回所選資料夾的路徑
+        /// </summary>
+        public static string BrowseFolderPanel(string folderPath = "")
+        {
+            if (string.IsNullOrEmpty(folderPath)) folderPath = Application.streamingAssetsPath;
+            string selectedFolder = EditorUtility.OpenFolderPanel("選擇資料夾", folderPath, "");
+            return selectedFolder;
+        }
+        #endregion
+
+        /// <summary>
+        /// 開啟檔案 / 資料夾 (Windows)
+        /// </summary>
+        public static void OpenFileOrFolder(string filePath)
+        {
+#if UNITY_STANDALONE_WIN
+            try
+            {
+                Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Failed to open file: {ex.Message}");
+            }
+#elif UNITY_WEBGL
+            Application.OpenURL(filePath);
+#endif
+        }
+
+
+
+        /// <summary>
+        /// 待修正
+        /// </summary>
+        /// <param name="path"></param>
+        /// <exception cref="FileNotFoundException"></exception>
+        public static void SelectInExplorer(string path)
+        {
+            Debug.Log($"SelectInExplorer: {path}");
+            if (!File.Exists(path) && !Directory.Exists(path))
+                throw new FileNotFoundException("路徑不存在", path);
+
+            // /select 會開啟該檔案所在資料夾，並反白該項目
+            Process.Start("explorer.exe", $"/select,\"{path}\"");
+        }
+
         /// <summary>
         /// 將Asset資料夾路徑在Project視窗中選取並高亮 (待修正)
         /// </summary>
         public static void PinAssetFolder(EnumFilePath enumFilePath, string folderName = "")
         {
 #if UNITY_EDITOR
-            string absolutePath = GetAssetPath(enumFilePath, folderName);
-            string relativePath = AbsoluteToAssetPath(absolutePath);
+            string absolutePath = FileHelper.GetAssetPath(enumFilePath, folderName);
+            string relativePath = FileHelper.AbsoluteToAssetPath(absolutePath);
 
             if (relativePath == null)
             {
@@ -45,6 +103,8 @@ namespace VzDev.FileUtils
             ActiveEditorTracker.sharedTracker.ForceRebuild();
 #endif
         }
+
+
 
         /// <summary>
         /// 將任意絕對路徑轉換為專案相對路徑 (Assets/...)。
@@ -113,6 +173,7 @@ namespace VzDev.FileUtils
                 EnumFilePath.streamingAssetsPath => Application.streamingAssetsPath,
                 EnumFilePath.persistentDataPath => Application.persistentDataPath,
                 EnumFilePath.dataPath => Application.dataPath,
+                EnumFilePath.resourcesPath => Application.dataPath + "/Resources",
                 _ => throw new ArgumentOutOfRangeException(nameof(enumFilePath), enumFilePath, null)
             };
             if (!string.IsNullOrEmpty(assetName))
@@ -343,22 +404,6 @@ namespace VzDev.FileUtils
             { "application/octet-stream", EnumResponseDataType.Binary },
         };
 
-        /// 開啟檔案 / 資料夾 (Windows)
-        public static void OpenFileOrFolder(string filePath)
-        {
-#if UNITY_STANDALONE_WIN
-            try
-            {
-                Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"Failed to open file: {ex.Message}");
-            }
-#elif UNITY_WEBGL
-            Application.OpenURL(filePath);
-#endif
-        }
 
         /// 將content寫入文字檔內，寫入動作可以不管檔案是否已存在
         public static void WriteStringToTextFile(string filePath, string content)

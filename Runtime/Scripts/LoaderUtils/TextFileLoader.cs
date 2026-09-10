@@ -6,7 +6,8 @@ using NaughtyAttributes;
 using System;
 using Debug = VzDev.ToolUtils.Debug;
 using Cysharp.Threading.Tasks;
-using System.Threading; // 使用 VzDev 的 Debug 擴展，提供更豐富的日誌功能
+using System.Threading;
+using VzDev.FileUtils; // 使用 VzDev 的 Debug 擴展，提供更豐富的日誌功能
 
 namespace VzDev.LoaderUtils
 {
@@ -18,10 +19,10 @@ namespace VzDev.LoaderUtils
     {
         #region Fields
         [Foldout("[Events]")] public UnityEvent<bool> onLoadingEvent;
-        [Foldout("[Events]")] public UnityEvent<string> onLoadSuccessEvent;
-        [Foldout("[Events]")] public UnityEvent<string> onFailedEvent;
-        [Foldout("[Settings]"), SerializeField] private EnumLoadPath enumLoadPath = EnumLoadPath.StreamingAssets;
-        [Foldout("[Settings]"), SerializeField] private string fileName = "data.json";
+        [Foldout("[Events]")] public UnityEvent<string> onLoadResultEvent;
+        [Foldout("[Events]")] public UnityEvent<string> onFailedMsgEvent;
+        [Foldout("[Settings]"), SerializeField] private EnumFilePath enumFilePath = EnumFilePath.streamingAssetsPath;
+        [Foldout("[Settings]"), SerializeField, TextArea(1, 5)] private string filePath = "data.json";
 
         private CancellationTokenSource _cts;
         private bool _isLoading;
@@ -39,10 +40,10 @@ namespace VzDev.LoaderUtils
             StopLoading();
             _cts = new CancellationTokenSource();
 
-            if (enumLoadPath == EnumLoadPath.Resources)
-                LoadResourcesInstanceAsync(fileName, _cts.Token).Forget();
+            if (enumFilePath == EnumFilePath.resourcesPath)
+                LoadResourcesInstanceAsync(filePath, _cts.Token).Forget();
             else
-                LoadWebRequestAsync(fileName, _cts.Token).Forget();
+                LoadWebRequestAsync(filePath, _cts.Token).Forget();
         }
 
         [Button, ShowIf("_isLoading")]
@@ -58,6 +59,13 @@ namespace VzDev.LoaderUtils
             }
         }
 
+        [Button]
+        private void BrowseFile()
+        {
+            filePath = FileHelper.BrowseFilePanel();
+            LoadFile();
+        }
+
         /// <summary>
         /// 從 Resources 非同步載入文字檔，使用 ResourceRequest，適用於 enumLoadPath = Resources。
         /// </summary>
@@ -71,12 +79,12 @@ namespace VzDev.LoaderUtils
             if (isSuccess)
             {
                 Debug.Log($"[TextLoader] File Loaded (Resources):\n{result}");
-                onLoadSuccessEvent?.Invoke(result);
+                onLoadResultEvent?.Invoke(result);
             }
             else
             {
                 Debug.LogError($"[TextLoader] Failed to load file from Resources: {result}");
-                onFailedEvent?.Invoke(result);
+                onFailedMsgEvent?.Invoke(result);
             }
             SetLoadingState(false);
         }
@@ -87,45 +95,27 @@ namespace VzDev.LoaderUtils
         private async UniTaskVoid LoadWebRequestAsync(string fileName, CancellationToken ct)
         {
             SetLoadingState(true);
-            var (isSuccess, result) = await LoadFromURLAsync(GetUrl(fileName), ct);
+            var (isSuccess, result) = await LoadFromURLAsync(FileHelper.GetAssetPath(enumFilePath, fileName), ct);
 
             if (ct.IsCancellationRequested) return;
 
             if (isSuccess)
             {
-                Debug.Log($"[TextLoader] File Loaded ({enumLoadPath}):\n{result}");
-                onLoadSuccessEvent?.Invoke(result);
+                Debug.Log($"[TextLoader] File Loaded ({enumFilePath}):\n{result}");
+                onLoadResultEvent?.Invoke(result);
             }
             else
             {
-                Debug.LogError($"[TextLoader] Failed to load file from {enumLoadPath}: {result}");
-                onFailedEvent?.Invoke(result);
+                Debug.LogError($"[TextLoader] Failed to load file from {enumFilePath}: {result}");
+                onFailedMsgEvent?.Invoke(result);
             }
             SetLoadingState(false);
         }
-
-        /// <summary>
-        /// 根據選擇的載入路徑組合出完整的 URL。
-        /// 僅供 StreamingAssets / PersistentData 使用。
-        /// </summary>
-        private string GetUrl(string fileName) => enumLoadPath switch
-        {
-            EnumLoadPath.StreamingAssets => $"{Application.streamingAssetsPath}/{fileName}",
-            EnumLoadPath.PersistentData => $"{Application.persistentDataPath}/{fileName}",
-            _ => throw new ArgumentOutOfRangeException(nameof(enumLoadPath))
-        };
 
         private void SetLoadingState(bool isLoading)
         {
             _isLoading = isLoading;
             onLoadingEvent?.Invoke(isLoading);
-        }
-
-        public enum EnumLoadPath
-        {
-            StreamingAssets,
-            Resources,
-            PersistentData,
         }
 
         #region Static Methods
