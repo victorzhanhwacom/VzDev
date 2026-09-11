@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e3caa59a36991a4a9edb82b91feb47b, type: 3}
+  m_Name: WebApiRequest
+  m_EditorClassIdentifier: 
+  ipConfigSo: {fileID: 0}
+  extendApiURL: 
+  authorizationSo: {fileID: 0}
+  httpType: 0
+  fullApiURL: 
+  enumHttpMethod: 0
+  responseDataType: 0
+  isQueryParams: 0
+  queryParams: []
+  bodyType: 0
+  formData: []
+  rawJson: 
