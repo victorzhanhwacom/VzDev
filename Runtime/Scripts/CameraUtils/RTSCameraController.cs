@@ -1,10 +1,9 @@
-using System;
 using VzDev.DebugUtils;
 using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Debug = UnityEngine.Debug;
+using VzDev.Frameworks;
 
 namespace VzDev.CameraUtils
 {

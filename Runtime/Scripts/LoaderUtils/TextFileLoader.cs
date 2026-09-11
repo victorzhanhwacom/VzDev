@@ -106,7 +106,7 @@ namespace VzDev.LoaderUtils
             }
             else
             {
-                Debug.LogError($"[TextLoader] Failed to load file from {enumFilePath}: {result}");
+                Debug.LogError($"[TextLoader] Failed to load file from {enumFilePath}: {fileName}\n{result}");
                 onFailedMsgEvent?.Invoke(result);
             }
             SetLoadingState(false);

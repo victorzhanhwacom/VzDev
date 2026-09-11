@@ -1,34 +1,45 @@
 using VzDev.Net.WebAPI;
 using NaughtyAttributes;
 using UnityEngine;
-using Debug = VzDev.ToolUtils.Debug;
+using System;
 
 namespace VictorDev.Net
 {
     /// 設定IP、Port
-    [CreateAssetMenu(fileName = "IPConfig", menuName = "VictorDev/Net/IPConfig")]
+    [CreateAssetMenu(fileName = "IPConfig", menuName = "VzDev/Net/IPConfig")]
     public class IPConfigSO : ScriptableObject
     {
         #region Variables
         [SerializeField] private EnumHttpType httpType;
-        [Space(10), SerializeField] private string ip;
-        [Space(10), SerializeField] private int port = 80;
+        [SerializeField] private string ip;
+        [SerializeField] private int port = 80;
+        [SerializeField] public string surfix = "/api";
 
-        public string IP => ip.Trim();
-        public int Port => port;
+        [field: SerializeField, ReadOnly, Space(20)] public string URL { get; private set; }
         #endregion
-        
-        public string URL
+
+        private void OnValidate() => URL = $"{httpType}://{ip.Trim()}:{port}{surfix}";
+
+
+        #region 設定Config
+        public void SetConfig(string httpType, string ip, string port)
         {
-            get
+            EnumHttpType parsedHttpType;
+            if (Enum.TryParse(httpType, out parsedHttpType) == false)
             {
-                string result = $"{httpType}://{IP}";
-                if(Port != 80) result += $":{Port}";
-                return result;
+                Debug.Log($"⚠️Invalid httpType: {httpType}. Using default value.");
+                parsedHttpType = EnumHttpType.http; // Default value
             }
+            SetConfig(parsedHttpType, ip, int.TryParse(port, out int parsedPort) ? parsedPort : 80);
         }
 
-        [Button]
-        private void LogURL() => Debug.Log($"URL:  {URL}");
+        public void SetConfig(EnumHttpType httpType, string ip, int port)
+        {
+            this.httpType = httpType;
+            this.ip = ip;
+            this.port = port;
+            OnValidate();
+        }
+        #endregion
     }
 }

@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using VzDev.DebugUtils;
 using UnityEngine;
 using Debug = VzDev.ToolUtils.Debug;
+using VzDev.Frameworks;
 
 namespace VictorDev.Managers
 {
