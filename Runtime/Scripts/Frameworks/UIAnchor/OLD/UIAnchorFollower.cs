@@ -33,7 +33,9 @@ namespace VzDev.ObjectUtils
 
         public Transform Target3DObject => target3DObject;
 
-        public float DistanceFromCamera => Vector3.Distance(mainCamera.transform.position, target3DObject.position);
+        public float DistanceFromCamera => target3DObject != null 
+            ? Vector3.Distance(mainCamera.transform.position, target3DObject.position)
+            : 0f;
 
         // 快取平方後的可視距離，Tick() 內比較時避免每幀重複做乘法
         private float visibleRangeSqr;
@@ -61,11 +63,11 @@ namespace VzDev.ObjectUtils
             GlobalLifecycleBroadcaster.OnGlobalUpdate -= Tick;
 
             // 場景卸載/物件停用時，主動收起顯示，避免下次啟用前殘留舊狀態
-            if (container != null && container.activeSelf)
+           /*  if (container != null && container.activeSelf)
             {
                 container.SetActive(false);
                 lastActive = false;
-            }
+            } */
             hasLastAnchoredPos = false;
         }
 

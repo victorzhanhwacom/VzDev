@@ -17,6 +17,9 @@ namespace VzDev.MediatorUtils
 
         public void NotifiyEvent() => SetToggleAndNotify(toggle.isOn);
 
+        public void SetToggleTrueAndNotify() => SetToggleAndNotify(true);
+        public void SetToggleFalseAndNotify() => SetToggleAndNotify(false);
+
         public void SetToggleAndNotify(bool value)
         {
             GetToggle();
