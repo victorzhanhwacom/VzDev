@@ -96,7 +96,7 @@ namespace VzDev.DCIMUtils.DataUtils
     [Serializable]
     public struct EquipmentUsageInfo
     {
-        public int power_watt;
+        public float power_watt;
         public float weight_kg;
         public int heightU;
     }

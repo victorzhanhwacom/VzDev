@@ -14,14 +14,14 @@ namespace VzDev.DCIMUtils.DataUtils
     {
         #region Fields
         [field: SerializeField]
-        public int totalPowerWatt { get; private set; }
+        public float totalPowerWatt { get; private set; }
         [field: SerializeField]
         public float totalWeightKG { get; private set; }
         [field: SerializeField]
         public int totalHeightU { get; private set; }
 
         [field: SerializeField]
-        public int remainPowerWatt { get; private set; }
+        public float remainPowerWatt { get; private set; }
         [field: SerializeField]
         public float remainWeightKG { get; private set; }
         [field: SerializeField]
@@ -46,7 +46,7 @@ namespace VzDev.DCIMUtils.DataUtils
         #endregion
 
         #region 檢查上架設備是否符合機櫃的功率/重量/U高限制
-        public bool IsRackUCanFit_Power(int powerWatt, out float remainPowerPercent)
+        public bool IsRackUCanFit_Power(float powerWatt, out float remainPowerPercent)
         {
             remainPowerPercent = 0f;
             if (_dcrAsset == null) return false;
