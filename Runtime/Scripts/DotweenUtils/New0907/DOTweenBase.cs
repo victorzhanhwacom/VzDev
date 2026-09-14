@@ -18,7 +18,7 @@ namespace VzDev.DOTweenUtils
 
         #region TweenParams Fields
         [SerializeField] private bool isAutoShowOnEnable = true;
-        [Foldout("[Tween]"), SerializeField, Label(">>Tween數值設定檔SO"), Expandable] protected DOTweeParamsSO tweenParamsSO;
+        [Foldout("[Tween]"), SerializeField, Label(">>Tween數值設定檔SO"), Expandable] protected DOTweenParamsSO tweenParamsSO;
         private bool isHaveSO => tweenParamsSO != null;
         [Space(10)]
         [Foldout("[Tween]"), SerializeField, HideIf("isHaveSO")] private float duration = 0.3f;

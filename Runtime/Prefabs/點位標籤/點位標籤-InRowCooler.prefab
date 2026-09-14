@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 129294444295183856, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_text
+      value: '{txtCategory}'
+      objectReference: {fileID: 0}
     - target: {fileID: 144637586928522246, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -103,10 +107,22 @@ PrefabInstance:
     - target: {fileID: 901009611278758457, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1136573058491513583, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_text
+      value: ---
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284266179374483346, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_text
+      value: ---
       objectReference: {fileID: 0}
     - target: {fileID: 1284266179374483346, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_margin.x
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1375900534264639101, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1925838190527850011, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_SizeDelta.x
@@ -174,11 +190,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2539341838860534749, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 21.7
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 2539341838860534749, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 194.1
+      value: 288
       objectReference: {fileID: 0}
     - target: {fileID: 2539341838860534749, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -220,9 +236,13 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3858680891955628648, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_text
+      value: '{txtDeviceName}'
+      objectReference: {fileID: 0}
     - target: {fileID: 5214129405273401866, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_text
-      value: 14.2
+      value: ---
       objectReference: {fileID: 0}
     - target: {fileID: 5214129405273401866, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_margin.x
@@ -256,6 +276,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u9EDE\u4F4D\u6A19\u7C64-InRowCooler"
       objectReference: {fileID: 0}
+    - target: {fileID: 8160073647690611134, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_text
+      value: ---
+      objectReference: {fileID: 0}
     - target: {fileID: 8228412168726058200, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -264,5 +288,213 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 7536287376489361567, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 603085378049189971, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8493341039738311605}
+    - targetCorrespondingSourceObject: {fileID: 5895344592681551307, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2338538407311497185}
+    - targetCorrespondingSourceObject: {fileID: 3547919902876122087, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1033547660197267676}
+    - targetCorrespondingSourceObject: {fileID: 5748619292481271990, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7452651935161257980}
   m_SourcePrefab: {fileID: 100100000, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+--- !u!1 &543412092958884885 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3547919902876122087, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+  m_PrefabInstance: {fileID: 3942382717966974962}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1033547660197267676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543412092958884885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9068f47845537c49a2f4a3111ce8212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.DOTweenUtils.DOTweenText
+  onComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  isAutoShowOnEnable: 1
+  tweenParamsSO: {fileID: 11400000, guid: c4dd86557d642654eab19d87316d45b3, type: 2}
+  duration: 0.3
+  easeOut: 30
+  easeIn: 29
+  isRandomDelay: 1
+  delay: 0
+  delayRandomRange: {x: 0, y: 0.1}
+  isLoop: 0
+  loopTimes: -1
+  loopType: 1
+  txt: {fileID: 5154457246550230604}
+--- !u!114 &2838544817592825952 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1284266179374483346, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+  m_PrefabInstance: {fileID: 3942382717966974962}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7450731272298740281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4139867011899786525 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1136573058491513583, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+  m_PrefabInstance: {fileID: 3942382717966974962}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8750805204422805316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &4533082780394182561 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 603085378049189971, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+  m_PrefabInstance: {fileID: 3942382717966974962}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8493341039738311605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4533082780394182561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9068f47845537c49a2f4a3111ce8212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.DOTweenUtils.DOTweenText
+  onComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  isAutoShowOnEnable: 1
+  tweenParamsSO: {fileID: 11400000, guid: c4dd86557d642654eab19d87316d45b3, type: 2}
+  duration: 0.3
+  easeOut: 30
+  easeIn: 29
+  isRandomDelay: 1
+  delay: 0
+  delayRandomRange: {x: 0, y: 0.1}
+  isLoop: 0
+  loopTimes: -1
+  loopType: 1
+  txt: {fileID: 9145235381660292600}
+--- !u!114 &5154457246550230604 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8160073647690611134, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+  m_PrefabInstance: {fileID: 3942382717966974962}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543412092958884885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &7450731272298740281 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5895344592681551307, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+  m_PrefabInstance: {fileID: 3942382717966974962}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2338538407311497185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7450731272298740281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9068f47845537c49a2f4a3111ce8212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.DOTweenUtils.DOTweenText
+  onComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  isAutoShowOnEnable: 1
+  tweenParamsSO: {fileID: 11400000, guid: c4dd86557d642654eab19d87316d45b3, type: 2}
+  duration: 0.3
+  easeOut: 30
+  easeIn: 29
+  isRandomDelay: 1
+  delay: 0
+  delayRandomRange: {x: 0, y: 0.1}
+  isLoop: 0
+  loopTimes: -1
+  loopType: 1
+  txt: {fileID: 2838544817592825952}
+--- !u!1 &8750805204422805316 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5748619292481271990, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+  m_PrefabInstance: {fileID: 3942382717966974962}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7452651935161257980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8750805204422805316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9068f47845537c49a2f4a3111ce8212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.DOTweenUtils.DOTweenText
+  onComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  onUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  onStart:
+    m_PersistentCalls:
+      m_Calls: []
+  isAutoShowOnEnable: 1
+  tweenParamsSO: {fileID: 11400000, guid: c4dd86557d642654eab19d87316d45b3, type: 2}
+  duration: 0.3
+  easeOut: 30
+  easeIn: 29
+  isRandomDelay: 1
+  delay: 0
+  delayRandomRange: {x: 0, y: 0.1}
+  isLoop: 0
+  loopTimes: -1
+  loopType: 1
+  txt: {fileID: 4139867011899786525}
+--- !u!114 &9145235381660292600 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5214129405273401866, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+  m_PrefabInstance: {fileID: 3942382717966974962}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4533082780394182561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

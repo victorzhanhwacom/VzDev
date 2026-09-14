@@ -5,7 +5,7 @@ using UnityEngine;
 namespace VzDev.DOTweenUtils
 {
     [CreateAssetMenu(fileName = "DOTweeParamsSO", menuName = "VzDev/DOTween/DOTweeParamsSO", order = 1)]
-    public class DOTweeParamsSO : ScriptableObject
+    public class DOTweenParamsSO : ScriptableObject
     {
         [Foldout("[Tween]")] public float duration = 0.3f;
         [Foldout("[Tween]"), SerializeField] protected Ease easeOut = Ease.OutQuad;
