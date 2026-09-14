@@ -10,12 +10,24 @@ namespace VzDev.DateTimeUtils
     /// DateTime日期格式
     public static class DateTimeHelper
     {
+        /// <summary>
         /// 將字串轉成DateTime當地時間(LocalTime)
+        /// </summary>
         public static DateTime StringToDateTime(string dateTimeString, DateTime? onFailed = null)
         {
-            if (string.IsNullOrWhiteSpace(dateTimeString)) return onFailed ?? DateTime.MinValue; // 西元 1 年 1 月 1 日午夜 0 點
+            if (string.IsNullOrWhiteSpace(dateTimeString)) return onFailed ?? DateTime.MinValue;
             dateTimeString = dateTimeString.Trim();
-            if (DateTime.TryParse(dateTimeString, null, DateTimeStyles.AdjustToUniversal, out var utcTime)) return utcTime.ToLocalTime();
+
+            if (DateTime.TryParse(dateTimeString, CultureInfo.InvariantCulture,
+                    DateTimeStyles.RoundtripKind, out var parsed))
+            {
+                return parsed.Kind switch
+                {
+                    DateTimeKind.Utc => parsed.ToLocalTime(),   // 有 "Z" 或明確UTC才轉換
+                    DateTimeKind.Local => parsed.ToLocalTime(), // 有帶offset，轉成本機時區
+                    _ => parsed                                 // 沒有時區資訊 → 視為已經是local，原樣回傳
+                };
+            }
             return onFailed ?? DateTime.MinValue;
         }
 

@@ -7,11 +7,9 @@ using System.Text;
 using NaughtyAttributes;
 using UnityEngine;
 using VzDev.ApiExtensions;
-using VictorDev.Net;
-using VictorDev.Net.WebAPI;
 using VzDev.UnityAPI.Extensions;
 
-namespace VzDev.Net.WebAPI
+namespace VzDev.NetUtils
 {
     /// WebAPI Requst資料包
     [CreateAssetMenu(fileName = "WebApiRequest", menuName = "VictorDev/Net/WebApiRequest")]

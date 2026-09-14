@@ -9,8 +9,7 @@ using VictorDev.Managers;
 using VzDev.UnityAPI.Extensions;
 using Debug = VzDev.ToolUtils.Debug;
 
-
-namespace VzDev.Net.WebAPI
+namespace VzDev.NetUtils
 {
     public static class WebApiCaller
     {

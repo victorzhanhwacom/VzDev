@@ -1,8 +1,7 @@
-using VzDev.Net.WebAPI;
 using NaughtyAttributes;
 using UnityEngine;
 
-namespace VictorDev.Net.WebAPI
+namespace VzDev.NetUtils
 {
     /// WebAPI Authorization設定
     [CreateAssetMenu(fileName = "WebApiAuthorization", menuName = "VictorDev/Net/WebApiAuthorization")]

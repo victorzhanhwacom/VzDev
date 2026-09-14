@@ -1,5 +1,5 @@
 
-namespace VzDev.Net.WebAPI
+namespace VzDev.NetUtils
 {
     public enum EnumAuthorizationType
     {
@@ -9,8 +9,8 @@ namespace VzDev.Net.WebAPI
     /// Https / Http
     public enum EnumHttpType
     {
+        http,
         https,
-        http
     };
     /// GET / POST 與其它類型
     public enum EnumHttpMethod

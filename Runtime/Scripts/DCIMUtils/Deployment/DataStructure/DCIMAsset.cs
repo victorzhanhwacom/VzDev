@@ -39,7 +39,7 @@ namespace VzDev.DCIMUtils.DataUtils
     }
     public enum DCIM_Catetory
     {
-        Unknow, Rack, Server, Switch, Router,
+        Unknow, Rack, Server, Switch, Router, IA,
         Storage, Firewall, UPS, PDU, Patch_Panel, PatchPanel
     }
 

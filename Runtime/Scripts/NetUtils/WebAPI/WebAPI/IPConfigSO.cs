@@ -1,9 +1,8 @@
-using VzDev.Net.WebAPI;
 using NaughtyAttributes;
 using UnityEngine;
 using System;
 
-namespace VictorDev.Net
+namespace VzDev.NetUtils
 {
     /// 設定IP、Port
     [CreateAssetMenu(fileName = "IPConfig", menuName = "VzDev/Net/IPConfig")]
