@@ -21,18 +21,7 @@ namespace VzDev.NetUtils
 
 
         #region 設定Config
-        public void SetConfig(string httpType, string ip, string port, string surfix = "/api")
-        {
-            EnumHttpType parsedHttpType;
-            if (Enum.TryParse(httpType, out parsedHttpType) == false)
-            {
-                Debug.Log($"⚠️Invalid httpType: {httpType}. Using default value.");
-                parsedHttpType = EnumHttpType.http; // Default value
-            }
-            SetConfig(parsedHttpType, ip, int.TryParse(port, out int parsedPort) ? parsedPort : 80, surfix);
-        }
-
-        public void SetConfig(EnumHttpType httpType, string ip, int port, string surfix = "/api")
+        public void SetConfig(EnumHttpType httpType, string ip, int port=80, string surfix = "/api")
         {
             this.httpType = httpType;
             this.ip = ip;
