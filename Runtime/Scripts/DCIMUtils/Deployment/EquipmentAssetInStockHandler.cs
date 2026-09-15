@@ -96,16 +96,15 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                     EquipmentAsset equipmentAsset = new EquipmentAsset
                     {
                         deviceCode = deviceCode,
-                        deploymentStatus = DeploymentStatus.InStock,
                         system = model.name.Contains("Server") ? DCIM_System.DCS : DCIM_System.DCN,
-                        companyPropertyInfo = new CompanyPropertyInfo
+                        companyAssetInfo = new CompanyAssetInfo
                         {
-                            propertyName = deviceCode,
+                            assetName = deviceCode,
                             note = $"{deviceCode} in stock"
                         },
                     };
 
-                    equipmentAsset.companyPropertyInfo.GenerateRandomPropertyNo("NTCGO");
+                    equipmentAsset.companyAssetInfo.GenerateRandomAssetNumber("NTCGO");
                     equipmentAsset.sizeInfo = new SizeInfo
                     {
                         width_mm = Random.Range(400, 600),

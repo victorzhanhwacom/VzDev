@@ -11,9 +11,9 @@ namespace VzDev.DCIMUtils.DataUtils
     [Serializable]
     public class DCIMAsset : RevitAsset
     {
-        public DCIM_Catetory category = DCIM_Catetory.Unknow;
+        public DCIM_Category category = DCIM_Category.Unknow;
         public DCIM_System system = DCIM_System.Unknow;
-        public CompanyPropertyInfo companyPropertyInfo = new();
+        public CompanyAssetInfo companyAssetInfo = new();
         public SizeInfo sizeInfo = new();
         public string DeviceCategory => system.ToString();
 
@@ -22,11 +22,11 @@ namespace VzDev.DCIMUtils.DataUtils
         /// </summary>
         public void CheckSystemAndCategory()
         {
-            category = EnumHelper<DCIM_Catetory>.GetEnumFromString(deviceCode ?? modelInfo.modelName);
+            category = EnumHelper<DCIM_Category>.GetEnumFromString(deviceCode ?? modelInfo.modelName);
             system = EnumHelper<DCIM_System>.GetEnumFromString(deviceCode);
-            companyPropertyInfo.GenerateRandomPropertyNo("NTCGO");
+            companyAssetInfo.GenerateRandomAssetNumber("NTCGO");
             deviceName ??= modelInfo.modelName;
-            companyPropertyInfo.propertyName ??= modelInfo.modelName;
+            companyAssetInfo.assetName ??= modelInfo.modelName;
         }
     }
 
@@ -37,7 +37,7 @@ namespace VzDev.DCIMUtils.DataUtils
     {
         Unknow, DCR, DCS, DCN, DCE, DCP
     }
-    public enum DCIM_Catetory
+    public enum DCIM_Category
     {
         Unknow, Rack, Server, Switch, Router, IA,
         Storage, Firewall, UPS, PDU, Patch_Panel, PatchPanel
@@ -47,16 +47,16 @@ namespace VzDev.DCIMUtils.DataUtils
     /// 公司資產資訊
     /// </summary>
     [Serializable]
-    public class CompanyPropertyInfo
+    public class CompanyAssetInfo
     {
         /// <summary>
         /// 財產名稱
         /// </summary>
-        public string propertyName;
+        public string assetName;
         /// <summary>
         /// 財產編號
         /// </summary>
-        public string propertyNumber;
+        public string assetNumber;
 
         /// <summary>
         /// 備註
@@ -66,11 +66,11 @@ namespace VzDev.DCIMUtils.DataUtils
         /// <summary>
         /// 自動產生財產編號 (DEMO用)
         /// </summary>
-        public void GenerateRandomPropertyNo(string prefix, int length = 8)
+        public void GenerateRandomAssetNumber(string prefix, int length = 8)
         {
-            if (string.IsNullOrEmpty(propertyNumber) == false) return;
+            if (string.IsNullOrEmpty(assetNumber) == false) return;
             int number = UnityEngine.Random.Range(0, MathHelper.GetAllNines(length));
-            propertyNumber = $"{prefix}-{number.ToString($"D{length}")}";
+            assetNumber = $"{prefix}-{number.ToString($"D{length}")}";
         }
     }
 }

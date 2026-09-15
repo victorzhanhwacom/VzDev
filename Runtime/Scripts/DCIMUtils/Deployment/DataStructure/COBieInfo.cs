@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace VzDev.DCIMUtils.DataUtils
 {
@@ -8,6 +9,20 @@ namespace VzDev.DCIMUtils.DataUtils
     [Serializable]
     public class COBieInfo
     {
+        public void CheckAndFixData(DCIMAsset asset)
+        {
+            string modelName = asset.modelInfo.modelName.Trim();
+
+            if (string.IsNullOrEmpty(type_manufacturer))
+                type_manufacturer = modelName.Split('-').FirstOrDefault().Trim();
+            if (string.IsNullOrEmpty(type_modelNumber))
+                type_modelNumber = modelName;
+            if (string.IsNullOrEmpty(type_name))
+                type_name = asset.deviceName;
+            if (string.IsNullOrEmpty(type_category))
+                type_category =  asset.category.ToString();
+        }
+
         public string component_description = "";
         public string component_assetIdentifier = "";
         public string component_serialNumber = "";
@@ -80,25 +95,25 @@ namespace VzDev.DCIMUtils.DataUtils
                 facility_siteName = cobieInfo.facility_siteName,
                 equipment_supplier = cobieInfo.equipment_supplier,
                 floor_name = cobieInfo.floor_name,
-                space_name =cobieInfo.space_name,
-                space_roomTag =cobieInfo.space_roomTag,
-                system_category =cobieInfo.system_category,
-                system_name =cobieInfo.system_name,
-                type_category =cobieInfo.type_category,
-                type_expectedLife =cobieInfo.type_expectedLife,
-                type_manufacturer =cobieInfo.type_manufacturer,
-                type_modelNumber =cobieInfo.type_modelNumber,
-                type_name =cobieInfo.type_name,
-                type_replacementCost =cobieInfo.type_replacementCost,
-                type_accessibilityPerformance =cobieInfo.type_accessibilityPerformance,
-                type_shape =cobieInfo.type_shape,
-                type_size =cobieInfo.type_size,
-                type_color =cobieInfo.type_color,
-                type_finish =cobieInfo.type_finish,
-                type_grade =cobieInfo.type_grade,
-                type_material =cobieInfo.type_material
+                space_name = cobieInfo.space_name,
+                space_roomTag = cobieInfo.space_roomTag,
+                system_category = cobieInfo.system_category,
+                system_name = cobieInfo.system_name,
+                type_category = cobieInfo.type_category,
+                type_expectedLife = cobieInfo.type_expectedLife,
+                type_manufacturer = cobieInfo.type_manufacturer,
+                type_modelNumber = cobieInfo.type_modelNumber,
+                type_name = cobieInfo.type_name,
+                type_replacementCost = cobieInfo.type_replacementCost,
+                type_accessibilityPerformance = cobieInfo.type_accessibilityPerformance,
+                type_shape = cobieInfo.type_shape,
+                type_size = cobieInfo.type_size,
+                type_color = cobieInfo.type_color,
+                type_finish = cobieInfo.type_finish,
+                type_grade = cobieInfo.type_grade,
+                type_material = cobieInfo.type_material
             };
-            return newData;     
+            return newData;
         }
     }
 }

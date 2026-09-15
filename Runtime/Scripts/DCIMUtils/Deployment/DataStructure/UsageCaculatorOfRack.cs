@@ -81,7 +81,6 @@ namespace VzDev.DCIMUtils.DataUtils
             for (int i = 0; i < rack.container.Count; i++)
             {
                 EquipmentAsset equipment = rack.container[i];
-                if (equipment.deploymentStatus != DeploymentStatus.Deployed) continue;
                 int equipmentTop = equipment.startUIndex + equipment.equipmentUsageInfo.heightU - 1;
 
                 // 兩個區段不重疊的條件：一個完全在另一個上方，或完全在另一個下方
@@ -120,7 +119,6 @@ namespace VzDev.DCIMUtils.DataUtils
             for (int i = 0; i < _dcrAsset.container.Count; i++)
             {
                 EquipmentAsset equipment = _dcrAsset.container[i];
-                if (equipment.deploymentStatus != DeploymentStatus.Deployed) continue;
 
                 int start = equipment.startUIndex;
                 int end = start + equipment.equipmentUsageInfo.heightU - 1;

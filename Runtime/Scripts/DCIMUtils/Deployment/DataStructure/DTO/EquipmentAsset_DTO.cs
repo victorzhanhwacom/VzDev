@@ -37,8 +37,6 @@ namespace VzDev.DCIMUtils.DataUtils
                 {
                     modelName = DCIM_Helper.GetModelNameFromDeviceCode(devicePath)
                 },
-                deploymentStatus = DeploymentStatus.Deployed
-
             };
             result.CheckSystemAndCategory();
             return result;

@@ -26,8 +26,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         public void SetEquipmentAsset(EquipmentAsset asset)
         {
             equipmentAsset = asset;
-            txtPropertyName.text = equipmentAsset.companyPropertyInfo.propertyName;
-            txtPropertyNumber.text = equipmentAsset.companyPropertyInfo.propertyNumber;
+            txtPropertyName.text = equipmentAsset.companyAssetInfo.assetName;
+            txtPropertyNumber.text = equipmentAsset.companyAssetInfo.assetNumber;
             txtHeightU.text = equipmentAsset.equipmentUsageInfo.heightU.ToString();
         }
         public void SetToggleGroup(ToggleGroup group) => toggle.group = group;

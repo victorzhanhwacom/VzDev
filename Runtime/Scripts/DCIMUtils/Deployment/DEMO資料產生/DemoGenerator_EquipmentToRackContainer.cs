@@ -159,7 +159,6 @@ namespace VzDev.DCIMUtils.DeploymentUtils.Demo
 
                 EquipmentAsset equipment = CloneEquipmentAsset(template);
                 equipment.startUIndex = uIndex;
-                equipment.deploymentStatus = DeploymentStatus.Deployed;
 
                 if (!TryCreateEquipmentModel(rack, template, rackTransform, equipment))
                 {
@@ -345,13 +344,13 @@ namespace VzDev.DCIMUtils.DeploymentUtils.Demo
                     height_mm = template.sizeInfo.height_mm,
                     depth_mm = template.sizeInfo.depth_mm,
                 },
-                companyPropertyInfo = new CompanyPropertyInfo
+                companyAssetInfo = new CompanyAssetInfo
                 {
-                    propertyName = template.companyPropertyInfo.propertyName,
-                    note = template.companyPropertyInfo.note,
+                    assetName = template.companyAssetInfo.assetName,
+                    note = template.companyAssetInfo.note,
                 },
             };
-            clone.companyPropertyInfo.GenerateRandomPropertyNo("NTCGO");
+            clone.companyAssetInfo.GenerateRandomAssetNumber("NTCGO");
             return clone;
         }
         #endregion

@@ -19,7 +19,7 @@ namespace VzDev.UIUtils.Tooltip.ContentViews
                 return;
             }
 
-            titleLabel.text = chiller.companyPropertyInfo?.propertyName;
+            titleLabel.text = chiller.companyAssetInfo?.assetName;
             runtimeLabel.text = $"輸入溫度：{chiller.inputTemperature}°C\n輸出溫度：{chiller.outputTemperature}°C";
         }
     }

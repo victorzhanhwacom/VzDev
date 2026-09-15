@@ -68,7 +68,7 @@ namespace VzDev.DCIMUtils.Import
             // null，這裡補一個防呆避免 Sort() 對 null 清單噴例外。
             result.container ??= new List<EquipmentAsset>();
             result.container.Sort((a, b) => b.startUIndex.CompareTo(a.startUIndex));
-            result.companyPropertyInfo.propertyName = entry.devicePath.Split(":").LastOrDefault().Trim();
+            result.companyAssetInfo.assetName = entry.devicePath.Split(":").LastOrDefault().Trim();
             result.RefreshUsageInfo();
             return result;
         }

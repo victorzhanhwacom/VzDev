@@ -23,6 +23,5 @@ namespace VzDev.DCIMUtils.DataUtils
 
         public COBieInfo cobieInfo = new ();
         public ModelInfo modelInfo = new ();
-        public TimeStampData timeStampData = new TimeStampData();
     }
 }

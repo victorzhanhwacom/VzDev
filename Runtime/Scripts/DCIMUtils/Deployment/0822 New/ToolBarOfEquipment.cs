@@ -34,7 +34,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         #region 更新UI顯示資訊
         private void UpdateView()
         {
-            txtDeviceName.text = equipmentAsset.companyPropertyInfo.propertyName;
+            txtDeviceName.text = equipmentAsset.companyAssetInfo.assetName;
             txtSystem.text = equipmentAsset.system.ToString();
         }
         #endregion

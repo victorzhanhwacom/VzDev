@@ -40,11 +40,11 @@ namespace VzDev.DCIMUtils.DeploymentUtils
 
             private void CreateEquipmentComponentsInRack(DCR_Asset dcrAsset)
             {
-                  Debug.Log($"CreateEquipmentComponentsInRack{dcrAsset.companyPropertyInfo.propertyName}");
+                  Debug.Log($"CreateEquipmentComponentsInRack{dcrAsset.companyAssetInfo.assetName}");
                   if (dcrAsset == null || dcrAsset.modelInfo == null || dcrAsset.modelInfo.modelTarget == null) return;
                   if (dcrAsset.container == null || dcrAsset.container.Count == 0) return;
 
-                  Debug.Log($"在機櫃 {dcrAsset.companyPropertyInfo.propertyName} 中生成設備模型，數量: {dcrAsset.container.Count}");
+                  Debug.Log($"在機櫃 {dcrAsset.companyAssetInfo.assetName} 中生成設備模型，數量: {dcrAsset.container.Count}");
 
                   for (int i = 0; i < dcrAsset.container.Count; i++)
                   {

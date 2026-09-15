@@ -14,7 +14,6 @@ namespace VzDev.DCIMUtils.DataUtils
         public string rackDevicePath;
 
         public EquipmentUsageInfo equipmentUsageInfo;
-        public DeploymentStatus deploymentStatus = DeploymentStatus.Unknow;
         public int startUIndex; // 部署在機櫃裡的起始 U 位置，未部署時為 0 或 -1
 
         /// <summary>
@@ -34,12 +33,10 @@ namespace VzDev.DCIMUtils.DataUtils
                 deviceName = deviceName,
                 cobieInfo = COBieInfo.ToClone(cobieInfo),
                 modelInfo = ModelInfo.ToClone(modelInfo),
-                timeStampData = timeStampData,
                 category = category,
                 system = system,
-                companyPropertyInfo = companyPropertyInfo,
+                companyAssetInfo = companyAssetInfo,
                 equipmentUsageInfo = equipmentUsageInfo,
-                deploymentStatus = deploymentStatus,
                 startUIndex = startUIndex
             };
 
@@ -58,12 +55,10 @@ namespace VzDev.DCIMUtils.DataUtils
                 deviceName = deviceName,
                 cobieInfo = cobieInfo,
                 modelInfo = modelInfo,
-                timeStampData = timeStampData,
                 category = category,
                 system = system,
-                companyPropertyInfo = companyPropertyInfo,
+                companyAssetInfo = companyAssetInfo,
                 equipmentUsageInfo = equipmentUsageInfo,
-                deploymentStatus = deploymentStatus,
                 startUIndex = startUIndex
             };
             return dcnAsset;
@@ -77,12 +72,10 @@ namespace VzDev.DCIMUtils.DataUtils
                 deviceName = deviceName,
                 cobieInfo = cobieInfo,
                 modelInfo = modelInfo,
-                timeStampData = timeStampData,
                 category = category,
                 system = system,
-                companyPropertyInfo = companyPropertyInfo,
+                companyAssetInfo = companyAssetInfo,
                 equipmentUsageInfo = equipmentUsageInfo,
-                deploymentStatus = deploymentStatus,
                 startUIndex = startUIndex
             };
             return dcsAsset;

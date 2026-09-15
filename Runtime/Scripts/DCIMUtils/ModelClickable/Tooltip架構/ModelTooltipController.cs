@@ -121,8 +121,8 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
                 var asset = provider.GetAsset();
                 if (asset != null)
                 {
-                    string nameFromAsset = !string.IsNullOrEmpty(asset.companyPropertyInfo?.propertyName)
-                        ? asset.companyPropertyInfo.propertyName
+                    string nameFromAsset = !string.IsNullOrEmpty(asset.companyAssetInfo?.assetName)
+                        ? asset.companyAssetInfo.assetName
                         : ResolveFallbackNameFromGameObject(target.name);
 
                     return (asset, nameFromAsset);

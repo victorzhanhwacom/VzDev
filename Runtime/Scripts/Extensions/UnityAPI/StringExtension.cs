@@ -75,6 +75,16 @@ namespace VzDev.UnityAPI.Extensions
             }
         }
 
+        /// <summary>
+        /// 將字串的首字母轉為大寫，其餘字母轉為小寫
+        /// </summary>
+        public static string ToTitleCase(this string self)
+        {
+            if (self.Length == 1) return char.ToUpperInvariant(self[0]).ToString();
+            return char.ToUpperInvariant(self[0]) + self.Substring(1).ToLowerInvariant();
+        }
+
+
 
 
         /////////////////////////////////////////////////

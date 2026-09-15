@@ -19,7 +19,7 @@ namespace VzDev.UIUtils.Tooltip.ContentViews
                 return;
             }
             rackAsset.RefreshUsageInfo();
-            titleLabel.text = rackAsset.companyPropertyInfo?.propertyName;
+            titleLabel.text = rackAsset.companyAssetInfo?.assetName;
             progressLabel.text = $"{rackAsset.usageInfo.totalPowerWatt:#.#}W / {rackAsset.power_watt_Max}W";
         }
     }

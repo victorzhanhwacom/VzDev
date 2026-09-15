@@ -42,10 +42,9 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             {
                 deviceCode = deviceCode,
                 deviceName = modelName,
-                deploymentStatus = DeploymentStatus.InStock,
-                companyPropertyInfo = new CompanyPropertyInfo
+                companyAssetInfo = new CompanyAssetInfo
                 {
-                    propertyName = modelName,
+                    assetName = modelName,
                 },
                 cobieInfo = new COBieInfo
                 {

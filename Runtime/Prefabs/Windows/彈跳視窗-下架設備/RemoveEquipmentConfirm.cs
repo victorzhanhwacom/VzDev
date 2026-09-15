@@ -47,7 +47,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         {
             txtDeviceName.SetText(equipmentAsset.deviceName);
             txtCategory.SetText(equipmentAsset.category.ToString());
-            txtPropertyNumber.SetText(equipmentAsset.companyPropertyInfo.propertyNumber);
+            txtPropertyNumber.SetText(equipmentAsset.companyAssetInfo.assetNumber);
             txtUsageHeightu.SetText(equipmentAsset.equipmentUsageInfo.heightU.ToString());
             txtUsagePower.SetText(equipmentAsset.equipmentUsageInfo.power_watt.ToString());
             txtUsageWeight.SetText(equipmentAsset.equipmentUsageInfo.weight_kg.ToString());

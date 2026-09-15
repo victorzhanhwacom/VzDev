@@ -18,8 +18,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         {
             equipmentAsset = asset;
             toggle.group = toggleGroup;
-            txtPropertyName.text = equipmentAsset.companyPropertyInfo.propertyName;
-            txtPropertyNumber.text = equipmentAsset.companyPropertyInfo.propertyNumber;
+            txtPropertyName.text = equipmentAsset.companyAssetInfo.assetName;
+            txtPropertyNumber.text = equipmentAsset.companyAssetInfo.assetNumber;
             txtHeightU.text = equipmentAsset.equipmentUsageInfo.heightU.ToString();
         }
 

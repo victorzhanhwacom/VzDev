@@ -15,7 +15,7 @@ namespace VzDev.DCIMUtils.DataUtils
         public DCR_Asset()
         {
             system = DCIM_System.DCR;
-            category = DCIM_Catetory.Rack;
+            category = DCIM_Category.Rack;
         }
 
         /// <summary>
@@ -64,8 +64,8 @@ namespace VzDev.DCIMUtils.DataUtils
             if (string.IsNullOrEmpty(deviceName) && modelInfo?.modelTarget != null)
             {
                 deviceName = modelInfo.modelTarget.name.GetStringBetweenMarks("[", "]").Split(":")[1];
-                companyPropertyInfo.propertyName = deviceName;
-                companyPropertyInfo.GenerateRandomPropertyNo("NTCGO");
+                companyAssetInfo.assetName = deviceName;
+                companyAssetInfo.GenerateRandomAssetNumber("NTCGO");
             }
         }
 
@@ -86,7 +86,6 @@ namespace VzDev.DCIMUtils.DataUtils
             if (equipmentModel.TryAddComponent(out DataModelBinder_Equipment equipmentBinder))
             {
                 equipmentBinder.SetEquipmentAsset(equipmentAsset);
-                equipmentAsset.deploymentStatus = DeploymentStatus.Deployed;
             }
 
             RefreshUsageInfo();
