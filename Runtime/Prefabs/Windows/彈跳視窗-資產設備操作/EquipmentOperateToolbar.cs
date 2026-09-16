@@ -13,6 +13,11 @@ namespace VzDev.DCIMUtils.DeploymentUtils
 {
     public class EquipmentOperateToolbar : MonoBehaviour
     {
+        #region UnityEvent
+        [Foldout("[Events]"), SerializeField] private UnityEvent<Transform> equipmentModelEvent;
+        [Foldout("[Events]"), SerializeField] private UnityEvent onClickCloseEvent;
+        #endregion
+
         #region Field
         [SerializeField, ReadOnly] private EquipmentAsset equipmentAsset;
         [Foldout("[Components]"), SerializeField] private RectTransform rectTransform;
@@ -50,7 +55,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             imgDevicePhoto.sprite = equipmentAsset.assetPhotoSprite ?? null;
 
             btnRemove.gameObject.SetActive(equipmentAsset.system != DCIM_System.DCR);
-            btnMove.gameObject.SetActive(equipmentAsset.system != DCIM_System.DCR);
+            btnMove?.gameObject.SetActive(equipmentAsset.system != DCIM_System.DCR);
 
             equipmentModelEvent?.Invoke(equipmentAsset.modelInfo.modelTarget);
         }
@@ -83,8 +88,9 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             {
                 if (rootView.activeSelf && lastEquipmentBinder == binder)
                 {
-                    Hide();
-                    lastEquipmentBinder = null;
+                    // Hide();
+                    // lastEquipmentBinder = null;
+                    OnClickClose();
                 }
                 else
                 {
@@ -95,14 +101,17 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             }
             else
             {
-                Hide();
-                lastEquipmentBinder = null;
+                // Hide();
+                // lastEquipmentBinder = null;
+                    OnClickClose();
             }
         }
 
         private void OnMouseClickEmptyHandler()
         {
-            // Hide();
+            Hide();
+            lastEquipmentBinder = null;
+            onClickCloseEvent?.Invoke();
         }
 
         private void OnDisable()
@@ -119,7 +128,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         {
             btnLocation.onClick.AddListener(OnClickLocation);
             btnRemove.onClick.AddListener(OnClickRemove);
-            btnMove.onClick.AddListener(OnClickMove);
+            btnMove?.onClick.AddListener(OnClickMove);
             btnClose.onClick.AddListener(OnClickClose);
             tweenFader.Show();
             // tweenFader.gameObject.SetActive(true);
@@ -132,7 +141,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             tweenFader.Hide();
             btnLocation.onClick.RemoveListener(OnClickLocation);
             btnRemove.onClick.RemoveListener(OnClickRemove);
-            btnMove.onClick.RemoveListener(OnClickMove);
+            btnMove?.onClick.RemoveListener(OnClickMove);
             btnClose.onClick.RemoveListener(OnClickClose);
         }
         private void OnClickLocation() => RTSCameraController.CameraToPosition(equipmentAsset.modelInfo.modelTarget.transform);
@@ -143,11 +152,11 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             Hide();
             lastEquipmentBinder = null;
             ColliderInteractionSystem.SimulateClickEmpty();
+            onClickCloseEvent?.Invoke();
         }
         #endregion
 
         public static Action<EquipmentAsset> OnRemoveEquipmentAssetAction, OnMoveEquipmentAssetAction;
 
-        public UnityEvent<Transform> equipmentModelEvent;
     }
 }

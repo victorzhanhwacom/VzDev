@@ -35,6 +35,12 @@ namespace VzDev.ObjectUtils
             transform.position = screenPosition;
         }
 
-        public void FollowModelPosition(Transform modelTarget) => targetModel = modelTarget;
+        public void FollowModelPosition(Transform modelTarget)
+        {
+            targetModel = modelTarget;
+            enabled = targetModel != null;
+        }
+
+        public void CancelFollowModelPosition() => targetModel = null;
     }
 }
