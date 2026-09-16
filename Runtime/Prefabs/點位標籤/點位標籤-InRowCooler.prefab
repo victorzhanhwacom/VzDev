@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 129294444295183856, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_text
-      value: '{txtCategory}'
+      value: InRowCooler
       objectReference: {fileID: 0}
     - target: {fileID: 144637586928522246, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_AnchorMax.y
@@ -207,6 +207,10 @@ PrefabInstance:
     - target: {fileID: 2539341838860534749, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585788657529399252, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: offsetPos.y
+      value: 1.05
       objectReference: {fileID: 0}
     - target: {fileID: 3108810612745007706, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_AnchoredPosition.x

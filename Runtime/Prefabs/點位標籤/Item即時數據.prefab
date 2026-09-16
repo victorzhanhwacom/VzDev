@@ -447,10 +447,6 @@ PrefabInstance:
       propertyPath: m_fontSizeBase
       value: 24
       objectReference: {fileID: 0}
-    - target: {fileID: 5181061595926067212, guid: 5edd9f5c6e69348488329c9dd258e1ec, type: 3}
-      propertyPath: m_VerticalAlignment
-      value: 4096
-      objectReference: {fileID: 0}
     - target: {fileID: 6103762908166955760, guid: 5edd9f5c6e69348488329c9dd258e1ec, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4289374890

@@ -29,13 +29,13 @@ namespace VzDev.DCIMUtils
         /// <summary>
         /// 從DeviceName取得模型名稱
         /// </summary>
-        public static string GetModelNameFromDeviceName(string deviceName)
-        => GetModelNameFromDeviceCode(deviceName.GetStringBetweenMarks("[", "]"));
+        public static string GetModelNameFromDeviceName(string deviceName, bool includeNumber = false)
+        => GetModelNameFromDeviceCode(deviceName.GetStringBetweenMarks("[", "]"), includeNumber);
 
         /// <summary>
         /// 從DeviceCode取得模型名稱
         /// </summary>
-        public static string GetModelNameFromDeviceCode(string deviceCode)
+        public static string GetModelNameFromDeviceCode(string deviceCode, bool includeNumber = false)
         {
             if (string.IsNullOrEmpty(deviceCode)) return string.Empty;
 
@@ -45,7 +45,7 @@ namespace VzDev.DCIMUtils
                 Debug.LogWarning($"Device code '{deviceCode}' does not contain a model name.");
                 return string.Empty;
             }
-            return parts[1].Split("+")[0].Trim();
+            return includeNumber ? parts[1].Trim() : parts[1].Split("+")[0].Trim();
         }
         #endregion
 

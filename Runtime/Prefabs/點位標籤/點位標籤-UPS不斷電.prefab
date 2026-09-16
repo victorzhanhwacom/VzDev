@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &33621098362551107
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8628702832882416179}
+  m_Layer: 0
+  m_Name: ForDemo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8628702832882416179
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33621098362551107}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7322435670337686489}
+  m_Father: {fileID: 4459045601344379694}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &138152786127556219
 GameObject:
   m_ObjectHideFlags: 0
@@ -306,6 +338,132 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 2
+--- !u!1 &4471292844359538675
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7322435670337686489}
+  - component: {fileID: 7688560813026801592}
+  - component: {fileID: 5712478215295857260}
+  m_Layer: 0
+  m_Name: RandomValueGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7322435670337686489
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4471292844359538675}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8628702832882416179}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7688560813026801592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4471292844359538675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c07b0eb230dd3a48b9ded959d6b1bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.DemoUtils.RandomValueGenerator
+  valueType: 2
+  currentValueFloat: 0
+  currentValueInt: 11282
+  OnValueChangedString:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2079209733154476889}
+        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+        m_MethodName: SetText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+  OnValueChangedFloat:
+    m_PersistentCalls:
+      m_Calls: []
+  OnValueChangedFloat01:
+    m_PersistentCalls:
+      m_Calls: []
+  OnValueChangedInt:
+    m_PersistentCalls:
+      m_Calls: []
+  OnValueChangedSingle:
+    m_PersistentCalls:
+      m_Calls: []
+  minValue: 10000
+  maxValue: 12000
+  decimalPlaces: 0
+  useWeightedRandom: 0
+  segments: []
+--- !u!114 &5712478215295857260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4471292844359538675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d51d4674bb6b6f4a95cdfa1ac08ce60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.Frameworks.LifecycleUtils.LifecycleInstance
+  onAwakeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onStartEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7688560813026801592}
+        m_TargetAssemblyTypeName: VzDev.DemoUtils.RandomValueGenerator, VzDev
+        m_MethodName: GenerateRandomValue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  isEnableEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onEnableEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDisableEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  onDestroyEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  enableUpdateEvent: 0
+  onUpdateEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4871024131258847950
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,7 +536,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0
+  m_FillAmount: 0.635
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -970,7 +1128,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 129294444295183856, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_text
-      value: '{txtCategory}'
+      value: "UPS\u4E0D\u65B7\u96FB\u7CFB\u7D71"
+      objectReference: {fileID: 0}
+    - target: {fileID: 129294444295183856, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_TextWrappingMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 144637586928522246, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1171,6 +1333,10 @@ PrefabInstance:
     - target: {fileID: 2539341838860534749, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2585788657529399252, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: offsetPos.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2894290460723910933, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1391,6 +1557,9 @@ PrefabInstance:
     - {fileID: 603085378049189971, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
     - {fileID: 4594221235192042211, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2539341838860534749, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8628702832882416179}
     - targetCorrespondingSourceObject: {fileID: 5723544969215467686, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       insertIndex: 2
       addedObject: {fileID: 2256377370014773214}
@@ -1419,6 +1588,11 @@ RectTransform:
 --- !u!224 &2010016213004920132 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 376394385800609207, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+  m_PrefabInstance: {fileID: 2223717924826749171}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &4459045601344379694 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2539341838860534749, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
   m_PrefabInstance: {fileID: 2223717924826749171}
   m_PrefabAsset: {fileID: 0}
 --- !u!224 &4636510438246346726 stripped
@@ -1763,7 +1937,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8247798005887269506, guid: 96a055b0e8412c04e83affdaa58538b5, type: 3}
       propertyPath: m_text
-      value: ---
+      value: 15,000
       objectReference: {fileID: 0}
     - target: {fileID: 8247798005887269506, guid: 96a055b0e8412c04e83affdaa58538b5, type: 3}
       propertyPath: m_fontSize
@@ -2179,7 +2353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8247798005887269506, guid: 96a055b0e8412c04e83affdaa58538b5, type: 3}
       propertyPath: m_text
-      value: ---
+      value: 11,282
       objectReference: {fileID: 0}
     - target: {fileID: 8247798005887269506, guid: 96a055b0e8412c04e83affdaa58538b5, type: 3}
       propertyPath: m_fontSize

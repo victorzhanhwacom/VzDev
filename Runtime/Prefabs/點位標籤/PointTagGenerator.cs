@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
+using VzDev.DCIMUtils;
 using VzDev.DebugUtils;
 
 namespace VzDev.LandmarkUtils
@@ -80,7 +81,7 @@ namespace VzDev.LandmarkUtils
                 Transform targetModel = targetModels[i];
                 PointTag pointTag = Instantiate(pointTagPrefab, pointsContainer);
                 pointTag.SetFollowerTarget(targetModel);
-                pointTag.SetModelName(targetModel.name);
+                pointTag.SetModelName(DCIM_Helper.GetModelNameFromDeviceName(targetModel.name, true));
                 pointTag.SetToggleViewModeGroup(toggleGroupViewMode);
                 pointTag.SetToggleDotModeGroup(toggleGroupDotMode);
                 pointTag.SetIsDotMode(isDotMode);
