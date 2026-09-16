@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using VzDev.Helpers;
 
@@ -16,6 +17,7 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         #region Fields
         [SerializeField, ReadOnly] private GameObject currentHover;
         [SerializeField, ReadOnly] private GameObject dragTarget;
+        [Foldout("[Event]"), SerializeField] private UnityEvent<Transform> onClickModelEvent;
         [Foldout("[Components]"), SerializeField] private Camera mainCamera;
         [Foldout("[Settings]"), SerializeField, Tooltip("模型對像篩選")] public LayerMask interactableLayer;
         [Foldout("[Settings]"), SerializeField] public float maxDistance = 100f;
@@ -39,6 +41,8 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             {
                 Debug.LogWarning("EventSystem is missing in the scene. Please add an EventSystem to handle UI interactions.", this);
             }
+
+            OnMouseClick += (gameObject) => onClickModelEvent?.Invoke(gameObject.transform);
         }
         private void OnValidate()
         {

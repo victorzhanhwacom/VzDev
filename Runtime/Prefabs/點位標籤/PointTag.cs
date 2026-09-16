@@ -12,94 +12,129 @@ namespace VzDev.LandmarkUtils
     {
         #region Fields
         [Foldout("[Components]"), SerializeField] private UIAnchorFollower uiAnchorFollower;
-        [Foldout("[Components]"), SerializeField] private Toggle toggle, labelToggle;
-        [Foldout("[Components]"), SerializeField] private TextMeshProUGUI label, label2;
-      
-        public Action<bool, PointTag> OnToggleChangedAction; // 外部订阅者可以监听Toggle状态变化]
-
-        public void SetToggleGroup(ToggleGroup group)
-        {
-            if (toggle != null)
-                toggle.group = group;
-        }
-
-        public void SetToggle(bool isOn)
-        {
-            if (toggle != null)
-                toggle.isOn = isOn;
-        }
-
+        [Foldout("[Components]"), SerializeField] private Toggle toggleSelf, toggleViewMode, toggleDotMode;
+        [Foldout("[Components]"), SerializeField] private TextMeshProUGUI txtModelName;
+        [Foldout("[Components]"), SerializeField] private Button btnClose;
         public Transform FollowerTarget => uiAnchorFollower != null ? uiAnchorFollower.Target3DObject : null;
-
-        public bool LabelVisible => labelToggle != null ? labelToggle.isOn : false;
         #endregion
 
+        #region 初始設置Toggle相關
         /// <summary>
         /// 設置UI Anchor Follower的目標物件，讓Tag跟隨該物件的位置。
         /// </summary>
         public void SetFollowerTarget(Transform target)
         {
-            if (uiAnchorFollower != null)
-                uiAnchorFollower.SetTargetObject(target);
+            if (uiAnchorFollower != null) uiAnchorFollower.SetTargetObject(target);
         }
 
-        public void SetLabelAlwaysVisible(bool alwaysVisible)
+        /// <summary>
+        /// 設定View標籤模式的ToggleGroup
+        /// </summary>
+        public void SetToggleViewModeGroup(ToggleGroup group)
         {
-            if (labelToggle != null)
-                labelToggle.isOn = alwaysVisible;
+            if (toggleViewMode != null) toggleViewMode.group = group;
         }
 
-        public void SetLabel(string text)
+        /// <summary>
+        /// 設定Dot精簡模式的ToggleGroup
+        /// </summary>
+        public void SetToggleDotModeGroup(ToggleGroup group)
         {
-            if (label != null)
-                label.text = text;
-            if (label2 != null)
-                label2.text = text;
+            if (toggleDotMode != null) toggleDotMode.group = group;
         }
+
+        /// <summary>
+        /// 設定是否為Dot精簡模式
+        /// </summary>
+        public void SetIsDotMode(bool isOn)
+        {
+            if (toggleSelf != null) toggleSelf.isOn = isOn;
+        }
+
+        /// <summary>
+        /// 設定標籤文字，如果有的話
+        /// </summary>
+        public void SetModelName(string modelName)
+        {
+            if (txtModelName != null) txtModelName.text = modelName;
+        }
+        #endregion
 
         private void OnValidate()
         {
             if (uiAnchorFollower == null)
                 uiAnchorFollower = GetComponent<UIAnchorFollower>();
-            if (toggle == null)
-                toggle = GetComponentsInChildren<Toggle>(true)[0];
-            if (labelToggle == null)
-                labelToggle = GetComponentsInChildren<Toggle>(true)[1];
-            if (label == null)
-                label = GetComponentInChildren<TextMeshProUGUI>(true);
+            toggleSelf ??= GetComponent<Toggle>();
         }
 
+        #region Event Listener
+        private void OnDisable()
+        {
+            btnClose.onClick.RemoveListener(OnClickCloseButton);
+            toggleDotMode.onValueChanged.RemoveListener(OnToggleDotModeValueChanged);
+            toggleViewMode.onValueChanged.RemoveListener(OnToggleViewModeValueChanged);
+            ColliderInteractionSystem.OnMouseClick -= OnModelClicked;
+            ColliderInteractionSystem.OnMouseClickEmpty -= OnMouseClickEmpty;
+        }
         private void OnEnable()
         {
-            toggle.onValueChanged.AddListener(OnToggleValueChanged);
+            btnClose.onClick.AddListener(OnClickCloseButton);
+            toggleDotMode.onValueChanged.AddListener(OnToggleDotModeValueChanged);
+            toggleViewMode.onValueChanged.AddListener(OnToggleViewModeValueChanged);
             ColliderInteractionSystem.OnMouseClick += OnModelClicked;
             ColliderInteractionSystem.OnMouseClickEmpty += OnMouseClickEmpty;
         }
+        #endregion
 
-        private void OnMouseClickEmpty() => toggle.isOn = false;
-
-        private void OnModelClicked(GameObject target)
+        #region 點擊Toggle / 模型事件
+        private void OnClickCloseButton()
         {
-            if (target.name == uiAnchorFollower.Target3DObject.name)
-            {
-                toggle.isOn = true;
-            }
+            toggleViewMode.isOn = false;
+            toggleDotMode.isOn = !toggleSelf.isOn;
         }
 
-        private void OnDisable() => toggle.onValueChanged.RemoveListener(OnToggleValueChanged);
-        private void OnToggleValueChanged(bool isOn)
+        private void OnToggleDotModeValueChanged(bool isOn)
         {
             if (isOn)
             {
                 ColliderInteractionSystem.SimulateClick(uiAnchorFollower.Target3DObject.gameObject);
             }
-            else
+        }
+        private void OnToggleViewModeValueChanged(bool isOn)
+        {
+            if (isOn)
             {
-                if(toggle.group != null && toggle.group.AnyTogglesOn() == false)
-                {
-                    ColliderInteractionSystem.SimulateClickEmpty();
-                }
+                ColliderInteractionSystem.SimulateClick(uiAnchorFollower.Target3DObject.gameObject);
             }
         }
+
+
+        private void OnToggleValueChanged(bool isOn)
+        {
+            bool isClickObject;
+            if (toggleSelf.isOn) isClickObject = toggleDotMode.isOn;
+            else isClickObject = toggleViewMode.isOn;
+            if (isClickObject) ColliderInteractionSystem.SimulateClick(uiAnchorFollower.Target3DObject.gameObject);
+            else ColliderInteractionSystem.SimulateClickEmpty();
+        }
+
+        private void OnModelClicked(GameObject target)
+        {
+            if (uiAnchorFollower == null || uiAnchorFollower.Target3DObject == null)
+            {
+                Debug.LogWarning($"{gameObject.name}: UIAnchorFollower或其目標物件為空，無法處理模型點擊事件。", this);
+                return;
+            }
+
+            if (target.name == uiAnchorFollower.Target3DObject.name)
+            {
+                if (toggleSelf.isOn) toggleDotMode.isOn = true;
+                else toggleViewMode.isOn = true;
+            }else OnClickCloseButton();
+        }
+
+        private void OnMouseClickEmpty() => OnClickCloseButton();
+
+        #endregion
     }
 }
