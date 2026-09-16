@@ -1870,7 +1870,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: f922230488c392948a53456ed4891f0f, type: 3}
     - target: {fileID: 7665337182268484084, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_Name
-      value: "\u9EDE\u4F4D\u6A19\u7C64-\u98A8\u6A5F"
+      value: "\u9EDE\u4F4D\u6A19\u7C64-\u7A7A\u8ABF\u7BB1"
       objectReference: {fileID: 0}
     - target: {fileID: 8160073647690611134, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_text
