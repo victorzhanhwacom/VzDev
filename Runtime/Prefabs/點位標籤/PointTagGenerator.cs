@@ -9,7 +9,8 @@ namespace VzDev.LandmarkUtils
     public class PointTagGenerator : MonoBehaviour
     {
         #region Fields
-        [SerializeField, Tooltip("是否Dot簡易模式"), OnValueChanged("SetDotMode")] private bool isDotMode = false;
+        [SerializeField, Tooltip("是否Dot簡易模式"), OnValueChanged("OnDotModeChanged")] private bool isDotMode = false;
+        [SerializeField, Tooltip("是否顯示"), OnValueChanged("OnShowPointTagsChanged")] private bool showPointTags = false;
         [SerializeField] private List<Transform> targetModels;
         [SerializeField, ReadOnly] private List<PointTag> pointTags;
         [Foldout("[Prefabs]"), SerializeField] private PointTag pointTagPrefab;
@@ -17,14 +18,24 @@ namespace VzDev.LandmarkUtils
         [Foldout("[Components]"), SerializeField] private ToggleGroup toggleGroupDotMode, toggleGroupViewMode;
         #endregion
 
-        public void SetDotMode()
+        private void OnDotModeChanged() => SetDotMode(isDotMode);
+        private void OnShowPointTagsChanged() => SetTagVisible(showPointTags);
+        public void SetDotMode(bool value)
         {
+            isDotMode = value;
             foreach (var pointTag in pointTags)
             {
                 if (pointTag != null) pointTag.SetIsDotMode(isDotMode);
             }
         }
-
+        public void SetTagVisible(bool value)
+        {
+            showPointTags = value;
+            foreach (var pointTag in pointTags)
+            {
+                if (pointTag != null) pointTag.gameObject.SetActive(showPointTags);
+            }
+        }
 
         /// <summary>
         /// 清除所有已生成的點位標籤
@@ -74,6 +85,9 @@ namespace VzDev.LandmarkUtils
                 pointTag.SetToggleDotModeGroup(toggleGroupDotMode);
                 pointTag.SetIsDotMode(isDotMode);
                 pointTags.Add(pointTag);
+
+                SetTagVisible(showPointTags);
+                SetDotMode(isDotMode);
             }
         }
         #endregion

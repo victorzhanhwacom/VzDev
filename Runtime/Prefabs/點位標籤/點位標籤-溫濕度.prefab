@@ -807,11 +807,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2539341838860534749, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 444.8
+      value: 383
       objectReference: {fileID: 0}
     - target: {fileID: 2539341838860534749, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 3.8
+      value: -444
       objectReference: {fileID: 0}
     - target: {fileID: 2539341838860534749, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1042,6 +1042,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 7459404211656234697}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7665337182268484084, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 2568534132665696437}
     - targetCorrespondingSourceObject: {fileID: 5364432482846562118, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       insertIndex: 1
       addedObject: {fileID: 6426548889138860227}
@@ -1292,6 +1295,88 @@ MonoBehaviour:
   fromPos: {x: 0, y: 0}
   toPos: {x: 0, y: 0}
   rectTransform: {fileID: 2789832771386099787}
+--- !u!1 &7486394046169197473 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7665337182268484084, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+  m_PrefabInstance: {fileID: 974391832667963989}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2568534132665696437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7486394046169197473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce8f3b8229fb4c440afea6d549985cc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.DCIMUtils.EnviornmentUtils.DataTagBinder_RTRH
+  rtRhMode: 0
+  pointModelData:
+    deviceCode: 
+    timeStampData:
+      timeStamp: 
+    rtValue: 0
+    rhValue: 0
+  onValueChangedEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5033321394843822175}
+        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+        m_MethodName: SetText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1315674849859350533}
+        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+        m_MethodName: SetText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnRtModeEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4165728950276975708}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onRhModeEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4944077850989863127}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  dataModelBinder_RTRH: {fileID: 0}
 --- !u!114 &8988018868000177131 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8160073647690611134, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}

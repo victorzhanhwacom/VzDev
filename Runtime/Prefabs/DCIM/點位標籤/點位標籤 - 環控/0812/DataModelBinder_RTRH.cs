@@ -29,16 +29,16 @@ namespace VzDev.DCIMUtils.EnviornmentUtils
         {
             if (transform.TryGetComponentAndLog(out heatSource) == false) return;
             float value;
-            string unit;
+            string unit="";
             switch (rtRhMode)
             {
                 case EnumRtRhMode.Rt:
                     value = pointModelData.rtValue;
-                    unit = "℃";
+                    // unit = "℃";
                     break;
                 case EnumRtRhMode.Rh:
                     value = pointModelData.rhValue;
-                    unit = "%";
+                    // unit = "%";
                     break;
                 default:
                     //Debug.LogWarning($"DataModelBinder_RTRH: Unselect mode. Cannot update heat source.", this);
