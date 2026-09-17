@@ -24,14 +24,14 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [Button]
         private void BrowseDCRListFile()
         {
-            jsonFilePath_DCRList = FileHelper.BrowseFilePanel();
+            jsonFilePath_DCRList = Path.GetRelativePath(Application.streamingAssetsPath, FileHelper.BrowseFilePanel());
             GetDCRList();
         }
 
         [Button]
         private void BrowseStockEquipmentFile()
         {
-            jsonFilePath_StockEquipment = FileHelper.BrowseFilePanel();
+            jsonFilePath_StockEquipment = Path.GetRelativePath(Application.streamingAssetsPath, FileHelper.BrowseFilePanel());
             GetStockEquipmentList();
         }
         #endregion
@@ -43,7 +43,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [Button]
         public void GetDCRList()
         {
-            TextFileLoader.LoadTextFileCoroutine(jsonFilePath_DCRList, (json) =>
+            string path = Path.Combine(Application.streamingAssetsPath, jsonFilePath_DCRList);
+            TextFileLoader.LoadTextFileCoroutine(path, (json) =>
             {
                 Debug.Log($"{GetType().Name}-GetDCRList:\n{json}");
                 OnGetRackListInformationAction?.Invoke(json);
@@ -60,7 +61,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [Button]
         public void GetStockEquipmentList()
         {
-            TextFileLoader.LoadTextFileCoroutine(jsonFilePath_StockEquipment, (json) =>
+            string path = Path.Combine(Application.streamingAssetsPath, jsonFilePath_StockEquipment);
+            TextFileLoader.LoadTextFileCoroutine(path, (json) =>
             {
                 Debug.Log($"{GetType().Name}-GetStockEquipmentList:\n{json}");
                 OnGetStockEquipmentListAction?.Invoke(json);

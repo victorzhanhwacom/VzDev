@@ -1,6 +1,8 @@
+using System;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
+using VzDev.InteractiveUtils.ModelMouseEvent;
 using VzDev.UnityAPI.Extensions;
 
 namespace VzDev.DCIMUtils
@@ -11,13 +13,17 @@ namespace VzDev.DCIMUtils
         [Foldout("[Events]")] public UnityEvent<string> invokeClickModelDeviceCode;
         public void SetClickedModel(Transform model)
         {
+            Debug.Log($"SetClickedModel: {model?.name}");
             if (model == null)
             {
                 Debug.LogWarning("SetClickedModel: model is null");
                 return;
             }
             clickedModel = model;
-            invokeClickModelDeviceCode?.Invoke(clickedModel.name.GetStringBetweenMarks("[", "]"));
+            if(ColliderInteractionSystem.lastClickModelTrigger == ColliderInteractionSystem.ClickModelTrigger.bySimulateClick)
+            {
+                invokeClickModelDeviceCode?.Invoke(clickedModel.name.GetStringBetweenMarks("[", "]"));
+            }
         }
     }
 }

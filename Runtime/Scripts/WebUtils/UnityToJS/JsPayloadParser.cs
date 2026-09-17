@@ -189,7 +189,7 @@ namespace VzDev.WebGLUtils
                 return;
             }
             Debug.Log($"SimulateClickModel action received for device: {clickModelPayload.deviceCode}");
-            ColliderInteractionSystem.SimulateClick(clickModelTarget.gameObject);
+            ColliderInteractionSystem.SimulateClick(clickModelTarget.gameObject, ColliderInteractionSystem.ClickModelTrigger.byJsCall);
         }
     }
 }

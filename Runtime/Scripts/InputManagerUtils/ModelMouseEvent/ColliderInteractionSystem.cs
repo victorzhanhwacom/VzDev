@@ -42,7 +42,11 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
                 Debug.LogWarning("EventSystem is missing in the scene. Please add an EventSystem to handle UI interactions.", this);
             }
 
-            OnMouseClick += (gameObject) => onClickModelEvent?.Invoke(gameObject.transform);
+            OnMouseClick += (gameObject) =>
+            {
+                lastClickModelTrigger = ClickModelTrigger.bySimulateClick;
+                onClickModelEvent?.Invoke(gameObject.transform);
+            };
         }
         private void OnValidate()
         {
@@ -169,8 +173,10 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
         /// 不需要在呼叫端重複這些邏輯。
         /// 事件只能在宣告的類別內部 Invoke，這是唯一合法的外部觸發入口。
         /// </summary>
-        public static void SimulateClick(GameObject target)
+        public static void SimulateClick(GameObject target, ClickModelTrigger trigger = ClickModelTrigger.bySimulateClick)
         {
+            lastClickModelTrigger = trigger;
+            
             if (!isMouseInteractable) return; // 如果暫時關閉 MouseClick，則不觸發事件
             if (target == null) return;
             OnMouseClick?.Invoke(target);
@@ -187,5 +193,15 @@ namespace VzDev.InteractiveUtils.ModelMouseEvent
             OnMouseClickEmpty?.Invoke();
         }
         #endregion
+
+        public static ClickModelTrigger lastClickModelTrigger { get; private set; } = ClickModelTrigger.bySimulateClick;
+
+
+
+        public enum ClickModelTrigger
+        {
+            bySimulateClick,
+            byJsCall
+        }
     }
 }
