@@ -18,7 +18,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
     {
 
         #region For DEMO
-        [Foldout("[For Demo]"), SerializeField, TextArea(1, 5)] private string jsonFilePath_DCRList = "", jsonFilePath_StockEquipment = "";
+        [Foldout("[For Demo]"), SerializeField, TextArea(1, 5)] private string jsonFilePath_DCRList, jsonFilePath_StockEquipment;
         [Foldout("[For Demo]"), SerializeField] private List<Transform> equipmentModels;
 
         [Button]
@@ -44,6 +44,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         public void GetDCRList()
         {
             string path = Path.Combine(Application.streamingAssetsPath, jsonFilePath_DCRList);
+            Debug.Log($"GetDCRList path: {path}");
             TextFileLoader.LoadTextFileCoroutine(path, (json) =>
             {
                 Debug.Log($"{GetType().Name}-GetDCRList:\n{json}");
@@ -62,6 +63,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         public void GetStockEquipmentList()
         {
             string path = Path.Combine(Application.streamingAssetsPath, jsonFilePath_StockEquipment);
+            Debug.Log($"GetStockEquipmentList path: {path}");
             TextFileLoader.LoadTextFileCoroutine(path, (json) =>
             {
                 Debug.Log($"{GetType().Name}-GetStockEquipmentList:\n{json}");

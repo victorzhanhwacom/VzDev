@@ -24,7 +24,10 @@ namespace VzDev.FileUtils
         public static string BrowseFilePanel(string folderPath = "", string extension = "json,txt")
         {
             if (string.IsNullOrEmpty(folderPath)) folderPath = Application.streamingAssetsPath;
-            string filePath = EditorUtility.OpenFilePanel("選擇檔案", folderPath, extension);
+            string filePath = null;
+#if UNITY_EDITOR
+            filePath = EditorUtility.OpenFilePanel("選擇檔案", folderPath, extension);
+#endif
             return filePath;
         }
 
@@ -34,7 +37,10 @@ namespace VzDev.FileUtils
         public static string BrowseFolderPanel(string folderPath = "")
         {
             if (string.IsNullOrEmpty(folderPath)) folderPath = Application.streamingAssetsPath;
-            string selectedFolder = EditorUtility.OpenFolderPanel("選擇資料夾", folderPath, "");
+            string selectedFolder = null;
+#if UNITY_EDITOR
+            selectedFolder = EditorUtility.OpenFolderPanel("選擇資料夾", folderPath, "");
+#endif
             return selectedFolder;
         }
         #endregion

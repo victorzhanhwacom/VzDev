@@ -37,7 +37,17 @@ namespace VzDev.DateTimeUtils
 
         private void Start()
         {
-            if (isActiveInStart) StartTimer(); // ✅ 實作 isActiveInStart
+            if (isActiveInStart)
+            {
+                StartTimer(); // ✅ 實作 isActiveInStart
+                onTimerUpdate?.Invoke(0); //待修正
+            }
+        }
+
+        public void SetTimerActivate(bool isStart)
+        {
+            if (isStart) StartTimer();
+            else StopTimer();
         }
 
         [Button, ShowIf(nameof(IsEnableToPlay))]

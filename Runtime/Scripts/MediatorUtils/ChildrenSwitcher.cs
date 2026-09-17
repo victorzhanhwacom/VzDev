@@ -24,6 +24,7 @@ namespace VzDev.MediatorUtils
         public void SetValue(Single value) => SetValue((int)value);
         public void SetValue(int value)
         {
+            receiveValue = value;
             if (receiveValue < 0 || receiveValue >= children.Length)
             {
                 Debug.LogWarning($"[ChildrenSwitcher] receiveValue {receiveValue} is out of range. Children length: {children.Length}");
