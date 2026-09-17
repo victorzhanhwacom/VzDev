@@ -32,14 +32,14 @@ namespace VzDev.Frameworks.LifecycleUtils
         private void Start() => onStartEvent?.Invoke();
         private void OnEnable()
         {
-            onEnableEvent?.Invoke();
             isEnableEvent?.Invoke(true);
+            onEnableEvent?.Invoke();
         }
 
         private void OnDisable()
         {
-            onDisableEvent?.Invoke();
             isEnableEvent?.Invoke(false);
+            onDisableEvent?.Invoke();
         }
         private void OnDestroy() => onDestroyEvent?.Invoke();
 

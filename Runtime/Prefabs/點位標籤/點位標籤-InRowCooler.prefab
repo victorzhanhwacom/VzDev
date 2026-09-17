@@ -427,6 +427,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 180312612024769902, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_Maskable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 525197721461587857, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -512,16 +516,24 @@ PrefabInstance:
       value: ---
       objectReference: {fileID: 0}
     - target: {fileID: 1284266179374483346, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_Maskable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284266179374483346, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_margin.x
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1284266179374483346, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_fontColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1284266179374483346, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_TextWrappingMode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1284266179374483346, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 16777215
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 1375900534264639101, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_SizeDelta.y
@@ -615,6 +627,10 @@ PrefabInstance:
       propertyPath: offsetPos.y
       value: 1.05
       objectReference: {fileID: 0}
+    - target: {fileID: 2932337183586267206, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3108810612745007706, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 115
@@ -647,6 +663,10 @@ PrefabInstance:
       propertyPath: m_text
       value: '{txtDeviceName}'
       objectReference: {fileID: 0}
+    - target: {fileID: 4074386258198290617, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5214129405273401866, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_text
       value: ---
@@ -654,6 +674,10 @@ PrefabInstance:
     - target: {fileID: 5214129405273401866, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_margin.x
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5895344592681551307, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6149222950643857018, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_AnchorMax.y
@@ -678,6 +702,10 @@ PrefabInstance:
     - target: {fileID: 6149222950643857018, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -26.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7401370797008945421, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_Maskable
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7665337182268484084, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_Name

@@ -43,6 +43,22 @@ namespace VzDev.ObjectUtils
             excludeModelsHashSet = new HashSet<Transform>(models);
         }
 
+
+        public void AddTargetModels(Transform models)
+        {
+           if(targetModels.Contains(models)) return;
+           targetModels.Add(models);
+        }
+        public void RemoveTargetModels(Transform models)
+        {
+            if (targetModels.Contains(models))
+            {
+                targetModels.Remove(models);
+            }
+        }
+        
+
+
         public void AddExcludeModels(List<Transform> models)
         {
             if (excludeModels == null) SetExcludeModels(models);

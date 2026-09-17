@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using VzDev.DCIMUtils.DataUtils;
 
@@ -17,6 +18,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [Foldout("[Components]"), SerializeField] private GameObject rootView;
         [Foldout("[Components]"), SerializeField] private TextMeshProUGUI txtDeviceName, txtRackName, txtULocation;
         [Foldout("[Components]"), SerializeField] private Image imgDevicePhoto;
+
+        public UnityEvent<Transform> onDeployCompleteEvent;
         #endregion
 
         private void Awake()
@@ -37,6 +40,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             txtULocation.SetText(equipmentAsset.uRange);
             StockEquipmentList.DeselectStockEquipmentItem();
             rootView.SetActive(true);
+            onDeployCompleteEvent?.Invoke(equipmentAsset.modelInfo.modelTarget);
         }
     }
 }
