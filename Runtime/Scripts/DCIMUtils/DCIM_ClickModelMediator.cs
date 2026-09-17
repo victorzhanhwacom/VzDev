@@ -13,13 +13,14 @@ namespace VzDev.DCIMUtils
         [Foldout("[Events]")] public UnityEvent<string> invokeClickModelDeviceCode;
         public void SetClickedModel(Transform model)
         {
-            Debug.Log($"SetClickedModel: {model?.name}");
             if (model == null)
             {
                 Debug.LogWarning("SetClickedModel: model is null");
                 return;
             }
             clickedModel = model;
+
+            //避免JS端呼叫運鏡指定模型時，誤傳出指定模型的deviceCode給JS端            
             if(ColliderInteractionSystem.lastClickModelTrigger == ColliderInteractionSystem.ClickModelTrigger.bySimulateClick)
             {
                 invokeClickModelDeviceCode?.Invoke(clickedModel.name.GetStringBetweenMarks("[", "]"));
