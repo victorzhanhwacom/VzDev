@@ -75,7 +75,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 0.6679245, g: 0.6679245, b: 0.6679245, a: 1}
+  m_fontColor: {r: 0.78616345, g: 0.78616345, b: 0.78616345, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

@@ -1,4 +1,3 @@
-using System;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
@@ -16,6 +15,8 @@ namespace VzDev.LandmarkUtils
         [Foldout("[Components]"), SerializeField] private TextMeshProUGUI txtModelName;
         [Foldout("[Components]"), SerializeField] private Button btnClose;
         public Transform FollowerTarget => uiAnchorFollower != null ? uiAnchorFollower.Target3DObject : null;
+        private bool IsDotMode => toggleSelf.isOn;
+        private bool isClickByModel = false;
         #endregion
 
         #region 初始設置Toggle相關
@@ -71,7 +72,7 @@ namespace VzDev.LandmarkUtils
         private void OnDisable()
         {
             btnClose.onClick.RemoveListener(OnClickCloseButton);
-            toggleDotMode.onValueChanged.RemoveListener(OnToggleDotModeValueChanged);
+            toggleDotMode.onValueChanged.RemoveListener(OnToggleViewModeValueChanged);
             toggleViewMode.onValueChanged.RemoveListener(OnToggleViewModeValueChanged);
             ColliderInteractionSystem.OnMouseClick -= OnModelClicked;
             ColliderInteractionSystem.OnMouseClickEmpty -= OnMouseClickEmpty;
@@ -79,7 +80,7 @@ namespace VzDev.LandmarkUtils
         private void OnEnable()
         {
             btnClose.onClick.AddListener(OnClickCloseButton);
-            toggleDotMode.onValueChanged.AddListener(OnToggleDotModeValueChanged);
+            toggleDotMode.onValueChanged.AddListener(OnToggleViewModeValueChanged);
             toggleViewMode.onValueChanged.AddListener(OnToggleViewModeValueChanged);
             ColliderInteractionSystem.OnMouseClick += OnModelClicked;
             ColliderInteractionSystem.OnMouseClickEmpty += OnMouseClickEmpty;
@@ -87,35 +88,15 @@ namespace VzDev.LandmarkUtils
         #endregion
 
         #region 點擊Toggle / 模型事件
-        private void OnClickCloseButton()
-        {
-            toggleViewMode.isOn = false;
-            toggleDotMode.isOn = !toggleSelf.isOn;
-        }
-
-        private void OnToggleDotModeValueChanged(bool isOn)
-        {
-            if (isOn)
-            {
-                ColliderInteractionSystem.SimulateClick(uiAnchorFollower.Target3DObject.gameObject);
-            }
-        }
+        private void OnClickCloseButton() => ColliderInteractionSystem.SimulateClickEmpty();
         private void OnToggleViewModeValueChanged(bool isOn)
         {
+            if (isClickByModel) return;
             if (isOn)
-            {
                 ColliderInteractionSystem.SimulateClick(uiAnchorFollower.Target3DObject.gameObject);
-            }
-        }
-
-
-        private void OnToggleValueChanged(bool isOn)
-        {
-            bool isClickObject;
-            if (toggleSelf.isOn) isClickObject = toggleDotMode.isOn;
-            else isClickObject = toggleViewMode.isOn;
-            if (isClickObject) ColliderInteractionSystem.SimulateClick(uiAnchorFollower.Target3DObject.gameObject);
-            else ColliderInteractionSystem.SimulateClickEmpty();
+            else
+                ColliderInteractionSystem.SimulateClickEmpty();
+            isClickByModel = false;
         }
 
         private void OnModelClicked(GameObject target)
@@ -126,14 +107,28 @@ namespace VzDev.LandmarkUtils
                 return;
             }
 
-            if (target.name == uiAnchorFollower.Target3DObject.name)
+            bool isTargetModelClicked = target == uiAnchorFollower.Target3DObject.gameObject;
+
+            if (isTargetModelClicked)
             {
-                if (toggleSelf.isOn) toggleDotMode.isOn = true;
-                else toggleViewMode.isOn = true;
-            }else OnClickCloseButton();
+                var targetToggle = IsDotMode ? toggleDotMode : toggleViewMode;
+                if (targetToggle.isOn)
+                {
+                    ColliderInteractionSystem.SimulateClickEmpty();
+                }
+                else
+                {
+                    targetToggle.isOn = true;
+                }
+            }
         }
 
-        private void OnMouseClickEmpty() => OnClickCloseButton();
+        private void OnMouseClickEmpty()
+        {
+            isClickByModel = true;
+            var targetToggle = IsDotMode ? toggleDotMode : toggleViewMode;
+            targetToggle.isOn = false;
+        }
 
         #endregion
     }

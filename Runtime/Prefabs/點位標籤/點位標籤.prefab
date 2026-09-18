@@ -1808,7 +1808,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
       - m_Target: {fileID: 7940289369022419741}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -1820,7 +1820,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   m_IsOn: 0
 --- !u!114 &2024857863605908130
 MonoBehaviour:
@@ -2050,7 +2050,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
       - m_Target: {fileID: 290090418439149075}
         m_TargetAssemblyTypeName: VzDev.MediatorUtils.BoolValueMediator, VzDev
         m_MethodName: SetBoolValue
@@ -2062,7 +2062,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   m_IsOn: 1
 --- !u!114 &290090418439149075
 MonoBehaviour:
