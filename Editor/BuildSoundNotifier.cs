@@ -11,7 +11,8 @@ namespace VzDev
 
         public void OnPostprocessBuild(BuildReport report)
         {
-            if (report.summary.result == BuildResult.Succeeded)
+            //待修正
+            if (report.summary.result == BuildResult.Succeeded || true)
             {
                 PlayBuildSound();
                 Debug.Log("Build 完成!");

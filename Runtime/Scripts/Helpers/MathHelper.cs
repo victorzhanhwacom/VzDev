@@ -18,6 +18,19 @@ namespace VzDev.MathUtils
             return result;
         }
 
+        /// <summary>
+        /// 取得小數點後為幾位數
+        /// </summary>
+        public static float GetDecimalPlace(float value)
+        {
+            int decimalPlaces = 0;
+            while (value != Mathf.Floor(value) && decimalPlaces < 10)
+            {
+                value *= 10;
+                decimalPlaces++;
+            }
+            return decimalPlaces;
+        }
 
 
         /// 是否在範圍值內

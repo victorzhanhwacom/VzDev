@@ -49,7 +49,7 @@ namespace VzDev.DebugUtils
             return result;
         }
 
-         /// <summary>
+        /// <summary>
         /// 依照名稱DeviceCode搜尋場景中所有物件
         /// </summary>
         public static List<Transform> FindObjectsByDeviceCode(string searchStr, NameSearchMode mode = NameSearchMode.Contains,
@@ -119,11 +119,11 @@ namespace VzDev.DebugUtils
             }
             else
             {
-                result = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity, container);
+                result = Object.Instantiate(prefab, container);
             }
 #else
             // 運行時使用普通的 Instantiate
-            result = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity, container);
+             result = Object.Instantiate(prefab, container);
 #endif
             return result;
         }
