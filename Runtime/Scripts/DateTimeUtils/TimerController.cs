@@ -53,6 +53,7 @@ namespace VzDev.DateTimeUtils
         [Button, ShowIf(nameof(IsEnableToPlay))]
         public void StartTimer()
         {
+            if(gameObject.activeInHierarchy  == false) return;
             loopCount = 0;
             remainingTime = timeValue * GetTimeUnitMultiplier(timeUnit);
             isPaused = false;

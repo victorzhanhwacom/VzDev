@@ -1147,6 +1147,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3112768177415719454, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
   m_PrefabInstance: {fileID: 974391832667963989}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3343690867808494977 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2585788657529399252, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+  m_PrefabInstance: {fileID: 974391832667963989}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7486394046169197473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 787aca439a1ce9040a10a72406393337, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.ObjectUtils.UIAnchorFollower
 --- !u!1 &4165728950276975708 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3767850827401047561, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
@@ -1337,13 +1348,97 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: VzDev::VzDev.DCIMUtils.EnviornmentUtils.DataTagBinder_RTRH
   rtRhMode: 0
-  pointModelData:
+  rtrhData:
     deviceCode: 
-    timeStampData:
-      timeStamp: 
-    rtValue: 0
-    rhValue: 0
-  onValueChangedEvent:
+    deviceName: 
+    assetPhotoSprite: {fileID: 0}
+    cobieInfo:
+      component_description: 
+      component_assetIdentifier: 
+      component_serialNumber: 
+      component_installationDate: 
+      component_tagName: 
+      component_warrantyDurationPart: 
+      component_warrantyDurationUnit: 
+      component_warrantyGuarantorLabor: 
+      component_warrantyStartDate: 
+      component_warrantyEndDate: 
+      document_inspection: 
+      document_handout: 
+      document_drawing: 
+      contact_company: 
+      contact_department: 
+      contact_email: 
+      contact_familyName: 
+      contact_givenName: 
+      contact_phone: 
+      contact_street: 
+      facility_name: 
+      facility_projectName: 
+      facility_siteName: 
+      equipment_supplier: 
+      floor_name: 
+      space_name: 
+      space_roomTag: 
+      system_category: 
+      system_name: 
+      type_category: 
+      type_expectedLife: 
+      type_manufacturer: 
+      type_modelNumber: 
+      type_name: 
+      type_replacementCost: 
+      type_accessibilityPerformance: 
+      type_shape: 
+      type_size: 
+      type_color: 
+      type_finish: 
+      type_grade: 
+      type_material: 
+    modelInfo:
+      modelTarget: {fileID: 0}
+      modelName: 
+    category: 0
+    system: 0
+    companyAssetInfo:
+      assetName: 
+      assetNumber: 
+      note: 
+    <rtTag>k__BackingField:
+      <tagId>k__BackingField: 
+      <name>k__BackingField: 
+      <value>k__BackingField: 
+      <valueKind>k__BackingField: 
+      <unit>k__BackingField: 
+      <displayName>k__BackingField: 
+      <timestamp>k__BackingField: 
+      <localTimestamp>k__BackingField: 
+      <sourceType>k__BackingField: 
+      <isOfflineStatusTag>k__BackingField: 0
+      <alertLevel>k__BackingField: 0
+      <severity>k__BackingField: 
+      <message>k__BackingField: 
+      <triggeredAt>k__BackingField: 
+      <direction>k__BackingField: 0
+      <valueLabels>k__BackingField: 
+    <rhTag>k__BackingField:
+      <tagId>k__BackingField: 
+      <name>k__BackingField: 
+      <value>k__BackingField: 
+      <valueKind>k__BackingField: 
+      <unit>k__BackingField: 
+      <displayName>k__BackingField: 
+      <timestamp>k__BackingField: 
+      <localTimestamp>k__BackingField: 
+      <sourceType>k__BackingField: 
+      <isOfflineStatusTag>k__BackingField: 0
+      <alertLevel>k__BackingField: 0
+      <severity>k__BackingField: 
+      <message>k__BackingField: 
+      <triggeredAt>k__BackingField: 
+      <direction>k__BackingField: 0
+      <valueLabels>k__BackingField: 
+  onRtValueChangedEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5033321394843822175}
@@ -1358,6 +1453,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onRhValueChangedEvent:
+    m_PersistentCalls:
+      m_Calls:
       - m_Target: {fileID: 1315674849859350533}
         m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
         m_MethodName: SetText
@@ -1400,6 +1498,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  uiAnchorFollower: {fileID: 3343690867808494977}
   dataModelBinder_RTRH: {fileID: 0}
 --- !u!114 &8988018868000177131 stripped
 MonoBehaviour:
