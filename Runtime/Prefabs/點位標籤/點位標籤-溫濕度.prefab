@@ -633,6 +633,22 @@ PrefabInstance:
       propertyPath: m_text
       value: "\u6EAB\u6FD5\u5EA6\u611F\u61C9\u5668"
       objectReference: {fileID: 0}
+    - target: {fileID: 129294444295183856, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.7735849
+      objectReference: {fileID: 0}
+    - target: {fileID: 129294444295183856, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.7735849
+      objectReference: {fileID: 0}
+    - target: {fileID: 129294444295183856, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.7735849
+      objectReference: {fileID: 0}
+    - target: {fileID: 129294444295183856, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291151301
+      objectReference: {fileID: 0}
     - target: {fileID: 144637586928522246, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -729,6 +745,22 @@ PrefabInstance:
       propertyPath: m_text
       value: ---
       objectReference: {fileID: 0}
+    - target: {fileID: 1136573058491513583, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.48113203
+      objectReference: {fileID: 0}
+    - target: {fileID: 1136573058491513583, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1136573058491513583, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.48113203
+      objectReference: {fileID: 0}
+    - target: {fileID: 1136573058491513583, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4286316411
+      objectReference: {fileID: 0}
     - target: {fileID: 1221243574236869592, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -748,6 +780,10 @@ PrefabInstance:
     - target: {fileID: 2060347593799639059, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_text
       value: '%'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2060347593799639059, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291348680
       objectReference: {fileID: 0}
     - target: {fileID: 2539341838860534749, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_Pivot.x
@@ -947,7 +983,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5214129405273401866, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_fontColor.b
-      value: 0
+      value: 0.48113203
       objectReference: {fileID: 0}
     - target: {fileID: 5214129405273401866, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_fontColor.g
@@ -955,11 +991,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5214129405273401866, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_fontColor.r
-      value: 0
+      value: 0.48113203
       objectReference: {fileID: 0}
     - target: {fileID: 5214129405273401866, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4278255360
+      value: 4286316411
       objectReference: {fileID: 0}
     - target: {fileID: 5364432482846562118, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_IsActive
@@ -968,6 +1004,10 @@ PrefabInstance:
     - target: {fileID: 5748619292481271990, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_Name
       value: txtRH
+      objectReference: {fileID: 0}
+    - target: {fileID: 5983719027126110538, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: txtModelName
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6149222950643857018, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_AnchorMax.y
@@ -993,6 +1033,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -26.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7092148701404570434, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4291348680
+      objectReference: {fileID: 0}
     - target: {fileID: 7262498596525805357, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -1004,6 +1048,22 @@ PrefabInstance:
     - target: {fileID: 8160073647690611134, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_text
       value: ---
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160073647690611134, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.48113203
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160073647690611134, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160073647690611134, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.48113203
+      objectReference: {fileID: 0}
+    - target: {fileID: 8160073647690611134, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4286316411
       objectReference: {fileID: 0}
     - target: {fileID: 8209227642600021957, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
       propertyPath: m_text
@@ -1158,6 +1218,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 787aca439a1ce9040a10a72406393337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: VzDev::VzDev.ObjectUtils.UIAnchorFollower
+--- !u!114 &4037888172299716669 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3858680891955628648, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
+  m_PrefabInstance: {fileID: 974391832667963989}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &4165728950276975708 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3767850827401047561, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
@@ -1441,8 +1512,20 @@ MonoBehaviour:
   onRtValueChangedEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5033321394843822175}
-        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+      - m_Target: {fileID: 7954992981587780548}
+        m_TargetAssemblyTypeName: VzDev.DOTweenUtils.DOTweenText, VzDev
+        m_MethodName: SetText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3985508973418430747}
+        m_TargetAssemblyTypeName: VzDev.DOTweenUtils.DOTweenText, VzDev
         m_MethodName: SetText
         m_Mode: 0
         m_Arguments:
@@ -1456,8 +1539,20 @@ MonoBehaviour:
   onRhValueChangedEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1315674849859350533}
-        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
+      - m_Target: {fileID: 73309202248412778}
+        m_TargetAssemblyTypeName: VzDev.DOTweenUtils.DOTweenText, VzDev
+        m_MethodName: SetText
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5385756357254075473}
+        m_TargetAssemblyTypeName: VzDev.DOTweenUtils.DOTweenText, VzDev
         m_MethodName: SetText
         m_Mode: 0
         m_Arguments:
@@ -1499,7 +1594,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   uiAnchorFollower: {fileID: 3343690867808494977}
-  dataModelBinder_RTRH: {fileID: 0}
+  txtDeviceName: {fileID: 4037888172299716669}
+  txtCategory: {fileID: 0}
 --- !u!114 &8988018868000177131 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8160073647690611134, guid: 42d7a7a80dd99844283a7ee9a765b886, type: 3}
@@ -1845,7 +1941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5181061595926067212, guid: 5edd9f5c6e69348488329c9dd258e1ec, type: 3}
       propertyPath: m_fontColor.b
-      value: 0
+      value: 0.48113203
       objectReference: {fileID: 0}
     - target: {fileID: 5181061595926067212, guid: 5edd9f5c6e69348488329c9dd258e1ec, type: 3}
       propertyPath: m_fontColor.g
@@ -1853,7 +1949,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5181061595926067212, guid: 5edd9f5c6e69348488329c9dd258e1ec, type: 3}
       propertyPath: m_fontColor.r
-      value: 0
+      value: 0.48113203
       objectReference: {fileID: 0}
     - target: {fileID: 5181061595926067212, guid: 5edd9f5c6e69348488329c9dd258e1ec, type: 3}
       propertyPath: m_fontSizeBase

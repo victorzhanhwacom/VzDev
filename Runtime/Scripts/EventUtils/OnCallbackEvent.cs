@@ -11,10 +11,18 @@ namespace VzDev.EventUtils
     [Serializable]
     public class OnCallbackEvent
     {
-        [Foldout("[Events]"), SerializeField] protected UnityEvent<bool> onCallingEvent;
+        [Foldout("[Events]-Calling"), SerializeField] protected UnityEvent<bool> onCallingBoolEvent;
+        [Foldout("[Events]-Calling"), SerializeField] protected UnityEvent onCallingStartEvent, onCallingEndEvent;
+        [Foldout("[Events]"), SerializeField] protected UnityEvent onSuccessEvent;
         [Foldout("[Events]"), SerializeField] protected UnityEvent<string> onErrorEvent;
 
-        public void InvokeOnCallingEvent(bool isCalling) => onCallingEvent?.Invoke(isCalling);
+        public void InvokeOnCallingEvent(bool isCalling)
+        {
+            onCallingBoolEvent?.Invoke(isCalling);
+            (isCalling ? onCallingStartEvent : onCallingEndEvent)?.Invoke();
+        }
+
+        public void InvokeOnSuccessEvent() => onSuccessEvent?.Invoke();
         public void InvokeOnErrorEvent(string error) => onErrorEvent?.Invoke(error);
     }
 }

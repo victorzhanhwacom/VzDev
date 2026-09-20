@@ -14,7 +14,7 @@ namespace VzDev.NetUtils
     /// WebAPI Requst資料包
     [CreateAssetMenu(fileName = "WebApiRequest", menuName = "VictorDev/Net/WebApiRequest")]
     public class WebApiRequestSO : ScriptableObject
-    { 
+    {
         #region Getter & Setter
         private Dictionary<EnumResponseDataType, string> ResponseTypeTable { get; set; }
 
@@ -49,12 +49,12 @@ namespace VzDev.NetUtils
                 string url = URL;
                 if (isQueryParams)
                 {
-                    if(url.EndsWith("/") == false) url += "/";
+                    if (url.EndsWith("/") == false) url += "/";
                     url += "?";
 
                     for (var i = 0; i < queryParams.Count; i++)
                     {
-                        if(i > 0) url += "&";
+                        if (i > 0) url += "&";
                         url += $"{queryParams[i].Key}={queryParams[i].Value}";
                     }
                     Debug.Log($"QueryParams: \turl: {url}\n");
@@ -88,7 +88,7 @@ namespace VzDev.NetUtils
                         {
                             case EnumBody.RawJson:
                                 StringContent content = new StringContent(BodyRawJson, Encoding.UTF8, MediaType);
-                                
+
                                 // PATCH 很常要求 Accept
                                 content.Headers.ContentType.CharSet = "utf-8";
                                 request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaType));
@@ -96,7 +96,7 @@ namespace VzDev.NetUtils
                                 break;
                             case EnumBody.FormData:
                                 var form = new MultipartFormDataContent();
-                                foreach (KeyValueData<string, string> kv in formData) 
+                                foreach (KeyValueData<string, string> kv in formData)
                                     form.Add(new StringContent(kv.Value.Trim()), kv.Key.Trim());
                                 request.Content = form;
                                 break;
@@ -172,11 +172,11 @@ namespace VzDev.NetUtils
         {
             url = url.Trim();
             ipConfigSo = null;
-            httpType = url.StartsWith("https://")? EnumHttpType.https : EnumHttpType.http;
+            httpType = url.StartsWith("https://") ? EnumHttpType.https : EnumHttpType.http;
             fullApiURL = url;
             enumHttpMethod = method;
         }
-        
+
         /// 設定Get的QueryParams
         public void SetQueryParams(Dictionary<string, string> data)
             => SetQueryParams(data
@@ -202,19 +202,23 @@ namespace VzDev.NetUtils
             rawJson = json.Trim().ToJsonFormat();
             bodyType = EnumBody.RawJson;
         }
-        
+
         /// 設定Token
-        public void SetAuthorizationToken(string token, EnumAuthorizationType authorizationType) 
+        public void SetAuthorizationToken(string token, EnumAuthorizationType authorizationType)
             => authorizationSo?.SetToken(token, authorizationType);
-        
+
         /// 呼叫WebAPI
-        public void CallAPI(Action<string> onSuccess, Action<string> onFailed = null) 
-            => WebApiCaller.SendRequest(this, onSuccess, onFailed); 
+        public void CallAPI(Action<string> onSuccess, Action<string> onFailed = null)
+            => WebApiCaller.SendRequest(this, onSuccess, onFailed);
+
+        public void StopCallApi()
+       => WebApiCaller.StopRequest(this);
+
         [Button]
         private void CallAPI() => CallAPI(null);
         [Button]
         private void LogURL() => Debug.Log($"URL:  {URL}");
-        
+
         #region Variables
         [Label("[IP Config設定 (選填)]")]
         [SerializeField] private IPConfigSO ipConfigSo;
@@ -222,10 +226,10 @@ namespace VzDev.NetUtils
         private bool IsIpConfigNotSetup => ipConfigSo == null;
         [ShowIf(nameof(IsHaveIpConfig))]
         [SerializeField] private string extendApiURL;
-        
+
         [Space(20)]
         [SerializeField] private WebApiAuthorizationSO authorizationSo;
-        
+
         [Space(20)]
         [ShowIf(nameof(IsIpConfigNotSetup))]
         [SerializeField] private EnumHttpType httpType;
@@ -239,10 +243,13 @@ namespace VzDev.NetUtils
 
         #region [Params設定]
 
-        [Space(10)] [Label("[Params設定]")] [SerializeField]
+        [Space(10)]
+        [Label("[Params設定]")]
+        [SerializeField]
         private bool isQueryParams = false;
 
-        [ShowIf(nameof(isQueryParams))] [SerializeField]
+        [ShowIf(nameof(isQueryParams))]
+        [SerializeField]
         private List<KeyValueData<string, string>> queryParams;
 
         [Space(10)]
@@ -258,10 +265,13 @@ namespace VzDev.NetUtils
         private bool IsFormData => bodyType == EnumBody.FormData;
         private bool IsRaw => bodyType == EnumBody.RawJson;
 
-        [ShowIf(nameof(IsFormData))] [SerializeField]
+        [ShowIf(nameof(IsFormData))]
+        [SerializeField]
         private List<KeyValueData<string, string>> formData;
 
-        [ShowIf(nameof(IsRaw))] [ResizableTextArea] [SerializeField]
+        [ShowIf(nameof(IsRaw))]
+        [ResizableTextArea]
+        [SerializeField]
         private string rawJson;
         #endregion
 

@@ -28,6 +28,8 @@ namespace VzDev.NetUtils
             SendRequest(data, onSuccess, onFailed);
         }
 
+        public static void StopRequest(WebApiRequestSO apiRequestSo) => TaskManager.Cancel($"SendRequest_{apiRequestSo.name}");
+
         /// 統一處理呼叫WebAPI (WebApiRequest類別)
         public static void SendRequest(WebApiRequestSO apiRequestSo, Action<string> onSuccess, Action<string> onFailed = null)
         {
