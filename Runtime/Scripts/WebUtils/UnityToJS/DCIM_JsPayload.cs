@@ -11,10 +11,23 @@ namespace VzDev.WebGLUtils
     }
 
     #region 各 action 對應的 payload class
+    /// <summary>
+    /// 僅收到 UserToken 的 payload
+    /// <para> + [post] /api/Auth/login</para>
+    /// </summary>
     [Serializable]
     public class UserTokenPayload
     {
         public string userToken;
+    }
+    /// <summary>
+    /// 收User的權限資料的payload
+    /// <para> + [get] /api/Account/my-permissions</para>
+    /// </summary>
+    [Serializable]
+    public class UserPermissionsPayload
+    {
+        public string json;
     }
 
     [Serializable]
@@ -41,6 +54,7 @@ namespace VzDev.WebGLUtils
     {
         Unknown,
         [InspectorName("使用者登入Token")] UserToken,
+        [InspectorName("使用者權限")] UserPermissions,
         [InspectorName("切換系統選單")] SwitchSystemMenu,
         [InspectorName("切換樓層")] SwitchToFloor,
         [InspectorName("點擊模型")] SimulateClickModel,

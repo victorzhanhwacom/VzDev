@@ -83,7 +83,7 @@ namespace VzDev.FileUtils
 
             if (isSuccess)
             {
-                Debug.Log($"[TextLoader] File Loaded (Resources):\n{result}");
+                //Debug.Log($"[TextLoader] File Loaded (Resources):\n{result}");
                 onLoadResultEvent?.Invoke(result);
             }
             else
@@ -99,6 +99,8 @@ namespace VzDev.FileUtils
         /// </summary>
         private async UniTaskVoid LoadWebRequestAsync(string fileName, CancellationToken ct)
         {
+            Debug.Log($"[TextLoader] Loading from File :{fileName}");
+
             SetLoadingState(true);
             var (isSuccess, result) = await LoadFromURLAsync(FileHelper.GetAssetPath(enumFilePath, fileName), ct);
 
@@ -106,7 +108,7 @@ namespace VzDev.FileUtils
 
             if (isSuccess)
             {
-                Debug.Log($"[TextLoader] File Loaded ({enumFilePath}):\n{result}");
+                // Debug.Log($"[TextLoader] File Loaded ({enumFilePath}):\n{result}");
                 onLoadResultEvent?.Invoke(result);
             }
             else

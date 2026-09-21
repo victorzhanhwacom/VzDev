@@ -14,7 +14,11 @@ namespace VzDev.WebGLUtils
     public class JsPayloadParser : MonoBehaviour
     {
         #region Events & StaticaActions
+        /// <summary>
+        /// 
+        /// </summary>
         [Foldout("[Events]-取得UserToken")] public UnityEvent<string> OnReceiveUserTokenEvent;
+        [Foldout("[Events]-取得User權限")] public UnityEvent<string> OnReceiveUserPermissionsEvent;
         [Foldout("[Events]-切換系統選單")] public UnityEvent<EnumSystemMenu> OnReceiveSwitchSystemMenuEvent;
         [Foldout("[Events]-切換樓層")] public UnityEvent<EnumFloor> OnReceiveSwitchFloorEvent;
 
@@ -84,6 +88,15 @@ namespace VzDev.WebGLUtils
 
             receivedPayload.action = action;
 
+            // 如果是 UserToken，直接觸發事件並返回
+            if (receivedPayload.action == EnumJsAction.UserToken)
+            {
+                Debug.Log($"[{GetType().Name}] 收到 UserToken action: {json}");
+                OnReceiveUserTokenEvent?.Invoke(json);
+                OnReceiveUserTokenAction?.Invoke(json);
+                return;
+            }
+
             JObject payload = root["payload"] as JObject;
             if (payload == null)
             {
@@ -100,7 +113,10 @@ namespace VzDev.WebGLUtils
             switch (action)
             {
                 case EnumJsAction.UserToken:
-                    OnUserTokenAction(payload);
+                    //OnUserTokenAction(payload);
+                    break;
+                case EnumJsAction.UserPermissions:
+                    OnUserPermissionsAction(payload);
                     break;
                 case EnumJsAction.SwitchSystemMenu:
                     OnSwitchSystemMenuAction(payload);
@@ -136,6 +152,20 @@ namespace VzDev.WebGLUtils
             }
             OnReceiveUserTokenEvent?.Invoke(userTokenPayload.userToken);
             OnReceiveUserTokenAction?.Invoke(userTokenPayload.userToken);
+        }
+        private void OnUserPermissionsAction(JObject payload)
+        {
+            Debug.Log($"[{GetType().Name}] 收到 UserPermissions action");
+            ///待修正…
+           /*  userTokenPayload = payload.ToObject<UserTokenPayload>();
+            if (userTokenPayload == null)
+            {
+                Debug.LogWarning($"[{GetType().Name}] UserToken 缺少 payload");
+                return;
+            }
+            OnReceiveUserTokenEvent?.Invoke(userTokenPayload.userToken);
+            OnReceiveUserTokenAction?.Invoke(userTokenPayload.userToken); */
+
         }
         /// <summary>
         /// 切換系統選單
