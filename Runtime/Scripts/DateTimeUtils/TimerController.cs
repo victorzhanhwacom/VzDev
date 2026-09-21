@@ -54,6 +54,7 @@ namespace VzDev.DateTimeUtils
         public void StartTimer()
         {
             if(gameObject.activeInHierarchy  == false) return;
+            StopTimer();
             loopCount = 0;
             remainingTime = timeValue * GetTimeUnitMultiplier(timeUnit);
             isPaused = false;

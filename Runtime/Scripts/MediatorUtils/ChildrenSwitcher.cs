@@ -19,6 +19,8 @@ namespace VzDev.MediatorUtils
         private bool IsHaveChildren => children != null && children.Length > 0;
         #endregion
 
+        private void Start() => GetChildren();
+
         #region 設定值 SetValue
         public void SetValue(Boolean value) => SetValue(value ? 1 : 0);
         public void SetValue(Single value) => SetValue((int)value);
