@@ -108,7 +108,7 @@ namespace VzDev.FileUtils
 
             if (isSuccess)
             {
-                // Debug.Log($"[TextLoader] File Loaded ({enumFilePath}):\n{result}");
+                Debug.Log($"[TextLoader] File Loaded ({enumFilePath}):\n{result}");
                 onLoadResultEvent?.Invoke(result);
             }
             else
