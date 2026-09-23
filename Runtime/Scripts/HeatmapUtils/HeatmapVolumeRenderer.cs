@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
+
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -375,4 +378,6 @@ public class HeatmapVolumeRenderer : MonoBehaviour
         Gizmos.DrawLine(c, c + d);
         Gizmos.DrawSphere(c + d, 0.08f);
     }
+
+    public void SetBaseTemperature(float temperature) => baseTemperature = temperature;
 }

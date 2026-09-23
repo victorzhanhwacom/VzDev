@@ -28,8 +28,8 @@ namespace VzDev.NetUtils
                 if (IsHaveIpConfig)
                 {
                     result = extendApiURL.Trim();
-                    if (result.StartsWith("/") == false) result = ipConfigSo.URL + "/" + result;
-                    else result = ipConfigSo.URL + result;
+                    if (result.StartsWith("/") == false) result = ipConfigSo.GetURL() + "/" + result;
+                    else result = ipConfigSo.GetURL() + result;
                 }
                 else
                 {
