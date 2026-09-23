@@ -357,28 +357,84 @@ namespace VzDev.FileUtils
         }
 
         /// 從HttpContent Header裡取得回傳的資料類型
-        public static EnumResponseDataType GetResponseDataTypeFromHttpHeader(HttpContent content)
+        public static EnumResponseDataType GetResponseDataTypeFromHttpHeader(Dictionary<string, string> headers)
         {
-            string contentType = content.Headers.ContentType?.MediaType;
+            string contentType = GetHeaderValue(headers, "Content-Type");
             if (string.IsNullOrEmpty(contentType)) return EnumResponseDataType.Binary;
-            if (ContentTypeToEnumMap.TryGetValue(contentType, out EnumResponseDataType dataType))
+
+            // "application/json; charset=utf-8" -> "application/json"
+            string mediaType = contentType.Split(';')[0].Trim();
+
+            if (ContentTypeToEnumMap.TryGetValue(mediaType, out EnumResponseDataType dataType))
                 return dataType;
+
             // fallback
-            if (contentType.StartsWith("image/"))
+            if (mediaType.StartsWith("image/"))
                 return EnumResponseDataType.Image;
 
-            if (contentType.StartsWith("text/"))
+            if (mediaType.StartsWith("text/"))
                 return EnumResponseDataType.Text;
+
             return EnumResponseDataType.Binary;
         }
 
-        /// 從HttpContent Header裡取得檔名.副檔名
-        public static string GetFileNameFromHttpHeader(HttpContent content)
+        /// 不分大小寫查詢 header 值（UnityWebRequest.GetResponseHeaders() 回傳的 key 大小寫不一定固定）
+        private static string GetHeaderValue(Dictionary<string, string> headers, string key)
         {
-            string rawFileName = content.Headers.ContentDisposition.FileName;
+            if (headers == null) return null;
+            foreach (var kvp in headers)
+            {
+                if (string.Equals(kvp.Key, key, StringComparison.OrdinalIgnoreCase))
+                    return kvp.Value;
+            }
+            return null;
+        }
+        /// 從 UnityWebRequest 的 Header 字典裡取得檔名.副檔名
+        public static string GetFileNameFromHttpHeader(Dictionary<string, string> headers)
+        {
+            string contentDisposition = GetHeaderValue(headers, "Content-Disposition");
+            if (string.IsNullOrEmpty(contentDisposition)) return string.Empty;
+
+            string rawFileName = ParseFileNameFromContentDisposition(contentDisposition);
             if (string.IsNullOrEmpty(rawFileName)) return string.Empty;
+
             string fileName = rawFileName.Trim('\"'); // 去掉前後引號（有些會包雙引號）
             return fileName.Replace("/", "").Replace(":", "").Replace(" ", "");
+        }
+
+        /// 從 Content-Disposition 字串裡解析出 filename（支援 filename="xxx" 與 filename*=UTF-8''xxx 兩種格式）
+        private static string ParseFileNameFromContentDisposition(string contentDisposition)
+        {
+            // 優先找 filename*=（RFC 5987，通常是 UTF-8 編碼過的檔名，例如中文檔名）
+            const string extendedKey = "filename*=";
+            int extendedIndex = contentDisposition.IndexOf(extendedKey, StringComparison.OrdinalIgnoreCase);
+            if (extendedIndex >= 0)
+            {
+                string value = contentDisposition[(extendedIndex + extendedKey.Length)..].Trim();
+                value = value.Split(';')[0].Trim(); // 只取到下一個 ; 之前
+
+                // 格式通常是 UTF-8''%E4%B8%AD%E6%96%87.xlsx
+                int quoteIndex = value.IndexOf("''", StringComparison.Ordinal);
+                if (quoteIndex >= 0)
+                {
+                    string encoded = value[(quoteIndex + 2)..];
+                    try { return Uri.UnescapeDataString(encoded); }
+                    catch { return encoded; }
+                }
+                return value;
+            }
+
+            // 一般 filename="xxx" 或 filename=xxx
+            const string normalKey = "filename=";
+            int normalIndex = contentDisposition.IndexOf(normalKey, StringComparison.OrdinalIgnoreCase);
+            if (normalIndex >= 0)
+            {
+                string value = contentDisposition[(normalIndex + normalKey.Length)..].Trim();
+                value = value.Split(';')[0].Trim();
+                return value;
+            }
+
+            return string.Empty;
         }
 
         private static readonly Dictionary<string, EnumResponseDataType> ContentTypeToEnumMap = new()

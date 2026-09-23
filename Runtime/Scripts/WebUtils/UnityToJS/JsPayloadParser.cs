@@ -88,15 +88,6 @@ namespace VzDev.WebGLUtils
 
             receivedPayload.action = action;
 
-            // 如果是 UserToken，直接觸發事件並返回
-            if (receivedPayload.action == EnumJsAction.UserToken)
-            {
-                Debug.Log($"[{GetType().Name}] 收到 UserToken action: {json}");
-                OnReceiveUserTokenEvent?.Invoke(json);
-                OnReceiveUserTokenAction?.Invoke(json);
-                return;
-            }
-
             JObject payload = root["payload"] as JObject;
             if (payload == null)
             {
@@ -113,7 +104,7 @@ namespace VzDev.WebGLUtils
             switch (action)
             {
                 case EnumJsAction.UserToken:
-                    //OnUserTokenAction(payload);
+                    OnUserTokenAction(payload);
                     break;
                 case EnumJsAction.UserPermissions:
                     OnUserPermissionsAction(payload);

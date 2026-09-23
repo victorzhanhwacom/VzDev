@@ -1,10 +1,12 @@
 using System;
-using System.Net.Http;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.Networking;
 using VzDev.ApiExtensions;
 using VzDev.FileUtils;
-using UnityEngine;
 using VictorDev.Managers;
 using VzDev.UnityAPI.Extensions;
 
@@ -19,6 +21,7 @@ namespace VzDev.NetUtils
             data.SetUrl(url);
             SendRequest(data, onSuccess, onFailed);
         }
+
         /// Post 請求
         public static void PostAsync(string url, string bodyJson, Action<string> onSuccess, Action<string> onFailed = null)
         {
@@ -44,46 +47,40 @@ namespace VzDev.NetUtils
             Debug.Log($"{apiRequestSo.name}: [{apiRequestSo.EnumHttpMethod}] {apiRequestSo.URL}");
 
             TaskManager.Run($"SendRequest_{apiRequestSo.name}", RunTask);
-            
-            // 執行Task：呼叫WebAPI
+
+            // 執行Task：呼叫WebAPI（統一走 UnityWebRequest，所有 method 共用同一條路）
             async Task RunTask(CancellationToken token)
             {
-                
-                if (apiRequestSo.EnumHttpMethod == EnumHttpMethod.PATCH)
-                {
-                    string result = await SendPatchByUnityWebRequest(apiRequestSo, token);
-                    Debug.Log($"SendRequest Success (PATCH)\n{result}");
-                    onSuccess?.Invoke(result);
-                    return;
-                }
-                
                 try
                 {
                     token.ThrowIfCancellationRequested(); // 支援取消
-                    HttpResponseMessage response = await Client.SendAsync(apiRequestSo.HttpRequestMessage, token);
-                    response.EnsureSuccessStatusCode(); // 如果這個 HTTP 回應不是成功的狀態碼（200～299），就 直接丟出例外，跳到 catch 區塊
+
+                    var (rawBytes, headers) = await SendByUnityWebRequest(apiRequestSo, token);
 
                     string responseContent = string.Empty;
-                    // 依回傳資料型態進行資料處理
-                    switch (FileHelper.GetResponseDataTypeFromHttpHeader(response.Content))
+
+                    // 依回傳資料型態進行資料處理（原本吃 HttpContent，這裡改吃 UnityWebRequest 的 Header 字典）
+                    switch (FileHelper.GetResponseDataTypeFromHttpHeader(headers))
                     {
-                        //case (NetUtils.EnumResponseDataType)EnumResponseDataType.Json: // Json字串
-                        case NetUtils.EnumResponseDataType.Json: // Json字串
-                            responseContent = await response.Content.ReadAsStringAsync();
+                        case NetUtils.EnumResponseDataType.Json:
+                            responseContent = Encoding.UTF8.GetString(rawBytes);
                             responseContent = responseContent.ToJsonFormat();
                             break;
                         case NetUtils.EnumResponseDataType.Excel:
-                            byte[] fileBytes = await response.Content.ReadAsByteArrayAsync();
-                            string fileName = FileHelper.GetFileNameFromHttpHeader(response.Content);
-                            //responseContent  = await FileHelper.SaveFileWithPopupWindow(fileBytes, fileName);
+                            string fileName = FileHelper.GetFileNameFromHttpHeader(headers);
+                            //responseContent = await FileHelper.SaveFileWithPopupWindow(rawBytes, fileName);
                             break;
                         case NetUtils.EnumResponseDataType.Text:
-                            responseContent = await response.Content.ReadAsStringAsync();
+                            responseContent = Encoding.UTF8.GetString(rawBytes);
                             break;
                     }
-                    
-                    Debug.Log($"SendRequest Success: [{(int)response.StatusCode}]\n{responseContent}");
+
+                    Debug.Log($"SendRequest Success: [{apiRequestSo.EnumHttpMethod}]\n{responseContent}");
                     onSuccess?.Invoke(responseContent);
+                }
+                catch (OperationCanceledException)
+                {
+                    Debug.LogWarning($"SendRequest Cancelled: {apiRequestSo.name}");
                 }
                 catch (Exception ex)
                 {
@@ -92,32 +89,25 @@ namespace VzDev.NetUtils
                 }
             }
         }
-        
-        /// [Patch]方式的另外處理
-        private static async Task<string> SendPatchByUnityWebRequest(
+
+        /// 統一用 UnityWebRequest 送出任意 HTTP Method（GET / POST / PUT / PATCH / DELETE...），WebGL 相容
+        private static async Task<(byte[] rawBytes, Dictionary<string, string> headers)> SendByUnityWebRequest(
             WebApiRequestSO apiRequest,
             CancellationToken token)
         {
-            using var request = new UnityEngine.Networking.UnityWebRequest(
-                apiRequest.URL,
-                "PATCH");
+            using var request = new UnityWebRequest(apiRequest.URL, apiRequest.EnumHttpMethod.ToString());
 
             // ===== Body =====
             if (!string.IsNullOrEmpty(apiRequest.BodyRawJson))
             {
-                byte[] bodyBytes =
-                    System.Text.Encoding.UTF8.GetBytes(apiRequest.BodyRawJson);
-
-                request.uploadHandler =
-                    new UnityEngine.Networking.UploadHandlerRaw(bodyBytes);
-
+                byte[] bodyBytes = Encoding.UTF8.GetBytes(apiRequest.BodyRawJson);
+                request.uploadHandler = new UploadHandlerRaw(bodyBytes);
                 request.SetRequestHeader("Content-Type", apiRequest.MediaType);
             }
 
-            request.downloadHandler =
-                new UnityEngine.Networking.DownloadHandlerBuffer();
-
+            request.downloadHandler = new DownloadHandlerBuffer();
             request.SetRequestHeader("Accept", "application/json");
+
             // ===== 關鍵：複製 Header（含 Authorization）=====
             if (apiRequest.HttpRequestMessage != null)
             {
@@ -132,29 +122,31 @@ namespace VzDev.NetUtils
 
             // ===== Send =====
             var operation = request.SendWebRequest();
-            while (!operation.isDone)
+
+            using (token.Register(() =>
+                   {
+                       if (!operation.isDone) request.Abort();
+                   }))
             {
-                if (token.IsCancellationRequested)
+                while (!operation.isDone)
                 {
-                    request.Abort();
-                    throw new OperationCanceledException();
+                    token.ThrowIfCancellationRequested();
+                    await Task.Yield();
                 }
-                await Task.Yield();
             }
 
-            if (request.result !=
-                UnityEngine.Networking.UnityWebRequest.Result.Success)
+            token.ThrowIfCancellationRequested();
+
+            if (request.result != UnityWebRequest.Result.Success)
             {
-                throw new Exception(request.error);
+                throw new Exception($"[{(int)request.responseCode}] {request.error}");
             }
 
-            return request.downloadHandler.text;
+            var responseHeaders = request.GetResponseHeaders() ?? new Dictionary<string, string>();
+            return (request.downloadHandler.data, responseHeaders);
         }
-
-      
 
         /// 預設的OnFail事件處理
         private static void DefaultOnFailed(string msg) => Debug.LogWarning($"DefaultOnFailed! \n{msg}");
-        private static readonly HttpClient Client = new();
     }
 }
