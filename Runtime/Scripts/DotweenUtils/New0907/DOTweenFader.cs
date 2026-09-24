@@ -25,6 +25,7 @@ namespace VzDev.DOTweenUtils
             StopTween();
             if (isVisible)
             {
+                if(canvasGroup.alpha == 1) canvasGroup.alpha = 0;
                 tween = SetTweenParams(canvasGroup.DOFade(isVisible ? 1f : 0f, isVisible ? Duration : 0f), isVisible);
             }
             canvasGroup.gameObject.SetActive(isVisible);
