@@ -343,7 +343,7 @@ namespace VzDev.CameraUtils
 
         public void FlyToPosition(Transform target, float? setDistance = null)
         {
-            if (target.TryGetComponent(out Renderer render))
+            if (target.TryGetComponent(out Renderer render) && render is not LineRenderer)
                 FlyToPosition(render.bounds.center, setDistance ?? defaultFlyDistance);
             else
                 FlyToPosition(target.position, setDistance ?? defaultFlyDistance);
@@ -351,7 +351,7 @@ namespace VzDev.CameraUtils
 
          public void FlyToPosition(Transform target, float setDistance)
         {
-            if (target.TryGetComponent(out Renderer render))
+            if (target.TryGetComponent(out Renderer render) && render is not LineRenderer)
                 FlyToPosition(render.bounds.center, setDistance);
             else
                 FlyToPosition(target.position, setDistance);
