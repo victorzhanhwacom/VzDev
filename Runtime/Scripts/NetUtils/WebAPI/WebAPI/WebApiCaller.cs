@@ -84,8 +84,9 @@ namespace VzDev.NetUtils
                 }
                 catch (Exception ex)
                 {
-                    Debug.LogError($"SendRequest Exception: {ex.Message}");
-                    onFailed?.Invoke(ex.Message);
+                    var realEx = ex.InnerException ?? ex;
+                    Debug.LogError($"SendRequest Exception: {realEx.Message}\n{realEx.StackTrace}");
+                    onFailed?.Invoke(realEx.Message);
                 }
             }
         }
