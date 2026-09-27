@@ -11,8 +11,10 @@ namespace VzDev.DCIMUtils.DataUtils
     [Serializable]
     public class DCIMAsset : RevitAsset
     {
-        public DCIM_Category category = DCIM_Category.Unknow;
-        public DCIM_System system = DCIM_System.Unknow;
+        /*  public DCIM_Category category = DCIM_Category.Unknow;
+         public DCIM_System system = DCIM_System.Unknow; */
+        public string category;
+        public string system;
         public CompanyAssetInfo companyAssetInfo = new();
         public SizeInfo sizeInfo = new();
         public string DeviceCategory => system.ToString();
@@ -22,11 +24,14 @@ namespace VzDev.DCIMUtils.DataUtils
         /// </summary>
         public void CheckSystemAndCategory()
         {
-            category = EnumHelper<DCIM_Category>.GetEnumFromString(deviceCode ?? modelInfo.modelName);
-            system = EnumHelper<DCIM_System>.GetEnumFromString(deviceCode);
+            /*  category = EnumHelper<DCIM_Category>.GetEnumFromString(deviceCode ?? modelInfo.modelName);
+             system = EnumHelper<DCIM_System>.GetEnumFromString(deviceCode); */
+            companyAssetInfo ??= new CompanyAssetInfo();
             companyAssetInfo.GenerateRandomAssetNumber("NTCGO");
-            deviceName ??= modelInfo.modelName;
             companyAssetInfo.assetName ??= modelInfo.modelName;
+            modelInfo ??= new ModelInfo();
+            modelInfo.modelName ??= DCIM_Helper.GetModelNameFromDeviceCode(deviceCode);
+            deviceName ??= modelInfo.modelName;
         }
     }
 

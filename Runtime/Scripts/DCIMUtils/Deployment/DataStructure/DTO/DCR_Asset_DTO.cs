@@ -141,7 +141,7 @@ namespace VzDev.DCIMUtils.DataUtils
         }
 
         #region 機櫃上限與目前用量
-        public int watt_limit;
+        public float watt_limit;
         public float weight_limit;
         public int heightU;
 

@@ -54,9 +54,11 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             imgDevicePhoto.gameObject.SetActive(isHavePhoto);
             imgDevicePhoto.sprite = equipmentAsset.assetPhotoSprite ?? null;
 
-            btnRemove.gameObject.SetActive(equipmentAsset.system != DCIM_System.DCR);
+            btnRemove.gameObject.SetActive(equipmentAsset.system != "DCR");
+            btnMove?.gameObject.SetActive(equipmentAsset.system != "DCR");
+/*  btnRemove.gameObject.SetActive(equipmentAsset.system != DCIM_System.DCR);
             btnMove?.gameObject.SetActive(equipmentAsset.system != DCIM_System.DCR);
-
+ */
             equipmentModelEvent?.Invoke(equipmentAsset.modelInfo.modelTarget);
         }
 

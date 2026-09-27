@@ -96,7 +96,8 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                     EquipmentAsset equipmentAsset = new EquipmentAsset
                     {
                         deviceCode = deviceCode,
-                        system = model.name.Contains("Server") ? DCIM_System.DCS : DCIM_System.DCN,
+                        // system = model.name.Contains("Server") ? DCIM_System.DCS : DCIM_System.DCN,
+                        system = model.name.Contains("Server") ? "DCS" : "DCN",
                         companyAssetInfo = new CompanyAssetInfo
                         {
                             assetName = deviceCode,

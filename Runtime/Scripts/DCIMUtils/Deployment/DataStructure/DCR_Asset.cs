@@ -14,8 +14,9 @@ namespace VzDev.DCIMUtils.DataUtils
     {
         public DCR_Asset()
         {
-            system = DCIM_System.DCR;
-            category = DCIM_Category.Rack;
+            system = "DCR";
+            /* system = DCIM_System.DCR;
+            category = DCIM_Category.Rack; */
         }
 
         /// <summary>
@@ -31,7 +32,7 @@ namespace VzDev.DCIMUtils.DataUtils
         /// <summary>
         /// 機櫃最大功率
         /// </summary>
-        public int power_watt_Max;
+        public float power_watt_Max;
         /// <summary>
         /// 機櫃最大承重
         /// </summary>
