@@ -1001,8 +1001,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VzDev.DCIMUtils.EnviornmentUtils.DataTagBinder_WaterLeak
   waterLeakData:
-    deviceCode: 
     deviceName: 
+    deviceCode: 
     assetPhotoSprite: {fileID: 0}
     cobieInfo:
       component_description: 
@@ -1151,12 +1151,12 @@ MonoBehaviour:
       - {fileID: 230103934665189571}
   - index: 3
     colorItems:
-    - color: {r: 1, g: 0.829917, b: 0.3490566, a: 1}
+    - color: {r: 1, g: 0.2471698, b: 0.37102455, a: 1}
       graphicTargets:
       - {fileID: 230103934665189571}
   - index: 4
     colorItems:
-    - color: {r: 1, g: 0.3301887, b: 0.3301887, a: 1}
+    - color: {r: 0.5396226, g: 0.5396226, b: 0.5396226, a: 1}
       graphicTargets:
       - {fileID: 230103934665189571}
   duration: 0.3
