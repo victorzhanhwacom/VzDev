@@ -12,7 +12,7 @@ namespace VzDev.Frameworks.ScrollRectUtils
         #region Fields
         [SerializeField, ReadOnly] protected TData data;
         [Foldout("[Components]"), SerializeField] protected Toggle toggle;
-        [Foldout("[Components]"), SerializeField] protected ScrollRectListBase<TData> scrollRectList;
+        protected ScrollRectListBase<TData> scrollRectList;
         public TData Data => data;
         #endregion
 
