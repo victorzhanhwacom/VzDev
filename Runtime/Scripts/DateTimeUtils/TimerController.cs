@@ -15,7 +15,7 @@ namespace VzDev.DateTimeUtils
         [Foldout("[Events]"), Tooltip("循環結束時觸發"), HideIf(nameof(isInfiniteLoop))] public UnityEvent onTimerEnd;
         [Foldout("[Events]"), Tooltip("Timer開始時觸發")] public UnityEvent onTimerStart;
 
-        [Foldout("[Settings]"), SerializeField] private bool isActiveInStart = true;
+        [Foldout("[Settings]"), SerializeField] private bool isActiveInStart = false;
         [Foldout("[Settings]"), SerializeField] private float timeValue = 10f;
         [Foldout("[Settings]"), SerializeField] private EnumTime timeUnit = EnumTime.秒;
         [Foldout("[Settings]"), SerializeField, HideIf(nameof(isInfiniteLoop))] private int maxLoopCount = 3; // ✅ 有限循環的最大次數
@@ -35,6 +35,11 @@ namespace VzDev.DateTimeUtils
         private bool IsEnableToResume => Application.isPlaying && isPaused;
         #endregion
 
+        /// <summary>
+        /// 設定時間間隔
+        /// </summary>
+        public void SetTimeValue(float value) => timeValue = value;
+
         private void Start()
         {
             if (isActiveInStart)
@@ -53,7 +58,7 @@ namespace VzDev.DateTimeUtils
         [Button, ShowIf(nameof(IsEnableToPlay))]
         public void StartTimer()
         {
-            if(gameObject.activeInHierarchy  == false) return;
+            if (gameObject.activeInHierarchy == false) return;
             StopTimer();
             loopCount = 0;
             remainingTime = timeValue * GetTimeUnitMultiplier(timeUnit);

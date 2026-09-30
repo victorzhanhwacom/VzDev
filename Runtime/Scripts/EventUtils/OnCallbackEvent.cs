@@ -11,18 +11,32 @@ namespace VzDev.EventUtils
     [Serializable]
     public class OnCallbackEvent
     {
-        [Foldout("[Events]-Calling"), SerializeField] protected UnityEvent<bool> onCallingBoolEvent;
-        [Foldout("[Events]-Calling"), SerializeField] protected UnityEvent onCallingStartEvent, onCallingEndEvent;
+        [Foldout("[Events]-Calling"), SerializeField] protected UnityEvent<bool> callingStatusEvent;
+        [Foldout("[Events]-Calling"), SerializeField] protected UnityEvent onStartEvent, onFinishedEvent;
         [Foldout("[Events]"), SerializeField] protected UnityEvent onSuccessEvent;
         [Foldout("[Events]"), SerializeField] protected UnityEvent<string> onErrorEvent;
+        [Foldout("[Events]"), SerializeField] protected UnityEvent onStopEvent;
 
-        public void InvokeOnCallingEvent(bool isCalling)
+        public void InvokeCallingStatusEvent(bool isStartCall)
         {
-            onCallingBoolEvent?.Invoke(isCalling);
-            (isCalling ? onCallingStartEvent : onCallingEndEvent)?.Invoke();
+            callingStatusEvent?.Invoke(isStartCall);
+            (isStartCall ? onStartEvent : onFinishedEvent)?.Invoke();
         }
 
-        public void InvokeOnSuccessEvent() => onSuccessEvent?.Invoke();
-        public void InvokeOnErrorEvent(string error) => onErrorEvent?.Invoke(error);
+        public void InvokeOnSuccessEvent()
+        {
+            InvokeCallingStatusEvent(false);
+            onSuccessEvent?.Invoke();
+        }
+        public void InvokeOnErrorEvent(string error)
+        {
+            InvokeCallingStatusEvent(false);
+            onErrorEvent?.Invoke(error);
+        }
+        public void InvokeStopCallEvent()
+        {
+            InvokeCallingStatusEvent(false);
+            onStopEvent?.Invoke();
+        }
     }
 }

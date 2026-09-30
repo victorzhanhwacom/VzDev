@@ -8,15 +8,15 @@ using VzDev.ApiExtensions;
 
 namespace VzDev.Frameworks.ScrollRectUtils
 {
-    public interface IDataID
+    public interface IDataKeyID
     {
-        string dataID { get;}
+        string dataKeyID { get;}
     }
 
     /// <summary>
     /// 框架：ScrollRect列表
     /// </summary>
-    public abstract class ScrollRectListBase<TData> : MonoBehaviour where TData: IDataID
+    public abstract class ScrollRectListBase<TData> : MonoBehaviour where TData: IDataKeyID
     {
         #region Event
         public static UnityEvent<ScrollRectListItemBase<TData>> onSelectedItemEvent_Static;
@@ -46,19 +46,19 @@ namespace VzDev.Frameworks.ScrollRectUtils
             // 判斷該TData是否已經存在對應的列表項目，若不存在則建立新的列表項目, 若存在則設置值
             foreach (var data in dataList)
             {
-                if (!dataToItemMap.ContainsKey(data.dataID))
+                if (!dataToItemMap.ContainsKey(data.dataKeyID))
                 {
                     var item = Instantiate(listItemPrefab, scrollRect.content);
                     item.SetData(data);
                     item.SetToggleGroup(toggleGroup);
                     item.SetScrollRectList(this);
-                    dataToItemMap[data.dataID] = item;
+                    dataToItemMap[data.dataKeyID] = item;
                 }
-                else dataToItemMap[data.dataID].SetData(data);
+                else dataToItemMap[data.dataKeyID].SetData(data);
             }
             // 移除不在新的資料集中的列表項目
             var keysToRemove = new List<string>();
-            List<string> dataIDs = dataList.Select(data => data.dataID).ToList();
+            List<string> dataIDs = dataList.Select(data => data.dataKeyID).ToList();
             foreach (string key in dataToItemMap.Keys)
             {
                 if (!dataIDs.Contains(key))
