@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace VzDev.MathUtils
@@ -7,6 +9,23 @@ namespace VzDev.MathUtils
     /// </summary>
     public static class MathHelper
     {
+        /// <summary>
+        /// 取得多個數值中的最大值(支援陣列與 List)
+        /// </summary>
+        public static T Max<T>(IList<T> values) where T : struct, IComparable<T>
+        {
+            if (values == null || values.Count == 0)
+                return default;
+
+            T maxValue = values[0];
+            for (int i = 1; i < values.Count; i++)
+            {
+                if (values[i].CompareTo(maxValue) > 0)
+                    maxValue = values[i];
+            }
+            return maxValue;
+        }
+
         /// <summary>
         /// 取得N個9的數字
         /// </summary>

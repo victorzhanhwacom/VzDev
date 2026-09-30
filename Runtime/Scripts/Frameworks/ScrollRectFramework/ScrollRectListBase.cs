@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,10 +8,15 @@ using VzDev.ApiExtensions;
 
 namespace VzDev.Frameworks.ScrollRectUtils
 {
+    public interface IDataID
+    {
+        string dataID { get;}
+    }
+
     /// <summary>
     /// 框架：ScrollRect列表
     /// </summary>
-    public abstract class ScrollRectListBase<TData> : MonoBehaviour
+    public abstract class ScrollRectListBase<TData> : MonoBehaviour where TData: IDataID
     {
         #region Event
         public static UnityEvent<ScrollRectListItemBase<TData>> onSelectedItemEvent_Static;
@@ -28,7 +34,7 @@ namespace VzDev.Frameworks.ScrollRectUtils
         /// <summary>
         /// 資料對應的列表項目字典，用於快速查找和管理列表項目
         /// </summary>
-        private Dictionary<TData, ScrollRectListItemBase<TData>> dataToItemMap = new Dictionary<TData, ScrollRectListItemBase<TData>>();
+        private Dictionary<string, ScrollRectListItemBase<TData>> dataToItemMap = new Dictionary<string, ScrollRectListItemBase<TData>>();
         #endregion
 
         /// <summary>
@@ -40,21 +46,22 @@ namespace VzDev.Frameworks.ScrollRectUtils
             // 判斷該TData是否已經存在對應的列表項目，若不存在則建立新的列表項目, 若存在則設置值
             foreach (var data in dataList)
             {
-                if (!dataToItemMap.ContainsKey(data))
+                if (!dataToItemMap.ContainsKey(data.dataID))
                 {
                     var item = Instantiate(listItemPrefab, scrollRect.content);
                     item.SetData(data);
                     item.SetToggleGroup(toggleGroup);
                     item.SetScrollRectList(this);
-                    dataToItemMap[data] = item;
+                    dataToItemMap[data.dataID] = item;
                 }
-                else dataToItemMap[data].SetData(data);
+                else dataToItemMap[data.dataID].SetData(data);
             }
             // 移除不在新的資料集中的列表項目
-            var keysToRemove = new List<TData>();
-            foreach (var key in dataToItemMap.Keys)
+            var keysToRemove = new List<string>();
+            List<string> dataIDs = dataList.Select(data => data.dataID).ToList();
+            foreach (string key in dataToItemMap.Keys)
             {
-                if (!dataList.Contains(key))
+                if (!dataIDs.Contains(key))
                 {
                     Destroy(dataToItemMap[key].gameObject);
                     keysToRemove.Add(key);
@@ -81,6 +88,7 @@ namespace VzDev.Frameworks.ScrollRectUtils
             if (selectedItem == null) return;
             onSelectedItemEvent_Static?.Invoke(selectedItem);
             onSelectedItemEvent?.Invoke(selectedItem);
+            OnSelectedItem(selectedItem);
         }
 
         /// <summary>
@@ -92,8 +100,12 @@ namespace VzDev.Frameworks.ScrollRectUtils
             {
                 onSelectEmptyEvent_Static?.Invoke();
                 onSelectEmptyEvent?.Invoke();
+                OnSelectEmpty();
             }
         }
+        protected virtual void OnSelectedItem(ScrollRectListItemBase<TData> selectedItem) { }
+        protected virtual void OnSelectEmpty() { }
+
 
         protected virtual void OnEnable()
         {

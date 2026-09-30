@@ -7,7 +7,7 @@ namespace VzDev.Frameworks.ScrollRectUtils
     /// <summary>
     /// 框架：ScrollRect列表 - 列表項目基底
     /// </summary>
-    public abstract class ScrollRectListItemBase<TData> : MonoBehaviour
+    public abstract class ScrollRectListItemBase<TData> : MonoBehaviour where TData: IDataID
     {
         #region Fields
         [SerializeField, ReadOnly] protected TData data;

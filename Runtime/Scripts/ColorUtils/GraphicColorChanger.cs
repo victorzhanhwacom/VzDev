@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using DG.Tweening;
 using NaughtyAttributes;
 using UnityEngine;
@@ -9,6 +8,7 @@ namespace VzDev.ColorUtils
 {
     /// <summary>
     /// Graphic顏色切換器 - 根據布林值或索引切換一組Graphic的顏色，支持DOTween動畫過渡。
+    /// 注意：改色動畫只會寫入RGB，Alpha保留給其他動畫(如Blink)獨立控制，避免互相覆蓋。
     /// </summary>
     public class GraphicColorChanger : MonoBehaviour
     {
@@ -69,10 +69,29 @@ namespace VzDev.ColorUtils
                         continue;
                     }
 #if UNITY_EDITOR
-                    if (!Application.isPlaying) { target.color = item.color; continue; }
+                    if (!Application.isPlaying)
+                    {
+                        Color c = item.color;
+                        c.a = target.color.a; // 編輯器預覽時，同樣不動alpha
+                        target.color = c;
+                        continue;
+                    }
 #endif
                     target.DOKill(this);
-                    target.DOColor(item.color, duration).SetEase(ease).SetDelay(delay);
+
+                    Color targetColor = item.color;
+                    DOTween.To(
+                            () => target.color,
+                            c =>
+                            {
+                                float currentAlpha = target.color.a; // 每一幀重新讀「當下」alpha，不覆蓋
+                                target.color = new Color(c.r, c.g, c.b, currentAlpha); // 只改RGB
+                            },
+                            targetColor,
+                            duration)
+                        .SetEase(ease)
+                        .SetDelay(delay)
+                        .SetId(this); // 保留原本以this為id的DOKill機制
                 }
             }
         }
