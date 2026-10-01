@@ -11,7 +11,7 @@ namespace VzDev.MediatorUtils
     public class ChildrenSwitcher : MonoBehaviour
     {
         #region Variables
-        [SerializeField, OnValueChanged("OnReceiveValueChanged"), Range(0, 6)] private int receiveValue = -1;
+        [SerializeField, OnValueChanged("OnReceiveValueChanged"), Range(0, 4)] private int receiveValue = -1;
         private void OnReceiveValueChanged() => SetValue(receiveValue);
         [SerializeField, ReadOnly] private GameObject[] children;
         [SerializeField] private GameObject[] excludeChildren;

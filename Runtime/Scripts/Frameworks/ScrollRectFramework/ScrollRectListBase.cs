@@ -10,17 +10,18 @@ namespace VzDev.Frameworks.ScrollRectUtils
 {
     public interface IDataKeyID
     {
-        string dataKeyID { get;}
+        string dataKeyID { get; }
     }
 
     /// <summary>
     /// 框架：ScrollRect列表
     /// </summary>
-    public abstract class ScrollRectListBase<TData> : MonoBehaviour where TData: IDataKeyID
+    public abstract class ScrollRectListBase<TData> : MonoBehaviour where TData : IDataKeyID
     {
         #region Event
         public static UnityEvent<ScrollRectListItemBase<TData>> onSelectedItemEvent_Static;
         public static UnityEvent onSelectEmptyEvent_Static;
+        [Foldout("[Event]")] public UnityEvent<string> listItemTotalCountEvent;
         [Foldout("[Event]")] public UnityEvent<ScrollRectListItemBase<TData>> onSelectedItemEvent;
         [Foldout("[Event]")] public UnityEvent onSelectEmptyEvent;
         #endregion
@@ -68,6 +69,8 @@ namespace VzDev.Frameworks.ScrollRectUtils
                 }
             }
             foreach (var key in keysToRemove) dataToItemMap.Remove(key);
+
+            listItemTotalCountEvent?.Invoke($"共{dataList.Count}筆資料");
         }
 
         /// <summary>
