@@ -11,16 +11,23 @@ namespace VzDev.EventUtils
     [Serializable]
     public class OnCallbackEvent
     {
-        [Foldout("[Events]-Calling"), SerializeField] protected UnityEvent<bool> callingStatusEvent;
-        [Foldout("[Events]-Calling"), SerializeField] protected UnityEvent onStartEvent, onFinishedEvent;
-        [Foldout("[Events]"), SerializeField] protected UnityEvent onSuccessEvent;
-        [Foldout("[Events]"), SerializeField] protected UnityEvent<string> onErrorEvent;
-        [Foldout("[Events]"), SerializeField] protected UnityEvent onStopEvent;
+        #region UnityEvent
+        [Foldout("[Events]")] public UnityEvent onStartEvent;
+        [Foldout("[Events]")] public UnityEvent onStopEvent;
+        [Foldout("[Events]")] public UnityEvent onSuccessEvent;
+        [Foldout("[Events]")] public UnityEvent<string> onFailureEvent;
+        [Foldout("[Events]")] public UnityEvent<bool> callingStatusEvent;
+        #endregion
 
-        public void InvokeCallingStatusEvent(bool isStartCall)
+        public void InvokeStartEvent()
         {
-            callingStatusEvent?.Invoke(isStartCall);
-            (isStartCall ? onStartEvent : onFinishedEvent)?.Invoke();
+            InvokeCallingStatusEvent(true);
+            onStartEvent?.Invoke();
+        }
+        public void InvokeStopCallEvent()
+        {
+            InvokeCallingStatusEvent(false);
+            onStopEvent?.Invoke();
         }
 
         public void InvokeOnSuccessEvent()
@@ -28,15 +35,12 @@ namespace VzDev.EventUtils
             InvokeCallingStatusEvent(false);
             onSuccessEvent?.Invoke();
         }
-        public void InvokeOnErrorEvent(string error)
+        public void InvokeOnFaliureEvent(string error)
         {
             InvokeCallingStatusEvent(false);
-            onErrorEvent?.Invoke(error);
+            onFailureEvent?.Invoke(error);
         }
-        public void InvokeStopCallEvent()
-        {
-            InvokeCallingStatusEvent(false);
-            onStopEvent?.Invoke();
-        }
+
+        public void InvokeCallingStatusEvent(bool isStartCall) => callingStatusEvent?.Invoke(isStartCall);
     }
 }
