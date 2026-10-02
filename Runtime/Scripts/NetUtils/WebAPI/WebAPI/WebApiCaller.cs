@@ -34,19 +34,20 @@ namespace VzDev.NetUtils
         public static void StopRequest(WebApiRequestSO apiRequestSo) => TaskManager.Cancel($"SendRequest_{apiRequestSo.name}");
 
         /// 統一處理呼叫WebAPI (WebApiRequest類別)
-        public static void SendRequest(WebApiRequestSO apiRequestSo, Action<string> onSuccess, Action<string> onFailed = null)
+        public static void SendRequest(WebApiRequestSO apiRequestSo, Action<string> onSuccess, Action<string> onFailed = null, int timeoutSeconds = 60)
         {
             if (apiRequestSo == null)
             {
                 Debug.LogWarning($"WebApiRequest is null");
                 return;
+
             }
 
             onFailed ??= DefaultOnFailed;
 
             Debug.Log($"{apiRequestSo.name}: [{apiRequestSo.EnumHttpMethod}] {apiRequestSo.URL}");
 
-            TaskManager.Run($"SendRequest_{apiRequestSo.name}", RunTask);
+            TaskManager.Run($"SendRequest_{apiRequestSo.name}", RunTask, timeoutSeconds);
 
             // 執行Task：呼叫WebAPI（統一走 UnityWebRequest，所有 method 共用同一條路）
             async Task RunTask(CancellationToken token)
@@ -85,7 +86,7 @@ namespace VzDev.NetUtils
                 catch (Exception ex)
                 {
                     var realEx = ex.InnerException ?? ex;
-                    Debug.LogError($"SendRequest Exception: {realEx.Message}\n{realEx.StackTrace}");
+                    Debug.LogWarning($"SendRequest Exception: {realEx.Message}\n{realEx.StackTrace}");
                     onFailed?.Invoke(realEx.Message);
                 }
             }
@@ -94,9 +95,10 @@ namespace VzDev.NetUtils
         /// 統一用 UnityWebRequest 送出任意 HTTP Method（GET / POST / PUT / PATCH / DELETE...），WebGL 相容
         private static async Task<(byte[] rawBytes, Dictionary<string, string> headers)> SendByUnityWebRequest(
             WebApiRequestSO apiRequest,
-            CancellationToken token)
+            CancellationToken token, int timeoutSeconds = 60)
         {
             using var request = new UnityWebRequest(apiRequest.URL, apiRequest.EnumHttpMethod.ToString());
+            request.timeout = timeoutSeconds;
 
             // ===== Body =====
             if (!string.IsNullOrEmpty(apiRequest.BodyRawJson))

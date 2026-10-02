@@ -209,7 +209,9 @@ namespace VzDev.NetUtils
 
         /// 呼叫WebAPI
         public void CallAPI(Action<string> onSuccess, Action<string> onFailed = null)
-            => WebApiCaller.SendRequest(this, onSuccess, onFailed);
+        {
+            WebApiCaller.SendRequest(this, onSuccess, onFailed);
+        }
 
         public void StopCallApi()
        => WebApiCaller.StopRequest(this);
