@@ -11,7 +11,7 @@ namespace VzDev.MediatorUtils
     public class ValueSwitcher : MonoBehaviour
     {
         #region Variables
-        [SerializeField, ReadOnly] private int receiveValue;
+        [SerializeField, ReadOnly] private int receiveValue = -1;
         [SerializeField] private ValueSwitchItem[] switchItems;
         
         private ValueSwitchItem currentActiveItem;
@@ -21,7 +21,6 @@ namespace VzDev.MediatorUtils
 
         public void SetValue(int value)
         {
-            if (receiveValue == value) return;
             if (currentActiveItem != null)
             {
                 currentActiveItem.IsActiveEvent?.Invoke(false);

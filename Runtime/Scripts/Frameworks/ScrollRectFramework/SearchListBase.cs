@@ -8,15 +8,11 @@ using VzDev.ApiExtensions;
 
 namespace VzDev.Frameworks.ScrollRectUtils
 {
-    public interface IDataKeyID
-    {
-        string dataKeyID { get; }
-    }
 
     /// <summary>
     /// 框架：ScrollRect列表
     /// </summary>
-    public abstract class ScrollRectListBase<TData> : MonoBehaviour where TData : IDataKeyID
+    public abstract class SearchListBase<TData> : MonoBehaviour where TData : IDataKeyID
     {
         #region Event
         public static UnityEvent<ScrollRectListItemBase<TData>> onSelectedItemEvent_Static;
