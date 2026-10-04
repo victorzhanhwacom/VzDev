@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.UI;
 using VzDev.Frameworks.LifecycleUtils;
 using VzDev.UnityAPI.Extensions;
 
@@ -23,6 +24,8 @@ namespace VzDev.ObjectUtils
 
         [Foldout("[Settings]"), SerializeField] private Vector3 offsetPos = Vector3.up * 0.1f;
 
+        [Foldout("[Settings]"), SerializeField, Tooltip("是否對齊邊界頂部")] private bool isAlignBoundTop = true;
+
         [Foldout("[Settings]"), SerializeField] private bool isAlwaysVisible = false;
         [Foldout("[Settings]"), SerializeField, HideIf(nameof(isAlwaysVisible))] private float visibleRange = 20f;
         [Foldout("[Settings]"), SerializeField, HideIf(nameof(isAlwaysVisible))] private bool visibleReverse = false;
@@ -30,10 +33,13 @@ namespace VzDev.ObjectUtils
         [Foldout("[Components]"), SerializeField] private Camera mainCamera;
         [Foldout("[Components]"), SerializeField] private RectTransform rectTrans, canvasRect;
         [Foldout("[Components]"), SerializeField] private GameObject container;
+        [Foldout("[Components]"), SerializeField] private Toggle toggle;
+
+        public bool toggleIsOn => toggle != null && toggle.isOn;
 
         public Transform Target3DObject => target3DObject;
 
-        public float DistanceFromCamera => target3DObject != null 
+        public float DistanceFromCamera => target3DObject != null
             ? Vector3.Distance(mainCamera.transform.position, target3DObject.position)
             : 0f;
 
@@ -63,11 +69,11 @@ namespace VzDev.ObjectUtils
             GlobalLifecycleBroadcaster.OnGlobalUpdate -= Tick;
 
             // 場景卸載/物件停用時，主動收起顯示，避免下次啟用前殘留舊狀態
-           /*  if (container != null && container.activeSelf)
-            {
-                container.SetActive(false);
-                lastActive = false;
-            } */
+            /*  if (container != null && container.activeSelf)
+             {
+                 container.SetActive(false);
+                 lastActive = false;
+             } */
             hasLastAnchoredPos = false;
         }
 
@@ -81,7 +87,9 @@ namespace VzDev.ObjectUtils
                 (targetPos - mainCamera.transform.position).sqrMagnitude <= visibleRangeSqr;
             if (!isAlwaysVisible && visibleReverse) inRange = !inRange;
 
-            Vector3 screenPos = mainCamera.WorldToScreenPoint(target3DObject.GetModelBoundsCenter() + offsetPos);
+            Vector3 screenPos = mainCamera.WorldToScreenPoint(
+                isAlignBoundTop ? target3DObject.GetModelBoundsMaxPosY() : target3DObject.GetModelBoundsCenter()
+                 + offsetPos);
             bool isInFrontOfCamera = screenPos.z > 0f;
 
             bool visible = inRange && isInFrontOfCamera && target3DObject.gameObject.activeInHierarchy;

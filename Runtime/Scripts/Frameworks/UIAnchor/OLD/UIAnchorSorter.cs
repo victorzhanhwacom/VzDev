@@ -62,6 +62,10 @@ namespace VzDev.ObjectUtils
             if (!aActive && bActive) return 1;
             if (!aActive && !bActive) return 0;
 
+             // UIAnchorFollower的toggleIsOn若為ture的話，要放到畫面的最前面
+            if (a.toggleIsOn && !b.toggleIsOn) return 1;
+            if (!a.toggleIsOn && b.toggleIsOn) return -1;
+
             // 都啟動的情況下，比較相機距離（由大到小排序）
             return b.DistanceFromCamera.CompareTo(a.DistanceFromCamera);
         }

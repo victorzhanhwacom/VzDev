@@ -548,7 +548,7 @@ namespace VzDev.UnityAPI.Extensions
         }
         #endregion
 
-       
+
 
         #region 從子孫物件中TryGetComponent
         /// <summary>
@@ -570,6 +570,22 @@ namespace VzDev.UnityAPI.Extensions
             return component != null;
         }
         #endregion
+
+        /// <summary>
+        /// 取得物件模型的幾何包圍盒最大Y座標（世界座標）
+        /// </summary>
+        public static Vector3 GetModelBoundsMaxPosY(this Transform target)
+        {
+            var meshRenderers = target.GetComponent<MeshRenderer>();
+            if (meshRenderers == null)
+            {
+                Debug.LogWarning($"[GetModelBoundsMaxPosY] 物件 {target.name} 找不到 MeshRenderer，回傳物件本身的座標。");
+                return default;
+            }
+            Bounds bounds = meshRenderers.bounds;
+            return new Vector3(bounds.center.x, bounds.max.y, bounds.center.z);
+        }
+
 
         /// <summary>
         /// 取得模型物件所有Mesh（包含靜態與骨骼動畫）結合起來的正中心點（世界座標）
