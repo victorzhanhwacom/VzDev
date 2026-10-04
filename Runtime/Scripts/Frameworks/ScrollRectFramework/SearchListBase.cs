@@ -8,9 +8,8 @@ using VzDev.ApiExtensions;
 
 namespace VzDev.Frameworks.ScrollRectUtils
 {
-
     /// <summary>
-    /// 框架：ScrollRect列表
+    /// 框架：搜索列表
     /// </summary>
     public abstract class SearchListBase<TData> : MonoBehaviour where TData : IDataKeyID
     {
@@ -48,7 +47,6 @@ namespace VzDev.Frameworks.ScrollRectUtils
                     var item = Instantiate(listItemPrefab, scrollRect.content);
                     item.SetData(data);
                     item.SetToggleGroup(toggleGroup);
-                    item.SetScrollRectList(this);
                     dataToItemMap[data.dataKeyID] = item;
                 }
                 else dataToItemMap[data.dataKeyID].SetData(data);

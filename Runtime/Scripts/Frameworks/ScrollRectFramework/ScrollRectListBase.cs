@@ -32,6 +32,8 @@ namespace VzDev.Frameworks.ScrollRectUtils
         [Foldout("[Components]"), SerializeField] protected ScrollRect scrollRect;
         [Foldout("[Components]"), SerializeField] protected ToggleGroup toggleGroup;
 
+        protected string searchTitlePrefix = "";
+
         /// <summary>
         /// 資料對應的列表項目字典，用於快速查找和管理列表項目
         /// </summary>
@@ -70,7 +72,9 @@ namespace VzDev.Frameworks.ScrollRectUtils
             }
             foreach (var key in keysToRemove) dataToItemMap.Remove(key);
 
-            listItemTotalCountEvent?.Invoke($"共{dataList.Count}筆資料");
+            // 發送事件：列表項目總數，activeSelf為true的列表項目數量
+            int activeItemCount = dataToItemMap.Values.Count(item => item.gameObject.activeSelf);
+            listItemTotalCountEvent?.Invoke($"{searchTitlePrefix}共{activeItemCount}筆資料");
         }
 
         /// <summary>
