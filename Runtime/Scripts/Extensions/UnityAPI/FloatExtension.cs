@@ -5,6 +5,7 @@ namespace VzDev.UnityAPI.Extensions
     public static class FloatExtension
     {
 
+        #region  將浮點數四捨五入到指定的小數位數
         /// <summary>
         /// Mathf.Pow(10, n)的效能比單純乘法還要差很多，所以直接用陣列存好10的次方數，避免每次都要計算
         /// </summary>
@@ -22,7 +23,8 @@ namespace VzDev.UnityAPI.Extensions
             float multiplier = Pow10[decimalPlaces];
             return Mathf.Round(value * multiplier) / multiplier;
         }
-
+        #endregion
+       
         /// <summary>
         /// 將浮點數轉換為指定小數位數的字串，並去除尾端多餘的零
         /// <para>+ decimalPlaces: 小數位數</para>
