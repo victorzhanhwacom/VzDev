@@ -23,6 +23,7 @@ namespace VzDev.DOTweenUtils
         public string text
         {
             set => SetText(value);
+            get => txt.text;
         }
 
         private void Awake() => OnValidate();
