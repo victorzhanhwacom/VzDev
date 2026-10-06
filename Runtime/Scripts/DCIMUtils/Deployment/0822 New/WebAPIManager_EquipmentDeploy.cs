@@ -66,11 +66,11 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             Debug.Log($"GetStockEquipmentList path: {path}");
             TextFileLoader.LoadTextFileCoroutine(path, (json) =>
             {
-                Debug.Log($"{GetType().Name}-GetStockEquipmentList:\n{json}");
+//                Debug.Log($"{GetType().Name}-GetStockEquipmentList:\n{json}");
                 OnGetStockEquipmentListAction?.Invoke(json);
             }, (error) =>
             {
-                Debug.LogError($"Error loading file: {error}");
+               // Debug.LogError($"Error loading file: {error}");
                 OnGetStockEquipmentListAction?.Invoke(null);
             });
         }

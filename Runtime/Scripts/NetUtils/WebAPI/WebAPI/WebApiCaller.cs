@@ -76,7 +76,7 @@ namespace VzDev.NetUtils
                             break;
                     }
 
-                    Debug.Log($"SendRequest Success: [{apiRequestSo.EnumHttpMethod}]\n{responseContent}");
+                    //Debug.Log($"SendRequest Success: [{apiRequestSo.EnumHttpMethod}]\n{responseContent}");
                     onSuccess?.Invoke(responseContent);
                 }
                 catch (OperationCanceledException)
