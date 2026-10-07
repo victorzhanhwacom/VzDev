@@ -10,14 +10,14 @@ namespace VzDev.DCIMUtils.DataUtils
     public class RevitAsset
     {
         /// <summary>
-        /// 模型名稱
-        /// </summary>
-        public string deviceName;
-
-        /// <summary>
         /// 模型索引碼
         /// </summary>
         public string deviceCode;
+
+        /// <summary>
+        /// 模型名稱
+        /// </summary>
+        public string deviceName;
 
         public Sprite assetPhotoSprite;
 

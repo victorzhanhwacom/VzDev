@@ -27,11 +27,17 @@ namespace VzDev
 
             ipConfig?.SetConfig(systemConfig.webapi.httpType, systemConfig.webapi.ip, systemConfig.webapi.port, systemConfig.webapi.surfix
             , systemConfig.webapi.usingProxyURL);
+            Debug.Log($"LogEnabled: {systemConfig.system.logEnabled}");
+
+#if UNITY_EDITOR
+            Debug.Log($"Set LogEnabled when EditorMode: true");
+            Debug.unityLogger.logEnabled = true;
+#else
+            Debug.unityLogger.logEnabled = systemConfig.system.logEnabled;
+#endif
+
             Debug.Log($"WebAPI URL: {ipConfig?.GetURL()}");
             Debug.Log($"TimeoutTimer: {systemConfig.webapi.requestTimeoutSec}, TimeIntervalTimer: {systemConfig.webapi.requestIntervalSec}");
-
-            Debug.Log($"LogEnabled: {systemConfig.system.logEnabled}");
-            Debug.unityLogger.logEnabled = systemConfig.system.logEnabled;
 
             OnGetSystemConfigAction?.Invoke(systemConfig);
         }

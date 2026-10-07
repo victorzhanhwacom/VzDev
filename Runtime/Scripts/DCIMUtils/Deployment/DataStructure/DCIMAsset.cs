@@ -24,8 +24,8 @@ namespace VzDev.DCIMUtils.DataUtils
         /// </summary>
         public void CheckSystemAndCategory()
         {
-            /*  category = EnumHelper<DCIM_Category>.GetEnumFromString(deviceCode ?? modelInfo.modelName);
-             system = EnumHelper<DCIM_System>.GetEnumFromString(deviceCode); */
+            category = EnumHelper<DCIM_Category>.GetEnumFromString(deviceCode ?? modelInfo.modelName).ToString();
+            system = EnumHelper<DCIM_System>.GetEnumFromString(deviceCode).ToString();
             companyAssetInfo ??= new CompanyAssetInfo();
             companyAssetInfo.GenerateRandomAssetNumber("NTCGO");
             companyAssetInfo.assetName ??= modelInfo.modelName;

@@ -48,7 +48,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         {
             this.equipmentAsset = equipmentAsset;
             txtDeviceName.text = equipmentAsset.deviceName;
-            txtCategory.text = equipmentAsset.category.ToString();
+            txtCategory.text = equipmentAsset.category?.ToString();
 
             bool isHavePhoto = equipmentAsset.assetPhotoSprite != null;
             imgDevicePhoto.gameObject.SetActive(isHavePhoto);

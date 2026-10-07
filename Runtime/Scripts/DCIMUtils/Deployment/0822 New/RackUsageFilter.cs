@@ -42,7 +42,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             rackDataCombiners.ForEach(combiner =>
             {
                 DCR_Asset rackAsset = combiner.RackAsset;
-                UsageCaculatorOfRack rackUsage = rackAsset?.usageInfo;
+                UsageCaculatorOfRack rackUsage = rackAsset.usageInfo;
 
                 bool isSuitable = true;
                 float totalRemainPercent = 0f;

@@ -44,10 +44,10 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         public void GetDCRList()
         {
             string path = Path.Combine(Application.streamingAssetsPath, jsonFilePath_DCRList);
-            Debug.Log($"GetDCRList path: {path}");
+            // Debug.Log($"GetDCRList path: {path}");
             TextFileLoader.LoadTextFileCoroutine(path, (json) =>
             {
-                Debug.Log($"{GetType().Name}-GetDCRList:\n{json}");
+                //Debug.Log($"{GetType().Name}-GetDCRList:\n{json}");
                 OnGetRackListInformationAction?.Invoke(json);
             }, (error) =>
             {
@@ -63,7 +63,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         public void GetStockEquipmentList()
         {
             string path = Path.Combine(Application.streamingAssetsPath, jsonFilePath_StockEquipment);
-            Debug.Log($"GetStockEquipmentList path: {path}");
+            // Debug.Log($"GetStockEquipmentList path: {path}");
             TextFileLoader.LoadTextFileCoroutine(path, (json) =>
             {
 //                Debug.Log($"{GetType().Name}-GetStockEquipmentList:\n{json}");

@@ -8,6 +8,7 @@ using VzDev.UnityAPI.Extensions;
 using System.Linq;
 using VzDev.ApiExtensions;
 using UnityEngine.Events;
+using System.Collections;
 
 namespace VzDev.DCIMUtils.DeploymentUtils
 {
@@ -90,7 +91,13 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         {
             if (!isRackDataReady || !isRackModelReady || !isEquipmentModelReady) return;
 
-            foreach (DCR_Asset rackAsset in rackAssets)
+            if (generateEquipmentCoroutine != null)
+            {
+                StopCoroutine(generateEquipmentCoroutine);
+                generateEquipmentCoroutine = null;
+            }
+            generateEquipmentCoroutine ??= StartCoroutine(GenerateEquipmentInContainer());
+            /* foreach (DCR_Asset rackAsset in rackAssets)
             {
                 // 比對deviceCode，找到對應的機櫃模型
                 Transform rackModel = rackModels.Find(r => r.name.GetStringBetweenMarks("[", "]") == rackAsset.deviceCode);
@@ -109,8 +116,36 @@ namespace VzDev.DCIMUtils.DeploymentUtils
                 rackDataCombiner.GenerateEquipmentInContainer(equipmentModels);
             }
             OnRackDataCombinerGeneratedAction?.Invoke(rackDataModelBinders);
+            onRackDataCombinerGeneratedEvent?.Invoke(); */
+        }
+
+        private Coroutine generateEquipmentCoroutine;
+        private IEnumerator GenerateEquipmentInContainer()
+        {
+            int counter = -1;
+            while (++counter < rackAssets.Count)
+            {
+                // 比對deviceCode，找到對應的機櫃模型
+                Transform rackModel = rackModels.Find(r => r.name.GetStringBetweenMarks("[", "]") == rackAssets[counter].deviceCode);
+                if (rackModel == null)
+                {
+                    Debug.LogWarning($"找不到對應的機櫃模型: {rackAssets[counter].deviceCode}");
+                    continue;
+                }
+                // 將 DCR_Asset 資料與對應的機櫃模型綁定
+                rackModel.gameObject.TryAddComponent(out DataModelBinder_Rack rackDataCombiner);
+                rackDataCombiner.SetRackAsset(rackAssets[counter]);
+
+                if (Application.isPlaying == false) continue; // 編輯模式下不生成模型，避免場景中出現多餘的物件
+
+                rackDataCombiner.GenerateRackSlotCollider(rackSlotColliderPrefab);
+                rackDataCombiner.GenerateEquipmentInContainer(equipmentModels);
+                yield return new WaitForSeconds(0.07f); // 等待下一幀，避免一次生成過多設備導致卡頓
+            }
+            OnRackDataCombinerGeneratedAction?.Invoke(rackDataModelBinders);
             onRackDataCombinerGeneratedEvent?.Invoke();
         }
+
 
         public UnityEvent onRackDataCombinerGeneratedEvent;
 
