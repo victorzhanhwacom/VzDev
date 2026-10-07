@@ -8,15 +8,15 @@ namespace VzDev.DCIMUtils.Extensions
         #region 取得模型的deviceCode
 
         /// <summary>
-        /// 取得模型的deviceCode
+        /// [DCIMExtension] 取得模型的deviceCode
         /// </summary>
         public static string GetDeviceCode(this string self) => self.GetStringBetweenMarks("[", "]");
         /// <summary>
-        /// 取得模型的deviceCode
+        /// [DCIMExtension] 取得模型的deviceCode
         /// </summary>
         public static string GetDeviceCode(this GameObject self) => GetDeviceCode(self.name);
         /// <summary>
-        /// 取得模型的deviceCode
+        /// [DCIMExtension] 取得模型的deviceCode
         /// </summary>
         public static string GetModelDeviceCode(this Transform self) => GetDeviceCode(self.name);
         #endregion

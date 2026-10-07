@@ -19,12 +19,27 @@ using System.Text.RegularExpressions;
 ///    最後一項不含逗號，可直接貼上作為陣列/清單使用
 ///    （單選時只會複製單獨一行，例如 "內容"，不含逗號）
 ///
+/// 5. 選單「VzDev/Tools/複製時加上雙引號」可切換是否用 "" 包住每一項
+///    （熱鍵 Ctrl+Shift+Alt+Q，勾選狀態會以 EditorPrefs 保存）。
+///    關閉時輸出格式為「內容,」，其餘格式不變。
+///
 /// 若想更改熱鍵，修改下方 MenuItem 路徑字串裡的組合鍵代碼即可：
 /// % = Ctrl(Win)/Cmd(Mac)，# = Shift，& = Alt，無符號 = 一般英數字鍵
 /// </summary>
 public static class CopyNameBetweenBrackets
 {
     private const string MenuPath = "VzDev/Tools/複製物件名稱中的 [] 內文字 %#&c";
+    private const string ToggleQuoteMenuPath = "VzDev/Tools/複製時加上雙引號 %#&q";
+    private const string WrapWithQuotesPrefKey = "VzDev.CopyNameBetweenBrackets.WrapWithQuotes";
+
+    /// <summary>
+    /// 複製時是否以 "" 包住每一項內容（預設為 true，以 EditorPrefs 保存）。
+    /// </summary>
+    private static bool WrapWithQuotes
+    {
+        get => EditorPrefs.GetBool(WrapWithQuotesPrefKey, true);
+        set => EditorPrefs.SetBool(WrapWithQuotesPrefKey, value);
+    }
 
     [MenuItem(MenuPath)]
     private static void CopyBracketText()
@@ -62,12 +77,13 @@ public static class CopyNameBetweenBrackets
             return;
         }
 
-        var quotedContents = new System.Collections.Generic.List<string>();
+        bool wrapWithQuotes = WrapWithQuotes;
+        var formattedContents = new System.Collections.Generic.List<string>();
         foreach (string c in matchedContents)
         {
-            quotedContents.Add($"\"{c}\"");
+            formattedContents.Add(wrapWithQuotes ? $"\"{c}\"" : c);
         }
-        string result = string.Join(",\n    ", quotedContents);
+        string result = string.Join(",\n    ", formattedContents);
         EditorGUIUtility.systemCopyBuffer = result;
 
         var log = new StringBuilder();
@@ -84,5 +100,22 @@ public static class CopyNameBetweenBrackets
     private static bool ValidateCopyBracketText()
     {
         return Selection.gameObjects != null && Selection.gameObjects.Length > 0;
+    }
+
+    // 切換是否加上雙引號，選單項目前會顯示勾選狀態
+    [MenuItem(ToggleQuoteMenuPath)]
+    private static void ToggleWrapWithQuotes()
+    {
+        WrapWithQuotes = !WrapWithQuotes;
+        Menu.SetChecked(ToggleQuoteMenuPath, WrapWithQuotes);
+        Debug.Log($"[CopyNameBetweenBrackets] 複製時加上雙引號：{(WrapWithQuotes ? "開啟" : "關閉")}");
+    }
+
+    // 驗證函式：開啟選單時同步勾選狀態（確保重開 Editor 後也正確顯示）
+    [MenuItem(ToggleQuoteMenuPath, true)]
+    private static bool ValidateToggleWrapWithQuotes()
+    {
+        Menu.SetChecked(ToggleQuoteMenuPath, WrapWithQuotes);
+        return true;
     }
 }
