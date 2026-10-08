@@ -165,7 +165,7 @@ namespace VictorDev.Managers
             {
                 Tag = tag;
                 TimeoutSeconds = timeoutSeconds;
-                Debug.Log($"[TaskManager] Task '{Tag}' 開始執行 (逾時 {TimeoutSeconds}s)");
+                // Debug.Log($"[TaskManager] Task '{Tag}' 開始執行 (逾時 {TimeoutSeconds}s)");
                 Cts = new CancellationTokenSource(Mathf.RoundToInt(timeoutSeconds * 1000));
             }
 
