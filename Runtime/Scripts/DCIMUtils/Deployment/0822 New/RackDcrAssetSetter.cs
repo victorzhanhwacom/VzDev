@@ -9,10 +9,13 @@ using System.Linq;
 using VzDev.ApiExtensions;
 using UnityEngine.Events;
 using System.Collections;
+using VzDev.Frameworks;
+using UnityEngine.UI;
+using DG.Tweening;
 
 namespace VzDev.DCIMUtils.DeploymentUtils
 {
-    public class RackDcrAssetSetter : MonoBehaviour
+    public class RackDcrAssetSetter : SingletonMonoBehaviour<RackDcrAssetSetter>
     {
         #region Fields
         [SerializeField, OnValueChanged("OnRackSelectableChanged")] private bool isRackSelectable = true;
@@ -28,6 +31,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [SerializeField, ReadOnly] private List<DataModelBinder_Rack> rackDataModelBinders = new List<DataModelBinder_Rack>();
 
         public List<DataModelBinder_Rack> RackDataModelBinders => rackDataModelBinders;
+        public static List<DataModelBinder_Rack> RackDataModelBinders_Static => Instance.rackDataModelBinders;
         private bool isHaveData => isRackDataReady && isRackModelReady && isEquipmentModelReady;
         private bool isRackDataReady => rackAssets != null && rackAssets.Count > 0;
         private bool isRackModelReady => rackModels != null && rackModels.Count > 0;
