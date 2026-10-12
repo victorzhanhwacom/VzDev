@@ -36,6 +36,18 @@ namespace VzDev.NetUtils
                     result = fullApiURL.Trim();
                     if (result.StartsWith(httpType.ToString()) == false) result = httpType + "://" + result;
                 }
+                //若有Query Params，則在URL後面加上Query Params
+                if (isQueryParams)
+                {
+                    if (result.EndsWith("/") == false) result += "/";
+                    result += "?";
+
+                    for (var i = 0; i < queryParams.Count; i++)
+                    {
+                        if (i > 0) result += "&";
+                        result += $"{queryParams[i].Key}={queryParams[i].Value}";
+                    }
+                }
                 return result;
             }
         }
@@ -47,18 +59,7 @@ namespace VzDev.NetUtils
             {
                 HttpRequestMessage request;
                 string url = URL;
-                if (isQueryParams)
-                {
-                    if (url.EndsWith("/") == false) url += "/";
-                    url += "?";
-
-                    for (var i = 0; i < queryParams.Count; i++)
-                    {
-                        if (i > 0) url += "&";
-                        url += $"{queryParams[i].Key}={queryParams[i].Value}";
-                    }
-                    Debug.Log($"QueryParams: \turl: {url}\n");
-                }
+                
                 switch (enumHttpMethod)
                 {
                     default:

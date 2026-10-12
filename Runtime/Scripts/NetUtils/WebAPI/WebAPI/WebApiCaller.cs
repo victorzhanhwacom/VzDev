@@ -86,6 +86,7 @@ namespace VzDev.NetUtils
                 catch (Exception ex)
                 {
                     var realEx = ex.InnerException ?? ex;
+                    
                     Debug.LogWarning($"SendRequest Exception: {realEx.Message}\n{realEx.StackTrace}");
                     onFailed?.Invoke(realEx.Message);
                 }
@@ -135,7 +136,7 @@ namespace VzDev.NetUtils
                 {
                     token.ThrowIfCancellationRequested();
                     await Task.Yield();
-                }
+                } 
             }
 
             token.ThrowIfCancellationRequested();
