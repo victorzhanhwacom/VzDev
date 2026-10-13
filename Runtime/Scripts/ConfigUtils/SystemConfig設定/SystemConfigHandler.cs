@@ -37,7 +37,7 @@ namespace VzDev
 #endif
 
             Debug.Log($"WebAPI URL: {ipConfig?.GetURL()}");
-            Debug.Log($"TimeoutTimer: {systemConfig.webapi.requestTimeoutSec}, TimeIntervalTimer: {systemConfig.webapi.requestIntervalSec}");
+            Debug.Log($"TimeoutTimer: {systemConfig.webapi.requestTimeoutSec}, TimeIntervalTimer: {systemConfig.webapi.requestIntervalSec_RealtimeData}");
 
             OnGetSystemConfigAction?.Invoke(systemConfig);
         }
@@ -96,6 +96,10 @@ namespace VzDev
             [field: SerializeField]
             public float requestTimeoutSec { get; private set; }
             [JsonProperty]
+            [field: SerializeField]
+            public float requestIntervalSec_RealtimeData { get; private set; }
+
+             [JsonProperty]
             [field: SerializeField]
             public float requestIntervalSec { get; private set; }
         }
