@@ -9,6 +9,7 @@ namespace VzDev.ApiExtensions.XChart
         {
             lineChart.AnimationReset();
             lineChart.AnimationFadeIn();
+            lineChart.RefreshChart();
         }
 
 
