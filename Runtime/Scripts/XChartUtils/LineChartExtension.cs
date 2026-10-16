@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
+using VzDev.ApiExtensions;
 using XCharts.Runtime;
 
-namespace VzDev.ApiExtensions.XChart
+namespace VzDev.XChartUtils.APIExtensions
 {
     public static class LineChartExtension
     {
@@ -107,8 +109,32 @@ namespace VzDev.ApiExtensions.XChart
                 span > 86400 ? "MM/dd HH:mm" :
                 interval < 60 ? "HH:mm:ss" : "HH:mm";
 
+            xAxis.SetAxisLabelFont(Color.white);
             lineChart.RefreshChart();
         }
+
+        #region 設定軸向的文字樣式
+        /// <summary>
+        /// 設定軸向的文字樣式
+        /// </summary>
+        public static void SetAxisLabelFont(this BaseChart chart, Color? color = null, int fontSize = 14)
+        {
+            chart.EnsureChartComponent<XAxis>().SetAxisLabelFont(color, fontSize);
+            chart.EnsureChartComponent<YAxis>().SetAxisLabelFont(color, fontSize);
+        }
+        /// <summary>
+        /// 設定軸向的文字樣式
+        /// </summary>
+        public static void SetAxisLabelFont(this Axis axis, Color? color = null, int fontSize = 14)
+        {
+            axis.axisLabel.textStyle.fontSize = fontSize;
+            if (color.HasValue)
+            {
+                axis.axisLabel.textStyle.color = color.Value;
+            }
+        }
+        #endregion
+
 
         // 軸與資料共用的換算（Utc 視為 UTC；Local / Unspecified 視為台灣時間）
         private static double ToAxisTime(DateTime t)
@@ -130,25 +156,49 @@ namespace VzDev.ApiExtensions.XChart
         /// 設置Y軸為溫度格式
         /// </summary>
         public static void SetYAxisToTemperatureFormat(this LineChart lineChart, float min = 0, float max = 40)
-            => SetYAxisToCustomFormat(lineChart, min, max, "{value}°C");
+            => SetYAxisToCustomFormat(lineChart, min, max, "{value}°c", "溫度 {c}°c");
 
         /// <summary>
         /// 設置Y軸為濕度格式
         /// </summary>
         public static void SetYAxisToHumidityFormat(this LineChart lineChart, float min = 0, float max = 100)
-            => SetYAxisToCustomFormat(lineChart, min, max, "{value}%");
+            => SetYAxisToCustomFormat(lineChart, min, max, "{value}%", "濕度 {c}%");
 
         /// <summary>
         /// 設定Y軸為自訂格式
         /// </summary>
-        public static void SetYAxisToCustomFormat(this LineChart lineChart, float min, float max, string formatter)
+        public static void SetYAxisToCustomFormat(this LineChart lineChart, float min, float max, string formatter, string tooltipFormatter = null)
         {
             var yAxis = lineChart.EnsureChartComponent<YAxis>();
             yAxis.min = min; yAxis.max = max;
             yAxis.minMaxType = Axis.AxisMinMaxType.Custom;
             yAxis.axisLabel.formatter = formatter;
+            yAxis.SetAxisLabelFont(Color.white);
+
+            lineChart.SetTooltipStyle(tooltipFormatter, titelColor: Color.black, textColor: Color.black);
+            lineChart.RefreshChart();
         }
         #endregion
+
+        /// <summary>
+        /// 設定Tooltip樣式
+        /// </summary>
+        public static Tooltip SetTooltipStyle(this BaseChart chart, string tooltipFormatter = null
+        , Color? backgroundColor = null, Color? titelColor = null, Color? textColor = null, int? fontSize = null)
+        {
+            var tooltip = chart.EnsureChartComponent<Tooltip>();
+            tooltip.show = true;
+            if (string.IsNullOrEmpty(tooltipFormatter) == false) tooltip.itemFormatter = tooltipFormatter;
+            if (backgroundColor.HasValue) tooltip.backgroundColor = backgroundColor.Value;
+            if (titelColor.HasValue) tooltip.titleLabelStyle.textStyle.color = titelColor.Value;
+            if (textColor.HasValue) tooltip.contentLabelStyles[0].textStyle.color = textColor.Value;
+            if (fontSize.HasValue) tooltip.titleLabelStyle.textStyle.fontSize = fontSize.Value;
+
+            tooltip.titleHeight = tooltip.itemHeight = 15;
+            tooltip.paddingLeftRight = tooltip.paddingTopBottom = 5;
+            return tooltip;
+        }
+
 
         #region 設定軸
         #region 設定X軸
@@ -190,27 +240,32 @@ namespace VzDev.ApiExtensions.XChart
         #endregion
 
         /// <summary>
-        /// 透明背景、圖表撐滿容器，適合疊在 3D 場景上
+        /// 透明背景、圖表撐滿容器設定邊界，適合疊在 3D 場景上
         /// </summary>
-        public static BaseChart ApplyOverlayLayout(this BaseChart chart)
+        public static BaseChart ApplyChartLayout(this BaseChart chart)
         {
             chart.theme.transparentBackground = true;
-
             var grid = chart.EnsureChartComponent<GridCoord>();
-            grid.left = 0;
-            grid.right = 0;
+            grid.left = 0.08f;
+            grid.right = 0.05f;
             grid.top = 0.1f;     // 小於 1 視為比例，留一點空間給頂端的點
-            grid.bottom = 0;
+            grid.bottom = 0.07f;
+
+            chart.EnsureChartComponent<Title>().show = false;
+            chart.SetTooltipStyle(titelColor: Color.black, textColor: Color.black);
             return chart;
         }
 
         /// <summary>
         /// 平滑線 + 實心圓點 + 半透明面積（漸層可選）
         /// </summary>
-        public static T ApplyGlowLineStyle<T>(this T serie, Color color,
-            float lineWidth = 2f, float symbolSize = 6f,
-            float areaAlpha = 0.25f, bool areaGradient = false) where T : Serie
+        public static Serie SetLineColorStyle(this BaseChart chart, Color color,
+            float lineWidth = 1f, float symbolSize = 3f, int serieIndex = 0)
         {
+
+            chart.EnsureChartComponent<VisualMap>().show = false; // 關閉 VisualMap，避免覆蓋掉自訂的顏色
+
+            Serie serie = chart.series[serieIndex];
             // 線
             serie.lineType = LineType.Smooth;
             serie.lineStyle.show = true;
@@ -227,28 +282,76 @@ namespace VzDev.ApiExtensions.XChart
             // 面積填色
             var area = serie.EnsureComponent<AreaStyle>();
             area.show = true;
-            area.color = new Color(color.r, color.g, color.b, areaAlpha);
-            // 漸層：往下淡出到全透明
-            area.toColor = areaGradient
-                ? new Color(color.r, color.g, color.b, 0f)
-                : area.color;
+            area.toTop = true;
+            area.opacity = 0.1f;
 
+            area.color = new Color(0, 0, 0, 1f);
+            area.toColor = new Color(color.r, color.g, color.b, 1f);
             return serie;
         }
 
         /// <summary>
-        /// 極簡座標軸：隱藏軸線、刻度、標籤，可選擇保留分隔線
+        /// 依多段等級設定 VisualMap 顏色。
+        /// levels 的 key 為該區段下限，下一筆的 key 為上限；最後一段延伸到 dataMax。
         /// </summary>
-        public static Axis ApplyMinimalStyle(this Axis axis, bool showSplitLine, Color splitLineColor)
+        public static VisualMap SetLevelColors(this BaseChart chart, IList<KeyValueData<float, Color32>> levels,
+            double dataMax, int serieIndex = 0, bool workOnArea = true)
         {
-            axis.axisLine.show = false;
-            axis.axisTick.show = false;
-            axis.axisLabel.show = false;
+            if (levels == null || levels.Count == 0) return null;
 
-            axis.splitLine.show = showSplitLine;
-            axis.splitLine.lineStyle.color = splitLineColor;
-            axis.splitLine.lineStyle.width = 1f;
-            return axis;
+            var sorted = levels.OrderBy(l => l.Key).ToList();
+            double dataMin = sorted[0].Key;
+            if (dataMax <= sorted[sorted.Count - 1].Key)
+                dataMax = sorted[sorted.Count - 1].Key + 1; // 確保最後一段有範圍
+
+            var visualMap = chart.EnsureChartComponent<VisualMap>();
+            visualMap.show = true;
+            visualMap.showUI = false;
+            visualMap.type = VisualMap.Type.Piecewise;
+            visualMap.serieIndex = serieIndex;
+            visualMap.dimension = 1;   // Y 值
+            visualMap.min = dataMin;
+            visualMap.max = dataMax;
+            visualMap.workOnLine = true;
+            visualMap.workOnArea = workOnArea;
+
+            visualMap.inRange.Clear();
+            for (int i = 0; i < sorted.Count; i++)
+            {
+                double min = sorted[i].Key;
+                double max = (i + 1 < sorted.Count) ? sorted[i + 1].Key : dataMax;
+                visualMap.inRange.Add(new VisualMapRange
+                {
+                    min = min,
+                    max = max,
+                    color = sorted[i].Value
+                });
+            }
+            chart.SetSerieAreaStyle(new Color(255, 255, 255, 0), new Color(255, 255, 255, 255));
+            // 面積填色
+            var area = chart.series[serieIndex].EnsureComponent<AreaStyle>();
+            area.show = true;
+            area.toTop = true;
+            area.opacity = 0.3f;
+
+            chart.RefreshChart();
+            return visualMap;
+        }
+
+        /// <summary> 設定 Serie 的面積樣式（AreaStyle）</summary>        
+        public static void SetSerieAreaStyle(this BaseChart chart, Color color, Color toColor, int serieIndex = 0)
+        {
+            var areaStyle = chart.series[serieIndex].EnsureComponent<AreaStyle>();
+            areaStyle.color = color;
+            areaStyle.toColor = toColor;
+        }
+
+        /// <summary>動態調整門檻（用於即時資料）</summary>
+        public static void UpdateThreshold(this VisualMap visualMap, double threshold)
+        {
+            if (visualMap.inRange.Count < 2) return;
+            visualMap.inRange[0].max = threshold;
+            visualMap.inRange[1].min = threshold;
         }
     }
 }

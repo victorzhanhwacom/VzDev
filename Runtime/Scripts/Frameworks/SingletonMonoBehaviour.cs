@@ -16,8 +16,8 @@ namespace VzDev.Frameworks
             {
                 if (instance == null)
                 {
+                    // 尋找場景中是否已存在該單例物件, 在非運行模式下也要可以找到
                     instance = FindFirstObjectByType<T>();
-
                     if (instance == null)
                     {
                         GameObject obj = new GameObject();
