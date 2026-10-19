@@ -76,7 +76,9 @@ namespace VzDev.NetUtils
                             break;
                     }
 
-                    //Debug.Log($"SendRequest Success: [{apiRequestSo.EnumHttpMethod}]\n{responseContent}");
+#if UNITY_EDITOR
+                    Debug.Log($"SendRequest Success: [{apiRequestSo.EnumHttpMethod}]\n{responseContent}");
+#endif
                     onSuccess?.Invoke(responseContent);
                 }
                 catch (OperationCanceledException)
@@ -86,7 +88,7 @@ namespace VzDev.NetUtils
                 catch (Exception ex)
                 {
                     var realEx = ex.InnerException ?? ex;
-                    
+
                     Debug.LogWarning($"SendRequest Exception: {realEx.Message}\n{realEx.StackTrace}");
                     onFailed?.Invoke(realEx.Message);
                 }
@@ -136,7 +138,7 @@ namespace VzDev.NetUtils
                 {
                     token.ThrowIfCancellationRequested();
                     await Task.Yield();
-                } 
+                }
             }
 
             token.ThrowIfCancellationRequested();

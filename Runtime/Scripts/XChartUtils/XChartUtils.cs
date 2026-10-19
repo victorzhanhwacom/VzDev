@@ -16,7 +16,7 @@ namespace VzDev.XChartUtils
     /// ChartData結構，包含時間與數值，用於XCharts的資料呈現
     /// </summary>
     [Serializable]
-    public struct XChartData
+    public class XChartData
     {
         public DateTime Time;
         public double Value;
@@ -28,16 +28,15 @@ namespace VzDev.XChartUtils
     }
     #endregion
 
-     #region 介面
+    #region 介面
     /// <summary>
     /// 供XCharts使用的資料接收介面，實作此介面即可接收ChartData資料
     /// </summary>
-    public interface IXChartDataReceiver
+    public interface IXChartData
     {
-        /// <summary>
-        /// 接收XChart圖表資料
+        /// 將資料轉換為XChartData結構
         /// </summary>
-        void ReceiveChartData(List<XChartData> xchartData);
+        XChartData ToXChartData();
     }
     #endregion
 }

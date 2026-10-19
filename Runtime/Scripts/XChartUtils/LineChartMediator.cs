@@ -13,7 +13,7 @@ namespace VzDev.XChartUtils
     /// <summary>
     /// XChart LineChart 的中介者，負責接收資料並更新圖表。
     /// </summary>
-    public class LineChartMediator : MonoBehaviour, IXChartDataReceiver
+    public class LineChartMediator : MonoBehaviour
     {
         #region Fields
         [ReadOnly, SerializeField] private List<XChartData> data;
@@ -31,16 +31,18 @@ namespace VzDev.XChartUtils
             // 若lineColor未設定，則使用ColorConfig.CyanColor作為預設值
             lineColor = lineColor == default ? ColorConfig.CyanColor : lineColor;
 
-            lineLevelColor ??= new List<KeyValueData<float, Color32>>()
-            {
-                new KeyValueData<float, Color32>(0f, ColorConfig.AlertColor),
-                new KeyValueData<float, Color32>(15f, ColorConfig.WarningColor),
-                new KeyValueData<float, Color32>(18f, ColorConfig.NormalColor),
-                new KeyValueData<float, Color32>(26f, ColorConfig.WarningColor),
-                new KeyValueData<float, Color32>(28f, ColorConfig.AlertColor)
-            };
+            /*  lineLevelColor ??= new List<KeyValueData<float, Color32>>()
+             {
+                 new KeyValueData<float, Color32>(0f, ColorConfig.AlertColor),
+                 new KeyValueData<float, Color32>(15f, ColorConfig.WarningColor),
+                 new KeyValueData<float, Color32>(18f, ColorConfig.NormalColor),
+                 new KeyValueData<float, Color32>(26f, ColorConfig.WarningColor),
+                 new KeyValueData<float, Color32>(28f, ColorConfig.AlertColor)
+             }; */
         }
         #endregion
+
+        private void Awake() => UpdateWithSetting();
 
         [Button]
         private void UpdateWithSetting()
@@ -80,8 +82,10 @@ namespace VzDev.XChartUtils
             if (isColorByLevel) lineChart.SetLevelColors(lineLevelColor, yAxisRange.y);
             else lineChart.SetLineColorStyle(lineColor);
         }
-
-        public void ReceiveChartData(List<XChartData> xchartData)
+        /// <summary>
+        /// 設定資料
+        /// </summary>
+        public void SetSerieData(List<XChartData> xchartData)
         {
             if (xchartData == null || xchartData.Count == 0)
             {
@@ -89,7 +93,11 @@ namespace VzDev.XChartUtils
                 return;
             }
             SetXAxisTimeToday(xchartData.Count);
-            SetSerieData(xchartData);
+
+            // 確保有一個名為 "DataSeries" 的系列存在
+            Line dataSerie = lineChart.EnsureSerie<Line>(serieDataName);
+            // 將接收到的資料設定到系列中
+            dataSerie.SetTimeData(xchartData, data => data.Time, data => data.Value);
             // 刷新圖表以顯示新的資料
             lineChart.RefreshChart();
         }
@@ -98,17 +106,15 @@ namespace VzDev.XChartUtils
         /// <summary>
         /// 設定X軸為今天的時間範圍，並根據資料數量決定分割數量。
         /// </summary>
-        private void SetXAxisTimeToday(int splitNumber = 10) => lineChart.SetXAxisToTimeFormat(DateTime.Today, DateTime.Now, splitNumber);
+        private void SetXAxisTimeToday(int splitNumber = 5) => lineChart.SetXAxisToTimeFormat(DateTime.Today, DateTime.Now, splitNumber);
 
         /// <summary>
-        /// 設定資料
+        /// 清除指定系列的資料，預設為第一個系列。
         /// </summary>
-        private void SetSerieData(List<XChartData> xchartData)
+        public void ClearSerieData(int serieIndex = 0)
         {
-            // 確保有一個名為 "DataSeries" 的系列存在
-            var dataSerie = lineChart.EnsureSerie<Line>(serieDataName);
-            // 將接收到的資料設定到系列中
-            dataSerie.SetTimeData(xchartData, data => data.Time, data => data.Value);
+            lineChart.series[serieIndex].data.Clear();
+            lineChart.RefreshChart();
         }
     }
 }

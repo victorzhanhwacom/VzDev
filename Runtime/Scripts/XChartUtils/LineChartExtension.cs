@@ -10,6 +10,8 @@ namespace VzDev.XChartUtils.APIExtensions
 {
     public static class LineChartExtension
     {
+        private static int X_SPLITER_MAX = 5;
+
         /// <summary>
         /// 強制刷新圖表，並播放淡入動畫。
         /// </summary>
@@ -91,7 +93,7 @@ namespace VzDev.XChartUtils.APIExtensions
             if (splitNumber > 0)
             {
                 xAxis.interval = 0;              // 必須歸零，splitNumber 才會生效
-                xAxis.splitNumber = Mathf.Min(10, splitNumber);
+                xAxis.splitNumber = Mathf.Min(X_SPLITER_MAX, splitNumber);
                 interval = span / splitNumber;   // 只用來決定標籤格式
             }
             else
@@ -156,13 +158,13 @@ namespace VzDev.XChartUtils.APIExtensions
         /// 設置Y軸為溫度格式
         /// </summary>
         public static void SetYAxisToTemperatureFormat(this LineChart lineChart, float min = 0, float max = 40)
-            => SetYAxisToCustomFormat(lineChart, min, max, "{value}°c", "溫度 {c}°c");
+            => SetYAxisToCustomFormat(lineChart, min, max, "{value}°c", "溫度 {c:F1}°c");
 
         /// <summary>
         /// 設置Y軸為濕度格式
         /// </summary>
         public static void SetYAxisToHumidityFormat(this LineChart lineChart, float min = 0, float max = 100)
-            => SetYAxisToCustomFormat(lineChart, min, max, "{value}%", "濕度 {c}%");
+            => SetYAxisToCustomFormat(lineChart, min, max, "{value}%", "濕度 {c:F0}%");
 
         /// <summary>
         /// 設定Y軸為自訂格式
