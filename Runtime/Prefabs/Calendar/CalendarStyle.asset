@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e51a21bed7132a442963404448ba984c, type: 3}
+  m_Name: CalendarStyle
+  m_EditorClassIdentifier: VzDev::VzDev.ToolUtils.Calendar.CalendarStyle
+  monthTitleFormat: "yyyy\u5E74 M\u6708"
+  weekdayNames:
+  - sun
+  - mon
+  - tue
+  - wed
+  - thu
+  - fri
+  - sat
+  normalBg: {r: 1, g: 1, b: 1, a: 0.19607843}
+  normalText: {r: 1, g: 1, b: 1, a: 1}
+  otherMonthText: {r: 0.645283, g: 0.645283, b: 0.645283, a: 1}
+  disabledText: {r: 0.5, g: 0.5, b: 0.5, a: 0.35}
+  todayBg: {r: 0, g: 0.6463334, b: 0.6754716, a: 1}
+  todayText: {r: 0, g: 0.95569634, b: 1, a: 1}
+  selectedBg: {r: 0.20000002, g: 0.54901963, b: 1, a: 1}
+  selectedText: {r: 1, g: 1, b: 1, a: 1}
+  rangeStartBg: {r: 0.9961763, g: 1, b: 0.24705881, a: 0.19607843}
+  rangeStartText: {r: 0.989445, g: 1, b: 0.24705881, a: 1}
+  rangeEndBg: {r: 0.97915775, g: 1, b: 0.24705881, a: 0.19607843}
+  rangeEndText: {r: 0.963733, g: 1, b: 0.24705881, a: 1}
+  rangePendingBg: {r: 0.9781675, g: 1, b: 0.24705881, a: 0.19607843}
+  rangePendingText: {r: 0.9979661, g: 1, b: 0.24705881, a: 1}
+  rangeStartTag: '{'
+  rangeEndTag: '}'
+  rangeSameDayTag: 
+  rangeStartTagAlign: 1
+  rangeEndTagAlign: 4
+  rangeSameDayTagAlign: 2
+  hintSelectStart: "\u8ACB\u9078\u64C7\u958B\u59CB\u65E5\u671F"
+  hintSelectEnd: "\u8ACB\u9078\u64C7\u7D50\u675F\u65E5\u671F"
+  hintRangeFormat: "{0:yyyy/MM/dd} ~ {1:yyyy/MM/dd}\uFF08\u5171 {2} \u5929\uFF09"
+  rangeBand: {r: 1, g: 0.99077034, b: 0.24705881, a: 0.078431375}
+  rangeBandHeight: 0.9
+  rangeEdgeBandWidth: 0.8
+  inRangeText: {r: 0.9883719, g: 1, b: 0.24705881, a: 1}
+  boldToday: 1
+  boldSelected: 1
+  boldInRange: 1
+  hideOtherMonthDays: 0
+  jumpMonthOnOtherMonthClick: 1

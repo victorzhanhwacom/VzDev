@@ -21,7 +21,7 @@ namespace VzDev.DOTweenUtils
         [Foldout("[Tween]"), SerializeField, Label(">>Tween數值設定檔SO"), Expandable] protected DOTweenParamsSO tweenParamsSO;
         private bool isHaveSO => tweenParamsSO != null;
         [Space(10)]
-        [Foldout("[Tween]"), SerializeField, HideIf("isHaveSO")] private float duration = 0.3f;
+        [Foldout("[Tween]"), SerializeField, HideIf("isHaveSO")] private float duration = 0.7f;
         protected float Duration => isHaveSO ? tweenParamsSO.duration : duration;
         [Foldout("[Tween]"), SerializeField, HideIf("isHaveSO")] protected Ease easeOut = Ease.OutQuad;
         [Foldout("[Tween]"), SerializeField, HideIf("isHaveSO")] protected Ease easeIn = Ease.InQuad;

@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: VzDev::VzDev.RaycastObject
   hoverColor: {r: 0.09411748, g: 5.992157, b: 5.7509274, a: 1}
   jumpDistance: 1
-  scaleOut: 1.2
+  scaleOut: -2
   clickDuration: 0.5
   hoverDuration: 0.2
   ease: 6

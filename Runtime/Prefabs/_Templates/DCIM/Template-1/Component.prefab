@@ -219,7 +219,7 @@ MonoBehaviour:
       m_Calls: []
   isAutoShowOnEnable: 1
   tweenParamsSO: {fileID: 0}
-  duration: 0.3
+  duration: 0.7
   easeOut: 6
   easeIn: 5
   isRandomDelay: 0
@@ -253,7 +253,7 @@ MonoBehaviour:
       m_Calls: []
   isAutoShowOnEnable: 1
   tweenParamsSO: {fileID: 0}
-  duration: 0.3
+  duration: 0.7
   easeOut: 6
   easeIn: 5
   isRandomDelay: 0
