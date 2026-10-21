@@ -60,6 +60,15 @@ namespace VzDev.ToolUtils.Calendar
             return x;
         }
 
+        /// <summary>以「月」為單位夾在 min/max 所在月份之間，回傳該月 1 號。null 表示不限制。</summary>
+        public static DateTime ClampMonth(this DateTime d, DateTime? min, DateTime? max)
+        {
+            DateTime m = d.FirstDayOfMonth();
+            if (min.HasValue && m.CompareMonth(min.Value) < 0) return min.Value.FirstDayOfMonth();
+            if (max.HasValue && m.CompareMonth(max.Value) > 0) return max.Value.FirstDayOfMonth();
+            return m;
+        }
+
         public static bool IsWithin(this DateTime d, DateTime? min, DateTime? max)
         {
             DateTime x = d.Date;

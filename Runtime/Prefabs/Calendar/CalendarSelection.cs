@@ -11,13 +11,15 @@ namespace VzDev.ToolUtils.Calendar
     /// </summary>
     public sealed class CalendarSelection
     {
-        public event Action Changed;
+        public event Action OnChanged;
 
         private CalendarSelectionMode _mode;
         private DateTime? _single;
         private DateTime? _rangeStart;
         private DateTime? _rangeEnd;
         private readonly HashSet<DateTime> _multiple = new HashSet<DateTime>();
+        private readonly List<DateTime> _datesCache = new List<DateTime>(31);
+        private bool _datesDirty = true;
 
         /// <summary>Multiple 模式最多可選幾天，0 = 不限。</summary>
         public int MaxMultipleCount { get; set; }
@@ -38,8 +40,75 @@ namespace VzDev.ToolUtils.Calendar
                 if (_mode == value) return;
                 ClearInternal();
                 _mode = value;
-                Changed?.Invoke();
+                NotifyChanged();
             }
+        }
+
+        // ───────────── 取值（不分模式，統一用法）─────────────
+
+        /// <summary>是否有任何選取。</summary>
+        public bool HasSelection => Count > 0;
+
+        /// <summary>選取是否已完成。Range 需起迄都選；其他模式有選就算完成。</summary>
+        public bool IsComplete => _mode == CalendarSelectionMode.Range
+            ? _rangeStart.HasValue && _rangeEnd.HasValue
+            : HasSelection;
+
+        /// <summary>
+        /// 最早的選取日。Single = 選取日；Range = 起點；Multiple = 最早一天。未選為 null。
+        /// </summary>
+        public DateTime? Start
+        {
+            get
+            {
+                switch (_mode)
+                {
+                    case CalendarSelectionMode.Single: return _single;
+                    case CalendarSelectionMode.Range: return _rangeStart;
+                    default: return _multiple.Count > 0 ? SelectedDates[0] : (DateTime?)null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 最晚的選取日。Single = 選取日；Range = 終點（尚未選終點為 null）；Multiple = 最晚一天。
+        /// </summary>
+        public DateTime? End
+        {
+            get
+            {
+                switch (_mode)
+                {
+                    case CalendarSelectionMode.Single: return _single;
+                    case CalendarSelectionMode.Range: return _rangeEnd;
+                    default:
+                        var list = SelectedDates;
+                        return list.Count > 0 ? list[list.Count - 1] : (DateTime?)null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 所有選取日期（已排序）。Range 會展開起迄之間每一天。
+        /// 內部快取，只在選取改變後第一次讀取時重建，不產生 GC；要長期保存請自行複製。
+        /// </summary>
+        public IReadOnlyList<DateTime> SelectedDates
+        {
+            get
+            {
+                if (_datesDirty)
+                {
+                    GetSelectedDates(_datesCache);
+                    _datesDirty = false;
+                }
+                return _datesCache;
+            }
+        }
+
+        private void NotifyChanged()
+        {
+            _datesDirty = true;
+            OnChanged?.Invoke();
         }
 
         /// <summary>Range 模式下已選起點、尚未選終點。</summary>
@@ -73,7 +142,7 @@ namespace VzDev.ToolUtils.Calendar
                 case CalendarSelectionMode.Multiple: changed = ClickMultiple(date); break;
                 default: changed = ClickRange(date); break;
             }
-            if (changed) Changed?.Invoke();
+            if (changed) NotifyChanged();
             return changed;
         }
 
@@ -124,7 +193,7 @@ namespace VzDev.ToolUtils.Calendar
         {
             ForceMode(CalendarSelectionMode.Single);
             _single = date.Date;
-            Changed?.Invoke();
+            NotifyChanged();
         }
 
         public void SetRange(DateTime start, DateTime end)
@@ -134,7 +203,7 @@ namespace VzDev.ToolUtils.Calendar
             if (s > e) { DateTime t = s; s = e; e = t; }
             _rangeStart = s;
             _rangeEnd = e;
-            Changed?.Invoke();
+            NotifyChanged();
         }
 
         /// <summary>批次加入多選日期（傳 List 避免 IEnumerable 的 enumerator GC）。</summary>
@@ -147,14 +216,14 @@ namespace VzDev.ToolUtils.Calendar
                 if (MaxMultipleCount > 0 && _multiple.Count >= MaxMultipleCount) break;
                 _multiple.Add(dates[i].Date);
             }
-            Changed?.Invoke();
+            NotifyChanged();
         }
 
         public void Clear()
         {
             if (Count == 0) return;
             ClearInternal();
-            Changed?.Invoke();
+            NotifyChanged();
         }
 
         private void ForceMode(CalendarSelectionMode mode)

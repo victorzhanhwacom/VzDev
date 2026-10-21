@@ -1,4 +1,5 @@
 using System;
+using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,13 +28,11 @@ namespace VzDev.ToolUtils.Calendar
     [RequireComponent(typeof(Button))]
     public sealed class CalendarDayCell : MonoBehaviour
     {
-        [SerializeField] private Button button;
-        [SerializeField] private Image background;
-        [Tooltip("可選：區間的連續底色帶，需為獨立的子物件 Image（全撐滿 anchors）")]
-        [SerializeField] private Image rangeBand;
-        [SerializeField] private TMP_Text label;
-        [Tooltip("可選：顯示「起 / 迄」的小標籤 TMP_Text")]
-        [SerializeField] private TMP_Text tagLabel;
+        [Foldout("[UI References]"), SerializeField] private Button button;
+        [Foldout("[UI References]"), SerializeField] private Image background;
+        [Foldout("[UI References]"), Tooltip("可選：區間的連續底色帶，需為獨立的子物件 Image（全撐滿 anchors）"), SerializeField] private Image rangeBand;
+        [Foldout("[UI References]"), SerializeField] private TMP_Text label;
+        [Foldout("[UI References]"), Tooltip("可選：顯示「起 / 迄」的小標籤 TMP_Text"), SerializeField] private TMP_Text tagLabel;
 
         private RectTransform _bandRect;
         private bool _hasBand;
