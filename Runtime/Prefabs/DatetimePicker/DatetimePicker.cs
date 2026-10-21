@@ -1,57 +1,41 @@
 using System;
 using NaughtyAttributes;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using VzDev.ToolUtils.Calendar;
 
 namespace VzDev.DateTimeUtils
 {
-    /// <summary>
-    /// 日期時間選取器，結合日曆組件CalendarView
-    /// </summary>
-    public class DatetimePicker : MonoBehaviour
+    public class DateTimePicker : MonoBehaviour
     {
-        #region Fields
-        [Foldout("[Components]"), SerializeField] private CalendarView calendarView;
-        [Foldout("[Components]"), SerializeField] private Toggle toggle;
-        [Foldout("[Components]"), SerializeField] private TextMeshProUGUI dateText;
-        /// <summary>
-        /// 選取的日期時間
-        /// </summary>
-        public DateTime SelectedDateTime { get; private set; }
+         #region Fields
+        [Foldout("[Components]"), SerializeField] private DatePicker datePickerFrom;
+        [Foldout("[Components]"), SerializeField] private TimePicker timePickerFrom;
+        [Foldout("[Components]"), SerializeField] private DatePicker datePickerTo;
+        [Foldout("[Components]"), SerializeField] private TimePicker timePickerTo;
+        [Foldout("[Components]"), SerializeField] private Button btnSearch;
+       // [Foldout("[Components]"), SerializeField] private WebAPI_CallerBase_DeviceHistory  webAPI_CallerBase_DeviceHistory;
+
         #endregion
 
-        private void OnValidate()
-        {
-            if (toggle == null) toggle = GetComponent<Toggle>();
-            if (calendarView == null) calendarView = GetComponentInChildren<CalendarView>();
-        }
 
-        private void Start()
-        {
-            toggle.isOn = false;
-            calendarView.gameObject.SetActive(false);
-            calendarView.SelectToday();
-        }
         private void OnEnable()
         {
-            toggle.onValueChanged.AddListener(OnToggleValueChanged);
-            calendarView.OnDateSelected += HandleDateSelected;
+            btnSearch.onClick.AddListener(OnSearchButtonClicked);
         }
-
-        private void OnToggleValueChanged(bool isOn) => calendarView.gameObject.SetActive(isOn);
-
         private void OnDisable()
         {
-            toggle.onValueChanged.RemoveListener(OnToggleValueChanged);
-            calendarView.OnDateSelected -= HandleDateSelected;
+            btnSearch.onClick.RemoveListener(OnSearchButtonClicked);
         }
-        private void HandleDateSelected(DateTime time)
+
+        private void OnSearchButtonClicked()
         {
-            SelectedDateTime = time;
-            dateText.text = time.ToString("yyyy/MM/dd");
-            toggle.isOn = false;
+            DateTime fromDateTime = datePickerFrom.SelectedDateTime.Date + timePickerFrom.currentSelectedTime.TimeOfDay;
+            DateTime toDateTime = datePickerTo.SelectedDateTime.Date + timePickerTo.currentSelectedTime.TimeOfDay;
+
+            Debug.Log($"搜尋時間範圍: From: {fromDateTime}, To: {toDateTime}");
+
+            // 在這裡可以呼叫 WebAPI_CallerBase_DeviceHistory 來查詢資料
+            // webAPI_CallerBase_DeviceHistory.GetDeviceHistory(tagIds, fromDateTime.ToString("o"), toDateTime.ToString("o"), onSuccess, onFailure);
         }
     }
 }

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using TMPro;
-using UnityEngine;
 
 namespace VzDev.ApiExtensions
 {
@@ -11,12 +10,12 @@ namespace VzDev.ApiExtensions
         /// <summary>
         /// 設定時間選項為 24 小時制，間隔為 30 分鐘
         /// </summary>
-        public static TMP_Dropdown SetTimeOptions24Hours(this TMP_Dropdown timeDropdown, int intervalMinutes = 30, bool notify = false)
+        public static TMP_Dropdown SetTimeOptions24Hours(this TMP_Dropdown timeDropdown, TimeSpan intervalTimeSpan = default, bool notify = false)
         {
             var range = new TimeOptionRange(
                 start: new TimeSpan(0, 0, 0),
                 end: new TimeSpan(23, 59, 59),
-                interval: new TimeSpan(0, intervalMinutes, 0)
+                interval: intervalTimeSpan == default ? TimeSpan.FromMinutes(30) : intervalTimeSpan
             );
             timeDropdown.SetTimeOptions(range, notify: notify);
             //選取最接近現在時間的項目
