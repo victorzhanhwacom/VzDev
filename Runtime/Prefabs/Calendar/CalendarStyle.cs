@@ -44,6 +44,7 @@ namespace VzDev.ToolUtils.Calendar
         [Foldout("[Range Hint]"), Tooltip("需在 View 指定 rangeHintLabel")] public string hintSelectStart = "請選擇開始日期";
         [Foldout("[Range Hint]")] public string hintSelectEnd = "請選擇結束日期";
         [Foldout("[Range Hint]"), Tooltip("{0}=起 {1}=迄 {2}=天數")] public string hintRangeFormat = "{0:yyyy/MM/dd} ~ {1:yyyy/MM/dd}（共 {2} 天）";
+        [Foldout("[Range Hint]"), Tooltip("起訖同一天時使用。{0}=日期 {1}=天數")] public string hintSameDayFormat = "{0:yyyy/MM/dd}  (共{1}天)";
 
         [Foldout("[Bold]")] public bool boldToday = true;
         [Foldout("[Bold]"), Tooltip("單選/多選的選取日、區間起迄日")] public bool boldSelected = true;

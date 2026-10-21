@@ -447,7 +447,9 @@ namespace VzDev.ToolUtils.Calendar
             }
 
             if (Selection.TryGetRange(out DateTime s, out DateTime e))
-                rangeHintLabel.text = string.Format(style.hintRangeFormat, s, e, s.InclusiveDayCount(e));
+                rangeHintLabel.text = s == e
+                    ? string.Format(style.hintSameDayFormat, s, 1)
+                    : string.Format(style.hintRangeFormat, s, e, s.InclusiveDayCount(e));
             else
                 rangeHintLabel.text = Selection.IsRangePending ? style.hintSelectEnd : style.hintSelectStart;
         }

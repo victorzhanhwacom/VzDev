@@ -8,6 +8,22 @@ namespace VzDev.ApiExtensions
 {
     public static class DropDownExtension
     {
+        /// <summary>
+        /// 設定時間選項為 24 小時制，間隔為 30 分鐘
+        /// </summary>
+        public static TMP_Dropdown SetTimeOptions24Hours(this TMP_Dropdown timeDropdown, int intervalMinutes = 30, bool notify = false)
+        {
+            var range = new TimeOptionRange(
+                start: new TimeSpan(0, 0, 0),
+                end: new TimeSpan(23, 59, 59),
+                interval: new TimeSpan(0, intervalMinutes, 0)
+            );
+            timeDropdown.SetTimeOptions(range, notify: notify);
+            //選取最接近現在時間的項目
+            TimeSpan nowTime = DateTime.Now.TimeOfDay;
+            timeDropdown.SelectTime(range, nowTime, notify: notify);
+            return timeDropdown;
+        }
 
         /// <summary>時間選項的範圍設定（值型別，無 GC）</summary>
         public readonly struct TimeOptionRange
@@ -85,7 +101,7 @@ namespace VzDev.ApiExtensions
             }
 
             int value = count == 0 ? 0 : Math.Min(dropdown.value, count - 1);
-            if (notify) dropdown.value = value;
+            if (notify)dropdown.value = value;
             else dropdown.SetValueWithoutNotify(value);
             dropdown.RefreshShownValue();   // value 沒變時 SetValue 不會刷新，需手動呼叫
         }

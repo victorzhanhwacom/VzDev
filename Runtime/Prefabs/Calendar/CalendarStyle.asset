@@ -21,13 +21,13 @@ MonoBehaviour:
   - "\u56DB"
   - "\u4E94"
   - "\u516D"
-  normalBg: {r: 1, g: 1, b: 1, a: 0}
+  normalBg: {r: 0.3803922, g: 0.63529414, b: 0.59607846, a: 0.99607843}
   normalText: {r: 0.84276724, g: 0.84276724, b: 0.84276724, a: 1}
   otherMonthText: {r: 0.48427665, g: 0.48427665, b: 0.48427665, a: 1}
   disabledText: {r: 0.5, g: 0.5, b: 0.5, a: 0.35}
   todayBg: {r: 0.3803922, g: 0.63529414, b: 0.59607846, a: 1}
-  todayText: {r: 1, g: 1, b: 1, a: 1}
-  selectedBg: {r: 0.5764706, g: 1, b: 0.93137413, a: 1}
+  todayText: {r: 0.9843137, g: 0.9199378, b: 0.12941174, a: 1}
+  selectedBg: {r: 0.12941177, g: 0.4666667, b: 0.98823535, a: 1}
   selectedText: {r: 1, g: 1, b: 1, a: 1}
   rangeStartBg: {r: 0.12941177, g: 0.4666667, b: 0.98823535, a: 1}
   rangeStartText: {r: 1, g: 1, b: 1, a: 1}
@@ -47,7 +47,8 @@ MonoBehaviour:
   rangeSameDayTagAlign: 1
   hintSelectStart: "\u8ACB\u9078\u64C7\u958B\u59CB\u65E5\u671F"
   hintSelectEnd: "\u8ACB\u9078\u64C7\u7D50\u675F\u65E5\u671F"
-  hintRangeFormat: "{0:yyyy/MM/dd} ~ {1:yyyy/MM/dd}\uFF08\u5171 {2} \u5929\uFF09"
+  hintRangeFormat: "{0:yyyy/MM/dd\u3000} ~ {1:yyyy/MM/dd}\uFF08\u5171 {2} \u5929\uFF09"
+  hintSameDayFormat: "{0:yyyy/MM/dd}  (\u5171{1}\u5929)"
   boldToday: 1
   boldSelected: 1
   boldInRange: 1
