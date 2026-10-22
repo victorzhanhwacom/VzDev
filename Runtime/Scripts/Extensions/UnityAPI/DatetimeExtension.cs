@@ -4,8 +4,27 @@ using UnityEngine;
 
 namespace VzDev.ApiExtensions
 {
-    public static class DatetimeExtension
+    public static class DateTimeExtension
     {
+
+        /// <summary>
+        /// 將DateTime轉換為日期字串 (yyyy-MM-dd)
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static string ToDateString(this DateTime dateTime) => dateTime.ToString("yyyy-MM-dd");
+        /// <summary>
+        /// 將DateTime轉換為時間字串 (HH:mm:ss)
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <returns></returns>
+        public static string ToTimeString(this DateTime dateTime) => dateTime.ToString("HH:mm:ss");
+        /// <summary>
+        /// 將DateTime轉換為完整的日期時間字串 (yyyy-MM-dd HH:mm:ss)
+        /// </summary>
+        public static string ToFullDateTimeString(this DateTime dateTime) => dateTime.ToString("yyyy-MM-dd HH:mm:ss");
+
+
         #region 轉換成整點/每半小時
         /// <summary>
         /// 取得時間的整點小時，並將分鐘數歸零

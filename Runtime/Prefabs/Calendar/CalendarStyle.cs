@@ -46,6 +46,10 @@ namespace VzDev.ToolUtils.Calendar
         [Foldout("[Range Hint]"), Tooltip("{0}=起 {1}=迄 {2}=天數")] public string hintRangeFormat = "{0:yyyy/MM/dd} ~ {1:yyyy/MM/dd}（共 {2} 天）";
         [Foldout("[Range Hint]"), Tooltip("起訖同一天時使用。{0}=日期 {1}=天數")] public string hintSameDayFormat = "{0:yyyy/MM/dd}  (共{1}天)";
 
+        [Foldout("[Hover]")] public Color hoverBg = new Color(0.2f, 0.55f, 1f, 0.1f);
+        [Foldout("[Hover]")] public Color hoverText = new Color(0.1f, 0.35f, 0.8f);
+        [Foldout("[Hover]"), Tooltip("已選取 / 區間起迄的格子是否也套用 Hover 色")] public bool hoverOnSelected = false;
+
         [Foldout("[Bold]")] public bool boldToday = true;
         [Foldout("[Bold]"), Tooltip("單選/多選的選取日、區間起迄日")] public bool boldSelected = true;
         [Foldout("[Bold]"), Tooltip("區間中間的日期")] public bool boldInRange = false;

@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VzDev.ToolUtils.Calendar;
-
+using VzDev.UnityAPI.Extensions;
 namespace VzDev.DateTimeUtils
 {
     /// <summary>
@@ -16,6 +16,7 @@ namespace VzDev.DateTimeUtils
         [Foldout("[Components]"), SerializeField] private CalendarView calendarView;
         [Foldout("[Components]"), SerializeField] private Toggle toggle;
         [Foldout("[Components]"), SerializeField] private TextMeshProUGUI dateText;
+        [Foldout("[Components]"), SerializeField] private RectTransform rectTransform;
         /// <summary>
         /// 選取的日期時間
         /// </summary>
@@ -24,20 +25,21 @@ namespace VzDev.DateTimeUtils
 
         private void OnValidate()
         {
-            if (toggle == null) toggle = GetComponent<Toggle>();
             if (calendarView == null) calendarView = GetComponentInChildren<CalendarView>();
+            if (toggle == null) toggle = GetComponent<Toggle>();
+            if (rectTransform == null) rectTransform = GetComponent<RectTransform>();
         }
 
         private void Start()
         {
             toggle.isOn = false;
             calendarView.gameObject.SetActive(false);
-            calendarView.SelectToday();
         }
         private void OnEnable()
         {
             toggle.onValueChanged.AddListener(OnToggleValueChanged);
             calendarView.OnDateSelected += HandleDateSelected;
+            calendarView.SelectToday();
         }
 
         private void OnToggleValueChanged(bool isOn) => calendarView.gameObject.SetActive(isOn);

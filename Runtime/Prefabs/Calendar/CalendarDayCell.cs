@@ -2,6 +2,7 @@ using System;
 using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace VzDev.ToolUtils.Calendar
@@ -26,7 +27,7 @@ namespace VzDev.ToolUtils.Calendar
     /// 只有 (日, 狀態) 改變時才寫入 UI，避免無意義的 Graphic rebuild。
     /// </summary>
     [RequireComponent(typeof(Button))]
-    public sealed class CalendarDayCell : MonoBehaviour
+    public sealed class CalendarDayCell : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [Foldout("[UI References]"), SerializeField] private Button button;
         [Foldout("[UI References]"), SerializeField] private Image background;
@@ -42,10 +43,16 @@ namespace VzDev.ToolUtils.Calendar
         private int _day = -1;
         private CalendarDayState _state;
         private CalendarStyle _style;
+        private bool _hovered;
 
         internal void Init(int index, Action<int> onClick)
         {
             if (button == null) button = GetComponent<Button>();
+
+            // 顏色完全由 CalendarStyle 控制，避免 Selectable 的 Color Tint 疊色
+            button.transition = Selectable.Transition.None;
+            // 避免點擊後停在 Selected 狀態、或被鍵盤方向鍵導覽到
+            button.navigation = new Navigation { mode = Navigation.Mode.None };
             _hasBand = rangeBand != null;
             if (_hasBand)
             {
@@ -89,11 +96,67 @@ namespace VzDev.ToolUtils.Calendar
             bool inRange = (state & CalendarDayState.InRange) != 0;
             bool today = (state & CalendarDayState.Today) != 0;
 
-            // ── 背景 / 文字顏色
-            // 優先序：Hidden > Disabled > 待選終點 > 起點 > 終點 > 選取 > 區間中 > 今天 > 一般
+            bool bold = !hidden && !disabled &&
+                        ((isEdge && style.boldSelected) ||
+                         (inRange && style.boldInRange) ||
+                         (today && style.boldToday));
+            FontStyles fs = bold ? _baseFontStyle | FontStyles.Bold : _baseFontStyle;
+            if (label.fontStyle != fs) label.fontStyle = fs; // 只在改變時寫入，避免多餘 mesh rebuild
+
+            UpdateBand(state, hidden, style);
+            UpdateTag(start, end, pending, hidden, style);
+            ApplyColors();
+        }
+
+        // ───────────── Hover ─────────────
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if (_hovered) return;
+            _hovered = true;
+            ApplyColors(); // 只改顏色，不重算整格
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if (!_hovered) return;
+            _hovered = false;
+            ApplyColors();
+        }
+
+        // 日曆被關閉時可能收不到 PointerExit，避免下次開啟殘留 hover 色
+        private void OnDisable()
+        {
+            if (!_hovered) return;
+            _hovered = false;
+            ApplyColors();
+        }
+
+        /// <summary>依目前狀態與 hover 計算背景/文字顏色。</summary>
+        private void ApplyColors()
+        {
+            CalendarStyle style = _style;
+            if (ReferenceEquals(style, null)) return; // 尚未 Apply 過
+
+            CalendarDayState state = _state;
+            bool otherMonth = (state & CalendarDayState.OtherMonth) != 0;
+            bool disabled = (state & CalendarDayState.Disabled) != 0;
+            bool hidden = otherMonth && style.hideOtherMonthDays;
+            bool selected = (state & CalendarDayState.Selected) != 0;
+            bool start = (state & CalendarDayState.RangeStart) != 0;
+            bool end = (state & CalendarDayState.RangeEnd) != 0;
+            bool pending = (state & CalendarDayState.RangePending) != 0;
+            bool isEdge = selected || start || end;
+            bool inRange = (state & CalendarDayState.InRange) != 0;
+            bool today = (state & CalendarDayState.Today) != 0;
+
+            // 優先序：Hidden > Disabled > Hover > 待選終點 > 起點 > 終點 > 選取 > 區間中 > 今天 > 一般
+            bool hover = _hovered && !hidden && !disabled && (!isEdge || style.hoverOnSelected);
+
             Color bg, txt;
             if (hidden) { bg = style.normalBg; txt = style.normalText; }
             else if (disabled) { bg = style.normalBg; txt = style.disabledText; }
+            else if (hover) { bg = style.hoverBg; txt = style.hoverText; }
             else if (pending) { bg = style.rangePendingBg; txt = style.rangePendingText; }
             else if (start) { bg = style.rangeStartBg; txt = style.rangeStartText; }
             else if (end) { bg = style.rangeEndBg; txt = style.rangeEndText; }
@@ -106,19 +169,10 @@ namespace VzDev.ToolUtils.Calendar
 
             background.color = bg;
             label.color = txt;
-
-            bool bold = !hidden && !disabled &&
-                        ((isEdge && style.boldSelected) ||
-                         (inRange && style.boldInRange) ||
-                         (today && style.boldToday));
-            FontStyles fs = bold ? _baseFontStyle | FontStyles.Bold : _baseFontStyle;
-            if (label.fontStyle != fs) label.fontStyle = fs; // 只在改變時寫入，避免多餘 mesh rebuild
-
-            UpdateBand(state, hidden, style);
-            UpdateTag(start, end, pending, hidden, txt, style);
+            if (_hasTag && tagLabel.enabled) tagLabel.color = txt;
         }
 
-        private void UpdateTag(bool start, bool end, bool pending, bool hidden, Color color, CalendarStyle style)
+        private void UpdateTag(bool start, bool end, bool pending, bool hidden, CalendarStyle style)
         {
             if (!_hasTag) return;
 
@@ -139,8 +193,7 @@ namespace VzDev.ToolUtils.Calendar
             tagLabel.enabled = show;
             if (!show) return;
 
-            tagLabel.SetText(tag); // 字串來自 Style，不產生 GC
-            tagLabel.color = color;
+            tagLabel.SetText(tag); // 字串來自 Style，不產生 GC（顏色由 ApplyColors 設定）
             // 只在對齊真的改變時才寫入，避免多餘的 TMP mesh rebuild
             if (tagLabel.horizontalAlignment != align) tagLabel.horizontalAlignment = align;
         }

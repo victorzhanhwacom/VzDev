@@ -31,14 +31,14 @@ namespace VzDev.XChartUtils
             // 若lineColor未設定，則使用ColorConfig.CyanColor作為預設值
             lineColor = lineColor == default ? ColorConfig.CyanColor : lineColor;
 
-            /*  lineLevelColor ??= new List<KeyValueData<float, Color32>>()
+             lineLevelColor ??= new List<KeyValueData<float, Color32>>()
              {
                  new KeyValueData<float, Color32>(0f, ColorConfig.AlertColor),
                  new KeyValueData<float, Color32>(15f, ColorConfig.WarningColor),
                  new KeyValueData<float, Color32>(18f, ColorConfig.NormalColor),
                  new KeyValueData<float, Color32>(26f, ColorConfig.WarningColor),
                  new KeyValueData<float, Color32>(28f, ColorConfig.AlertColor)
-             }; */
+             };
         }
         #endregion
 
@@ -116,5 +116,7 @@ namespace VzDev.XChartUtils
             lineChart.series[serieIndex].data.Clear();
             lineChart.RefreshChart();
         }
+
+        public void ToAnimate() => lineChart.ToAnimate();
     }
 }

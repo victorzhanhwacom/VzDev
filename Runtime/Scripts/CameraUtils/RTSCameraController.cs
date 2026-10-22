@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Debug = UnityEngine.Debug;
 using VzDev.Frameworks;
+using UnityEngine.EventSystems;
+using VzDev.Helpers;
 
 namespace VzDev.CameraUtils
 {
@@ -11,7 +13,7 @@ namespace VzDev.CameraUtils
     /// https://chatgpt.com/share/67fcb5ab-b03c-8012-b685-28ab8ee23da5
     public class RTSCameraController : SingletonMonoBehaviour<RTSCameraController>
     {
-        [Header(">>> LookAt對像")] [SerializeField] private Transform lookAtTarget;
+        [Header(">>> LookAt對像")][SerializeField] private Transform lookAtTarget;
 
         [Header(">>> 移動邊界BoxCollider Trigger")]
         public BoxCollider boundsCollider;
@@ -155,6 +157,8 @@ namespace VzDev.CameraUtils
         {
             if (lookAtTarget == null) return;
             if (EventHelper.IsUsingInputField) return;
+            if (EventSystem.current.IsPointerOverGameObject()) return;
+            if (MouseHelper.IsPointerOutOfScreen) return;
 
             HandleMovementInput();
             if (!isRotating) HandleEdgeMovement();
@@ -210,7 +214,7 @@ namespace VzDev.CameraUtils
         {
             if (!enableEdgeMovement) return;
             if (IsEnableMove == false) return; // 修正: 原版沒檢查這個旗標，導致 Follow 模式（SetIsEnableMove(false)）時，
-                                                // 若滑鼠恰好停在螢幕邊緣，仍會偷偷移動 currentTargetPosition 跟 Follow 打架。
+                                               // 若滑鼠恰好停在螢幕邊緣，仍會偷偷移動 currentTargetPosition 跟 Follow 打架。
 
             var mouse = Mouse.current;
             if (mouse == null) return; // 修正: 沒有滑鼠裝置時直接跳過，避免 NRE
@@ -349,7 +353,7 @@ namespace VzDev.CameraUtils
                 FlyToPosition(target.position, setDistance ?? defaultFlyDistance);
         }
 
-         public void FlyToPosition(Transform target, float setDistance)
+        public void FlyToPosition(Transform target, float setDistance)
         {
             if (target.TryGetComponent(out Renderer render) && render is not LineRenderer)
                 FlyToPosition(render.bounds.center, setDistance);

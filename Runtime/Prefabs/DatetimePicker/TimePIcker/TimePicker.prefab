@@ -745,7 +745,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 03:00:00
+  m_text: 12:00:00
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9f63a78c5411d234fb4ee21fc01cf210, type: 2}
   m_sharedMaterial: {fileID: -3758166231712576370, guid: 9f63a78c5411d234fb4ee21fc01cf210, type: 2}
@@ -1395,11 +1395,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3474152281315128269, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: -126.395706
       objectReference: {fileID: 0}
     - target: {fileID: 3474152281315128269, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -42
       objectReference: {fileID: 0}
     - target: {fileID: 3474152281315128269, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1492,6 +1492,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5869922965839507093, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7578334030765065921}
+    - targetCorrespondingSourceObject: {fileID: 5869922965839507093, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2151099913043303585}
   m_SourcePrefab: {fileID: 100100000, guid: 30f228210e69d3f458f1df32b579fbe7, type: 3}
 --- !u!224 &675324020071280631 stripped
 RectTransform:
@@ -1525,8 +1528,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5eaa79fc07a4fc448604c94a1591e1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: VzDev::VzDev.DateTimeUtils.TimePicker
-  dropdown: {fileID: 7578334030765065921}
   intervalMinutes: 60
+  selectedTimeMode: 0
+  dropdown: {fileID: 7578334030765065921}
 --- !u!114 &7578334030765065921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1551,7 +1555,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
     m_HighlightedColor: {r: 0.36078432, g: 0.60784316, b: 0.57254905, a: 1}
     m_PressedColor: {r: 0.25882354, g: 0.43529415, b: 0.40784317, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 0}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -1574,7 +1578,7 @@ MonoBehaviour:
   m_Placeholder: {fileID: 0}
   m_ItemText: {fileID: 7259377134958008163}
   m_ItemImage: {fileID: 0}
-  m_Value: 3
+  m_Value: 12
   m_MultiSelect: 0
   m_Options:
     m_Options:
@@ -1650,7 +1654,22 @@ MonoBehaviour:
     - m_Text: 23:00:00
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
+    - m_Text: 23:59:59
+      m_Image: {fileID: 0}
+      m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
   m_AlphaFadeSpeed: 0.15
+--- !u!114 &2151099913043303585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5656287094573737948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3267e553b7a633149a116bfad5ab0f7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.ApiExtensions.DropdownScrollToSelected

@@ -13,8 +13,9 @@ namespace VzDev.DateTimeUtils
     public class TimePicker : MonoBehaviour
     {
         #region Fields
-        [Foldout("[Components]"), SerializeField] private TMP_Dropdown dropdown;
         [Foldout("[Settings]"), SerializeField] private int intervalMinutes = 30;
+        [Foldout("[Settings]"), SerializeField] private SelectedTimeMode selectedTimeMode = SelectedTimeMode.NearestNowTime;
+        [Foldout("[Components]"), SerializeField] private TMP_Dropdown dropdown;
         private TimeSpan timeSpanInterval;
 #if UNITY_EDITOR
         [Button]
@@ -23,7 +24,7 @@ namespace VzDev.DateTimeUtils
             if (intervalMinutes == 0) return;
             dropdown.ClearOptions();
             timeSpanInterval = TimeSpan.FromMinutes(intervalMinutes);
-            dropdown.SetTimeOptions24Hours(timeSpanInterval);
+            dropdown.SetTimeOptions24Hours(timeSpanInterval, selectedTimeMode);
         }
 #endif
         public DateTime currentSelectedTime
@@ -38,7 +39,19 @@ namespace VzDev.DateTimeUtils
                 return DateTime.MinValue;
             }
         }
+
+        private int originSelectedIndex = -1;
         #endregion
+
+        private void Start()
+        {
+            originSelectedIndex = dropdown.value;
+        }
+
+        private void OnEnable()
+        {
+            dropdown.value = originSelectedIndex > -1 ? originSelectedIndex : dropdown.value;
+        }
 
         private void OnValidate()
         {
