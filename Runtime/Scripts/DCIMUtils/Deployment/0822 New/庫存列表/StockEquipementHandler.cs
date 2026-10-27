@@ -46,7 +46,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         private void HandleGetStockEquipmentModels(List<Transform> list)
         {
             stockEquipmentModels = list;
-            CombineDataAndModel();
+            CombineDataAndModel2();
         }
 
         /// <summary>
@@ -74,6 +74,34 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             });
             OnCombineStockeEquipmentAndModelAction?.Invoke(stockEquipmentList);
         }
+
+         private void CombineDataAndModel2()
+        {
+            dataReadyCount++;
+            if (!IsDataReady) return;
+
+            stockEquipmentList.ForEach(stockEquipment =>
+            {
+                Transform model = stockEquipmentModels.Find(model => DCIM_Helper.CompareEquipmentModelName(model.name, stockEquipment.modelInfo.modelName));
+                if (model == null)
+                {
+                    Debug.LogWarning($"[StockEquipementHandler] 找不到對應的設備模型: {stockEquipment.modelInfo.modelName}");
+                }
+                else
+                {
+                    stockEquipment.modelInfo.modelTarget = model;
+                }
+            });
+            OnCombineStockeEquipmentAndModelAction?.Invoke(stockEquipmentList);
+        }
+        public void SetStockEquipmentData(List<EquipmentAsset> stockAssets)
+        {
+            stockEquipmentList = stockAssets;
+            CombineDataAndModel2();
+        }
+
+
+
 
         [Button, ShowIf("IsDataReady")]
         private void ClearData()

@@ -34,7 +34,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             txtHeightU.text = equipmentAsset.equipmentUsageInfo.heightU.ToString();
             txtPowerWatt.text = equipmentAsset.equipmentUsageInfo.power_watt.ToString();
             txtWeightKG.text = equipmentAsset.equipmentUsageInfo.weight_kg.ToString();
-            txtSystem.text = equipmentAsset.system.ToString();
+            txtSystem.text = equipmentAsset.systemType.ToString();
             toggleEditoInfo.isOn = false;
             rootView.SetActive(true);
         }

@@ -19,9 +19,12 @@ namespace VzDev.DCIMUtils.DataUtils
         /// </summary>
         public string deviceName;
 
+        public string id, buildingCode, floor, space;
+
+
         public Sprite assetPhotoSprite;
 
-        public COBieInfo cobieInfo = new ();
-        public ModelInfo modelInfo = new ();
+        public COBieInfo cobieInfo = new();
+        public ModelInfo modelInfo = new();
     }
 }

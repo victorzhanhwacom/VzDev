@@ -20,7 +20,7 @@ namespace VzDev.DCIMUtils.DataUtils
             if (string.IsNullOrEmpty(type_name))
                 type_name = asset.deviceName;
             if (string.IsNullOrEmpty(type_category))
-                type_category =  asset.category.ToString();
+                type_category =  asset.deviceCategory.ToString();
         }
 
         public string component_description = "";

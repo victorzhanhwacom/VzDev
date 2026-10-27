@@ -13,19 +13,19 @@ namespace VzDev.DCIMUtils.DataUtils
     {
         /*  public DCIM_Category category = DCIM_Category.Unknow;
          public DCIM_System system = DCIM_System.Unknow; */
-        public string category;
-        public string system;
+        public string systemType;
+        public string deviceCategory;
         public CompanyAssetInfo companyAssetInfo = new();
         public SizeInfo sizeInfo = new();
-        public string DeviceCategory => system.ToString();
+        public string DeviceCategory => systemType.ToString();
 
         /// <summary>
         /// 檢查設備的系統類別與設備類別(For Demo)
         /// </summary>
         public void CheckSystemAndCategory()
         {
-            category = EnumHelper<DCIM_Category>.GetEnumFromString(deviceCode ?? modelInfo.modelName).ToString();
-            system = EnumHelper<DCIM_System>.GetEnumFromString(deviceCode).ToString();
+            deviceCategory = EnumHelper<DCIM_Category>.GetEnumFromString(deviceCode ?? modelInfo.modelName).ToString();
+            systemType = EnumHelper<DCIM_System>.GetEnumFromString(deviceCode).ToString();
             companyAssetInfo ??= new CompanyAssetInfo();
             companyAssetInfo.GenerateRandomAssetNumber("NTCGO");
             companyAssetInfo.assetName ??= modelInfo.modelName;

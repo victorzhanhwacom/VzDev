@@ -48,14 +48,14 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         {
             this.equipmentAsset = equipmentAsset;
             txtDeviceName.text = equipmentAsset.deviceName;
-            txtCategory.text = equipmentAsset.category?.ToString();
+            txtCategory.text = equipmentAsset.deviceCategory?.ToString();
 
             bool isHavePhoto = equipmentAsset.assetPhotoSprite != null;
             imgDevicePhoto.gameObject.SetActive(isHavePhoto);
             imgDevicePhoto.sprite = equipmentAsset.assetPhotoSprite ?? null;
 
-            btnRemove.gameObject.SetActive(equipmentAsset.system != "DCR");
-            btnMove?.gameObject.SetActive(equipmentAsset.system != "DCR");
+            btnRemove.gameObject.SetActive(equipmentAsset.systemType != "DCR");
+            btnMove?.gameObject.SetActive(equipmentAsset.systemType != "DCR");
 /*  btnRemove.gameObject.SetActive(equipmentAsset.system != DCIM_System.DCR);
             btnMove?.gameObject.SetActive(equipmentAsset.system != DCIM_System.DCR);
  */

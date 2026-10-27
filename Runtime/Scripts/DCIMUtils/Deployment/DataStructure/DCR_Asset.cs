@@ -14,7 +14,7 @@ namespace VzDev.DCIMUtils.DataUtils
     {
         public DCR_Asset()
         {
-            system = "DCR";
+            systemType = "DCR";
             /* system = DCIM_System.DCR;
             category = DCIM_Category.Rack; */
         }

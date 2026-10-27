@@ -27,9 +27,12 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         /// 系統類別: DCS、DCN
         /// </summary>
         public string system;
-        public int power;
+        public float power;
         public float weight;
         public int heightU;
+
+        
+
         /// <summary>
         /// 模型Prefab
         /// </summary>

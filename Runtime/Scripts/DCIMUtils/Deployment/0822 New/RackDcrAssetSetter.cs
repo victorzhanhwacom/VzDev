@@ -56,6 +56,15 @@ namespace VzDev.DCIMUtils.DeploymentUtils
             rackDataModelBinders.ForEach(combiner => combiner.SetRackSlotColliderEnabled(isRackDeployable));
         }
 
+        public void SetRackAssets(List<DCR_Asset> list)
+        {
+            rackAssets?.Clear();
+            rackAssets ??= new List<DCR_Asset>();
+            rackAssets.AddRange(list);
+            GenerateDataCombiner();
+        }
+
+
         /// <summary>
         /// 解析機櫃Json資料
         /// </summary>

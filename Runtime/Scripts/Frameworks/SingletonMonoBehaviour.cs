@@ -31,7 +31,5 @@ namespace VzDev.Frameworks
         }
 
         protected virtual void Awake() => instance ??= this as T;
-
-        //protected virtual void OnValidate() => name = objName;
     }
 }

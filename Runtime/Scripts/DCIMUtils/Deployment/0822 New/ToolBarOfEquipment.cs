@@ -35,7 +35,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         private void UpdateView()
         {
             txtDeviceName.text = equipmentAsset.companyAssetInfo.assetName;
-            txtSystem.text = equipmentAsset.system.ToString();
+            txtSystem.text = equipmentAsset.systemType.ToString();
         }
         #endregion
 

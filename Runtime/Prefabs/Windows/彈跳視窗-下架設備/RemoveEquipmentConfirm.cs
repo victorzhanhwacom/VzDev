@@ -46,7 +46,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         private void OnRemoveEquipmentAssetHandler(EquipmentAsset equipmentAsset)
         {
             txtDeviceName.SetText(equipmentAsset.deviceName);
-            txtCategory.SetText(equipmentAsset.category.ToString());
+            txtCategory.SetText(equipmentAsset.deviceCategory.ToString());
             txtPropertyNumber.SetText(equipmentAsset.companyAssetInfo.assetNumber);
             txtUsageHeightu.SetText(equipmentAsset.equipmentUsageInfo.heightU.ToString());
             txtUsagePower.SetText(equipmentAsset.equipmentUsageInfo.power_watt.ToString());

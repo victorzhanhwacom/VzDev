@@ -33,8 +33,8 @@ namespace VzDev.DCIMUtils.DataUtils
                 deviceName = deviceName,
                 cobieInfo = COBieInfo.ToClone(cobieInfo),
                 modelInfo = ModelInfo.ToClone(modelInfo),
-                category = category,
-                system = system,
+                deviceCategory = deviceCategory,
+                systemType = systemType,
                 companyAssetInfo = companyAssetInfo,
                 equipmentUsageInfo = equipmentUsageInfo,
                 startUIndex = startUIndex
@@ -55,8 +55,8 @@ namespace VzDev.DCIMUtils.DataUtils
                 deviceName = deviceName,
                 cobieInfo = cobieInfo,
                 modelInfo = modelInfo,
-                category = category,
-                system = system,
+                deviceCategory = deviceCategory,
+                systemType = systemType,
                 companyAssetInfo = companyAssetInfo,
                 equipmentUsageInfo = equipmentUsageInfo,
                 startUIndex = startUIndex
@@ -72,8 +72,8 @@ namespace VzDev.DCIMUtils.DataUtils
                 deviceName = deviceName,
                 cobieInfo = cobieInfo,
                 modelInfo = modelInfo,
-                category = category,
-                system = system,
+                deviceCategory = deviceCategory,
+                systemType = systemType,
                 companyAssetInfo = companyAssetInfo,
                 equipmentUsageInfo = equipmentUsageInfo,
                 startUIndex = startUIndex
