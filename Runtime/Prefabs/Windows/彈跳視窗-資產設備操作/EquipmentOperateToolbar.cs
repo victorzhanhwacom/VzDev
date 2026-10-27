@@ -22,7 +22,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         [SerializeField, ReadOnly] private EquipmentAsset equipmentAsset;
         [Foldout("[Components]"), SerializeField] private RectTransform rectTransform;
         [Foldout("[Components]"), SerializeField] private GameObject rootView;
-        [Foldout("[Components]"), SerializeField] private TextMeshProUGUI txtDeviceName, txtCategory;
+        [Foldout("[Components]"), SerializeField] private TextMeshProUGUI txtDeviceName, txtCategory, txtHeight, txtWatt, txtWeight;
         [Foldout("[Components]"), SerializeField] private Image imgDevicePhoto;
         [Foldout("[Components]"), SerializeField] private Button btnLocation, btnRemove, btnMove, btnClose;
         [Foldout("[Components]"), SerializeField] private DOTweenFader tweenFader;
@@ -48,7 +48,14 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         {
             this.equipmentAsset = equipmentAsset;
             txtDeviceName.text = equipmentAsset.deviceName;
+<<<<<<< Updated upstream
             txtCategory.text = equipmentAsset.deviceCategory?.ToString();
+=======
+            txtCategory.text = equipmentAsset.category?.ToString();
+            txtHeight.text = equipmentAsset.equipmentUsageInfo.heightU.ToString();
+            txtWatt.text = equipmentAsset.equipmentUsageInfo.power_watt.ToString();
+            txtWeight.text = equipmentAsset.equipmentUsageInfo.weight_kg.ToString();
+>>>>>>> Stashed changes
 
             bool isHavePhoto = equipmentAsset.assetPhotoSprite != null;
             imgDevicePhoto.gameObject.SetActive(isHavePhoto);
@@ -128,7 +135,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         #region Event Listener Show / Hide
         private void Show()
         {
-            btnLocation.onClick.AddListener(OnClickLocation);
+            btnLocation?.onClick.AddListener(OnClickLocation);
             btnRemove.onClick.AddListener(OnClickRemove);
             btnMove?.onClick.AddListener(OnClickMove);
             btnClose.onClick.AddListener(OnClickClose);
@@ -141,7 +148,7 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         private void Hide()
         {
             tweenFader.Hide();
-            btnLocation.onClick.RemoveListener(OnClickLocation);
+            btnLocation?.onClick.RemoveListener(OnClickLocation);
             btnRemove.onClick.RemoveListener(OnClickRemove);
             btnMove?.onClick.RemoveListener(OnClickMove);
             btnClose.onClick.RemoveListener(OnClickClose);
