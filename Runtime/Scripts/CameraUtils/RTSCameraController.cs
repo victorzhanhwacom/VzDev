@@ -64,6 +64,10 @@ namespace VzDev.CameraUtils
         [field: SerializeField, ReadOnly, Label("是否可移動")] public bool IsEnableMove { get; private set; } = true;
         [field: SerializeField, ReadOnly, Label("是否可旋轉角度")] public bool IsEnableRotate { get; private set; } = true;
         [field: SerializeField, ReadOnly, Label("是否可拉近拉遠")] public bool IsEnableZoom { get; private set; } = true;
+        [field: SerializeField, ReadOnly, Label("是否可被控制")] public bool IsAbleToControl { get; private set; } = true;
+        
+        public static void SetIsAbleToControl(bool isAble) => Instance.IsAbleToControl = isAble;
+
 
         /// 設定是否可移動鏡頭
         public void SetIsEnableMove(bool isEnableMove) => this.IsEnableMove = isEnableMove;
@@ -157,8 +161,8 @@ namespace VzDev.CameraUtils
         {
             if (lookAtTarget == null) return;
             if (EventHelper.IsUsingInputField) return;
-            if (EventSystem.current.IsPointerOverGameObject()) return;
             if (MouseHelper.IsPointerOutOfScreen) return;
+            if (IsAbleToControl == false) return;
 
             HandleMovementInput();
             if (!isRotating) HandleEdgeMovement();

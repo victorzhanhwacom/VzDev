@@ -10,13 +10,14 @@ namespace VzDev.ToolUtils
     /// </summary>
     public class GetIndexHandler : MonoBehaviour
     {
-        #region Fields
+        #region Unity Events
+        [Foldout("[Events]"), SerializeField] private UnityEvent<bool> isIndexSingularEvent;
         [Foldout("[Events]"), SerializeField] private UnityEvent<string> OnGetSiblingIndex;
-        public event Action<string> OnGetSiblingIndexEvent;
+        #endregion
 
+        #region Fields
         [Foldout("[Settings]"), SerializeField] private bool isOrderByDesc = true;
         [Foldout("[Settings]"), SerializeField] private int startIndexFromValue = 1;
-
         // 小數字快取，避免重複 alloc（0~255 範圍內幾乎零 GC）
         private static readonly string[] _indexCache = BuildCache(256);
         #endregion
@@ -39,8 +40,8 @@ namespace VzDev.ToolUtils
                 ? _indexCache[result]
                 : result.ToString();
 
-            OnGetSiblingIndex?.Invoke(label);   // Inspector 訂閱
-            OnGetSiblingIndexEvent?.Invoke(label); // Code 訂閱
+            OnGetSiblingIndex?.Invoke(label);  
+            isIndexSingularEvent?.Invoke(result.IsOdd()); 
         }
 
         private static string[] BuildCache(int size)
