@@ -2,8 +2,8 @@ Shader "VzDev/StagingBoundingBox"
 {
     Properties
     {
-        [ColorUsage(true,true)] _FillColor("Fill Color", Color) = (0.4, 0.9, 1, 1)
-        [ColorUsage(true,true)] _EdgeColor("Edge Color", Color) = (0.6, 1, 1, 1)
+        [HDR] _FillColor("Fill Color", Color) = (0.4, 0.9, 1, 1)
+        [HDR] _EdgeColor("Edge Color", Color) = (0.6, 1, 1, 1)
         _EdgeThickness("Edge Thickness (UV space)", Range(0.001, 0.1)) = 0.015
         _FresnelPower("Fresnel Power", Range(0.5, 8)) = 3
         _FillMinAlpha("Fill Min Alpha (面對鏡頭時)", Range(0, 1)) = 0.03

@@ -10,6 +10,25 @@ namespace VzDev.UnityAPI.Extensions
     /// [Extended] 原API類別功能擴充
     public static class TransformExtension
     {
+        /// <summary>取得最後一個子物件，沒有子物件時回傳 null</summary>
+        public static Transform GetLastChild(this Transform self)
+        {
+            int count = self.childCount;
+            return count > 0 ? self.GetChild(count - 1) : null;
+        }
+
+        /// <summary>取得最後一個 activeSelf 的子物件，找不到回傳 null</summary>
+        public static Transform GetLastActiveChild(this Transform self)
+        {
+            for (int i = self.childCount - 1; i >= 0; i--)
+            {
+                Transform child = self.GetChild(i);
+                if (child.gameObject.activeInHierarchy) return child;
+            }
+            return null;
+        }
+
+
         /// <summary>
         /// 新增找不到元件時的警告訊息
         /// </summary>

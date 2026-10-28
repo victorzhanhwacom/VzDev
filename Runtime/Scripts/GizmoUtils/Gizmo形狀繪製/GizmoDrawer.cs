@@ -9,8 +9,8 @@ namespace VzDev.DrawUtils
         public bool alwaysShow = false;
         [Foldout("[Settings]")] public Color color = Color.yellow;
         [Foldout("[Settings]")] public GizmoStyle style = GizmoStyle.SolidSphere;
-        [Foldout("[Settings]")] public float radius = 0.5f;
-        [Foldout("[Settings]")] public Vector3 cubeSize = Vector3.one * 0.5f;
+        [Foldout("[Settings]")] public float radius = 0.3f;
+        [Foldout("[Settings]")] public Vector3 cubeSize = Vector3.one * 0.3f;
         #endregion
         
 #if UNITY_EDITOR

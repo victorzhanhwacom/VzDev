@@ -141,6 +141,7 @@ namespace VzDev.WebGLUtils
                 Debug.LogWarning($"[{GetType().Name}] UserToken 缺少 payload");
                 return;
             }
+            Debug.Log($"收到 UserToken!");
             OnReceiveUserTokenEvent?.Invoke(userTokenPayload.userToken);
             OnReceiveUserTokenAction?.Invoke(userTokenPayload.userToken);
         }

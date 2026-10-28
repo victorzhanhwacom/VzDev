@@ -160,7 +160,7 @@ namespace VzDev.NetUtils
         {
             if (bodyType != target)
             {
-                Debug.LogWarning($"{name} is not {target} type.");
+              //  Debug.LogWarning($"{name} is not {target} type.");
                 return false;
             }
 
