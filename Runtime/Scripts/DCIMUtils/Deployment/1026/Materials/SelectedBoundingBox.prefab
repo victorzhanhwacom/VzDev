@@ -9,10 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4745577435172077135}
+  - component: {fileID: 164716103874016963}
   - component: {fileID: 1900500211885244064}
   - component: {fileID: 311372735475636505}
   m_Layer: 0
-  m_Name: BoundingBox
+  m_Name: SelectedBoundingBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,6 +34,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &164716103874016963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5033992853711794051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52d1c48c9ab7cc940b5fe26924900590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: VzDev::VzDev.MaterialSwitcher
+  receiveValue: -1
+  materialSet:
+  - index: 0
+    mat: {fileID: 2100000, guid: 1d34f033df15c9941a57a910d6b05039, type: 2}
+    target: {fileID: 311372735475636505}
+  - index: 1
+    mat: {fileID: 2100000, guid: c509c0de9bf294447a2b607ac2a94571, type: 2}
+    target: {fileID: 311372735475636505}
+  - index: 1
+    mat: {fileID: 2100000, guid: cd65e2fbb608a2548b3e0d57fbc89545, type: 2}
+    target: {fileID: 311372735475636505}
 --- !u!33 &1900500211885244064
 MeshFilter:
   m_ObjectHideFlags: 0

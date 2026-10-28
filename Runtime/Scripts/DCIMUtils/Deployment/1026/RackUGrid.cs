@@ -63,34 +63,4 @@ public class RackUGrid : MonoBehaviour
         int u = G.WorldToCell(worldPos).y + 1;
         return (u >= 1 && u <= totalU) ? u : -1;
     }
-
-#if UNITY_EDITOR
-    void OnDrawGizmosSelected()
-    {
-        var g = GetComponent<Grid>();
-        if (g == null) return;
-
-        var style = new GUIStyle(UnityEditor.EditorStyles.label) { fontSize = 10, normal = { textColor = Color.white } };
-        Gizmos.matrix = transform.localToWorldMatrix;
-
-        for (int i = 0; i < totalU; i++)
-        {
-            Vector3 local = g.CellToLocal(new Vector3Int(0, i, 0));
-            Gizmos.color = ((i + 1) % 5 == 0) ? Color.blue * 0.6f : Color.yellow * 0.6f;
-            Gizmos.DrawWireCube(local + g.cellSize * 0.5f, g.cellSize);
-            UnityEditor.Handles.Label(
-                transform.TransformPoint(local + new Vector3(-0.03f, g.cellSize.y * 0.5f, 0f)),
-                $"U{i + 1}", style);
-        }
-
-        // 綠框標示前門那一面，方便確認 frontIsNegativeZ 設定是否正確
-        Vector3 origin = g.CellToLocal(Vector3Int.zero);
-        float h = g.cellSize.y * totalU;
-        float zFront = origin.z + (frontIsNegativeZ ? 0f : g.cellSize.z);
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(
-            new Vector3(origin.x + g.cellSize.x * 0.5f, origin.y + h * 0.5f, zFront),
-            new Vector3(g.cellSize.x, h, 0f));
-    }
-#endif
 }

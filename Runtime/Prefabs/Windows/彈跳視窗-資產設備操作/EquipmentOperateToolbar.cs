@@ -48,14 +48,10 @@ namespace VzDev.DCIMUtils.DeploymentUtils
         {
             this.equipmentAsset = equipmentAsset;
             txtDeviceName.text = equipmentAsset.deviceName;
-<<<<<<< Updated upstream
             txtCategory.text = equipmentAsset.deviceCategory?.ToString();
-=======
-            txtCategory.text = equipmentAsset.category?.ToString();
             txtHeight.text = equipmentAsset.equipmentUsageInfo.heightU.ToString();
             txtWatt.text = equipmentAsset.equipmentUsageInfo.power_watt.ToString();
             txtWeight.text = equipmentAsset.equipmentUsageInfo.weight_kg.ToString();
->>>>>>> Stashed changes
 
             bool isHavePhoto = equipmentAsset.assetPhotoSprite != null;
             imgDevicePhoto.gameObject.SetActive(isHavePhoto);
