@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 546068e2c1e61c74eaccec7b6a517d6a, type: 3}
+  m_Name: "\u6A5F\u623F\u6A5F\u6AC3\u4F48\u5C40"
+  m_EditorClassIdentifier: VzDev::VzDev.NetUtils.WebApiRequestSO
+  ipConfigSo: {fileID: 11400000, guid: 33d205db505a86048a6ac645ff8b7e24, type: 2}
+  extendApiURL: /Rack/capacity-report/export
+  authorizationSo: {fileID: 11400000, guid: b5a329fffdc264a4ab6e553091c27ce7, type: 2}
+  httpType: 0
+  fullApiURL: 
+  enumHttpMethod: 0
+  responseDataType: 0
+  isQueryParams: 1
+  queryParams:
+  - <Key>k__BackingField: format
+    <Value>k__BackingField: json
+  bodyType: 0
+  formData: []
+  rawJson: "{\r\n    \"deviceCodes\": [\r\n        \"TGL+TPE+IDC+08F+DCE+ia+ia+0100_ia_001\",\r\n       
+    \"TGL+TPE+IDC+08F+DCE+ia+ia+0100_ia_002\",\r\n        \"TGL+TPE+IDC+08F+DCE+ia+ia+0100_ia_003\",\r\n       
+    \"TGL+TPE+IDC+08F+DCE+ia+ia+0100_ia_004\",\r\n        \"TGL+TPE+IDC+08F+DCE+ia+ia+0100_ia_005\",\r\n       
+    \"TGL+TPE+IDC+08F+DCE+ia+ia+0100_ia_006\",\r\n        \"TGL+TPE+IDC+08F+DCE+ia+ia+0100_ia_007\",\r\n       
+    \"TGL+TPE+IDC+08F+DCE+ia+ia+0100_ia_008\",\r\n        \"TGL+TPE+IDC+08F+DCE+ia+ia+0100_ia_009\",\r\n       
+    \"TGL+TPE+IDC+08F+DCE+ia+ia+0100_ia_010\",\r\n        \"TGL+TPE+IDC+08F+DCE+ia+ia+0100_ia_011\",\r\n       
+    \"TGL+TPE+IDC+08F+DCE+ia+ia+0100_ia_012\"\r\n    ]\r\n}"
